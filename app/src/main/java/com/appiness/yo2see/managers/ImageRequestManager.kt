@@ -1,4 +1,4 @@
-package com.appiness.yo2see.manager;
+package com.appiness.yo2see.managers;
 
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
@@ -8,15 +8,14 @@ import android.text.TextUtils.isEmpty
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import com.appiness.yo2see.R
-import com.appiness.yo2see.util.AndroidUtils
 import com.facebook.drawee.backends.pipeline.Fresco
 import com.facebook.drawee.drawable.ScalingUtils
 import com.facebook.drawee.generic.RoundingParams
 import com.facebook.drawee.view.SimpleDraweeView
 import com.facebook.imagepipeline.common.ResizeOptions
 import com.facebook.imagepipeline.request.ImageRequestBuilder
-
+import com.appiness.yo2see.R
+import com.appiness.yo2see.utils.AndroidUtils
 
 class ImageRequestManager private constructor(val imageView: SimpleDraweeView?,
                                               val url: String?,
@@ -46,7 +45,7 @@ class ImageRequestManager private constructor(val imageView: SimpleDraweeView?,
         private var roundedBottomLeftRadius: Float = 0f
         private var roundedBottomRightRadius: Float = 0f
         private var colorFilter: ColorFilter? = null
-        private var placeholderImage: Int? = R.drawable.yo2see1
+        private var placeholderImage: Int? = R.drawable.ic_launcher
         private var failureImage: Int? = null
         private var resizeOptions: ResizeOptions? = null
         private var scaleType: ScalingUtils.ScaleType? = null
@@ -221,9 +220,9 @@ class ImageRequestManager private constructor(val imageView: SimpleDraweeView?,
             if (placeholderImage != null) {
                 hierarchy.setPlaceholderImage(placeholderImage, ScalingUtils.ScaleType.CENTER_CROP)
             } else if (circular) {
-                hierarchy.setPlaceholderImage(R.drawable.yo2see1, ScalingUtils.ScaleType.CENTER_INSIDE)
+                hierarchy.setPlaceholderImage(R.drawable.ic_launcher, ScalingUtils.ScaleType.CENTER_INSIDE)
             } else {
-                hierarchy.setPlaceholderImage(R.drawable.yo2see1, ScalingUtils.ScaleType.CENTER_INSIDE)
+                hierarchy.setPlaceholderImage(R.drawable.ic_launcher, ScalingUtils.ScaleType.CENTER_INSIDE)
             }
 
             // scale type - default is center crop

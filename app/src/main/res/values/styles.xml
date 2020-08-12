@@ -14,12 +14,36 @@
         <item name="fontFamily">@font/railway</item>
     </style>
 
-    <style name="Theme.AppCompat.Translucent">
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">#000000</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorPrimary">@color/transparent</item>
+
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
+    <style name="ActionBar.SemiTransp" parent="Base.Widget.AppCompat.ActionBar">
+        <item name="displayOptions">showHome|showTitle</item>
+        <!--
+                <item name="background">@drawable/toolbar_bg</item>
+        -->
+    </style>
+    <style name="AppTheme.SemiTranspActionBar" parent="@style/AppTheme">
+        <item name="actionBarStyle">@style/ActionBar.SemiTransp</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorPrimary">@android:color/transparent</item>
 
+    </style>
+
+    <style name="toolbarSize" parent="@style/Base.TextAppearance.AppCompat.Title">
+        <item name="android:textSize">20sp</item>
+    </style>
+    <integer name="password_max_char">40</integer>
+    <integer name="password_min_char">8</integer>
 </resources>

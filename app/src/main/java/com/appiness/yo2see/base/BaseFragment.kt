@@ -8,14 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.appiness.yo2see.util.UiUtils
 import com.appiness.yo2see.R
-import com.appiness.yo2see.util.AndroidUtils
-
-
+import com.appiness.yo2see.utils.AndroidUtils
+import com.appiness.yo2see.utils.fragmentToolbar.FragmentToolbar
+import com.appiness.yo2see.utils.fragmentToolbar.ToolbarManager
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.reflect.KClass
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment<T : ViewModel>(clazz: KClass<T>) : Fragment() {
 
+    val model: T by viewModel(clazz)
     lateinit var mFragmentNavigation: FragmentNavigation
     internal var mInt = 0
 
@@ -31,21 +34,22 @@ abstract class BaseFragment : Fragment() {
             mFragmentNavigation = context
         }
     }
-   /* override fun startActivity(intent: Intent?) = if (intent != null) {
+    override fun startActivity(intent: Intent?) = if (intent != null) {
         super.startActivity(intent)
     } else {
         showSnackbar(AndroidUtils.getString(R.string.internal_error), false)
-    }*/
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // used for fragment toolbar implementation
+        ToolbarManager(toolbarBuilder(), view).prepareToolbar()
     }
 
     abstract fun getLayoutId(): Int
 
 
-   /* fun showSnackbar(string: String?, positive: Boolean) {
+    fun showSnackbar(string: String?, positive: Boolean) {
         UiUtils.showSnackBar(activity, string, positive)
     }
 
@@ -57,7 +61,7 @@ abstract class BaseFragment : Fragment() {
         UiUtils.dismissProgressDialog()
     }
 
-    open fun toolbarBuilder() = FragmentToolbar.Builder().build()*/
+    open fun toolbarBuilder() = FragmentToolbar.Builder().build()
 
  /* open fun showLoadingView() {
         view?.findViewById<ProgressFrameLayout>(R.id.progressFrameLayout)?.showLoading()
@@ -131,6 +135,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     companion object {
-        const val ARGS_INSTANCE = "com.gsa"
+        const val ARGS_INSTANCE = "com.appiness.yo2see"
     }
 }

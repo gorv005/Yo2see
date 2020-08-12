@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin5x2">10dp</dimen>
+    <dimen name="padding3x4">12dp</dimen>
+    <dimen name="margin5x1">5dp</dimen>
+    <dimen name="margin5x5">25dp</dimen>
+    <dimen name="margin5x6">30dp</dimen>
+
+    <dimen name="et_height_7x2">14dp</dimen>
+    <dimen name="et_width_50">50dp</dimen>
+
+    <dimen name="margin_supermini">2dp</dimen>
+    <dimen name="margin_mini">4dp</dimen>
+    <dimen name="margin_6dp">6dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_small_10">10dp</dimen>
+
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_medium_2">13dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_xlarge">20dp</dimen>
+    <dimen name="margin_xxlarge">24dp</dimen>
+    <dimen name="margin_dp_10">10dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="toolbar_height_1">64dp</dimen>
+    <dimen name="toolbar_height_more">70dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="hundraded">100dp</dimen>
+    <dimen name="width_120">120dp</dimen>
+    <dimen name="activity_padding">16dp</dimen>
+    <dimen name="dimen_10">10dp</dimen>
+    <dimen name="logo_width">20dp</dimen>
+    <dimen name="airline_name">16sp</dimen>
+    <dimen name="no_of_stops">14sp</dimen>
+    <dimen name="lbl_price">12sp</dimen>
+    <dimen name="departure">20sp</dimen>
+    <dimen name="price">16sp</dimen>
+    <dimen name="duration">11sp</dimen>
+    <dimen name="divider">1dp</dimen>
+    <dimen name="normal_divider">0.5dp</dimen>
+    <dimen name="yellow_divider">1dp</dimen>
+    <dimen name="login_or_padding">5dp</dimen>
+    <dimen name="tendp">10dp</dimen>
+    <dimen name="padding5x1">5dp</dimen>
+    <dimen name="zero">0dp</dimen>
+    <dimen name="one">1dp</dimen>
+    <dimen name="two">2dp</dimen>
+    <dimen name="default_text_size">16sp</dimen>
+    <dimen name="default_text_size_change">14sp</dimen>
+    <dimen name="medium_text_size">18sp</dimen>
+    <dimen name="padding4x4">16dp</dimen>
+    <dimen name="padding4x2">8dp</dimen>
+    <dimen name="padding4x1">4dp</dimen>
+    <dimen name="margin5x3">15dp</dimen>
+    <dimen name="margin5x4">20dp</dimen>
+
+    <dimen name="item_view">32dp</dimen>
+    <dimen name="button_height">45dp</dimen>
+
+    <dimen name="et_width_300">300dp</dimen>
+    <dimen name="et_width_310">320dp</dimen>
+    <dimen name="button_width">300dp</dimen>
+    <dimen name="et_width_120">120dp</dimen>
+    <dimen name="et_width_150">150dp</dimen>
+    <dimen name="et_width_200">200dp</dimen>
+    <dimen name="et_width_220">220dp</dimen>
+    <dimen name="et_width_180">180dp</dimen>
+    <dimen name="et_width_250">250dp</dimen>
+    <dimen name="et_height_40">40dp</dimen>
+    <dimen name="et_height_20">20dp</dimen>
+    <dimen name="et_height_45">45dp</dimen>
+    <dimen name="et_height_8">8dp</dimen>
+    <dimen name="et_height_4">4dp</dimen>
+    <dimen name="et_height_50">50dp</dimen>
+    <dimen name="et_height_60">60dp</dimen>
+    <dimen name="et_height_80">80dp</dimen>
+    <dimen name="et_height_10">10dp</dimen>
+    <dimen name="et_height_30">30dp</dimen>
+    <dimen name="padding_main">16dp</dimen>
+
+
+    <dimen name="text_sp18">18sp</dimen>
+    <dimen name="text_sp16">16sp</dimen>
+    <dimen name="text_sp14">14sp</dimen>
+    <dimen name="text_sp20">20sp</dimen>
+    <dimen name="text_sp24">24sp</dimen>
+    <dimen name="text_sp22">22sp</dimen>
+    <dimen name="text_sp28">28sp</dimen>
+    <dimen name="text_sp35">35sp</dimen>
+    <dimen name="text_sp31">31sp</dimen>
+
+    <dimen name="text_sp12">12sp</dimen>
+    <dimen name="hint_sp8">12sp</dimen>
+
+    <dimen name="view_pager_card_radius">10dp</dimen>
+    <dimen name="et_width_130">130dp</dimen>
+
+    <dimen name="padding_bottom_view_pager">85dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+</resources>

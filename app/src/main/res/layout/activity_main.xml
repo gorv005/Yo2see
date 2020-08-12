@@ -1,264 +1,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tutorial_message"
-    android:layout_width="wrap_content"
-    android:background="#80000000"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentView"
+    android:layout_width="match_parent"
 
-    android:layout_height="wrap_content"
-    android:background="@drawable/pattern_back">
-
-    <LinearLayout
+    android:background="@color/transparent"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:id="@+id/gifImageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:weightSum="4">
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
-
-            <RelativeLayout
-                android:id="@+id/rlBuy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/fadingTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/rasaregular"
-                    android:gravity="center_vertical"
-                    android:rotation="300"
-                    android:text="@string/buy"
-                    android:textColor="@color/black"
-                    android:textSize="30sp" />
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-
-                    android:src="@drawable/yo2see1" />
-
-                <!--    <pl.droidsonroids.gif.GifTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:text="@string/buy"
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-
-                        />-->
-            </RelativeLayout>
-
-            <TextView
-
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/railway"
-                android:gravity="left|center_vertical"
-
-                android:textColor="@color/red"
-                android:text="@string/text"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
+        android:layout_height="match_parent"/>
 
 
-            <!--<pl.droidsonroids.gif.GifTextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/text"
-                android:textColor="@color/white"
-
-                />-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-
-                android:fontFamily="@font/railway"
-                android:gravity="left|center_vertical"
-                android:text="@string/text"
-                android:textColor="@color/red"
-                android:textSize="14sp"
-
-                />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:id="@+id/imgSell"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:src="@drawable/yo2see1" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/rasaregular"
-                    android:rotation="-300"
-                    android:text="@string/sell"
-                    android:textColor="@color/black"
-                    android:textSize="30sp" />
-
-                <!--
-                                <com.tomer.fadingtextview.FadingTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:timeout="500"
-                                    android:textSize="18sp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    app:texts="@array/sell"
-                                    android:textColor="@color/white" />
-                -->
-
-            </RelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:src="@drawable/yo2see1" />
-                <!--
-                                <com.tomer.fadingtextview.FadingTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:timeout="500"
-                                    android:textSize="18sp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    app:texts="@array/rent"
-                                    android:textColor="@color/white" />
-                -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/rasaregular"
-                    android:rotation="300"
-
-                    android:text="@string/rent"
-                    android:textColor="@color/black"
-                    android:textSize="30sp" />
-
-            </RelativeLayout>
-
-            <!-- <pl.droidsonroids.gif.GifTextView
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_weight="1"
-                 android:gravity="center_vertical"
-                 android:text="@string/text"
-                 android:textColor="@color/white"
-
-                 />-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/railway"
-                android:gravity="left|center_vertical"
-
-                android:text="@string/text"
-                android:textColor="@color/red"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:weightSum="2">
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ivsell"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="230dp"
+        android:src="@drawable/sell"
 
-                android:fontFamily="@font/railway"
-                android:gravity="left|center_vertical"
-                android:text="@string/text"
-                android:textColor="@color/red"
-                android:textSize="14sp" />
+        android:layout_width="80dp"
+        android:layout_height="80dp"></ImageView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ivbuy"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/buy"
+        android:layout_marginTop="180dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"></ImageView>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ivrent"
+        android:layout_marginTop="120dp"
+        android:src="@drawable/rent"
+        android:layout_marginStart="55dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"></ImageView>
+    <ImageView
+        android:visibility="gone"
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
+        android:id="@+id/ivpost"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/post"
+        android:layout_marginStart="200dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"></ImageView>
 
-                <pl.droidsonroids.gif.GifImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:src="@drawable/yo2see1" />
-                <!--
-                                <com.tomer.fadingtextview.FadingTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    app:timeout="500"
-                                    android:textSize="18sp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_weight="1"
-                                    android:gravity="center_vertical"
-                                    app:texts="@array/post"
-                                    android:textColor="@color/white" />
-                -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="@font/rasaregular"
-                    android:rotation="-300"
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ivbarter"
+        android:layout_marginTop="230dp"
 
-                    android:text="@string/post"
-                    android:textColor="@color/black"
-                    android:textSize="30sp" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
+        android:layout_marginEnd="40dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/barter"
+        android:layout_width="80dp"
+        android:layout_height="80dp"></ImageView>
 </RelativeLayout>

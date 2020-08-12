@@ -236,6 +236,12 @@ class AndroidUtils {
 
         }
     }
+    fun validateAddress(address: String) {
+
+
+
+
+    }
 
 
 }

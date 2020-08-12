@@ -1,4 +1,4 @@
-package com.appiness.yo2see.view.ads.adapter
+package com.appiness.yo2see.ui.ads.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.appiness.yo2see.model.AdsItems

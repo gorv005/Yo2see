@@ -5,20 +5,17 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.appiness.yo2see.R
 import com.appiness.yo2see.base.BaseFragment
 import com.appiness.yo2see.callbacks.AdapterViewClickListener
 import com.appiness.yo2see.model.AdsItems
-import com.appiness.yo2see.ui.AdsItems.sheet.SimpleAdsBottomSheet
 import com.appiness.yo2see.ui.LandingActivity
-import com.appiness.yo2see.view.ads.adapter.AdapterAdsItems
-import com.arthurivanets.bottomsheets.BottomSheet
+import com.appiness.yo2see.ui.ads.adapter.AdapterAdsItems
 import kotlinx.android.synthetic.main.activity_item_list.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class AdsItemsFragment : BaseFragment(), AdapterViewClickListener<AdsItems> {
+class AdsItemsFragment : Fragment(), AdapterViewClickListener<AdsItems> {
     override fun onClickAdapterView(objectAtPosition: AdsItems, viewType: Int, position: Int) {
         when (viewType) {
 
@@ -29,7 +26,7 @@ class AdsItemsFragment : BaseFragment(), AdapterViewClickListener<AdsItems> {
         }
     }
 
-    override fun getLayoutId() = R.layout.fragment_ads_items
+  //  override fun getLayoutId() = R.layout.fragment_ads_items
 
     private var adapterAdsItems: AdapterAdsItems? = null
 

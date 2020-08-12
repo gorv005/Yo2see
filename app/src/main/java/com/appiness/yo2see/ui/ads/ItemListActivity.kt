@@ -1,4 +1,4 @@
-package com.appiness.yo2see.view.ads
+package com.appiness.yo2see.ui.ads
 
 import android.content.Context
 import android.content.Intent
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.appiness.yo2see.R
 import com.appiness.yo2see.callbacks.AdapterViewClickListener
 import com.appiness.yo2see.model.AdsItems
-import com.appiness.yo2see.view.ads.adapter.AdapterAdsItems
+import com.appiness.yo2see.ui.ads.adapter.AdapterAdsItems
 import com.arthurivanets.bottomsheets.BottomSheet
 import kotlinx.android.synthetic.main.activity_item_list.*
 

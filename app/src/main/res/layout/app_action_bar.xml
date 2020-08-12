@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/transparent_grey">
+
+    <RelativeLayout
+        android:padding="10dp"
+
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+           android:layout_gravity="center_vertical"
+            android:src="@drawable/hamburger" />
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_marginStart="40dp"
+            android:scaleType="fitXY"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/yo2see_bar_logo" />
+
+        <LinearLayout
+            android:layout_alignParentEnd="true"
+            android:gravity="end"
+            android:layout_gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txtViewLocation"
+            android:layout_gravity="center_vertical"
+            android:text="PUNJAB"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <ImageView
+            android:layout_marginStart="10dp"
+            android:scaleType="fitXY"
+            android:layout_width="18dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/location" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>
