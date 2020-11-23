@@ -1,62 +1,122 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parentView"
     android:layout_width="match_parent"
 
-    android:background="@color/transparent"
     android:layout_height="match_parent"
-    >
-    <ImageView
-        android:id="@+id/gifImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    android:background="@drawable/background">
 
-
-
-
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/ivsell"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="230dp"
-        android:src="@drawable/sell"
-
-        android:layout_width="80dp"
-        android:layout_height="80dp"></ImageView>
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/ivbuy"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/buy"
-        android:layout_marginTop="180dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"></ImageView>
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/ivrent"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/rent"
-        android:layout_marginStart="55dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"></ImageView>
-    <ImageView
-        android:visibility="gone"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:paddingLeft="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/tute_header1"
+        android:textColor="@color/dark_green"
+        android:textSize="20sp" />
 
-        android:id="@+id/ivpost"
-        android:layout_marginTop="80dp"
-        android:src="@drawable/post"
-        android:layout_marginStart="200dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp"></ImageView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_centerInParent="true">
 
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/ivbarter"
-        android:layout_marginTop="230dp"
+        <ImageView
+            android:id="@+id/gifImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_tree_without_circles1" />
 
-        android:layout_marginEnd="40dp"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/barter"
-        android:layout_width="80dp"
-        android:layout_height="80dp"></ImageView>
+
+        <ImageView
+            android:id="@+id/ivsell"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="150dp"
+
+            android:src="@drawable/sell"
+            android:visibility="visible"></ImageView>
+
+        <ImageView
+            android:id="@+id/ivbarter"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="60dp"
+
+            android:layout_marginEnd="40dp"
+            android:layout_toRightOf="@id/ivrent"
+            android:src="@drawable/barter"
+            android:visibility="visible"></ImageView>
+
+        <ImageView
+            android:id="@+id/ivbuy"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/buy"
+            android:visibility="visible"></ImageView>
+
+        <ImageView
+            android:id="@+id/ivrent"
+
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/rent"
+            android:visibility="visible"></ImageView>
+
+        <ImageView
+            android:id="@+id/ivpost"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="160dp"
+            android:layout_marginEnd="40dp"
+            android:src="@drawable/post"
+            android:visibility="visible"></ImageView>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingEnd="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy "
+            android:textColor="@color/dark_green"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/button_round_selected"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            android:textColor="@color/dark_green"
+            android:textSize="18sp" />
+    </LinearLayout>
 </RelativeLayout>

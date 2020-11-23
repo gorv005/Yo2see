@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.appiness.yo2see.callbacks.GifEndListener
 import com.appiness.yo2see.ui.categories.CategoryActivity
 import com.appiness.yo2see.util.UiUtils
@@ -15,20 +16,22 @@ class MainActivity : AppCompatActivity(),GifEndListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         setContentView(R.layout.activity_main)
-        parentView.visibility=View.VISIBLE
-        ivsell.visibility=View.GONE
+       // parentView.visibility=View.VISIBLE
+        /*ivsell.visibility=View.GONE
         ivbarter.visibility=View.GONE
         ivbuy.visibility=View.GONE
         ivpost.visibility=View.GONE
-        ivrent.visibility=View.GONE
-       let {
+        ivrent.visibility=View.GONE*/
+       /*let {
            gifUtil = GifUtil(this)
            gifUtil?.setImage(this,gifImageView)
-        }
+        }*/
         ivbuy.setOnClickListener {
             let {
-                parentView.visibility=View.GONE
+               // parentView.visibility=View.GONE
                 UiUtils.hideSoftKeyboard(it)
                 startActivity(
                     CategoryActivity.getIntent(
@@ -51,7 +54,7 @@ class MainActivity : AppCompatActivity(),GifEndListener {
 
     override fun onResume() {
         super.onResume()
-        parentView.visibility=View.VISIBLE
+     //   parentView.visibility=View.VISIBLE
 
     }
 
@@ -61,12 +64,12 @@ class MainActivity : AppCompatActivity(),GifEndListener {
     }
     override fun animationEnd() {
 
-        ivsell.visibility=View.VISIBLE
+       /* ivsell.visibility=View.VISIBLE
         ivbarter.visibility=View.VISIBLE
         ivbuy.visibility=View.VISIBLE
         ivpost.visibility=View.VISIBLE
         ivrent.visibility=View.VISIBLE
-
+*/
 
     }
 }

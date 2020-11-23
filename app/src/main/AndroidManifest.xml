@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appiness.yo2see">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -9,13 +10,14 @@
         android:allowBackup="true"
         android:icon="@drawable/logo_yo2see"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.AppCompat.Translucent">
-        <activity android:name=".ui.categories.CategoryActivity"></activity>
+        <activity android:name=".ui.login.LoginActivity"></activity>
+        <activity android:name=".ui.categories.CategoryActivity" />
         <activity android:name=".ui.LandingActivity" />
-        <activity android:name="com.appiness.yo2see.ui.ads.ItemListActivity" />
+        <activity android:name=".ui.ads.ItemListActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

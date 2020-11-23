@@ -63,4 +63,14 @@
     <string name="load_more">LOAD MORE</string>
     <string name="alert">Alert</string>
     <string name="ok">Ok</string>
+    <string name="tute_header1">An <b>Ecommerce platform</b>\nplace where you can</string>
+    <string name="next">Next</string>
+    <string name="buy_anything">Buy Anithing Saving you money</string>
+    <string name="username">User Name</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="sign_in_facebook">Sign in with Facebook</string>
+    <string name="sign_in_twitter">Sign in with Twitter</string>
+    <string name="sign_in_gmail">Sign in with Gmail</string>
 </resources>
