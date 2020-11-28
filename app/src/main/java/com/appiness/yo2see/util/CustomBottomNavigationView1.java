@@ -20,7 +20,7 @@ public class CustomBottomNavigationView1  extends BottomNavigationView {
     private Paint mPaint;
 
     /** the CURVE_CIRCLE_RADIUS represent the radius of the fab button */
-    private final int CURVE_CIRCLE_RADIUS = 70;
+    private final int CURVE_CIRCLE_RADIUS = 128 / 2;
     // the coordinates of the first curve
     private Point mFirstCurveStartPoint = new Point();
     private Point mFirstCurveEndPoint = new Point();
@@ -54,10 +54,9 @@ public class CustomBottomNavigationView1  extends BottomNavigationView {
     private void init() {
         mPath = new Path();
         mPaint = new Paint();
-        mPaint.setStyle(Paint.Style.STROKE);
-       mPaint.setColor(ContextCompat.getColor(getContext(), R.color.white));
-       setBackgroundColor(Color.TRANSPARENT);
-      //  setBackgroundResource(R.color.white);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        mPaint.setColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override

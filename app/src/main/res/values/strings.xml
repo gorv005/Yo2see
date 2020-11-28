@@ -73,4 +73,8 @@
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_twitter">Sign in with Twitter</string>
     <string name="sign_in_gmail">Sign in with Gmail</string>
+    <string name="welcome_text">welcome!\nPlease select one of the categories to\ndetermine what would you like to do today?</string>
+    <string name="events">Events</string>
+    <string name="dont_miss">Don\'t miss what\'s happening around you</string>
+    <string name="ads">Ads</string>
 </resources>

@@ -6,7 +6,7 @@
         android:id="@+id/navigation_home"
         android:enabled="true"
 
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_hamburger_white"
         android:title="HOME"
         app:showAsAction="ifRoom"/>
 
@@ -14,7 +14,7 @@
         android:id="@+id/action_podcast"
         android:enabled="true"
         android:title="PODCAST"
-        android:icon="@drawable/podcast"
+        android:icon="@drawable/ic_heart_white"
         app:showAsAction="ifRoom"/>
     <item
 
@@ -24,13 +24,13 @@
     <item
         android:id="@+id/action_my_ads"
         android:enabled="true"
-        android:icon="@drawable/heart"
+        android:icon="@drawable/ic_bell_white"
         android:title="MY ADS"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_account"
         android:enabled="true"
         android:title="ACCOUNT"
-        android:icon="@drawable/ic_perm_identity_black_24dp"
+        android:icon="@drawable/ic_chat_bubbles_white"
         app:showAsAction="ifRoom"/>
 </menu>

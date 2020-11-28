@@ -13,17 +13,20 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Translucent">
+        android:theme="@style/AppTheme">
         <activity android:name=".ui.login.LoginActivity"></activity>
         <activity android:name=".ui.categories.CategoryActivity" />
-        <activity android:name=".ui.LandingActivity" />
-        <activity android:name=".ui.ads.ItemListActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.LandingActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ui.ads.ItemListActivity" />
+        <activity android:name=".MainActivity">
+
         </activity>
     </application>
 
