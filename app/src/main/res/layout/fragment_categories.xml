@@ -1,0 +1,180 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/lllocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp">
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/ic_location_pin" />
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search_black_24dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/lllocation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_horizontal"
+                    android:text="@string/buy_header_text"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+
+
+                <RelativeLayout
+                    android:layout_width="320dp"
+
+                    android:layout_height="180dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_tree_without_stem_home" />
+
+                    <ImageView
+                        android:id="@+id/ivbarterv"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="56dp"
+                        android:src="@drawable/barter"
+                        android:visibility="visible"></ImageView>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/gifImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_tree_without_circles1" />
+
+
+                    <ImageView
+                        android:id="@+id/ivsell"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="55dp"
+                        android:layout_marginTop="150dp"
+
+                        android:src="@drawable/sell"
+                        android:visibility="visible"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/ivbarter"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="60dp"
+
+                        android:layout_marginEnd="40dp"
+                        android:layout_toRightOf="@id/ivrent"
+                        android:src="@drawable/barter"
+                        android:visibility="visible"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/ivbuy"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginStart="75dp"
+                        android:layout_marginTop="50dp"
+                        android:src="@drawable/buy"
+                        android:visibility="visible"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/ivrent"
+
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/rent"
+                        android:visibility="visible"></ImageView>
+
+                    <ImageView
+                        android:id="@+id/ivpost"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="160dp"
+                        android:layout_marginEnd="40dp"
+                        android:src="@drawable/post"
+                        android:visibility="visible"></ImageView>
+                </RelativeLayout>
+
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBuyList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp" />
+
+
+                <ExpandableListView
+                    android:id="@+id/categoriesExpandableListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:dividerHeight="0.5dp">
+
+                </ExpandableListView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/curve_buysell" />
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

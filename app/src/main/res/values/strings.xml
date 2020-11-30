@@ -77,4 +77,14 @@
     <string name="events">Events</string>
     <string name="dont_miss">Don\'t miss what\'s happening around you</string>
     <string name="ads">Ads</string>
+    <string name="jobs">Jobs</string>
+    <string name="real_estate">Real Estate</string>
+    <string name="free_stuff">Free stuff</string>
+    <string name="clothing">Clothing</string>
+    <string name="electronic">Electronic</string>
+    <string name="mobile">Mobiles</string>
+    <string name="buy_header_text">Buy with the best details\nwhat would you like to Buy</string>
+    <string name="tools">Tools</string>
+    <string name="mobile_and_accessories"><![CDATA[Mobiles & Accessories]]></string>
+
 </resources>

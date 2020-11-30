@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="320dp"
+
+    android:layout_height="180dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_tree_without_stem_home" />
+    <ImageView
+        android:id="@+id/ivsell"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="63dp"
+        android:src="@drawable/buysell_bubble"
+        android:visibility="visible"></ImageView>
+    <ImageView
+        android:id="@+id/ivsellWhite"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="63dp"
+        android:src="@drawable/round_circle_white"
+        android:visibility="visible"></ImageView>
+
+    <ImageView
+        android:id="@+id/ivbarterv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="56dp"
+        android:src="@drawable/barter_bubble"
+        android:visibility="visible"></ImageView>
+    <ImageView
+        android:id="@+id/ivbartervWhite"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="56dp"
+        android:src="@drawable/round_circle_white"
+        android:visibility="visible"></ImageView>
+
+    <ImageView
+        android:id="@+id/ivpost"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="55dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/post_bubble"
+        android:visibility="visible"></ImageView>
+    <ImageView
+        android:id="@+id/ivpostWhite"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginTop="55dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/round_circle_white"
+        android:visibility="visible"></ImageView>
+
+    <ImageView
+        android:id="@+id/ivrent"
+
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/rent_bubble"
+        android:visibility="visible"></ImageView>
+    <ImageView
+        android:id="@+id/ivrentWhite"
+
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/round_circle_white"
+        android:visibility="visible"></ImageView>
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_blue"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/expandedListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:text="ncncnnc"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_regular"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"/>
+
+</LinearLayout>

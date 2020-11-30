@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+
+            <TextView
+                android:id="@+id/tvSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Mobiles/"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="80dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+
+            <ExpandableListView
+                android:layout_marginTop="20dp"
+                android:scrollbars="none"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:groupIndicator="@null"
+                android:id="@+id/subategoriesExpandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:childDivider="@color/light_blue"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="12dp">
+
+            </ExpandableListView>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tvTitleHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/mobile_and_accessories"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/curve_buysell" />
+    </RelativeLayout>
+</RelativeLayout>
