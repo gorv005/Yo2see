@@ -3,6 +3,10 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -65,7 +69,8 @@
                     android:layout_marginTop="10dp" />
 
 
-                <ExpandableListView
+                <com.dartmic.yo2see.utils.NoScrollExListView
+                    android:animateLayoutChanges="true"
                     android:layout_marginTop="20dp"
                     android:scrollbars="none"
                     android:layout_marginStart="10dp"
@@ -78,7 +83,7 @@
                     android:divider="@android:color/transparent"
                     android:dividerHeight="12dp">
 
-                </ExpandableListView>
+                </com.dartmic.yo2see.utils.NoScrollExListView>
             </LinearLayout>
 
             <ImageView
@@ -87,4 +92,5 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/curve_buysell" />
         </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

@@ -18,6 +18,7 @@
         android:id="@+id/ivsell"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:transitionName="buy"
         android:layout_marginStart="2dp"
         android:layout_marginTop="63dp"
         android:src="@drawable/buysell_bubble"
@@ -32,7 +33,7 @@
         android:visibility="visible"></ImageView>
 
     <ImageView
-        android:id="@+id/ivbarterv"
+        android:id="@+id/ivbarter"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentRight="true"
@@ -41,7 +42,7 @@
         android:src="@drawable/barter_bubble"
         android:visibility="visible"></ImageView>
     <ImageView
-        android:id="@+id/ivbartervWhite"
+        android:id="@+id/ivbarterWhite"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentRight="true"

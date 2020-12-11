@@ -110,5 +110,7 @@ dependencies {
     implementation 'com.ncapdevi:frag-nav:3.3.0'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     implementation "com.google.android.material:material:1.1.0"
+    implementation 'com.diegodobelo.expandingview:expanding-view:0.9.4'
+    implementation 'com.github.florent37:viewanimator:1.1.0'
 
 }

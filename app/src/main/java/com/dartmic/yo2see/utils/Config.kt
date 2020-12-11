@@ -6,6 +6,7 @@ class Config {
 
 
         const val CLICK_VIEW_CATEGORY = 99
+        const val CLICK_VIEW_PRODUCT = 100
 
 
     }

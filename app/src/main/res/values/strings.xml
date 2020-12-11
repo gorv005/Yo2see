@@ -86,5 +86,6 @@
     <string name="buy_header_text">Buy with the best details\nwhat would you like to Buy</string>
     <string name="tools">Tools</string>
     <string name="mobile_and_accessories"><![CDATA[Mobiles & Accessories]]></string>
+    <string name="view_listing"><u>View listing</u></string>
 
 </resources>

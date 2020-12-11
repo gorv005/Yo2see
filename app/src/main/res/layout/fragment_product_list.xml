@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lllocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/ic_location_pin" />
+
+                <ImageView
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_search_icon_black" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/tvSubTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Mobiles/cell phones/Android"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="80dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Found 1777 results"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <com.dartmic.yo2see.utils.CustomGridRecyclerView
+                android:id="@+id/rvProductList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layoutAnimation="@anim/gridlayout_animation_from_bottom"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:scaleType="fitXY"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/mobile_and_accessories"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="60dp"
+            android:src="@drawable/ic_yo2see_logo"
+             />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/curve_buysell" />
+    </RelativeLayout>
+</RelativeLayout>

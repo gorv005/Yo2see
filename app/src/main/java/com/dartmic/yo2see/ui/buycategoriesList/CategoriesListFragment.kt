@@ -1,11 +1,14 @@
 package com.dartmic.yo2see.ui.buycategoriesList
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import android.widget.ExpandableListAdapter
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
@@ -15,11 +18,13 @@ import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.buycategoriesList.adapter.CategoriesExpandableListView
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
+import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
+import com.github.florent37.viewanimator.ViewAnimator
 import kotlinx.android.synthetic.main.fragment_categories_list.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.tree.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -106,16 +111,32 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
             }
 
             categoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-                /* Toast.makeText(
-                     it,
-                     "Clicked: " + (titleList as ArrayList<String>)[groupPosition] + " -> " + listData[(titleList as ArrayList<String>)[groupPosition]]!!.get(
-                         childPosition
-                     ),
-                     Toast.LENGTH_SHORT
-                 ).show()*/
+                mFragmentNavigation.pushFragment(
+                    ProductListFragment
+                        .getInstance(mInt + 1)
+                )
                 false
             }
 
+        }
+       ViewAnimator
+            .animate(ivsell)
+            .scale(1.3f, 1f)
+            .onStart({})
+            .onStop({ })
+            .start()
+        runLayoutAnimation(rvBuyList)
+    }
+    private fun runLayoutAnimation(recyclerView: RecyclerView) {
+        try {
+            val context: Context = recyclerView.context
+            val controller: LayoutAnimationController =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+            recyclerView.layoutAnimation = controller
+            recyclerView.adapter!!.notifyDataSetChanged()
+            recyclerView.scheduleLayoutAnimation()
+        }catch (e: Exception){
+            e.printStackTrace()
         }
     }
 
@@ -244,7 +265,7 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
     }
 
     fun treeVisibility() {
-        ivbartervWhite.visibility = View.VISIBLE
+        ivbarterWhite.visibility = View.VISIBLE
         ivpostWhite.visibility = View.VISIBLE
         ivrentWhite.visibility = View.VISIBLE
         ivsellWhite.visibility = View.GONE

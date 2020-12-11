@@ -1,17 +1,14 @@
 package com.dartmic.yo2see.ui.SubCategoriesList
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ExpandableListAdapter
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.ui.buycategoriesList.adapter.CategoriesExpandableListView
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
-import kotlinx.android.synthetic.main.fragment_categories_list.*
+import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import kotlinx.android.synthetic.main.fragment_sub_categories.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -65,6 +62,10 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
             }
 
             subategoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+                mFragmentNavigation.pushFragment(
+                    ProductListFragment
+                        .getInstance(mInt + 1)
+                )
                 /* Toast.makeText(
                      it,
                      "Clicked: " + (titleList as ArrayList<String>)[groupPosition] + " -> " + listData[(titleList as ArrayList<String>)[groupPosition]]!!.get(

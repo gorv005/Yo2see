@@ -1,14 +1,18 @@
 package com.dartmic.yo2see.ui.home
 
 
+import android.content.Context
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.view.animation.LayoutAnimationController
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
@@ -22,6 +26,7 @@ import com.dartmic.yo2see.ui.home.adapter.AdapterAdsEvents
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
+import com.github.florent37.viewanimator.ViewAnimator
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.tree.*
 
@@ -77,13 +82,60 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         ViewCompat.setNestedScrollingEnabled(rvAds, false)
 
         ivsell.setOnClickListener {
+
+            val p: ArrayList<Pair<View, String>> = ArrayList()
+            p.add(Pair(ivsell, "buy"))
+
             mFragmentNavigation.pushFragment(
                 CategoriesListFragment
-                    .getInstance(mInt + 1)
+                    .getInstance(mInt + 1), p
             )
 
         }
+
+        ViewAnimator
+            .animate(ivsell)
+            .scale(1.3f, 1f)
+            .onStart({})
+            .onStop({})
+            .start()
+        ViewAnimator
+            .animate(ivpost)
+            .scale(1.3f, 1f)
+            .onStart({})
+            .onStop({})
+            .start()
+        ViewAnimator
+            .animate(ivbarter)
+            .scale(1.3f, 1f)
+            .onStart({})
+            .onStop({ })
+            .start()
+        ViewAnimator
+            .animate(ivrent)
+            .scale(1.3f, 1f)
+            .onStart({})
+            .onStop({})
+            .start()
+
+        runLayoutAnimation(rvAds)
+        runLayoutAnimation(rvEvents)
+
     }
+
+    private fun runLayoutAnimation(recyclerView: RecyclerView) {
+        try {
+            val context: Context = recyclerView.context
+            val controller: LayoutAnimationController =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+            recyclerView.layoutAnimation = controller
+            recyclerView.adapter!!.notifyDataSetChanged()
+            recyclerView.scheduleLayoutAnimation()
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
     companion object {
 
         fun getInstance(instance: Int): HomeFragment {
@@ -204,7 +256,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
 
     fun visibilityGone() {
-        ivbartervWhite.visibility = View.GONE
+        ivbarterWhite.visibility = View.GONE
         ivpostWhite.visibility = View.GONE
         ivrentWhite.visibility = View.GONE
         ivsellWhite.visibility = View.GONE
