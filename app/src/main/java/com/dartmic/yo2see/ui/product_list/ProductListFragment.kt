@@ -15,6 +15,7 @@ import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
+import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
@@ -73,7 +74,7 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
         AndroidUtils.getString(R.string.jobs)
         val events = arrayListOf<ProductItems>()
 
-        for (i in 1..15) {
+        for (i in 1..30) {
             events?.add(
                 ProductItems(
                     1,
@@ -136,6 +137,10 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
 
                 this?.let {
 
+                    mFragmentNavigation.pushFragment(
+                        FragmentProductDetails
+                            .getInstance(mInt + 1)
+                    )
                     /* mFragmentNavigation.pushFragment(
                          SubCategoriesFragment
                              .getInstance(mInt + 1)

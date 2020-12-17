@@ -1,0 +1,212 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lllocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/ic_location_pin" />
+
+                <ImageView
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_search_icon_black" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="80dp"
+                android:background="@color/blue1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    app:tint="@color/white"
+                    android:layout_width="30dp"
+                    android:src="@drawable/ic_trending"
+                    android:layout_height="30dp"/>
+                <TextView
+
+                    android:layout_marginStart="5dp"
+                    android:id="@+id/tvSubTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/open_to_nagotiation"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvResult"
+                android:paddingStart="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:text="Samsung galaxy s8"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            <TextView
+                android:paddingEnd="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/address"
+                android:layout_gravity="end"
+                android:layout_marginTop="30dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="230dp">
+                <pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="4.2"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    />
+                <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                    android:id="@+id/worm_dots_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/view_pager"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:dotsStrokeColor="@color/white1"
+                    app:dotsStrokeWidth="8dp"
+                    app:dotsColor="@color/blue1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:selectedDotColor="@color/blue1" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="10dp"
+                android:text="$1000"
+                android:layout_marginStart="20dp"
+
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:fontFamily="@font/poppins_semibold" />
+            <TextView
+                android:id="@+id/tvModel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="Samsung galaxy s8"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_bold" />
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_light" />
+            <TextView
+                android:id="@+id/tvDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="Details"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_semibold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="color:black"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_light" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_yo2see_logo"
+            android:text="@string/mobile_and_accessories" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="170dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/curve_buysell" />
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

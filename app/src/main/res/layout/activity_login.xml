@@ -1,190 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbars="none"
-    android:background="@drawable/background"
+    android:background="@drawable/login_page_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <LinearLayout
 
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_padding"
-        android:layout_height="match_parent"
-        android:id="@+id/mainLayout"
-        >
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_horizontal"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_login_tree"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_semibold"
-            android:gravity="center_horizontal"
-            android:paddingLeft="10dp"
-            android:layout_gravity="center_horizontal"
-            android:paddingEnd="10dp"
-            android:text="@string/buy_anything"
-            android:textColor="@color/dark_green"
-            android:textSize="14sp" />
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_yo2see_logo"
+            android:text="@string/mobile_and_accessories" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="50dp"
+            android:id="@+id/ivLoginCart"
+            app:srcCompat="@drawable/moving_cart_withoutbg" />
+
+        <LinearLayout
+
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_marginTop="150dp"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_padding">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_bold"
-            android:paddingLeft="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingLeft="40dp"
             android:paddingEnd="10dp"
             android:text="@string/username"
-            android:textColor="@color/dark_green"
-            android:textSize="14sp" />
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:paddingStart="@dimen/padding3x4"
-            android:paddingEnd="@dimen/padding3x4"
+            android:layout_marginStart="@dimen/padding3x4"
+            android:layout_marginEnd="@dimen/padding3x4"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto_regular"
+            android:paddingStart="20dp"
+            android:fontFamily="@font/poppins_regular"
             android:animateLayoutChanges="@bool/show"
             android:drawablePadding="@dimen/margin5x2"
             android:background="@drawable/rounded_corners_app_edittext_bg"
-            android:inputType="textCapCharacters"
             android:singleLine="@bool/show"
-            android:textColor="@color/dark_green"
-            android:textSize="18sp" tools:ignore="UnusedAttribute"/>
+            android:textColor="@color/black"
+            android:textSize="16sp" tools:ignore="UnusedAttribute"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_bold"
-            android:paddingLeft="20dp"
-            android:paddingEnd="10dp"
-            android:text="@string/password"
-            android:textColor="@color/dark_green"
-            android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingLeft="40dp"
+                android:paddingEnd="10dp"
+                android:text="@string/password"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="43dp"
-            android:paddingStart="@dimen/padding3x4"
-            android:paddingEnd="@dimen/padding3x4"
+            android:layout_marginStart="@dimen/padding3x4"
+            android:layout_marginEnd="@dimen/padding3x4"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/poppins_regular"
             android:animateLayoutChanges="@bool/show"
             android:drawablePadding="@dimen/margin5x2"
             android:background="@drawable/rounded_corners_app_edittext_bg"
-            android:inputType="textCapCharacters"
+            android:paddingStart="20dp"
             android:singleLine="@bool/show"
-            android:textColor="@color/dark_green"
-            android:textSize="18sp" tools:ignore="UnusedAttribute"/>
+            android:textColor="@color/black"
+            android:textSize="16sp" tools:ignore="UnusedAttribute"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/tvSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_bold"
+            android:fontFamily="@font/poppins_semibold"
             android:paddingLeft="20dp"
             android:paddingEnd="10dp"
             android:text="@string/sign_up"
-            android:textColor="@color/dark_green"
+            android:textColor="@color/black"
             android:textSize="14sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins_bold"
+                android:fontFamily="@font/poppins_semibold"
                 android:paddingLeft="20dp"
                 android:paddingEnd="10dp"
                 android:layout_alignParentRight="true"
                 android:text="@string/forgot_password"
-                android:textColor="@color/dark_green"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
 
 
         </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:id="@+id/btnLogin"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/margin5x3"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textAllCaps="false"
-            android:text="@string/action_sign_in_short"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rememberCheck"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            android:fontFamily="@font/roboto_regular"
-            android:background="@drawable/rounded_corners_app_button_bg"
-            />
-        <androidx.appcompat.widget.AppCompatButton
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/margin5x3"
+                android:background="@drawable/rounded_corners_app_button_bg"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/action_sign_in_short"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="19sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
             android:id="@+id/btnSignInFacebook"
 
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="70dp"
             app:layout_constraintStart_toStartOf="parent"
             android:textAllCaps="false"
             android:text="@string/sign_in_facebook"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rememberCheck"
             android:textColor="@color/white"
-            android:textSize="19sp"
+            android:textSize="16sp"
 
-            android:fontFamily="@font/roboto_regular"
+            android:fontFamily="@font/poppins_regular"
             android:background="@drawable/rounded_corners_app_button_facebook_bg"
             />
-        <androidx.appcompat.widget.AppCompatButton
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSignInTwitter"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/margin5x3"
+                android:background="@drawable/rounded_corners_app_button_twitter_bg"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/sign_in_twitter"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
+
+            <androidx.appcompat.widget.AppCompatButton
             android:layout_width="match_parent"
-            android:id="@+id/btnSignInTwitter"
-            android:layout_height="50dp"
+            android:id="@+id/btnSignInGoogle"
+            android:layout_height="45dp"
             android:layout_marginTop="@dimen/margin5x3"
             app:layout_constraintStart_toStartOf="parent"
             android:textAllCaps="false"
-            android:text="@string/sign_in_twitter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rememberCheck"
-            android:textColor="@color/white"
-            android:textSize="19sp"
-            android:fontFamily="@font/roboto_regular"
-            android:background="@drawable/rounded_corners_app_button_twitter_bg"
-            />
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:id="@+id/btnSignInGoogle"
-            android:layout_height="50dp"
-            android:layout_marginTop="@dimen/margin5x3"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textAllCaps="true"
             android:text="@string/sign_in_gmail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rememberCheck"
             android:textColor="@color/white"
-            android:textSize="19sp"
-            android:fontFamily="@font/roboto_regular"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins_regular"
             android:background="@drawable/rounded_corners_app_button_google_bg"
             />
 

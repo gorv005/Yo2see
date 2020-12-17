@@ -72,22 +72,22 @@
                 android:layout_marginStart="10dp"
                 android:layoutAnimation="@anim/gridlayout_animation_from_bottom"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="30dp" />
         </LinearLayout>
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="35dp"
-            android:scaleType="fitXY"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="@string/mobile_and_accessories"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="60dp"
-            android:src="@drawable/ic_yo2see_logo"
-             />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="80dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_yo2see_logo"
+            android:text="@string/mobile_and_accessories" />
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="170dp"
             android:scaleType="fitXY"
             android:src="@drawable/curve_buysell" />
     </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.dartmic.yo2see;
+package com.dartmic.yo2see.utils;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -19,11 +19,11 @@ import com.bumptech.glide.request.target.Target;
 public class GifUtil {
 
    public GifEndListener gifEndListener;
-    GifUtil(GifEndListener gifEndListener){
+    public GifUtil(GifEndListener gifEndListener){
         this.gifEndListener=gifEndListener;
     }
-    public   void setImage(Context context, ImageView imageView){
-        Glide.with(context).asGif().load(R.drawable.tree_gif).listener(new RequestListener<GifDrawable>() {
+    public   void setImage(Context context, ImageView imageView,int res){
+        Glide.with(context).asGif().load(res).listener(new RequestListener<GifDrawable>() {
             @Override
             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<GifDrawable> target, boolean isFirstResource) {
                 return false;

@@ -40,6 +40,12 @@ class AdapterProductList(
         return ViewHolder(itemView, activity)
     }
 
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.itemView.clearAnimation();
+
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position), adapterViewClickListener,back)
         setAnimation(holder.itemView,position)
@@ -49,7 +55,12 @@ class AdapterProductList(
         // If the bound view wasn't previously displayed on screen, it's animated
         if (position > lastPosition) {
             val animation: Animation =
-                AnimationUtils.loadAnimation(activity, android.R.anim.slide_in_left)
+                AnimationUtils.loadAnimation(activity, R.anim.slide_left_to_right)
+            viewToAnimate.startAnimation(animation)
+            lastPosition = position
+        }else{
+            val animation: Animation =
+                AnimationUtils.loadAnimation(activity, R.anim.slide_in_from_right)
             viewToAnimate.startAnimation(animation)
             lastPosition = position
         }
@@ -71,7 +82,7 @@ class AdapterProductList(
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
                     allProducts,
-                    Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY, adapterPosition
+                    Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT, adapterPosition
                 )
             }
         }

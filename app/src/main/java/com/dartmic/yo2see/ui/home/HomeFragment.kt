@@ -127,7 +127,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         try {
             val context: Context = recyclerView.context
             val controller: LayoutAnimationController =
-                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_left_to_right)
             recyclerView.layoutAnimation = controller
             recyclerView.adapter!!.notifyDataSetChanged()
             recyclerView.scheduleLayoutAnimation()

@@ -22,6 +22,11 @@
     <color name="voilet">#8a0399</color>
     <color name="light_blue">#E9F8FF</color>
     <color name="blue1">#002F49</color>
+    <color name="white1">#FBFAFA</color>
+    <color name="facebook_color">#39598A</color>
+    <color name="twitter_color">#37A9DB</color>
+    <color name="gmail_color">#D2462E</color>
+
 
 
 </resources>

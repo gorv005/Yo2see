@@ -87,5 +87,14 @@
     <string name="tools">Tools</string>
     <string name="mobile_and_accessories"><![CDATA[Mobiles & Accessories]]></string>
     <string name="view_listing"><u>View listing</u></string>
+    <string name="first_name">First Name*</string>
+    <string name="phone_number">Phone number*</string>
+    <string name="email_id">Email Id*</string>
+    <string name="password_">Password*</string>
+    <string name="confirm_password">Confirm Password*</string>
+    <string name="create_account">Create account</string>
+    <string name="confirm_term_and_condition">Confirm the terms and conditions</string>
+    <string name="open_to_nagotiation">This Item is open\nto nagotiation</string>
+    <string name="address"><u>Greater Toronto</u></string>
 
 </resources>

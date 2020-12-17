@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.dartmic.yo2see.callbacks.GifEndListener
 import com.dartmic.yo2see.ui.categories.CategoryActivity
 import com.dartmic.yo2see.util.UiUtils
+import com.dartmic.yo2see.utils.GifUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 
