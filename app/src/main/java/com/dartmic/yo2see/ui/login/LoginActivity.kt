@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity(), GifEndListener {
         }
         let {
             gifUtil = GifUtil(this)
-            gifUtil?.setImage(this, ivLoginCart, R.drawable.moving_cart_withoutbg)
+            gifUtil?.setImage(this, ivLoginCart, R.drawable.cart_icon)
         }
     }
 
@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity(), GifEndListener {
 
     override fun animationEnd() {
         let {
-            gifUtil?.setImage(this, ivLoginCart, R.drawable.moving_cart_withoutbg)
+            gifUtil?.setImage(this, ivLoginCart, R.drawable.cart_icon)
 
         }
     }
