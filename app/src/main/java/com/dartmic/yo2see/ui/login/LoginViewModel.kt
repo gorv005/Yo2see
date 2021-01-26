@@ -77,10 +77,7 @@ class LoginViewModel(
     }
 
     public fun saveUserDetail(user: UserList?) {
-
         pre.saveUserData(user)
-
-
     }
 
 }
