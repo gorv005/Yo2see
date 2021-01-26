@@ -88,7 +88,40 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
             mFragmentNavigation.pushFragment(
                 CategoriesListFragment
-                    .getInstance(mInt + 1), p
+                    .getInstance(mInt + 1, Config.Constants.SELL), p
+            )
+
+        }
+        ivrent.setOnClickListener {
+
+            val p: ArrayList<Pair<View, String>> = ArrayList()
+            p.add(Pair(ivsell, "buy"))
+
+            mFragmentNavigation.pushFragment(
+                CategoriesListFragment
+                    .getInstance(mInt + 1, Config.Constants.RENT), p
+            )
+
+        }
+        ivbarter.setOnClickListener {
+
+            val p: ArrayList<Pair<View, String>> = ArrayList()
+            p.add(Pair(ivsell, "buy"))
+
+            mFragmentNavigation.pushFragment(
+                CategoriesListFragment
+                    .getInstance(mInt + 1, Config.Constants.BARTER), p
+            )
+
+        }
+        ivpost.setOnClickListener {
+
+            val p: ArrayList<Pair<View, String>> = ArrayList()
+            p.add(Pair(ivsell, "buy"))
+
+            mFragmentNavigation.pushFragment(
+                CategoriesListFragment
+                    .getInstance(mInt + 1, Config.Constants.POST), p
             )
 
         }

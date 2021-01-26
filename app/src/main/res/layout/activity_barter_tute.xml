@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parentView"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@drawable/barter_bg">
+
+
+    <RelativeLayout
+        android:layout_weight="2.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        >
+        <TextView
+            android:id="@+id/tvSkip"
+            android:paddingTop="25dp"
+            android:paddingStart="15dp"
+            android:text="@string/skip"
+            android:textSize="14sp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/yellow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:padding="15dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_barter_coloured_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_marginTop="100dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/mainTree"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/tree_barter" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_weight="0.5"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:layout_margin="15dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp">
+            <ImageView
+                android:id="@+id/ivTute1"
+                android:layout_width="15dp"
+                android:src="@drawable/round_circle_red"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/ivTute2"
+                android:layout_marginStart="5dp"
+                android:layout_width="15dp"
+                android:src="@drawable/round_circle_blue"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/ivTute3"
+                android:layout_marginStart="5dp"
+                android:layout_width="15dp"
+                android:src="@drawable/round_circle_purple"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/ivTute4"
+                android:layout_marginStart="5dp"
+                android:layout_width="15dp"
+                android:src="@drawable/round_circle_yellow"
+                android:layout_height="15dp"/>
+            <ImageView
+                android:id="@+id/ivTute5"
+                android:layout_marginStart="5dp"
+                android:layout_width="15dp"
+                android:src="@drawable/round_circle_grey"
+                android:layout_height="15dp"/>
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/ivNext"
+            android:layout_margin="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="30dp"
+            app:tint="@color/yellow1"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_next"
+            android:layout_height="30dp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

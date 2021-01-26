@@ -37,7 +37,7 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="error_mobile_not_validation">Mobile number digits should be greater than 6  and less than 12</string>
+    <string name="error_mobile_not_validation">Mobile number digits should be equal to 10 digit</string>
     <string name="error_password_not_validation"><![CDATA[Password should have !, @, #, $, & one of these special character]]></string>
 
     <string-array name="buy">
@@ -84,10 +84,14 @@
     <string name="electronic">Electronic</string>
     <string name="mobile">Mobiles</string>
     <string name="buy_header_text">Buy with the best details\nwhat would you like to Buy</string>
+    <string name="rent_header_text">Rent with the best details\nwhat would you like to Rent</string>
+    <string name="barter_header_text">Barter with the best details\nwhat would you like to Barter</string>
+    <string name="post_header_text">Post with the best details\nwhat would you like to Post</string>
+
     <string name="tools">Tools</string>
     <string name="mobile_and_accessories"><![CDATA[Mobiles & Accessories]]></string>
     <string name="view_listing"><u>View listing</u></string>
-    <string name="first_name">First Name*</string>
+    <string name="first_name">Name*</string>
     <string name="phone_number">Phone number*</string>
     <string name="email_id">Email Id*</string>
     <string name="password_">Password*</string>
@@ -96,5 +100,7 @@
     <string name="confirm_term_and_condition">Confirm the terms and conditions</string>
     <string name="open_to_nagotiation">This Item is open\nto nagotiation</string>
     <string name="address"><u>Greater Toronto</u></string>
+    <string name="skip">SKIP</string>
+    <string name="explore">Explore</string>
 
 </resources>

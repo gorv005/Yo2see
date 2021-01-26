@@ -8,6 +8,12 @@ import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.categories.CategoryRepository
 import com.dartmic.yo2see.ui.categories.CategoryRepositoryImpl
+import com.dartmic.yo2see.ui.signup.RegistrationViewModel
+import com.gsa.ui.login.LoginRepository
+import com.gsa.ui.login.LoginRepositoryImpl
+import com.gsa.ui.login.LoginViewModel
+import com.gsa.ui.register.RegisterRepository
+import com.gsa.ui.register.RegisterRepositoryImpl
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
@@ -28,6 +34,11 @@ object AppModule {
         single { getSharedPrefrence(androidApplication()) }
         single { ApplicationSchedulerProvider() as SchedulerProvider }
 
+        single<LoginRepository> { LoginRepositoryImpl(get(), get()) }
+        viewModel { LoginViewModel(get(),get(),get()) }
+
+        single<RegisterRepository> { RegisterRepositoryImpl(get(), get()) }
+        viewModel { RegistrationViewModel(get(),get()) }
         single<CategoryRepository> { CategoryRepositoryImpl(get(), get()) }
         viewModel { CategoriesViewModel(get(),get(),get()) }
 

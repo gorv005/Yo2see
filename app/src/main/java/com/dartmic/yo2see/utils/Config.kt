@@ -26,6 +26,11 @@ class Config {
 
     object Constants {
         const val HEADER_AUTHORISATION = "Authorization"
+        const val SELL = 1
+        const val RENT = 2
+        const val BARTER = 3
+        const val POST = 4
+
     }
 
     object Endpoints {
@@ -33,8 +38,8 @@ class Config {
         const val BASE_PATH = "/app/admin/api/"
 
         /* AUTH RELATED */
-        const val SIGN_UP_API = BASE_PATH + "users/sign_up"
-        const val LOGIN_API = BASE_PATH + "users/authenticate"
+        const val SIGN_UP_API = BASE_PATH + "user/signup"
+        const val LOGIN_API = BASE_PATH + "user/login"
         const val RESET_PASSWORD_API = BASE_PATH + "users/password_resets"
         const val CATEGORIES_API = BASE_PATH + "common/categorylist"
         const val FEATURE_API = BASE_PATH + "common/isfeaturelist"
@@ -54,6 +59,8 @@ class Config {
         const val PROPERTY_USER_NAME = "PROPERTY_USER_NAME" // user name
         const val PROPERTY_USER_EMAIL = "PROPERTY_USER_EMAIL" // user email
         const val PROPERTY_USER_TYPE = "PROPERTY_USER_TYPE" // user email
+        const val PROPERTY_USER_PHONE = "PROPERTY_USER_PHONE" // user email
+
 
         // notification
         const val PROPERTY_FCM_REGISTRATION_TOKEN = "PROPERTY_FCM_REGISTRATION_TOKEN"

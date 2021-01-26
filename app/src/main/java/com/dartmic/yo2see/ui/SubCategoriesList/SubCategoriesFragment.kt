@@ -42,7 +42,7 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
         titleList = ArrayList(listData.keys)
         activity?.let {
             adapter =
-                CategoriesExpandableListView(it, titleList as ArrayList<String>, listData)
+                CategoriesExpandableListView(it, titleList as ArrayList<String>, listData,1)
             subategoriesExpandableListView!!.setAdapter(adapter)
 
             subategoriesExpandableListView!!.setOnGroupExpandListener { groupPosition ->

@@ -23,9 +23,15 @@
     <color name="light_blue">#E9F8FF</color>
     <color name="blue1">#002F49</color>
     <color name="white1">#FBFAFA</color>
-    <color name="facebook_color">#39598A</color>
+    <color name="facebook_color">#39598A</color>2
     <color name="twitter_color">#37A9DB</color>
     <color name="gmail_color">#D2462E</color>
+    <color name="grey">#c6c6c6</color>
+    <color name="yellow1">#f6ac18</color>
+    <color name="light_yellow">#FBF9DE</color>
+    <color name="light_purple">#FDEBFF</color>
+
+
 
 
 

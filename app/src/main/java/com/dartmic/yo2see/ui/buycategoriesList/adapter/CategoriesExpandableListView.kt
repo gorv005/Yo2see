@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.dartmic.yo2see.R
+import com.dartmic.yo2see.utils.Config
 
 class CategoriesExpandableListView internal constructor(
     private val context: Context,
     private val titleList: List<String>,
-    private val dataList: HashMap<String, List<String>>
+    private val dataList: HashMap<String, List<String>>, private var type: Int
 ) : BaseExpandableListAdapter() {
 
     override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
@@ -37,7 +41,30 @@ class CategoriesExpandableListView internal constructor(
             convertView = layoutInflater.inflate(R.layout.item_subcategory, null)
         }
         val expandedListTextView = convertView!!.findViewById<TextView>(R.id.expandedListItem)
+        val llChildView = convertView!!.findViewById<LinearLayout>(R.id.llChildView)
+
         expandedListTextView.text = expandedListText
+
+
+        when (type) {
+            Config.Constants.SELL -> {
+                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_blue))
+
+            }
+            Config.Constants.RENT -> {
+                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_purple))
+
+            }
+            Config.Constants.BARTER -> {
+                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_yellow))
+
+            }
+            Config.Constants.POST -> {
+                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_blue))
+
+            }
+        }
+
         return convertView
     }
 
@@ -71,6 +98,25 @@ class CategoriesExpandableListView internal constructor(
             convertView = layoutInflater.inflate(R.layout.item_list_category_name, null)
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.listTitle)
+        val rlParentView = convertView!!.findViewById<RelativeLayout>(R.id.rlParentView)
+        when (type) {
+            Config.Constants.SELL -> {
+                rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_blue_back)
+
+            }
+            Config.Constants.RENT -> {
+                rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_voilet_back)
+
+            }
+            Config.Constants.BARTER -> {
+                rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_yellow_back)
+
+            }
+            Config.Constants.POST -> {
+                rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_light_blue_back)
+
+            }
+        }
         listTitleTextView.text = listTitle
         return convertView
     }

@@ -1,11 +1,15 @@
 package com.dartmic.yo2see.ui.buycategoriesList
 
 import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.Spannable
+import android.text.style.StyleSpan
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ExpandableListAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,7 +46,7 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
     private var param1: String? = null
     private var param2: String? = null
     private var adapterEvents: AdapterHomeEvents? = null
-
+    var type: Int? = 0
     internal var adapter: ExpandableListAdapter? = null
     internal var titleList: List<String>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,41 +60,19 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            (activity as LandingActivity).updateStatusBarColor(AndroidUtils.getColor(R.color.blue1),2)
-        }
 
+        type = arguments?.getInt(TYPE)
         treeVisibility()
 
 
-        var sb = AndroidUtils.setTextWithSpan(
-            tvCategoriesHeader,
-            AndroidUtils.getString(R.string.buy_header_text),
-            "Buy",
-            AndroidUtils.getColor(R.color.blue)
-        )
-        AndroidUtils.setTextWithSpan(
-            tvCategoriesHeader,
-            AndroidUtils.getString(R.string.buy_header_text),
-            " Buy",
-            sb,
-            AndroidUtils.getColor(R.color.blue1)
-        )
-
         val manager = GridLayoutManager(context, 4)
         rvBuyList.layoutManager = manager
-        activity?.let {
-            adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_blue)
-
-        }
-        rvBuyList.adapter = adapterEvents
-        adapterEvents?.submitList(getEvents())
 
         val listData = data
         titleList = ArrayList(listData.keys)
         activity?.let {
             adapter =
-                CategoriesExpandableListView(it, titleList as ArrayList<String>, listData)
+                CategoriesExpandableListView(it, titleList as ArrayList<String>, listData,type!!)
             categoriesExpandableListView!!.setAdapter(adapter)
 //            ViewCompat.setNestedScrollingEnabled(categoriesExpandableListView, false)
 
@@ -119,7 +101,7 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
             }
 
         }
-       ViewAnimator
+        ViewAnimator
             .animate(ivsell)
             .scale(1.3f, 1f)
             .onStart({})
@@ -127,6 +109,7 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
             .start()
         runLayoutAnimation(rvBuyList)
     }
+
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
         try {
             val context: Context = recyclerView.context
@@ -135,25 +118,20 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
             recyclerView.layoutAnimation = controller
             recyclerView.adapter!!.notifyDataSetChanged()
             recyclerView.scheduleLayoutAnimation()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CategoriesListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        const val TYPE = "type"
+
         @JvmStatic
-        fun getInstance(instance: Int): CategoriesListFragment {
+        fun getInstance(instance: Int, type: Int): CategoriesListFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
+            bundle.putInt(TYPE, type)
+
             val fragment = CategoriesListFragment()
             fragment.arguments = bundle
             return fragment
@@ -247,7 +225,7 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
     override fun onClickAdapterView(objectAtPosition: EventsItems, viewType: Int, position: Int) {
 
         when (viewType) {
-        Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY -> {
+            Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY -> {
 
                 this?.let {
 
@@ -268,7 +246,148 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
         ivbarterWhite.visibility = View.VISIBLE
         ivpostWhite.visibility = View.VISIBLE
         ivrentWhite.visibility = View.VISIBLE
-        ivsellWhite.visibility = View.GONE
+        ivsellWhite.visibility = View.VISIBLE
+        when (type) {
+            Config.Constants.SELL -> {
+                ivsellWhite.visibility = View.GONE
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.blue1),
+                        2
+                    )
+                }
+
+                categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_blue))
+                ivCornerImage.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue1)
+                )
+                activity?.let {
+                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_blue)
+
+                }
+
+                var sb = AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.buy_header_text),
+                    "Buy",
+                    AndroidUtils.getColor(R.color.blue)
+                )
+                AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.buy_header_text),
+                    " Buy",
+                    sb,
+                    AndroidUtils.getColor(R.color.blue1)
+                )
+            }
+            Config.Constants.RENT -> {
+                ivrentWhite.visibility = View.GONE
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.voilet),
+                        2
+                    )
+                }
+
+                ivCornerImage.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.voilet)
+                )
+                categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_purple))
+
+                activity?.let {
+                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_purple)
+
+                }
+                tvCategoriesHeader.setText(AndroidUtils.getString(R.string.rent_header_text))
+
+                var sb = AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.rent_header_text),
+                    "Rent",
+                    AndroidUtils.getColor(R.color.voilet)
+                )
+                var bss = StyleSpan(Typeface.BOLD); // Span to make text bold
+               /* sb.setSpan(
+                    bss,
+                    AndroidUtils.getString(R.string.buy_header_text).length - 5,
+                    AndroidUtils.getString(R.string.buy_header_text).length,
+                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                )
+                tvCategoriesHeader.setText(sb)*/
+
+                AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.rent_header_text),
+                    " Rent",
+                    sb,
+                    AndroidUtils.getColor(R.color.voilet)
+                )
+            }
+            Config.Constants.BARTER -> {
+                ivbarterWhite.visibility = View.GONE
+                categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_yellow))
+
+                ivCornerImage.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.yellow1)
+                )
+
+                activity?.let {
+                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_yellow)
+
+                }
+
+                tvCategoriesHeader.setText(AndroidUtils.getString(R.string.barter_header_text))
+
+                var sb = AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.barter_header_text),
+                    "Barter",
+                    AndroidUtils.getColor(R.color.yellow1)
+                )
+
+                AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.barter_header_text),
+                    " Barter",
+                    sb,
+                    AndroidUtils.getColor(R.color.yellow1)
+                )
+            }
+            Config.Constants.POST -> {
+                ivpostWhite.visibility = View.GONE
+                ivCornerImage.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue)
+                )
+                categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_blue))
+
+                activity?.let {
+                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_light_blue)
+
+                }
+                tvCategoriesHeader.setText(AndroidUtils.getString(R.string.post_header_text))
+
+                var sb = AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.post_header_text),
+                    "Post",
+                    AndroidUtils.getColor(R.color.blue)
+                )
+
+
+                AndroidUtils.setTextWithSpan(
+                    tvCategoriesHeader,
+                    AndroidUtils.getString(R.string.post_header_text),
+                    " Post",
+                    sb,
+                    AndroidUtils.getColor(R.color.blue)
+                )
+            }
+
+        }
+
+
+        rvBuyList.adapter = adapterEvents
+        adapterEvents?.submitList(getEvents())
 
     }
 

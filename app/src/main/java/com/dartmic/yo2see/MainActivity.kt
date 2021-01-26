@@ -1,11 +1,15 @@
 package com.dartmic.yo2see
 
 import android.app.ActivityOptions
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.dartmic.yo2see.callbacks.GifEndListener
+import com.dartmic.yo2see.tutorails.BuyTuteActivity
 import com.dartmic.yo2see.ui.categories.CategoryActivity
+import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.GifUtil
 import kotlinx.android.synthetic.main.activity_main.*
@@ -50,6 +54,11 @@ class MainActivity : AppCompatActivity(),GifEndListener {
                  ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
              )
          }*/
+        btnNext.setOnClickListener {
+            let {
+                startActivity(BuyTuteActivity.getIntent(it))
+            }
+        }
     }
 
     override fun onResume() {
@@ -71,5 +80,15 @@ class MainActivity : AppCompatActivity(),GifEndListener {
         ivrent.visibility=View.VISIBLE
 */
 
+    }
+
+    companion object {
+        const val KEY_TAB = "KEY_TAB"
+
+        fun getIntent(context: Context): Intent? {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            return intent
+        }
     }
 }

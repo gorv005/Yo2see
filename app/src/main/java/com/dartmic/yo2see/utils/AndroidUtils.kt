@@ -169,7 +169,7 @@ class AndroidUtils {
                 return AndroidUtils.getString(R.string.error_field_cant_blank)
             } else
 
-                if (mobile?.length < 7 || mobile?.length > 11) {
+                if (mobile?.length < 10 || mobile?.length > 10) {
                     return AndroidUtils.getString(
                         R.string.error_mobile_not_validation
                     )

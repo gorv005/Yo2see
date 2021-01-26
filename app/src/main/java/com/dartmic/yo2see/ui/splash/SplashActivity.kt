@@ -2,6 +2,7 @@ package com.dartmic.yo2see.ui.splash
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.dartmic.yo2see.MainActivity
 import com.dartmic.yo2see.utils.GifUtil
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.GifEndListener
