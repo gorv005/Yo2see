@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_explore.*
 
 class ExploreActivity : AppCompatActivity() {
@@ -14,7 +15,7 @@ class ExploreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_explore)
         btnExplore.setOnClickListener {
             let {
-                startActivity(LandingActivity.getIntent(it,1))
+                startActivity(LoginActivity.getIntent(it))
             }
         }
     }

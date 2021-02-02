@@ -43,6 +43,8 @@ class Config {
         const val RESET_PASSWORD_API = BASE_PATH + "users/password_resets"
         const val CATEGORIES_API = BASE_PATH + "common/categorylist"
         const val FEATURE_API = BASE_PATH + "common/isfeaturelist"
+        const val CATEGORIES_DATA_API = BASE_PATH + "common/alltypelist"
+        const val PRODUCT_DATA_API = BASE_PATH + "common/listing"
 
 
     }

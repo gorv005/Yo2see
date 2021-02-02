@@ -182,6 +182,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             window.setStatusBarColor(color)
         }
         bottomBar.setBackgroundColor(color)
+        bottomBar.setColorChange(color)
         fab.setColorFilter(color)
         //fab.visibility = visbility
        /* if(bottomColor==1){

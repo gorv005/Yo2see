@@ -50,6 +50,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="80dp"
                 android:background="@color/blue1"
+                android:id="@+id/llNagotiation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -203,6 +204,7 @@
             android:text="@string/mobile_and_accessories" />
 
         <ImageView
+            android:id="@+id/ivCurveProductDetails"
             android:layout_width="150dp"
             android:layout_height="170dp"
             android:scaleType="fitXY"

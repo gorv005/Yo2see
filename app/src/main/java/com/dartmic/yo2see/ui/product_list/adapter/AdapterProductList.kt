@@ -12,15 +12,16 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
 import com.dartmic.yo2see.model.ProductItems
+import com.dartmic.yo2see.model.product.ListingItem
 import com.dartmic.yo2see.utils.Config
 import com.facebook.drawee.drawable.ScalingUtils
 import kotlinx.android.synthetic.main.item_product.view.*
 
 
 class AdapterProductList(
-    private val adapterViewClickListener: AdapterViewClickListener<ProductItems>?,
+    private val adapterViewClickListener: AdapterViewClickListener<ListingItem>?,
     val activity: Activity, val back:Int
-) : ListAdapter<ProductItems, AdapterProductList.ViewHolder>(
+) : ListAdapter<ListingItem, AdapterProductList.ViewHolder>(
     AdapterProductListCallback()
 )
 {
@@ -68,12 +69,12 @@ class AdapterProductList(
     class ViewHolder(itemView: View, val activity: Activity) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(allProducts: ProductItems, adapterViewClick: AdapterViewClickListener<ProductItems>?,back: Int) {
+        fun bind(allProducts: ListingItem, adapterViewClick: AdapterViewClickListener<ListingItem>?,back: Int) {
 
-            itemView.tvPrice?.text = allProducts.price
-            itemView.tvModel?.text = allProducts.model
-            itemView.tvAddress?.text = allProducts.address
-            itemView.tvDate?.text = allProducts.date
+            itemView.tvPrice?.text = allProducts.listingPrice
+            itemView.tvModel?.text = allProducts.categoryName
+            itemView.tvAddress?.text = allProducts.listingAddress
+            itemView.tvDate?.text = allProducts.listingPublishDatetime
 
            ImageRequestManager.with(itemView.imageProduct)
                 .setPlaceholderImage(R.drawable.download)

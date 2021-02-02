@@ -5,11 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
+import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.productDetails.adapter.ProductImagesAdapter
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.utils.Config
 import kotlinx.android.synthetic.main.fragment_product_details.*
+import kotlinx.android.synthetic.main.fragment_product_list.*
+import org.jetbrains.anko.backgroundColor
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,6 +33,8 @@ class FragmentProductDetails : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var type: Int? = 0
+    lateinit var listingItem: ListingItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +55,10 @@ class FragmentProductDetails : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
+            type = arguments?.getInt(ProductListFragment.TYPE)
+            listingItem = arguments?.getParcelable(DATA)!!
+
+            init()
             with(view_pager) {
 
                 adapter = ProductImagesAdapter()
@@ -64,22 +77,66 @@ class FragmentProductDetails : Fragment() {
 
         }
     }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentProductDetails.
-         */
-        @JvmStatic
-        fun getInstance(instance: Int): FragmentProductDetails {
+        const val TYPE = "type"
+        const val DATA = "data"
+
+        fun getInstance(instance: Int, type: Int?, data: ListingItem): FragmentProductDetails {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = FragmentProductDetails()
+            bundle.putInt(TYPE, type!!)
+            bundle.putParcelable(DATA, data!!)
             fragment.arguments = bundle
             return fragment
         }
     }
+
+    fun init() {
+
+        when (type) {
+            Config.Constants.SELL -> {
+
+                ivCurveProductDetails.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue1)
+                )
+                llNagotiation.backgroundColor =
+                    ContextCompat.getColor(activity!!, R.color.blue1)
+
+
+            }
+            Config.Constants.RENT -> {
+
+
+                ivCurveProductDetails.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.voilet)
+                )
+                llNagotiation.backgroundColor =
+                    ContextCompat.getColor(activity!!, R.color.voilet)
+
+
+            }
+            Config.Constants.BARTER -> {
+
+                ivCurveProductDetails.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.yellow1)
+                )
+                llNagotiation.backgroundColor =
+                    ContextCompat.getColor(activity!!, R.color.yellow1)
+
+            }
+            Config.Constants.POST -> {
+
+                ivCurveProductDetails.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue)
+                )
+                llNagotiation.backgroundColor =
+                    ContextCompat.getColor(activity!!, R.color.blue)
+
+            }
+
+        }
+    }
+
 }

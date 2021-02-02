@@ -1,15 +1,26 @@
 package com.dartmic.yo2see.ui.SubCategoriesList
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.ExpandableListAdapter
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
+import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
 import com.dartmic.yo2see.ui.buycategoriesList.adapter.CategoriesExpandableListView
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
+import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.utils.AndroidUtils
+import com.dartmic.yo2see.utils.Config
+import kotlinx.android.synthetic.main.fragment_categories_list.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.*
+import kotlinx.android.synthetic.main.tree.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +38,8 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
     private var param2: String? = null
     internal var titleList: List<String>? = null
     internal var adapter: ExpandableListAdapter? = null
+    var type: Int? = 0
+    lateinit var categoryListItemData: CategoryListItemData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +53,12 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
         super.onViewCreated(view, savedInstanceState)
         val listData = data
         titleList = ArrayList(listData.keys)
+        type = arguments?.getInt(TYPE)
+        categoryListItemData=arguments?.getParcelable(DATA)!!
+        init()
         activity?.let {
             adapter =
-                CategoriesExpandableListView(it, titleList as ArrayList<String>, listData,1)
+                CategoriesExpandableListView(it, categoryListItemData?.subCatList!!,type!!)
             subategoriesExpandableListView!!.setAdapter(adapter)
 
             subategoriesExpandableListView!!.setOnGroupExpandListener { groupPosition ->
@@ -64,7 +80,7 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
             subategoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
                 mFragmentNavigation.pushFragment(
                     ProductListFragment
-                        .getInstance(mInt + 1)
+                        .getInstance(mInt + 1,type)
                 )
                 /* Toast.makeText(
                      it,
@@ -80,20 +96,16 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SubCategoriesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        const val TYPE = "type"
+        const val DATA="data"
         @JvmStatic
-        fun getInstance(instance: Int): SubCategoriesFragment {
+        fun getInstance(instance: Int, type:Int?,categoryListItemData: CategoryListItemData
+        ): SubCategoriesFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = SubCategoriesFragment()
+            bundle.putInt(TYPE, type!!)
+            bundle.putParcelable(DATA,categoryListItemData)
             fragment.arguments = bundle
             return fragment
         }
@@ -143,5 +155,47 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
 
             return listData
         }
+    fun init() {
+
+        when (type) {
+            Config.Constants.SELL -> {
+
+                subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_blue))
+                ivCurve.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue1)
+                )
+
+            }
+            Config.Constants.RENT -> {
+
+
+                ivCurve.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.voilet)
+                )
+                subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_purple))
+
+
+
+
+            }
+            Config.Constants.BARTER -> {
+                subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_yellow))
+
+                ivCurve.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.yellow1)
+                )
+
+            }
+            Config.Constants.POST -> {
+
+                subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_blue))
+                ivCurve.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue)
+                )
+
+            }
+
+        }
+    }
 
 }

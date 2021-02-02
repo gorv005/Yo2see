@@ -34,8 +34,8 @@
 
     <ImageView
         android:id="@+id/ivbarter"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="56dp"
@@ -43,8 +43,8 @@
         android:visibility="visible"></ImageView>
     <ImageView
         android:id="@+id/ivbarterWhite"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="56dp"
@@ -53,19 +53,19 @@
 
     <ImageView
         android:id="@+id/ivpost"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="56dp"
         android:layout_alignParentRight="true"
         android:src="@drawable/post_bubble"
         android:visibility="visible"></ImageView>
     <ImageView
         android:id="@+id/ivpostWhite"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="2dp"
-        android:layout_marginTop="55dp"
         android:layout_alignParentRight="true"
         android:src="@drawable/round_circle_white"
         android:visibility="visible"></ImageView>

@@ -6,6 +6,7 @@ import com.dartmic.yo2see.base.SingleLiveEvent
 import com.dartmic.yo2see.common.CommonBoolean
 import com.dartmic.yo2see.interfaces.SchedulerProvider
 import com.dartmic.yo2see.managers.PreferenceManager
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryDataResponsePayload
 import com.dartmic.yo2see.model.SearchEvent
 import com.dartmic.yo2see.model.categories.CategoriesResponse
 import com.dartmic.yo2see.model.categories.FeatureListResponse
@@ -22,14 +23,17 @@ class CategoriesViewModel(
 ) : AbstractViewModel() {
 
 
-    val categoryModel = MutableLiveData<CategoriesResponse>()
+    val categoryModel= MutableLiveData<CategoriesResponse>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
     val featureProductyModel = MutableLiveData<FeatureListResponse>()
+    val categoryModelEvents = MutableLiveData<CategoriesResponse>()
+    val categoryModelAds= MutableLiveData<CategoriesResponse>()
+    val categoryModelMenu = MutableLiveData<CategoryDataResponsePayload>()
 
-    fun getCategories(service :String) {
+    fun getCategories(service :String, type: String) {
         searchEvent.value = SearchEvent(isLoading = true)
         launch {
-            categoryRepository.getCategories(service)
+            categoryRepository.getCategories(service,type)
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
                 .subscribe({
@@ -53,6 +57,122 @@ class CategoriesViewModel(
 
                             categoryModel.value =
                                 Gson().fromJson(error, CategoriesResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }// searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+        }
+    }
+
+    fun getCategoriesEvents(service :String, type: String) {
+        searchEvent.value = SearchEvent(isLoading = true)
+        launch {
+            categoryRepository.getCategories(service,type)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    categoryModelEvents.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            categoryModelEvents.value =
+                                Gson().fromJson(error, CategoriesResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }// searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+        }
+    }
+
+    fun getCategoriesAds(service :String, type: String) {
+        searchEvent.value = SearchEvent(isLoading = true)
+        launch {
+            categoryRepository.getCategories(service,type)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    categoryModelAds.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            categoryModelAds.value =
+                                Gson().fromJson(error, CategoriesResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }// searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+        }
+    }
+    fun getCategoriesMenu(service :String, type: String) {
+        searchEvent.value = SearchEvent(isLoading = true)
+        launch {
+            categoryRepository.getCategoriesData(service,type)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    categoryModelMenu.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            categoryModelMenu.value =
+                                Gson().fromJson(error, CategoryDataResponsePayload::class.java)
                             searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 

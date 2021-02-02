@@ -9,9 +9,7 @@ import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.categories.CategoryRepository
 import com.dartmic.yo2see.ui.categories.CategoryRepositoryImpl
 import com.dartmic.yo2see.ui.signup.RegistrationViewModel
-import com.gsa.ui.login.LoginRepository
-import com.gsa.ui.login.LoginRepositoryImpl
-import com.gsa.ui.login.LoginViewModel
+import com.gsa.ui.login.*
 import com.gsa.ui.register.RegisterRepository
 import com.gsa.ui.register.RegisterRepositoryImpl
 import org.koin.android.ext.koin.androidApplication
@@ -35,12 +33,16 @@ object AppModule {
         single { ApplicationSchedulerProvider() as SchedulerProvider }
 
         single<LoginRepository> { LoginRepositoryImpl(get(), get()) }
-        viewModel { LoginViewModel(get(),get(),get()) }
+        viewModel { LoginViewModel(get(), get(), get()) }
 
         single<RegisterRepository> { RegisterRepositoryImpl(get(), get()) }
-        viewModel { RegistrationViewModel(get(),get()) }
+        viewModel { RegistrationViewModel(get(), get()) }
+
         single<CategoryRepository> { CategoryRepositoryImpl(get(), get()) }
-        viewModel { CategoriesViewModel(get(),get(),get()) }
+        viewModel { CategoriesViewModel(get(), get(), get()) }
+
+        single<ProductListRepository> { ProductListRepositoryImpl(get(), get()) }
+        viewModel { ProductListnViewModel(get(), get(), get()) }
 
 
     }

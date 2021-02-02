@@ -1,4 +1,4 @@
-package com.dartmic.yo2see.ui.categories.adapter
+package com.dartmic.yo2see.ui.home.adapter
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -9,29 +9,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
-import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
-
+import com.dartmic.yo2see.model.EventsItems
 import com.dartmic.yo2see.model.categories.CategoryListItem
 import com.dartmic.yo2see.utils.Config
 import com.facebook.drawee.drawable.ScalingUtils
-import kotlinx.android.synthetic.main.ads_item.view.*
-import kotlinx.android.synthetic.main.item_ads.view.*
-import kotlinx.android.synthetic.main.item_ads.view.rlCategoryBack
-import kotlinx.android.synthetic.main.item_ads.view.tvEventName
 import kotlinx.android.synthetic.main.item_events.view.*
 
 
-class AdapterCategories(
-    private val adapterViewClickListener: AdapterViewClickListener<CategoryListItemData>?,
+class AdapterHomeData(
+    private val adapterViewClickListener: AdapterViewClickListener<CategoryListItem>?,
     val activity: Activity, val back:Int
-) : ListAdapter<CategoryListItemData, AdapterCategories.ViewHolder>(
-    AdapterCategoriesCallback()
+) : ListAdapter<CategoryListItem, AdapterHomeData.ViewHolder>(
+    AdapterHomeDataCallback()
 )
 {
-    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, p1: Int): AdapterHomeData.ViewHolder {
         val itemView = LayoutInflater.from(
             parent.context
-        ).inflate(R.layout.item_ads, parent, false)
+        ).inflate(R.layout.item_events, parent, false)
 
       /*  val displayMetrics = DisplayMetrics()
         activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -40,36 +35,30 @@ class AdapterCategories(
         itemView.layoutParams = RecyclerView.LayoutParams(width - (width / 5), RecyclerView.LayoutParams.WRAP_CONTENT)
 */
 
-        return ViewHolder(
-            itemView,
-            activity
-        )
+        return ViewHolder(itemView, activity)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), position,adapterViewClickListener,back)
+        holder.bind(getItem(position), adapterViewClickListener,back)
     }
     class ViewHolder(itemView: View, val activity: Activity) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(product: CategoryListItemData,position: Int, adapterViewClick: AdapterViewClickListener<CategoryListItemData>?, back: Int) {
+        fun bind(allProducts: CategoryListItem, adapterViewClick: AdapterViewClickListener<CategoryListItem>?,back: Int) {
 
-                itemView.tvEventName.text=product.categoryName
+            itemView.tvEventName?.text = allProducts.categoryName
+            itemView.ivEvents.setImageResource(allProducts.image!!)
             itemView.rlCategoryBack.setBackgroundResource(back)
-
-            /*itemView.gridview_text?.text = product.categoryName
-                ImageRequestManager.with(itemView.gridview_image).url(product.catImage)
-                    .setPlaceholderImage(R.drawable.yo2see1)
-                    .setScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-                    .build()*/
-
+          /*  ImageRequestManager.with(itemView.imgSource)
+                .url(allProducts.image?.avatar?.url)
+                .setScaleType(ScalingUtils.ScaleType.FIT_CENTER)
+                .build()*/
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
-                    product,
+                    allProducts,
                     Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY, adapterPosition
                 )
             }
-
         }
     }
 

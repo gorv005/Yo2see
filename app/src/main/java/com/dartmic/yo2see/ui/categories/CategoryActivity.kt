@@ -59,7 +59,7 @@ class CategoryActivity : BaseActivity<CategoriesViewModel>(CategoriesViewModel::
     ) {
         TODO("Not yet implemented")
     }
-    private var adapterCategory: AdapterCategories? = null
+   // private var adapterCategory: AdapterCategories? = null
     internal var categoryList: ArrayList<CategoryListItem>? = null
 
     private var adapterFeature: AdapterFeature? = null
@@ -74,11 +74,11 @@ class CategoryActivity : BaseActivity<CategoriesViewModel>(CategoriesViewModel::
         rv_feature_products.layoutManager = manager2
 
         let {
-            adapterCategory = AdapterCategories(this, it)
+           // adapterCategory = AdapterCategories(this, it)
             adapterFeature = AdapterFeature(this, it)
 
         }
-        rv_categories.adapter = adapterCategory
+     //   rv_categories.adapter = adapterCategory
         rv_feature_products.adapter = adapterFeature
 
         subscribeLoading()
@@ -90,7 +90,7 @@ class CategoryActivity : BaseActivity<CategoriesViewModel>(CategoriesViewModel::
 
 
         if (NetworkUtil.isInternetAvailable(this)) {
-            model.getCategories("Category List")
+          //  model.getCategories("Category List")
         }
         if (NetworkUtil.isInternetAvailable(this)) {
             model.getFeatureProduct("List")
@@ -139,7 +139,7 @@ class CategoryActivity : BaseActivity<CategoriesViewModel>(CategoriesViewModel::
     }
 
     private fun showData(data: CategoriesResponse?) {
-        categoryList = data?.categoryList
+       /* categoryList = data?.categoryList
         categoryList?.let {
 
             adapterCategory?.submitList(it)
@@ -147,7 +147,7 @@ class CategoryActivity : BaseActivity<CategoriesViewModel>(CategoriesViewModel::
             ViewCompat.setNestedScrollingEnabled(rv_categories, false)
 
             adapterCategory?.notifyDataSetChanged()
-        }
+        }*/
     }
 
     fun showProgressDialog() {

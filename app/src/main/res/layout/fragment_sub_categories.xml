@@ -32,7 +32,7 @@
 
 
             <ExpandableListView
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="90dp"
                 android:scrollbars="none"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -59,6 +59,7 @@
 
 
         <ImageView
+            android:id="@+id/ivCurve"
             android:layout_width="150dp"
             android:layout_height="170dp"
             android:scaleType="fitXY"

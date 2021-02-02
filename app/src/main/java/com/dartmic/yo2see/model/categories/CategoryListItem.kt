@@ -7,4 +7,6 @@ data class CategoryListItem(@SerializedName("cat_image")
                             @SerializedName("category_name")
                             val categoryName: String = "",
                             @SerializedName("category_id")
-                            val categoryId: String = "")
+                            val categoryId: String = "",
+                            @SerializedName("image")
+                            var image: Int)

@@ -19,13 +19,13 @@ class SplashActivity : AppCompatActivity(),GifEndListener {
         setContentView(R.layout.activity_splash)
         let {
             gifUtil = GifUtil(this)
-            gifUtil?.setImage(this,gifImageView,R.drawable.animation_with_icon_update)
+            gifUtil?.setImage(this,gifImageView,R.drawable.animation_with_icon_splash)
         }
     }
 
     override fun animationEnd() {
         let {
-            startActivity(LoginActivity.getIntent(it))
+            startActivity(MainActivity.getIntent(it))
         }
     }
 }

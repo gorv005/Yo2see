@@ -4,22 +4,20 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import com.dartmic.yo2see.R
+import com.dartmic.yo2see.model.Category_sub_subTosub.SubCatListItem
 import com.dartmic.yo2see.utils.Config
 
 class CategoriesExpandableListView internal constructor(
     private val context: Context,
-    private val titleList: List<String>,
-    private val dataList: HashMap<String, List<String>>, private var type: Int
+    private val titleList: List<SubCatListItem>,
+     private var type: Int
 ) : BaseExpandableListAdapter() {
 
-    override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
-        return this.dataList[this.titleList[listPosition]]!![expandedListPosition]
+    override fun getChild(listPosition: Int, expandedListPosition: Int): String? {
+        return this.titleList[listPosition].subToSubList?.get(expandedListPosition)?.subSubcategoryName
     }
 
     override fun getChildId(listPosition: Int, expandedListPosition: Int): Long {
@@ -52,11 +50,21 @@ class CategoriesExpandableListView internal constructor(
 
             }
             Config.Constants.RENT -> {
-                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_purple))
+                llChildView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.light_purple
+                    )
+                )
 
             }
             Config.Constants.BARTER -> {
-                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_yellow))
+                llChildView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.light_yellow
+                    )
+                )
 
             }
             Config.Constants.POST -> {
@@ -69,11 +77,11 @@ class CategoriesExpandableListView internal constructor(
     }
 
     override fun getChildrenCount(listPosition: Int): Int {
-        return this.dataList[this.titleList[listPosition]]!!.size
+        return this.titleList[listPosition]?.subToSubList?.size!!
     }
 
     override fun getGroup(listPosition: Int): Any {
-        return this.titleList[listPosition]
+        return this.titleList[listPosition].subCategoryName
     }
 
     override fun getGroupCount(): Int {
@@ -99,6 +107,14 @@ class CategoriesExpandableListView internal constructor(
         }
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.listTitle)
         val rlParentView = convertView!!.findViewById<RelativeLayout>(R.id.rlParentView)
+        val ivIndicator = convertView!!.findViewById<ImageView>(R.id.ivIndicator)
+
+        if (isExpanded) {
+            ivIndicator.setImageResource(R.drawable.arrow_up)
+        } else {
+            ivIndicator.setImageResource(R.drawable.ic_plus_white)
+
+        }
         when (type) {
             Config.Constants.SELL -> {
                 rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_blue_back)

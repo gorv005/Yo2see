@@ -7,19 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.ProductItems
+import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
+import com.dartmic.yo2see.ui.categories.adapter.AdapterCategories
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
+import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
+import com.dartmic.yo2see.utils.Logger
+import com.dartmic.yo2see.utils.NetworkUtil
+import com.gsa.ui.login.ProductListnViewModel
+import kotlinx.android.synthetic.main.fragment_categories_list.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
+import kotlinx.android.synthetic.main.fragment_sub_categories.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,12 +43,13 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProductListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::class),
-    AdapterViewClickListener<ProductItems> {
+class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class),
+    AdapterViewClickListener<ListingItem> {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var adapterProductList: AdapterProductList? = null
+    var type: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,16 +70,65 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val manager = GridLayoutManager(context, 2)
+        type = arguments?.getInt(TYPE)
+        init()
         rvProductList.layoutManager = manager
         activity?.let {
             adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue)
 
         }
         rvProductList.adapter = adapterProductList
-        adapterProductList?.submitList(getProducts())
-        runLayoutAnimation(rvProductList)
-       // runAnimationAgain()
+        //  adapterProductList?.submitList(getProducts())
+        // runAnimationAgain()
+        subscribeUi()
+        subscribeLoading()
+        getProductData()
+    }
 
+    fun getProductData() {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            model.getProductList(
+                "List", "0", "0",
+                "0", "", "Rent", "10000",
+                "India", "New Delhi", "New Ashok Nagar", ""
+            )
+        }
+    }
+
+    private fun subscribeLoading() {
+
+        model.searchEvent.observe(this, Observer {
+            if (it.isLoading) {
+                showProgressDialog()
+            } else {
+                hideProgressDialog()
+            }
+            it.error?.run {
+                UiUtils.showInternetDialog(activity, R.string.something_went_wrong)
+            }
+        })
+    }
+
+    private fun subscribeUi() {
+        model.productListViewModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+
+
+                adapterProductList?.submitList(it?.listing)
+                adapterProductList?.notifyDataSetChanged()
+                runLayoutAnimation(rvProductList)
+
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
+
+
+    }
+
+    fun showProgressDialog() {
+        showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
 
     fun getProducts(): ArrayList<ProductItems> {
@@ -86,6 +147,7 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
         return events
 
     }
+
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
         try {
             val context: Context = recyclerView.context
@@ -94,10 +156,11 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
             recyclerView.layoutAnimation = controller
             recyclerView.adapter!!.notifyDataSetChanged()
             recyclerView.scheduleLayoutAnimation()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
     private fun runAnimationAgain() {
         val controller =
             AnimationUtils.loadLayoutAnimation(
@@ -108,21 +171,16 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
         adapterProductList?.notifyDataSetChanged()
         rvProductList.scheduleLayoutAnimation()
     }
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProductListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+        const val TYPE = "type"
+
         @JvmStatic
-        fun getInstance(instance: Int): ProductListFragment {
+        fun getInstance(instance: Int, type: Int?): ProductListFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = ProductListFragment()
+            bundle.putInt(TYPE, type!!)
             fragment.arguments = bundle
             return fragment
         }
@@ -131,7 +189,7 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
     override fun getLayoutId() = R.layout.fragment_product_list
 
 
-    override fun onClickAdapterView(objectAtPosition: ProductItems, viewType: Int, position: Int) {
+    override fun onClickAdapterView(objectAtPosition: ListingItem, viewType: Int, position: Int) {
         when (viewType) {
             Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT -> {
 
@@ -139,7 +197,7 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
 
                     mFragmentNavigation.pushFragment(
                         FragmentProductDetails
-                            .getInstance(mInt + 1)
+                            .getInstance(mInt + 1,type,objectAtPosition)
                     )
                     /* mFragmentNavigation.pushFragment(
                          SubCategoriesFragment
@@ -151,4 +209,42 @@ class ProductListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMode
             }
         }
     }
+
+    fun init() {
+
+        when (type) {
+            Config.Constants.SELL -> {
+
+                ivCurveProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue1)
+                )
+
+            }
+            Config.Constants.RENT -> {
+
+
+                ivCurveProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.voilet)
+                )
+
+
+            }
+            Config.Constants.BARTER -> {
+
+                ivCurveProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.yellow1)
+                )
+
+            }
+            Config.Constants.POST -> {
+
+                ivCurveProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.blue)
+                )
+
+            }
+
+        }
+    }
+
 }

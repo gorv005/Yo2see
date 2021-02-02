@@ -60,7 +60,7 @@ public class CustomBottomNavigationView1  extends BottomNavigationView {
     }
     public void setColorChange(int color) {
 
-//        mPaint.setColor(color);
+       mPaint.setColor(color);
 //        if(canvas!=null)
 //        canvas.drawPath(mPath, mPaint);
     }

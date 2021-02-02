@@ -10,23 +10,30 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.ExpandableListAdapter
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.EventsItems
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
-import com.dartmic.yo2see.ui.buycategoriesList.adapter.CategoriesExpandableListView
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
+import com.dartmic.yo2see.ui.categories.adapter.AdapterCategories
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
+import com.dartmic.yo2see.utils.Logger
+import com.dartmic.yo2see.utils.NetworkUtil
 import com.github.florent37.viewanimator.ViewAnimator
 import kotlinx.android.synthetic.main.fragment_categories_list.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.tree.*
 
 
@@ -41,11 +48,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::class),
-    AdapterViewClickListener<EventsItems> {
+    AdapterViewClickListener<CategoryListItemData> {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var adapterEvents: AdapterHomeEvents? = null
+    private var adapterCategory: AdapterCategories? = null
+
     var type: Int? = 0
     internal var adapter: ExpandableListAdapter? = null
     internal var titleList: List<String>? = null
@@ -68,46 +77,148 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
         val manager = GridLayoutManager(context, 4)
         rvBuyList.layoutManager = manager
 
-        val listData = data
-        titleList = ArrayList(listData.keys)
-        activity?.let {
-            adapter =
-                CategoriesExpandableListView(it, titleList as ArrayList<String>, listData,type!!)
-            categoriesExpandableListView!!.setAdapter(adapter)
-//            ViewCompat.setNestedScrollingEnabled(categoriesExpandableListView, false)
 
-            categoriesExpandableListView!!.setOnGroupExpandListener { groupPosition ->
-                /*Toast.makeText(
-                    it,
-                    (titleList as ArrayList<String>)[groupPosition] + " List Expanded.",
-                    Toast.LENGTH_SHORT
-                ).show()*/
-            }
 
-            categoriesExpandableListView!!.setOnGroupCollapseListener { groupPosition ->
-                /* Toast.makeText(
-                     it,
-                     (titleList as ArrayList<String>)[groupPosition] + " List Collapsed.",
-                     Toast.LENGTH_SHORT
-                 ).show()*/
-            }
+        ivsell.setOnClickListener {
 
-            categoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
+            if (type != Config.Constants.SELL) {
+                val p: ArrayList<Pair<View, String>> = ArrayList()
+                p.add(Pair(ivsell, "buy"))
+
                 mFragmentNavigation.pushFragment(
-                    ProductListFragment
-                        .getInstance(mInt + 1)
+                    CategoriesListFragment
+                        .getInstance(mInt, Config.Constants.SELL), p
                 )
-                false
             }
 
         }
-        ViewAnimator
+        ivrent.setOnClickListener {
+            if (type != Config.Constants.RENT) {
+                val p: ArrayList<Pair<View, String>> = ArrayList()
+                p.add(Pair(ivsell, "buy"))
+
+                mFragmentNavigation.pushFragment(
+                    CategoriesListFragment
+                        .getInstance(mInt, Config.Constants.RENT), p
+                )
+            }
+        }
+        ivbarter.setOnClickListener {
+            if (type != Config.Constants.BARTER) {
+                val p: ArrayList<Pair<View, String>> = ArrayList()
+                p.add(Pair(ivsell, "buy"))
+
+                mFragmentNavigation.pushFragment(
+                    CategoriesListFragment
+                        .getInstance(mInt, Config.Constants.BARTER), p
+                )
+            }
+
+        }
+        ivpost.setOnClickListener {
+            if (type != Config.Constants.POST) {
+                val p: ArrayList<Pair<View, String>> = ArrayList()
+                p.add(Pair(ivsell, "buy"))
+
+                mFragmentNavigation.pushFragment(
+                    CategoriesListFragment
+                        .getInstance(mInt, Config.Constants.POST), p
+                )
+            }
+        }
+        subscribeUi()
+        subscribeLoading()
+        getCategoryData()
+        /*ViewAnimator
             .animate(ivsell)
             .scale(1.3f, 1f)
             .onStart({})
             .onStop({ })
             .start()
-        runLayoutAnimation(rvBuyList)
+        runLayoutAnimation(rvBuyList)*/
+    }
+
+    fun getCategoryData() {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            model.getCategoriesMenu("Category List", "Menu")
+        }
+    }
+
+    private fun subscribeLoading() {
+
+        model.searchEvent.observe(this, Observer {
+            if (it.isLoading) {
+                showProgressDialog()
+            } else {
+                hideProgressDialog()
+            }
+            it.error?.run {
+                UiUtils.showInternetDialog(activity, R.string.something_went_wrong)
+            }
+        })
+    }
+
+    private fun subscribeUi() {
+        model.categoryModelMenu.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+
+                when (type) {
+                    Config.Constants.SELL -> {
+
+                        activity?.let {
+                            adapterCategory =
+                                AdapterCategories(this, it, R.drawable.round_circle_blue)
+
+                        }
+
+
+                    }
+                    Config.Constants.RENT -> {
+
+                        activity?.let {
+                            adapterCategory =
+                                AdapterCategories(this, it, R.drawable.round_circle_purple)
+
+                        }
+
+
+                    }
+                    Config.Constants.BARTER -> {
+
+
+                        activity?.let {
+                            adapterCategory =
+                                AdapterCategories(this, it, R.drawable.round_circle_yellow)
+
+                        }
+
+
+                    }
+                    Config.Constants.POST -> {
+
+                        activity?.let {
+                            adapterCategory =
+                                AdapterCategories(this, it, R.drawable.round_circle_light_blue)
+
+                        }
+
+                    }
+
+                }
+
+                rvBuyList.adapter = adapterCategory
+                adapterCategory?.submitList(it?.categoryList)
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
+
+
+    }
+
+    fun showProgressDialog() {
+        showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
 
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
@@ -222,7 +333,11 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
         }
 
     override fun getLayoutId() = R.layout.fragment_categories_list
-    override fun onClickAdapterView(objectAtPosition: EventsItems, viewType: Int, position: Int) {
+    override fun onClickAdapterView(
+        objectAtPosition: CategoryListItemData,
+        viewType: Int,
+        position: Int
+    ) {
 
         when (viewType) {
             Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY -> {
@@ -231,7 +346,7 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
 
                     mFragmentNavigation.pushFragment(
                         SubCategoriesFragment
-                            .getInstance(mInt + 1)
+                            .getInstance(mInt + 1, type,objectAtPosition)
                     )
 
                 }
@@ -261,10 +376,10 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
                 ivCornerImage.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue1)
                 )
-                activity?.let {
-                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_blue)
+                /* activity?.let {
+                     adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_blue)
 
-                }
+                 }*/
 
                 var sb = AndroidUtils.setTextWithSpan(
                     tvCategoriesHeader,
@@ -294,10 +409,10 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
                 )
                 categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_purple))
 
-                activity?.let {
-                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_purple)
+                /* activity?.let {
+                     adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_purple)
 
-                }
+                 }*/
                 tvCategoriesHeader.setText(AndroidUtils.getString(R.string.rent_header_text))
 
                 var sb = AndroidUtils.setTextWithSpan(
@@ -307,13 +422,13 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
                     AndroidUtils.getColor(R.color.voilet)
                 )
                 var bss = StyleSpan(Typeface.BOLD); // Span to make text bold
-               /* sb.setSpan(
-                    bss,
-                    AndroidUtils.getString(R.string.buy_header_text).length - 5,
-                    AndroidUtils.getString(R.string.buy_header_text).length,
-                    Spannable.SPAN_INCLUSIVE_INCLUSIVE
-                )
-                tvCategoriesHeader.setText(sb)*/
+                /* sb.setSpan(
+                     bss,
+                     AndroidUtils.getString(R.string.buy_header_text).length - 5,
+                     AndroidUtils.getString(R.string.buy_header_text).length,
+                     Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                 )
+                 tvCategoriesHeader.setText(sb)*/
 
                 AndroidUtils.setTextWithSpan(
                     tvCategoriesHeader,
@@ -326,16 +441,21 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
             Config.Constants.BARTER -> {
                 ivbarterWhite.visibility = View.GONE
                 categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_yellow))
-
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.yellow1),
+                        2
+                    )
+                }
                 ivCornerImage.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.yellow1)
                 )
 
-                activity?.let {
-                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_yellow)
+                /* activity?.let {
+                     adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_yellow)
 
-                }
-
+                 }
+ */
                 tvCategoriesHeader.setText(AndroidUtils.getString(R.string.barter_header_text))
 
                 var sb = AndroidUtils.setTextWithSpan(
@@ -358,12 +478,18 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
                 ivCornerImage.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue)
                 )
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.blue),
+                        2
+                    )
+                }
                 categoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_blue))
 
-                activity?.let {
-                    adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_light_blue)
+                /* activity?.let {
+                     adapterEvents = AdapterHomeEvents(this, it, R.drawable.round_circle_light_blue)
 
-                }
+                 }*/
                 tvCategoriesHeader.setText(AndroidUtils.getString(R.string.post_header_text))
 
                 var sb = AndroidUtils.setTextWithSpan(
@@ -385,9 +511,6 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
 
         }
 
-
-        rvBuyList.adapter = adapterEvents
-        adapterEvents?.submitList(getEvents())
 
     }
 
