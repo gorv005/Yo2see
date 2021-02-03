@@ -17,9 +17,6 @@ import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.model.product.ListingItem
-import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
-import com.dartmic.yo2see.ui.categories.CategoriesViewModel
-import com.dartmic.yo2see.ui.categories.adapter.AdapterCategories
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.util.UiUtils

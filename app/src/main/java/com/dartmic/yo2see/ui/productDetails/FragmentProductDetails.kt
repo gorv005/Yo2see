@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
-import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.product.ListingItem
-import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.productDetails.adapter.ProductImagesAdapter
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.utils.Config
@@ -73,6 +71,10 @@ class FragmentProductDetails : Fragment() {
                 //    setSlideBorderMode(AutoScrollViewPager.SlideBorderMode.TO_PARENT)
                 // startAutoScroll()
             }
+            tvPrice.setText(listingItem?.listingPrice)
+            tvModel.setText(listingItem?.listingTitle)
+            tvDesc.setText(listingItem?.listingDescription)
+
         } catch (e: Exception) {
 
         }

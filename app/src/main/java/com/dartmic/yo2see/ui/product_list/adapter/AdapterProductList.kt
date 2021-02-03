@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
-import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.model.product.ListingItem
 import com.dartmic.yo2see.utils.Config
 import com.facebook.drawee.drawable.ScalingUtils
@@ -72,7 +71,7 @@ class AdapterProductList(
         fun bind(allProducts: ListingItem, adapterViewClick: AdapterViewClickListener<ListingItem>?,back: Int) {
 
             itemView.tvPrice?.text = allProducts.listingPrice
-            itemView.tvModel?.text = allProducts.categoryName
+            itemView.tvModel?.text = allProducts.listingTitle
             itemView.tvAddress?.text = allProducts.listingAddress
             itemView.tvDate?.text = allProducts.listingPublishDatetime
 
