@@ -103,5 +103,28 @@
     <string name="skip">SKIP</string>
     <string name="explore">Explore</string>
     <string name="post_an_add">Post an Add</string>
+    <string name="select_an_posting_category">Select the posting category</string>
+    <string name="barter">Barter</string>
+    <string name="add_a_title_to_your_post">Add a title to your post</string>
+    <string name="description">Description</string>
+    <string name="set_a_price">Set a price</string>
+    <string name="select_an_item">Select item condition</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="upload_images">Upload Images</string>
+    <string name="for_the_best_viewing_please_upload">For best viewing please upload High quality images of your product</string>
+    <string name="are_you_open_to_negotiation">Are you open to negotiation</string>
+    <string name="please_set_your_address">Please set your address</string>
+    <string name="user_my_current_location">Use my current location></string>
+    <string name="city">City</string>
+    <string name="pincode">Pincode</string>
+    <string name="state">State/Provence</string>
+    <string name="country">country</string>
+    <string name="are_you_open_to_deliver">Are you open to deliver</string>
+    <string name="up_till_what_km">up till what km would you deliver</string>
+    <string name="poster_infomation">Poster Information</string>
+    <string name="has_been_part_ayo2see">Has been a part of YO2SEE since a year</string>
+    <string name="view_profile">View Profile></string>
+    <string name="add_listing">Add Listing</string>
 
 </resources>

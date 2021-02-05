@@ -11,6 +11,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.addProduct.AddProductFragment
 import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
 import com.dartmic.yo2see.ui.buycategoriesList.adapter.CategoriesExpandableListView
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
@@ -91,11 +92,23 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
 
             subategoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
                 if (type == Config.Constants.POST_AN_ADD) {
+                    mFragmentNavigation.pushFragment(
+                        AddProductFragment
+                            .getInstance(mInt + 1,categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                childPosition
+                            ))
+                    )
 
                 } else {
                     mFragmentNavigation.pushFragment(
                         ProductListFragment
-                            .getInstance(mInt + 1, type,categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(childPosition))
+                            .getInstance(
+                                mInt + 1,
+                                type,
+                                categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                    childPosition
+                                )
+                            )
                     )
                 }
                 /* Toast.makeText(
