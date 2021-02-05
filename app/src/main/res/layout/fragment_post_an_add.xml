@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
@@ -42,31 +43,31 @@
                 </LinearLayout>
 
                 <TextView
+
                     android:id="@+id/tvCategoriesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/lllocation"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="80dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
-                    android:text="@string/buy_header_text"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:text="@string/post_an_add"
+                    android:textColor="@color/red_a"
+                    android:textSize="24sp" />
 
 
 
-                <include layout="@layout/tree" />
 
 
 
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvBuyList"
+                    android:id="@+id/rvPostList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="20dp" />
 
 
                 <com.dartmic.yo2see.utils.NoScrollExListView
@@ -85,15 +86,25 @@
 
                 </com.dartmic.yo2see.utils.NoScrollExListView>
             </LinearLayout>
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_yo2see_logo"
+                android:text="@string/mobile_and_accessories" />
 
             <ImageView
                 android:id="@+id/ivCornerImage"
                 android:layout_width="150dp"
                 android:layout_height="170dp"
                 android:scaleType="fitXY"
+                app:tint="@color/red_a"
                 android:src="@drawable/curve_buysell" />
             <ImageView
-                android:id="@+id/ivBackCategories"
+                android:id="@+id/ivBackAddanPost"
                 android:padding="20dp"
                 android:layout_width="wrap_content"
                 android:src="@drawable/ic_left_arrow_white"

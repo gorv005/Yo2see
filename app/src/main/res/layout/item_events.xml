@@ -53,7 +53,7 @@
             android:layout_height="70dp"
             android:elevation="8dp">
 
-            <ImageView
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/ivEvents"
                 android:layout_centerInParent="true"
                 android:src="@drawable/ic_key_white"

@@ -57,11 +57,11 @@ class AdapterCategories(
                 itemView.tvEventName.text=product.categoryName
             itemView.rlCategoryBack.setBackgroundResource(back)
 
-            /*itemView.gridview_text?.text = product.categoryName
-                ImageRequestManager.with(itemView.gridview_image).url(product.catImage)
-                    .setPlaceholderImage(R.drawable.yo2see1)
+            itemView.gridview_text?.text = product.categoryName
+                ImageRequestManager.with(itemView.ivCategory).url(product.catImage)
+                    .setPlaceholderImage(R.drawable.ic_clothing_white)
                     .setScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-                    .build()*/
+                    .build()
 
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(

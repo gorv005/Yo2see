@@ -13,7 +13,7 @@ import com.dartmic.yo2see.utils.Config
 class CategoriesExpandableListView internal constructor(
     private val context: Context,
     private val titleList: List<SubCatListItem>,
-     private var type: Int
+    private var type: Int
 ) : BaseExpandableListAdapter() {
 
     override fun getChild(listPosition: Int, expandedListPosition: Int): String? {
@@ -69,6 +69,10 @@ class CategoriesExpandableListView internal constructor(
             }
             Config.Constants.POST -> {
                 llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_blue))
+
+            }
+            Config.Constants.POST_AN_ADD -> {
+                llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_red))
 
             }
         }
@@ -130,6 +134,10 @@ class CategoriesExpandableListView internal constructor(
             }
             Config.Constants.POST -> {
                 rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_light_blue_back)
+
+            }
+            Config.Constants.POST_AN_ADD -> {
+                rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_red_back)
 
             }
         }

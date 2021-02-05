@@ -42,21 +42,21 @@
                 </LinearLayout>
 
                 <TextView
+
                     android:id="@+id/tvCategoriesHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/lllocation"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="80dp"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
-                    android:text="@string/buy_header_text"
+                    android:text="@string/post_an_add"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
 
 
-                <include layout="@layout/tree" />
 
 
 
@@ -92,13 +92,6 @@
                 android:layout_height="170dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/curve_buysell" />
-            <ImageView
-                android:id="@+id/ivBackCategories"
-                android:padding="20dp"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_left_arrow_white"
-                android:layout_height="wrap_content"/>
-
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

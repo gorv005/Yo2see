@@ -30,6 +30,7 @@ class Config {
         const val RENT = 2
         const val BARTER = 3
         const val POST = 4
+        const val POST_AN_ADD = 5
 
     }
 

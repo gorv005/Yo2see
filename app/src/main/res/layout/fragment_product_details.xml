@@ -63,7 +63,7 @@
 
                     android:layout_marginStart="5dp"
                     android:id="@+id/tvSubTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:text="@string/open_to_nagotiation"
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tvResult"
+                android:id="@+id/tvProductName"
                 android:paddingStart="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,6 +89,7 @@
                 android:textColor="@color/black"
                 android:textSize="14sp" />
             <TextView
+                android:id="@+id/tvAddress"
                 android:paddingEnd="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
@@ -209,6 +210,13 @@
             android:layout_height="170dp"
             android:scaleType="fitXY"
             android:src="@drawable/curve_buysell" />
+        <ImageView
+            android:id="@+id/ivBackDetails"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_left_arrow_white"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

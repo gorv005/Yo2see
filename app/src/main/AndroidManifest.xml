@@ -14,12 +14,15 @@
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".tutorails.ExploreActivity"></activity>
+        <activity android:name=".ui.postAdd.PostAnAddCategoriesActivity"></activity>
+        <activity android:name=".tutorails.ExploreActivity" />
         <activity android:name=".tutorails.PostTuteActivity" />
         <activity android:name=".tutorails.BarterTuteActivity" />
         <activity android:name=".tutorails.RentTuteActivity" />
         <activity android:name=".tutorails.BuyTuteActivity" />
-        <activity android:name=".ui.signup.SignUpActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.signup.SignUpActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

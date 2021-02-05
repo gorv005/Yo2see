@@ -15,8 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
+import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.util.UiUtils
@@ -26,6 +30,7 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_categories_list.*
+import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.*
 
@@ -47,6 +52,8 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     private var param2: String? = null
     private var adapterProductList: AdapterProductList? = null
     var type: Int? = 0
+    var listingType: String? = ""
+    lateinit var subToSubListItem: SubToSubListItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +61,16 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.let {
+            (activity as LandingActivity).hideVisibleBottomBar(
+                View.VISIBLE
+            )
+        }
+
     }
 
     override fun onCreateView(
@@ -68,6 +85,8 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         super.onViewCreated(view, savedInstanceState)
         val manager = GridLayoutManager(context, 2)
         type = arguments?.getInt(TYPE)
+        subToSubListItem = arguments?.getParcelable(DATA)!!
+
         init()
         rvProductList.layoutManager = manager
         activity?.let {
@@ -80,13 +99,19 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         subscribeUi()
         subscribeLoading()
         getProductData()
+        ivBackProduct.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
     }
 
     fun getProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
+            listingType = "Rent"
+
             model.getProductList(
                 "List", "0", "0",
-                "0", "", "Rent", "10000",
+                "0", "", listingType!!, "10000",
                 "India", "New Delhi", "New Ashok Nagar", ""
             )
         }
@@ -171,13 +196,20 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
     companion object {
         const val TYPE = "type"
+        const val DATA = "data"
 
         @JvmStatic
-        fun getInstance(instance: Int, type: Int?): ProductListFragment {
+        fun getInstance(
+            instance: Int,
+            type: Int?,
+            categoryListItemData: SubToSubListItem?
+        ): ProductListFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = ProductListFragment()
             bundle.putInt(TYPE, type!!)
+            bundle.putParcelable(DATA, categoryListItemData)
+
             fragment.arguments = bundle
             return fragment
         }
@@ -194,7 +226,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
                     mFragmentNavigation.pushFragment(
                         FragmentProductDetails
-                            .getInstance(mInt + 1,type,objectAtPosition)
+                            .getInstance(mInt + 1, type, objectAtPosition)
                     )
                     /* mFragmentNavigation.pushFragment(
                          SubCategoriesFragment
@@ -208,10 +240,11 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     }
 
     fun init() {
-
+        tvSubTitleProductValue.text =
+            subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
         when (type) {
             Config.Constants.SELL -> {
-
+                listingType = "Sell"
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue1)
                 )
@@ -219,6 +252,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             }
             Config.Constants.RENT -> {
 
+                listingType = "Rent"
 
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.voilet)
@@ -227,6 +261,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
             }
             Config.Constants.BARTER -> {
+                listingType = "Barter"
 
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.yellow1)
@@ -234,6 +269,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
             }
             Config.Constants.POST -> {
+                listingType = "Post"
 
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue)

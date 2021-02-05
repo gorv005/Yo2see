@@ -98,9 +98,10 @@
     <string name="confirm_password">Confirm Password*</string>
     <string name="create_account">Create account</string>
     <string name="confirm_term_and_condition">Confirm the terms and conditions</string>
-    <string name="open_to_nagotiation">This Item is open\nto nagotiation</string>
+    <string name="open_to_nagotiation">This Item is open to nagotiation</string>
     <string name="address"><u>Greater Toronto</u></string>
     <string name="skip">SKIP</string>
     <string name="explore">Explore</string>
+    <string name="post_an_add">Post an Add</string>
 
 </resources>

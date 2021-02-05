@@ -17,7 +17,7 @@
 
 
             <TextView
-                android:id="@+id/tvSubTitle"
+                android:id="@+id/tvSubTitleValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
@@ -64,5 +64,12 @@
             android:layout_height="170dp"
             android:scaleType="fitXY"
             android:src="@drawable/curve_buysell" />
+        <ImageView
+            android:id="@+id/ivBackSubCategories"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_left_arrow_white"
+            android:layout_height="wrap_content"/>
+
     </RelativeLayout>
 </RelativeLayout>

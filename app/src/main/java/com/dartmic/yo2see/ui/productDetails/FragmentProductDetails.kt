@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.productDetails.adapter.ProductImagesAdapter
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.utils.Config
@@ -40,6 +41,16 @@ class FragmentProductDetails : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.let {
+            (activity as LandingActivity).hideVisibleBottomBar(
+                View.VISIBLE
+            )
+        }
+
     }
 
     override fun onCreateView(
@@ -78,6 +89,9 @@ class FragmentProductDetails : Fragment() {
         } catch (e: Exception) {
 
         }
+        ivBackDetails.setOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
     companion object {
@@ -96,7 +110,8 @@ class FragmentProductDetails : Fragment() {
     }
 
     fun init() {
-
+        tvProductName.text=listingItem?.listingTitle
+        tvAddress.text=listingItem?.listingState
         when (type) {
             Config.Constants.SELL -> {
 

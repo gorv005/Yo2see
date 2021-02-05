@@ -18,41 +18,46 @@ import kotlinx.android.synthetic.main.item_events.view.*
 
 class AdapterHomeData(
     private val adapterViewClickListener: AdapterViewClickListener<CategoryListItem>?,
-    val activity: Activity, val back:Int
+    val activity: Activity, val back: Int
 ) : ListAdapter<CategoryListItem, AdapterHomeData.ViewHolder>(
     AdapterHomeDataCallback()
-)
-{
+) {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): AdapterHomeData.ViewHolder {
         val itemView = LayoutInflater.from(
             parent.context
         ).inflate(R.layout.item_events, parent, false)
 
-      /*  val displayMetrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val width = displayMetrics.widthPixels
+        /*  val displayMetrics = DisplayMetrics()
+          activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+          val width = displayMetrics.widthPixels
 
-        itemView.layoutParams = RecyclerView.LayoutParams(width - (width / 5), RecyclerView.LayoutParams.WRAP_CONTENT)
-*/
+          itemView.layoutParams = RecyclerView.LayoutParams(width - (width / 5), RecyclerView.LayoutParams.WRAP_CONTENT)
+  */
 
         return ViewHolder(itemView, activity)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), adapterViewClickListener,back)
+        holder.bind(getItem(position), adapterViewClickListener, back)
     }
+
     class ViewHolder(itemView: View, val activity: Activity) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(allProducts: CategoryListItem, adapterViewClick: AdapterViewClickListener<CategoryListItem>?,back: Int) {
+        fun bind(
+            allProducts: CategoryListItem,
+            adapterViewClick: AdapterViewClickListener<CategoryListItem>?,
+            back: Int
+        ) {
 
             itemView.tvEventName?.text = allProducts.categoryName
-            itemView.ivEvents.setImageResource(allProducts.image!!)
+            // itemView.ivEvents.setImageResource(allProducts.image!!)
             itemView.rlCategoryBack.setBackgroundResource(back)
-          /*  ImageRequestManager.with(itemView.imgSource)
-                .url(allProducts.image?.avatar?.url)
+            ImageRequestManager.with(itemView.ivEvents)
+                .url(allProducts.catImage)
+                .setPlaceholderImage(R.drawable.ic_clothing_white)
                 .setScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-                .build()*/
+                .build()
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
                     allProducts,

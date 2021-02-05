@@ -34,6 +34,7 @@ import com.dartmic.yo2see.utils.NetworkUtil
 import com.github.florent37.viewanimator.ViewAnimator
 import kotlinx.android.synthetic.main.fragment_categories_list.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_sub_categories.*
 import kotlinx.android.synthetic.main.tree.*
 
 
@@ -66,6 +67,15 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity?.let {
+            (activity as LandingActivity).hideVisibleBottomBar(
+                View.VISIBLE
+            )
+        }
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,6 +88,9 @@ class CategoriesListFragment : BaseFragment<CategoriesViewModel>(CategoriesViewM
         rvBuyList.layoutManager = manager
 
 
+        ivBackCategories.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         ivsell.setOnClickListener {
 

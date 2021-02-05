@@ -19,6 +19,7 @@ import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import kotlinx.android.synthetic.main.fragment_categories_list.*
+import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.*
 import kotlinx.android.synthetic.main.tree.*
 
@@ -49,16 +50,27 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        activity?.let {
+            (activity as LandingActivity).hideVisibleBottomBar(
+                View.VISIBLE
+            )
+        }
+
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val listData = data
         titleList = ArrayList(listData.keys)
         type = arguments?.getInt(TYPE)
-        categoryListItemData=arguments?.getParcelable(DATA)!!
+        categoryListItemData = arguments?.getParcelable(DATA)!!
         init()
         activity?.let {
             adapter =
-                CategoriesExpandableListView(it, categoryListItemData?.subCatList!!,type!!)
+                CategoriesExpandableListView(it, categoryListItemData?.subCatList!!, type!!)
             subategoriesExpandableListView!!.setAdapter(adapter)
 
             subategoriesExpandableListView!!.setOnGroupExpandListener { groupPosition ->
@@ -78,10 +90,14 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
             }
 
             subategoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
-                mFragmentNavigation.pushFragment(
-                    ProductListFragment
-                        .getInstance(mInt + 1,type)
-                )
+                if (type == Config.Constants.POST_AN_ADD) {
+
+                } else {
+                    mFragmentNavigation.pushFragment(
+                        ProductListFragment
+                            .getInstance(mInt + 1, type,categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(childPosition))
+                    )
+                }
                 /* Toast.makeText(
                      it,
                      "Clicked: " + (titleList as ArrayList<String>)[groupPosition] + " -> " + listData[(titleList as ArrayList<String>)[groupPosition]]!!.get(
@@ -93,19 +109,25 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
             }
 
         }
+        ivBackSubCategories.setOnClickListener {
+            activity?.onBackPressed()
+        }
+
     }
 
     companion object {
         const val TYPE = "type"
-        const val DATA="data"
+        const val DATA = "data"
+
         @JvmStatic
-        fun getInstance(instance: Int, type:Int?,categoryListItemData: CategoryListItemData
+        fun getInstance(
+            instance: Int, type: Int?, categoryListItemData: CategoryListItemData
         ): SubCategoriesFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = SubCategoriesFragment()
             bundle.putInt(TYPE, type!!)
-            bundle.putParcelable(DATA,categoryListItemData)
+            bundle.putParcelable(DATA, categoryListItemData)
             fragment.arguments = bundle
             return fragment
         }
@@ -155,8 +177,9 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
 
             return listData
         }
-    fun init() {
 
+    fun init() {
+        tvSubTitleValue.text = categoryListItemData?.categoryName + "/"
         when (type) {
             Config.Constants.SELL -> {
 
@@ -175,8 +198,6 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
                 subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_purple))
 
 
-
-
             }
             Config.Constants.BARTER -> {
                 subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_yellow))
@@ -193,6 +214,19 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
                     ContextCompat.getColor(activity!!, R.color.blue)
                 )
 
+            }
+            Config.Constants.POST_AN_ADD -> {
+
+                subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_red))
+                ivCurve.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.red_a)
+                )
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.red_a),
+                        2
+                    )
+                }
             }
 
         }
