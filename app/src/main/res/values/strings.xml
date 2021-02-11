@@ -113,7 +113,7 @@
     <string name="no">NO</string>
     <string name="upload_images">Upload Images</string>
     <string name="for_the_best_viewing_please_upload">For best viewing please upload High quality images of your product</string>
-    <string name="are_you_open_to_negotiation">Are you open to negotiation</string>
+    <string name="are_you_open_to_negotiation">Are you open to negotiation?</string>
     <string name="please_set_your_address">Please set your address</string>
     <string name="user_my_current_location">Use my current location></string>
     <string name="city">City</string>
@@ -126,5 +126,18 @@
     <string name="has_been_part_ayo2see">Has been a part of YO2SEE since a year</string>
     <string name="view_profile">View Profile></string>
     <string name="add_listing">Add Listing</string>
+    <string name="product_details">Product details</string>
+    <string name="set_rent_term_and_condition">Set rent terms and conditions</string>
+    <string name="renting_type">Renting type</string>
+    <string name="set_payment">Set Payment</string>
+    <string name="hourly">Hourly</string>
+    <string name="weekly">Weekly</string>
+    <string name="monthly">Monthly</string>
+    <string name="yearly">Yearly</string>
+    <string name="what_would_you_like_to_barter">What would you like to barter</string>
+    <string name="what_would_you_like_in_exchange">What would you like in exchange</string>
+    <string name="exchangeable_product_title">Exchangeable product title</string>
+    <string name="exchangeable_product_title_description">Exchangeable product title description</string>
+    <string name="additional_details">Additional details</string>
 
 </resources>

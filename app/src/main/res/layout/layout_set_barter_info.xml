@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/what_would_you_like_to_barter"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/emailOverloadAlarmEdt"
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text_round_corner_bg"
+        android:focusableInTouchMode="true"
+        android:inputType="textEmailAddress|textNoSuggestions"
+        android:textColor="@color/disabled_text"
+        android:textColorHint="@color/disabled_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="Helper text"
+        android:textColor="@color/grey"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/what_would_you_like_in_exchange"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text_round_corner_bg"
+        android:focusableInTouchMode="true"
+        android:inputType="textEmailAddress|textNoSuggestions"
+        android:textColor="@color/disabled_text"
+        android:textColorHint="@color/disabled_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="Helper text"
+        android:textColor="@color/grey"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/exchangeable_product_title"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text_round_corner_bg"
+        android:focusableInTouchMode="true"
+        android:inputType="textEmailAddress|textNoSuggestions"
+        android:textColor="@color/disabled_text"
+        android:textColorHint="@color/disabled_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="Helper text"
+        android:textColor="@color/grey"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/exchangeable_product_title_description"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text_round_corner_bg"
+        android:focusableInTouchMode="true"
+        android:inputType="textEmailAddress|textNoSuggestions"
+        android:textColor="@color/disabled_text"
+        android:textColorHint="@color/disabled_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="Helper text"
+        android:textColor="@color/grey"
+        android:textSize="12sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="@string/additional_details"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edit_text_round_corner_bg"
+        android:focusableInTouchMode="true"
+        android:inputType="textEmailAddress|textNoSuggestions"
+        android:textColor="@color/disabled_text"
+        android:textColorHint="@color/disabled_text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_regular"
+        android:gravity="center_horizontal"
+        android:text="Helper text"
+        android:textColor="@color/grey"
+        android:textSize="12sp" />
+</LinearLayout>

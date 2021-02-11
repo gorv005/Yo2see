@@ -74,123 +74,13 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/add_a_title_to_your_post"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/emailOverloadAlarmEdt"
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="Helper text"
-                    android:textColor="@color/grey"
-                    android:textSize="12sp" />
+                <include layout="@layout/layout_set_rent_sell_info"/>
+                <include layout="@layout/layout_set_barter_info"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/description"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="Helper text"
-                    android:textColor="@color/grey"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/set_a_price"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="Helper text"
-                    android:textColor="@color/grey"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/select_an_item"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="Helper text"
-                    android:textColor="@color/grey"
-                    android:textSize="12sp" />
-
+                <include layout="@layout/layout_set_payment"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -243,9 +133,9 @@
                     android:textSize="12sp" />
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -260,26 +150,27 @@
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
-                            android:layout_marginStart="20dp"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
-                            android:layout_marginStart="20dp"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
-                            android:layout_marginStart="20dp"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp">
@@ -292,254 +183,33 @@
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
-                            android:layout_marginStart="20dp"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
-                            android:layout_marginStart="20dp"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
-                            android:layout_marginStart="20dp"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
+                            android:layout_marginStart="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
                     </LinearLayout>
 
                 </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/please_set_your_address"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:text="@string/user_my_current_location"
-                    android:textColor="@color/red_a"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/address"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/city"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/pincode"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/state"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/country"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/are_you_open_to_deliver"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:id="@+id/rbYesDeliver"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/yes"
-                        android:textColor="@color/black" />
-
-                    <RadioButton
-                        android:id="@+id/rbNoDeliver"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/no"
-                        android:textColor="@color/black"
-                        tools:ignore="DuplicateIds" />
 
 
-                </LinearLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/up_till_what_km"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                <include layout="@layout/layout_set_location_info"/>
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="39dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/edit_text_round_corner_bg"
-                    android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
-                    android:textColor="@color/disabled_text"
-                    android:textColorHint="@color/disabled_text" />
-
-                <RelativeLayout
-                    android:padding="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/edit_text_corner_red_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tvPosterInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
-                        android:gravity="center_horizontal"
-                        android:text="@string/poster_infomation"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@id/tvPosterInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <RelativeLayout
-
-                            android:layout_width="80dp"
-                            android:background="@drawable/round_bg"
-                            android:layout_height="80dp"/>
-
-                        <LinearLayout
-                            android:layout_marginStart="20dp"
-                            android:layout_width="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_regular"
-                                android:gravity="center_horizontal"
-                                android:text="Name"
-                                android:textColor="@color/grey"
-                                android:textSize="14sp" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_regular"
-                                android:text="@string/has_been_part_ayo2see"
-                                android:textColor="@color/grey"
-                                android:textSize="14sp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_regular"
-                                android:gravity="center_horizontal"
-                                android:text="@string/view_profile"
-                                android:textColor="@color/grey"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-                    </LinearLayout>
-                </RelativeLayout>
+            <include layout="@layout/layout_set_user_info"/>
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/saveProductBtn"
                     android:layout_width="match_parent"
@@ -547,16 +217,16 @@
                     android:layout_marginStart="5dp"
                     android:background="@drawable/btn_app_selected"
                     android:clickable="false"
-                    android:fontFamily="@font/poppins_bold"
                     android:enabled="false"
+                    android:fontFamily="@font/poppins_bold"
                     android:text="@string/add_listing"
                     android:textColor="@color/white" />
 
                 <RelativeLayout
 
-                    android:layout_marginBottom="40dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp" />
 
             </LinearLayout>
 

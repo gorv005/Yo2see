@@ -87,6 +87,7 @@
             android:layout_marginStart="@dimen/padding3x4"
             android:layout_marginEnd="@dimen/padding3x4"
             android:layout_gravity="center"
+            android:inputType="textPassword"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/poppins_regular"
             android:animateLayoutChanges="@bool/show"
