@@ -25,7 +25,7 @@ class SplashActivity : AppCompatActivity(),GifEndListener {
 
     override fun animationEnd() {
         let {
-            startActivity(MainActivity.getIntent(it))
+            startActivity(LandingActivity.getIntent(it,1))
         }
     }
 }

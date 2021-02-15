@@ -4,6 +4,7 @@
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -11,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/add_a_title_to_your_post"
         android:textColor="@color/black"
@@ -31,7 +32,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
+       android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:text="Helper text"
         android:textColor="@color/grey"
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/description"
         android:textColor="@color/black"
@@ -67,16 +68,19 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tvProductDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/product_details"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etProductDetails"
+
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="5dp"
@@ -87,6 +91,7 @@
         android:textColorHint="@color/disabled_text" />
 
     <TextView
+        android:id="@+id/tvProductDetailsHelperText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_regular"
@@ -96,16 +101,19 @@
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tvSetPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/set_a_price"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etSetPrice"
+
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
@@ -116,9 +124,10 @@
         android:textColorHint="@color/disabled_text" />
 
     <TextView
+        android:id="@+id/tvSetPriceHelperText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
+       android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:text="Helper text"
         android:textColor="@color/grey"
@@ -128,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/select_an_item"
         android:textColor="@color/black"
@@ -147,23 +156,25 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
+       android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:text="Helper text"
         android:textColor="@color/grey"
         android:textSize="12sp" />
 
     <TextView
+        android:id="@+id/tvRentTermAndCondition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/set_rent_term_and_condition"
         android:textColor="@color/black"
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etRentTermAndCondition"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="5dp"
@@ -174,9 +185,10 @@
         android:textColorHint="@color/disabled_text" />
 
     <TextView
+        android:id="@+id/tvRentTermAndConditionHelperText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_regular"
+       android:fontFamily="@font/poppins_regular"
         android:gravity="center_horizontal"
         android:text="Helper text"
         android:textColor="@color/grey"

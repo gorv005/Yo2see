@@ -139,5 +139,8 @@
     <string name="exchangeable_product_title">Exchangeable product title</string>
     <string name="exchangeable_product_title_description">Exchangeable product title description</string>
     <string name="additional_details">Additional details</string>
-
+    <string name="address_one">Address one</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_gallery">Gallery</string>
+    <string name="select_images">Select Images</string>
 </resources>

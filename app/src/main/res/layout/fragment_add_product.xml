@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="Samsung galaxy s8"
                     android:textColor="@color/red_a"
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/select_an_posting_category"
                     android:textColor="@color/black"
@@ -75,17 +75,26 @@
                 </LinearLayout>
 
 
+                <include
+                    android:id="@+id/layout_rent_sell"
+                    layout="@layout/layout_set_rent_sell_info"
+                    android:visibility="visible" />
 
-                <include layout="@layout/layout_set_rent_sell_info"/>
-                <include layout="@layout/layout_set_barter_info"/>
+                <include
+                    android:id="@+id/layout_barter_info"
+                    layout="@layout/layout_set_barter_info"
+                    android:visibility="gone" />
 
+                <include
+                    android:id="@+id/layout_payment"
+                    layout="@layout/layout_set_payment"
+                    android:visibility="gone" />
 
-                <include layout="@layout/layout_set_payment"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/are_you_open_to_negotiation"
                     android:textColor="@color/black"
@@ -118,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/upload_images"
                     android:textColor="@color/black"
@@ -127,7 +136,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/for_the_best_viewing_please_upload"
                     android:textColor="@color/grey"
                     android:textSize="12sp" />
@@ -143,13 +152,18 @@
                         android:layout_height="90dp">
 
                         <ImageView
-
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct1"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct2"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_marginStart="20dp"
@@ -157,6 +171,9 @@
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct3"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_marginStart="20dp"
@@ -164,6 +181,9 @@
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct4"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_marginStart="20dp"
@@ -176,13 +196,18 @@
                         android:layout_height="100dp">
 
                         <ImageView
-
+                            android:id="@+id/ivProduct5"
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
                             android:layout_width="0dp"
-                            android:layout_height="90dp"
+                            android:layout_height="80dp"
                             android:layout_weight="1"
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct6"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_marginStart="20dp"
@@ -190,6 +215,9 @@
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct7"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_marginStart="20dp"
@@ -197,6 +225,9 @@
                             android:background="@drawable/edit_text_round_corner_bg" />
 
                         <ImageView
+                            android:adjustViewBounds="true"
+                            android:scaleType="centerCrop"
+                            android:id="@+id/ivProduct8"
                             android:layout_width="0dp"
                             android:layout_height="80dp"
                             android:layout_marginStart="20dp"
@@ -207,9 +238,14 @@
                 </LinearLayout>
 
 
-                <include layout="@layout/layout_set_location_info"/>
+                <include
+                    android:id="@+id/layout_location_info"
+                    layout="@layout/layout_set_location_info" />
 
-            <include layout="@layout/layout_set_user_info"/>
+                <include
+                    android:id="@+id/layout_user_info"
+                    layout="@layout/layout_set_user_info" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/saveProductBtn"
                     android:layout_width="match_parent"
@@ -218,7 +254,7 @@
                     android:background="@drawable/btn_app_selected"
                     android:clickable="false"
                     android:enabled="false"
-                    android:fontFamily="@font/poppins_bold"
+                    android:fontFamily="@font/poppins_semibold"
                     android:text="@string/add_listing"
                     android:textColor="@color/white" />
 

@@ -114,7 +114,7 @@ class CategoriesExpandableListView internal constructor(
         val ivIndicator = convertView!!.findViewById<ImageView>(R.id.ivIndicator)
 
         if (isExpanded) {
-            ivIndicator.setImageResource(R.drawable.arrow_up)
+            ivIndicator.setImageResource(R.drawable.ic_minus_icon)
         } else {
             ivIndicator.setImageResource(R.drawable.ic_plus_white)
 

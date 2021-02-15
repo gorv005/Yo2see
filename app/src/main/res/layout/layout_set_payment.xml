@@ -28,11 +28,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/renting_type"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -46,11 +46,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="15dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/set_payment"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -68,7 +68,7 @@
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/hourly"
                     android:textColor="@color/black"
@@ -119,7 +119,7 @@
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/weekly"
                     android:textColor="@color/black"
@@ -170,7 +170,7 @@
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/monthly"
                     android:textColor="@color/black"
@@ -221,7 +221,7 @@
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
@@ -231,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dp"
-                    android:fontFamily="@font/poppins_regular"
+                    android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:text="@string/yearly"
                     android:textColor="@color/black"
