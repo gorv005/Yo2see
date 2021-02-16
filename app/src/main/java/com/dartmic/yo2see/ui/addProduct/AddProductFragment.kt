@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.coursion.freakycoder.mediapicker.galleries.Gallery
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
@@ -22,12 +23,18 @@ import com.dartmic.yo2see.interfaces.ResultListener
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.add_product.ImageItem
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
-import com.dartmic.yo2see.utils.AndroidUtils
+import com.dartmic.yo2see.util.UiUtils
+import com.dartmic.yo2see.utils.*
 import com.dartmic.yo2see.utils.DialogHelper
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.gsa.ui.login.AddProductViewModel
+import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_add_product.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.layout_set_rent_sell_info.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -41,7 +48,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AddProductFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AddProductFragment : Fragment() {
+class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -59,13 +66,6 @@ class AddProductFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_product, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -73,7 +73,13 @@ class AddProductFragment : Fragment() {
         tvProductPath.text =
             subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
         init()
+        subscribeLoading()
+        subscribeUi()
+        saveProductBtn.setOnClickListener {
 
+            var file = File(RealPathUtil.getRealPath(activity, ImageList?.get(0)?.fileUrl))
+            uploadImage(file)
+        }
     }
 
 
@@ -107,6 +113,36 @@ class AddProductFragment : Fragment() {
         })
     }
 
+    private fun subscribeLoading() {
+
+        model.searchEvent.observe(this, Observer {
+            if (it.isLoading) {
+                showProgressDialog()
+            } else {
+                hideProgressDialog()
+            }
+            it.error?.run {
+                UiUtils.showInternetDialog(activity, R.string.something_went_wrong)
+            }
+        })
+    }
+
+    private fun subscribeUi() {
+        model.uploadImageModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
+
+
+    }
+
+    fun showProgressDialog() {
+        showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -133,6 +169,7 @@ class AddProductFragment : Fragment() {
                     }
 
                 }
+
                 showImages()
             }
 
@@ -151,6 +188,20 @@ class AddProductFragment : Fragment() {
             } else {
                 Toast.makeText(activity, "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    fun uploadImage(f: File) {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            var service = RequestBody.create(MediaType.parse("multipart/form-data"), "Upload")
+            var user_id = RequestBody.create(MediaType.parse("multipart/form-data"), "1")
+            var type = RequestBody.create(MediaType.parse("multipart/form-data"), "Profile")
+            var file = RequestBody.create(MediaType.parse("multipart/form-data"), f)
+
+            var pic = MultipartBody.Part.createFormData("images", f.name, file)
+            model.uploadImage(
+                service, user_id, type, pic
+            )
         }
     }
 
@@ -294,4 +345,7 @@ class AddProductFragment : Fragment() {
             return fragment
         }
     }
+
+    override fun getLayoutId() = R.layout.fragment_add_product
+
 }

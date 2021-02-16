@@ -252,8 +252,6 @@
                     android:layout_height="39dp"
                     android:layout_marginStart="5dp"
                     android:background="@drawable/btn_app_selected"
-                    android:clickable="false"
-                    android:enabled="false"
                     android:fontFamily="@font/poppins_semibold"
                     android:text="@string/add_listing"
                     android:textColor="@color/white" />

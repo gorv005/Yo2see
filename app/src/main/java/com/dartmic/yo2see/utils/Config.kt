@@ -46,6 +46,7 @@ class Config {
         const val FEATURE_API = BASE_PATH + "common/isfeaturelist"
         const val CATEGORIES_DATA_API = BASE_PATH + "common/alltypelist"
         const val PRODUCT_DATA_API = BASE_PATH + "common/listing"
+        const val UPLOAD_IMAGE_API = BASE_PATH + "common/upload_image"
 
 
     }

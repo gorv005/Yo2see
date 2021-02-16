@@ -44,7 +44,8 @@ object AppModule {
         single<ProductListRepository> { ProductListRepositoryImpl(get(), get()) }
         viewModel { ProductListnViewModel(get(), get(), get()) }
 
-
+        single<AddProductRepository> { AddProdcutRepositoryImpl(get(), get()) }
+        viewModel { AddProductViewModel(get(), get(), get()) }
     }
 
 
