@@ -5,6 +5,7 @@ import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.login.LoginRequest
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
+import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.network.AppRestApiFast
 
@@ -42,6 +43,14 @@ class ProductListRepositoryImpl(
             city,
             search_key
         )
+    }
+
+    override fun getProductDetails(
+        service: String,
+        user_id: String,
+        id: String
+    ): Single<ProductDetailResponsePayload> {
+        return restApi.getProductDetails(service, user_id, id)
     }
 
 

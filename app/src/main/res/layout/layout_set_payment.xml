@@ -67,6 +67,7 @@
 
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
+                    android:id="@+id/checkboxHourly"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
@@ -74,6 +75,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -96,9 +98,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
+                    android:id="@+id/etHourly"
                     android:background="@drawable/edit_text_round_corner_bg"
                     android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/disabled_text"
                     android:textColorHint="@color/disabled_text" />
             </RelativeLayout>
@@ -122,6 +125,8 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
+                    android:id="@+id/checkboxWeekly"
+
                     android:textSize="14sp" />
 
                 <TextView
@@ -147,9 +152,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
+                    android:id="@+id/etWeekly"
                     android:background="@drawable/edit_text_round_corner_bg"
                     android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/disabled_text"
                     android:textColorHint="@color/disabled_text" />
             </RelativeLayout>
@@ -170,6 +176,8 @@
                 <com.google.android.material.checkbox.MaterialCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/checkboxMonthly"
+
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
@@ -198,9 +206,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
+                    android:id="@+id/etMonthly"
                     android:background="@drawable/edit_text_round_corner_bg"
                     android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/disabled_text"
                     android:textColorHint="@color/disabled_text" />
             </RelativeLayout>
@@ -224,6 +233,7 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center_horizontal"
                     android:textColor="@color/black"
+                    android:id="@+id/checkboxYearly"
                     android:textSize="14sp" />
 
                 <TextView
@@ -249,9 +259,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
+                    android:id="@+id/etYearly"
                     android:background="@drawable/edit_text_round_corner_bg"
                     android:focusableInTouchMode="true"
-                    android:inputType="textEmailAddress|textNoSuggestions"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/disabled_text"
                     android:textColorHint="@color/disabled_text" />
             </RelativeLayout>

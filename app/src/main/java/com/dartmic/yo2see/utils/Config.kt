@@ -31,6 +31,10 @@ class Config {
         const val BARTER = 3
         const val POST = 4
         const val POST_AN_ADD = 5
+        const val TYPE_SELL = "Sell"
+        const val TYPE_RENT = "Rent"
+        const val TYPE_POST = "Post"
+        const val TYPE_BARTER = "Barter"
 
     }
 
@@ -47,6 +51,8 @@ class Config {
         const val CATEGORIES_DATA_API = BASE_PATH + "common/alltypelist"
         const val PRODUCT_DATA_API = BASE_PATH + "common/listing"
         const val UPLOAD_IMAGE_API = BASE_PATH + "common/upload_image"
+        const val PRODUCT_ADD_API = BASE_PATH + "common/add_listing"
+        const val PRODUCT_DETAILS_DATA_API = BASE_PATH + "common/listing_detail"
 
 
     }

@@ -6,13 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.model.product.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.productDetails.adapter.ProductImagesAdapter
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.util.UiUtils
+import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
+import com.dartmic.yo2see.utils.Logger
+import com.dartmic.yo2see.utils.NetworkUtil
+import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import org.jetbrains.anko.backgroundColor
@@ -28,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentProductDetails.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentProductDetails : Fragment() {
+class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -53,12 +59,72 @@ class FragmentProductDetails : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_product_details, container, false)
+    fun getProductDetails() {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            //  listingType = "Rent"
+
+            model.getProductDetails(
+                "Detail", "1", "" + listingItem.id
+            )
+        }
+    }
+
+    private fun subscribeLoading() {
+
+        model.searchEvent.observe(this, Observer {
+            if (it.isLoading) {
+                showProgressDialog()
+            } else {
+                hideProgressDialog()
+            }
+            it.error?.run {
+                UiUtils.showInternetDialog(activity, R.string.something_went_wrong)
+            }
+        })
+    }
+
+    private fun subscribeUi() {
+        model.productDetailsViewModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status.equals("true")) {
+
+                with(view_pager) {
+
+                    adapter = ProductImagesAdapter(it?.galleryList!!)
+                    //    setPageTransformer(true, ZoomOutPageTransformer())
+                    worm_dots_indicator.setViewPager(this)
+                    setBorderAnimation(true)
+                    //  setInterval(2000)
+                    setDirection(AutoScrollViewPager.Direction.RIGHT)
+                    //   setCycle(true)
+                    //  setBorderAnimation(true)
+                    //    setSlideBorderMode(AutoScrollViewPager.SlideBorderMode.TO_PARENT)
+                    // startAutoScroll()
+                }
+                if(it?.detail?.get(0)?.negotiationType.equals("yes")){
+                    llNagotiation.visibility=View.VISIBLE
+                }else{
+                    llNagotiation.visibility=View.INVISIBLE
+                }
+             //   if (type?.equals(Config.Constants.SELL)!!) {
+                    tvProductName.setText(it?.detail?.get(0)?.listingTitle)
+                    tvAddress.setText(it?.detail?.get(0)?.listingAddress)
+                    tvPrice.setText(it?.detail?.get(0)?.listingPrice)
+                    tvModel.setText(it?.detail?.get(0)?.listingTitle)
+                    tvDesc.setText(it?.detail?.get(0)?.listingDescription)
+                    tvDetails.setText(it?.detail?.get(0)?.rentProductDetail)
+
+             //   }
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
+
+
+    }
+
+    fun showProgressDialog() {
+        showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,23 +134,10 @@ class FragmentProductDetails : Fragment() {
             listingItem = arguments?.getParcelable(DATA)!!
 
             init()
-            with(view_pager) {
+            subscribeUi()
+            subscribeLoading()
+            getProductDetails()
 
-                adapter = ProductImagesAdapter()
-                //    setPageTransformer(true, ZoomOutPageTransformer())
-                worm_dots_indicator.setViewPager(this)
-                setBorderAnimation(true)
-
-                //  setInterval(2000)
-                setDirection(AutoScrollViewPager.Direction.RIGHT)
-                //   setCycle(true)
-                //  setBorderAnimation(true)
-                //    setSlideBorderMode(AutoScrollViewPager.SlideBorderMode.TO_PARENT)
-                // startAutoScroll()
-            }
-            tvPrice.setText(listingItem?.listingPrice)
-            tvModel.setText(listingItem?.listingTitle)
-            tvDesc.setText(listingItem?.listingDescription)
 
         } catch (e: Exception) {
 
@@ -110,8 +163,8 @@ class FragmentProductDetails : Fragment() {
     }
 
     fun init() {
-        tvProductName.text=listingItem?.listingTitle
-        tvAddress.text=listingItem?.listingState
+        tvProductName.text = listingItem?.listingTitle
+        tvAddress.text = listingItem?.listingState
         when (type) {
             Config.Constants.SELL -> {
 
@@ -155,5 +208,8 @@ class FragmentProductDetails : Fragment() {
 
         }
     }
+
+    override fun getLayoutId() = R.layout.fragment_product_details
+
 
 }

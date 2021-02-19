@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:id="@+id/etAddressOne"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -59,6 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:id="@+id/etCity"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -78,6 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:id="@+id/etPincode"
+        android:inputType="number"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -97,6 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:id="@+id/etState"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -109,12 +114,14 @@
         android:fontFamily="@font/poppins_semibold"
         android:gravity="center_horizontal"
         android:text="@string/country"
+
         android:textColor="@color/black"
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:layout_width="match_parent"
         android:layout_height="39dp"
+        android:id="@+id/etCountry"
         android:layout_marginTop="5dp"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
@@ -140,6 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/yes"
+            app:buttonTint="@color/red_a"
             android:textColor="@color/black" />
 
         <RadioButton
@@ -148,6 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/no"
+            app:buttonTint="@color/red_a"
             android:textColor="@color/black"
           />
 
@@ -168,8 +177,9 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:id="@+id/etKm"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
-        android:inputType="textEmailAddress|textNoSuggestions"
+        android:inputType="numberDecimal"
         android:textColor="@color/disabled_text"
         android:textColorHint="@color/disabled_text" /></LinearLayout>

@@ -8,13 +8,16 @@ import com.dartmic.yo2see.model.add_product.RentTypeResponse
 import com.dartmic.yo2see.model.categories.CategoriesResponse
 import com.dartmic.yo2see.model.categories.FeatureListResponse
 import com.dartmic.yo2see.model.login.LoginResponsePayload
+import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.model.signUp.RegisterResponsePayload
 import com.dartmic.yo2see.utils.Config
 import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
 import retrofit2.http.*
+import java.util.ArrayList
 
 interface AppRestApiFast {
 
@@ -84,13 +87,13 @@ interface AppRestApiFast {
         @Part("service") service: RequestBody,
         @Part("user_id") user_id: RequestBody,
         @Part("type") type: RequestBody,
-        @Part  images:MultipartBody.Part
+        @Part images: MultipartBody.Part
 
-        ): Single<UploadImageResponse>
+    ): Single<UploadImageResponse>
 
 
     @FormUrlEncoded
-    @POST(Config.Endpoints.PRODUCT_DATA_API)
+    @POST(Config.Endpoints.PRODUCT_ADD_API)
     fun addProdcut(
         @Field("service") service: String,
         @Field("category_id") category_id: String,
@@ -113,10 +116,28 @@ interface AppRestApiFast {
         @Field("publish_datetime") publish_datetime: String,
         @Field("expiry_datetime") expiry_datetime: String,
         @Field("user_id") user_id: String,
-        @Field("photos_array") photos_array: List<ImagePathResponse>,
-        @Field("rent_type_array") rent_type_array:  List<RentTypeResponse>
+        @Field("photos_array") photos_array: JSONArray,
+        @Field("rent_type_array") rent_type_array: JSONArray,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("barter_text") barter_text: String,
+        @Field("barter_exchange_text") barter_exchange_text: String,
+        @Field("barter_product_title") barter_product_title: String,
+        @Field("barter_product_desc") barter_product_desc: String,
+        @Field("barter_additional_text") barter_additional_text: String,
+        @Field("rent_product_detail") rent_product_detail: String,
+        @Field("rent_terms_and_condition") rent_terms_and_condition: String
 
     ): Single<AddProdcutResponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_DETAILS_DATA_API)
+    fun getProductDetails(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("id") id: String
+    ): Single<ProductDetailResponsePayload>
 
 }
 

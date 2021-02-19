@@ -2,18 +2,13 @@ package com.dartmic.yo2see.ui.addProduct
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.util.Size
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.coursion.freakycoder.mediapicker.galleries.Gallery
 import com.dartmic.yo2see.R
@@ -22,21 +17,29 @@ import com.dartmic.yo2see.common.ImageProvider
 import com.dartmic.yo2see.interfaces.ResultListener
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.add_product.ImageItem
+import com.dartmic.yo2see.model.add_product.RentTypeResponse
+import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.*
-import com.dartmic.yo2see.utils.DialogHelper
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.gsa.ui.login.AddProductViewModel
-import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_add_product.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
+import kotlinx.android.synthetic.main.layout_set_barter_info.*
+import kotlinx.android.synthetic.main.layout_set_location_info.*
+import kotlinx.android.synthetic.main.layout_set_payment.*
 import kotlinx.android.synthetic.main.layout_set_rent_sell_info.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
 import java.io.File
 import java.io.FileNotFoundException
+import java.util.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,11 +57,19 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     private var param2: String? = null
     lateinit var subToSubListItem: SubToSubListItem
     val OPEN_MEDIA_PICKER_IMAGE_GALLRY = 2 // Request code
-    var ImageList: ArrayList<ImageItem>? = null
+    var ImageList: java.util.ArrayList<ImageItem>? = null
+    private var type: String? = ""
+    private var isNagotiable: String? = ""
+    private var isOpenTodeliver: String? = ""
+    private var count: Int = 0
+    var imageListURLs: java.util.ArrayList<String>? = null
+    var rentTypeList: java.util.ArrayList<RentTypeResponse>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ImageList = ArrayList()
+        ImageList = java.util.ArrayList()
+        imageListURLs = ArrayList<String>()
+        rentTypeList = ArrayList<RentTypeResponse>()
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -76,12 +87,164 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         subscribeLoading()
         subscribeUi()
         saveProductBtn.setOnClickListener {
-
-            var file = File(RealPathUtil.getRealPath(activity, ImageList?.get(0)?.fileUrl))
-            uploadImage(file)
+            imageListURLs?.clear()
+            showProgressDialog()
+            count = 0
+            if (ImageList?.size!! > 0) {
+                uploadImage()
+            } else {
+                addProduct()
+            }
         }
     }
 
+
+    fun addProduct() {
+        val imageArray = JSONArray(imageListURLs)
+        rentTypeList?.clear()
+        if(checkboxWeekly.isChecked){
+            rentTypeList?.add(RentTypeResponse("Weekly", etWeekly.text.toString()))
+        }
+        if(checkboxHourly.isChecked){
+            rentTypeList?.add(RentTypeResponse("Hourly", etHourly.text.toString()))
+        }
+        if(checkboxMonthly.isChecked){
+            rentTypeList?.add(RentTypeResponse("Monthly", etMonthly.text.toString()))
+        }
+        if(checkboxYearly.isChecked){
+            rentTypeList?.add(RentTypeResponse("Yearly", etYearly.text.toString()))
+        }
+
+        val gson = Gson()
+
+        val listString = gson.toJson(
+            rentTypeList,
+            object : TypeToken<ArrayList<RentTypeResponse?>?>() {}.type
+        )
+        val rentArray = JSONArray(listString)
+
+        Log.e("DEBUG json array", imageArray.toString())
+        if (type.equals(Config.Constants.TYPE_SELL)) {
+            model.addProduct(
+                "AddListing",
+                subToSubListItem.categoryId,
+                subToSubListItem.subCategoryId,
+                subToSubListItem.id,
+                "",
+                type!!,
+                etSetPrice.text.toString(),
+                etCountry.text.toString(),
+                etState.text.toString(),
+                etCity.text.toString(),
+                etPincode.text.toString(),
+                etAddressOne.text.toString(),
+                etAddatitle.text.toString(),
+                etDescription.text.toString(),
+                etSelectItemCondition.text.toString(),
+                isNagotiable!!,
+                isOpenTodeliver!!,
+                etKm.text.toString(),
+                "",
+                "",
+                "1",
+                imageArray,
+                rentArray,
+                "222",
+                "255",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        } else if (type.equals(Config.Constants.TYPE_RENT)) {
+            model.addProduct(
+                "AddListing",
+                subToSubListItem.categoryId,
+                subToSubListItem.subCategoryId,
+                subToSubListItem.id,
+                "",
+                type!!,
+                "",
+                etCountry.text.toString(),
+                etState.text.toString(),
+                etCity.text.toString(),
+                etPincode.text.toString(),
+                etAddressOne.text.toString(),
+                etAddatitle.text.toString(),
+                etDescription.text.toString(),
+                etSelectItemCondition.text.toString(),
+                isNagotiable!!,
+                isOpenTodeliver!!,
+                etKm.text.toString(),
+                "",
+                "",
+                "1",
+                imageArray,
+                rentArray,
+                "222",
+                "255",
+                "",
+                "",
+                "",
+                "",
+                "",
+                etProductDetails.text.toString(),
+                etRentTermAndCondition.text.toString()
+            )
+        } else if (type.equals(Config.Constants.TYPE_BARTER)) {
+            model.addProduct(
+                "AddListing",
+                subToSubListItem.categoryId,
+                subToSubListItem.subCategoryId,
+                subToSubListItem.id,
+                "",
+                type!!,
+                "",
+                etCountry.text.toString(),
+                etState.text.toString(),
+                etCity.text.toString(),
+                etPincode.text.toString(),
+                etAddressOne.text.toString(),
+                "",
+                "",
+                etSelectItemCondition.text.toString(),
+                isNagotiable!!,
+                isOpenTodeliver!!,
+                etKm.text.toString(),
+                "",
+                "",
+                "1",
+                imageArray,
+                rentArray,
+                "222",
+                "255",
+                etwhatWouldtoLiketoBarter.text.toString(),
+                etwhatWouldtoLiketoExchange.text.toString(),
+                etExchangeProductTitle.text.toString(),
+                etExchangeProductTitleDescription.text.toString(),
+                etAdditionalDetails.text.toString(),
+                "",
+                ""
+            )
+        }
+
+    }
+
+    fun getStringArray(arr: ArrayList<String>): Array<String?>? {
+
+        // Convert ArrayList to object array
+        val objArr = arr.toArray()
+
+        // convert Object array to String array
+        return Arrays
+            .copyOf(
+                objArr, objArr.size,
+                Array<String>::class.java
+            )
+    }
 
     private fun showImageProviderDialog() {
         DialogHelper.showChooseAppDialog(activity!!, object : ResultListener<ImageProvider> {
@@ -131,12 +294,34 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         model.uploadImageModel.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
+                /*  var obj=ImagePathResponse(it?.path!!)
+                Logger.Debug("DEBUG   obj", obj.toString())
+                var j=JSONObject(obj.toString())
+            //    Log.e("DEBUG   obj sndnbsd", j.toString())*/
 
+                imageListURLs?.add(it?.path!!)
+
+                count++
+                if (count == ImageList?.size) {
+                    addProduct()
+                } else {
+                    uploadImage()
+                }
             } else {
                 showSnackbar(it.message, false)
             }
         })
 
+        model.addProductModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+                hideProgressDialog()
+                showSnackbar(it.message, true)
+
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
 
     }
 
@@ -191,17 +376,20 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         }
     }
 
-    fun uploadImage(f: File) {
+    fun uploadImage() {
         if (NetworkUtil.isInternetAvailable(activity)) {
-            var service = RequestBody.create(MediaType.parse("multipart/form-data"), "Upload")
-            var user_id = RequestBody.create(MediaType.parse("multipart/form-data"), "1")
-            var type = RequestBody.create(MediaType.parse("multipart/form-data"), "Profile")
-            var file = RequestBody.create(MediaType.parse("multipart/form-data"), f)
+            if (count < ImageList?.size!!) {
+                var f = File(RealPathUtil.getRealPath(activity, ImageList?.get(count)?.fileUrl))
+                var service = RequestBody.create(MediaType.parse("multipart/form-data"), "Upload")
+                var user_id = RequestBody.create(MediaType.parse("multipart/form-data"), "1")
+                var type = RequestBody.create(MediaType.parse("multipart/form-data"), "Product")
+                var file = RequestBody.create(MediaType.parse("multipart/form-data"), f)
 
-            var pic = MultipartBody.Part.createFormData("images", f.name, file)
-            model.uploadImage(
-                service, user_id, type, pic
-            )
+                var pic = MultipartBody.Part.createFormData("images", f.name, file)
+                model.uploadImage(
+                    service, user_id, type, pic
+                )
+            }
         }
     }
 
@@ -270,7 +458,41 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
     fun init() {
         rbSell.isChecked = true
+        rbYes.isChecked = true
+        rbYesDeliver.isChecked = true
+        isNagotiable = "yes"
+        isOpenTodeliver = "yes"
         sellViews()
+        rbYes.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                rbYes.isChecked = true
+                rbNO.isChecked = false
+                isNagotiable = "yes"
+
+            }
+        }
+        rbNO.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                rbYes.isChecked = false
+                rbNO.isChecked = true
+                isNagotiable = "no"
+            }
+        }
+        rbYesDeliver.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                rbYesDeliver.isChecked = true
+                rbNoDeliver.isChecked = false
+                isOpenTodeliver = "yes"
+
+            }
+        }
+        rbNoDeliver.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                rbYesDeliver.isChecked = false
+                rbNoDeliver.isChecked = true
+                isOpenTodeliver = "no"
+            }
+        }
         rbSell.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 sellViews()
@@ -278,6 +500,8 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         }
         rbRent.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                type = Config.Constants.TYPE_RENT
+
                 rbRent.isChecked = true
 
                 rbSell.isChecked = false
@@ -289,15 +513,57 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 etSetPrice.visibility = View.GONE
                 tvSetPriceHelperText.visibility = View.GONE
                 layout_payment.visibility = View.VISIBLE
+
+                tvProductDetails.visibility = View.VISIBLE
+                etProductDetails.visibility = View.VISIBLE
+                tvProductDetailsHelperText.visibility = View.VISIBLE
+
+                tvRentTermAndCondition.visibility = View.VISIBLE
+                etRentTermAndCondition.visibility = View.VISIBLE
+                tvRentTermAndConditionHelperText.visibility = View.VISIBLE
+
+                ivCurveAddProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.voilet)
+                )
+
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.voilet),
+                        2
+                    )
+                    saveProductBtn.setBackgroundResource(R.drawable.btn_app_selected_voilet)
+
+                }
             }
         }
         rbBarter.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
+                type = Config.Constants.TYPE_BARTER
+
                 rbSell.isChecked = false
                 rbRent.isChecked = false
                 rbBarter.isChecked = true
                 layout_rent_sell.visibility = View.GONE
                 layout_barter_info.visibility = View.VISIBLE
+                layout_payment.visibility = View.GONE
+
+                tvSelectItemCondition.visibility=View.VISIBLE
+                tvSelectItemConditionHelperText.visibility=View.VISIBLE
+                etSelectItemCondition.visibility=View.VISIBLE
+
+                ivCurveAddProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.yellow1)
+                )
+
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.yellow1),
+                        2
+                    )
+                    saveProductBtn.setBackgroundResource(R.drawable.btn_app_selected_yellow)
+
+                }
+
             }
         }
         ivProduct1.setOnClickListener { showImageProviderDialog() }
@@ -313,7 +579,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
     fun sellViews() {
         rbSell.isChecked = true
-
+        type = Config.Constants.TYPE_SELL
         rbRent.isChecked = false
         rbBarter.isChecked = false
         layout_rent_sell.visibility = View.VISIBLE
@@ -327,6 +593,23 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         tvRentTermAndCondition.visibility = View.GONE
         tvRentTermAndConditionHelperText.visibility = View.GONE
 
+        tvSetPrice.visibility = View.VISIBLE
+        etSetPrice.visibility = View.VISIBLE
+        tvSetPriceHelperText.visibility = View.VISIBLE
+
+        layout_payment.visibility = View.GONE
+
+        ivCurveAddProduct.setColorFilter(
+            ContextCompat.getColor(activity!!, R.color.blue1)
+        )
+
+        activity?.let {
+            (activity as LandingActivity).updateStatusBarColor(
+                AndroidUtils.getColor(R.color.blue1),
+                2
+            )
+            saveProductBtn.setBackgroundResource(R.drawable.btn_app_selected)
+        }
     }
 
     companion object {

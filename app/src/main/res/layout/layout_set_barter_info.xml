@@ -18,7 +18,7 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/emailOverloadAlarmEdt"
+        android:id="@+id/etwhatWouldtoLiketoBarter"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
@@ -48,6 +48,8 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etwhatWouldtoLiketoExchange"
+
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
@@ -77,6 +79,7 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etExchangeProductTitle"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="5dp"
@@ -106,6 +109,8 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etExchangeProductTitleDescription"
+
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="5dp"
@@ -134,6 +139,8 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etAdditionalDetails"
+
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="5dp"

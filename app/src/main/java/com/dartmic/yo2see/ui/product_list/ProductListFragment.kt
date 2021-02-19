@@ -100,12 +100,12 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
     fun getProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
-            listingType = "Rent"
+            //  listingType = "Rent"
 
             model.getProductList(
-                "List", "0", "0",
-                "0", "", listingType!!, "10000",
-                "India", "New Delhi", "New Ashok Nagar", ""
+                "List", subToSubListItem.categoryId, subToSubListItem.subCategoryId,
+                subToSubListItem.id, "", listingType!!, "",
+                "", "", "", ""
             )
         }
     }
@@ -237,7 +237,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
         when (type) {
             Config.Constants.SELL -> {
-                listingType = "Sell"
+                listingType = Config.Constants.TYPE_SELL
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue1)
                 )
@@ -245,7 +245,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             }
             Config.Constants.RENT -> {
 
-                listingType = "Rent"
+                listingType = Config.Constants.TYPE_RENT
 
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.voilet)
@@ -254,7 +254,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
             }
             Config.Constants.BARTER -> {
-                listingType = "Barter"
+                listingType = Config.Constants.TYPE_BARTER
 
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.yellow1)
@@ -262,8 +262,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
             }
             Config.Constants.POST -> {
-                listingType = "Post"
-
+                Config.Constants.TYPE_POST
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue)
                 )

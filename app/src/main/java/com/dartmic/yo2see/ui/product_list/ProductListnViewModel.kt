@@ -10,6 +10,7 @@ import com.dartmic.yo2see.model.SearchEvent
 import com.dartmic.yo2see.model.login.LoginRequest
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
+import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
@@ -25,6 +26,7 @@ class ProductListnViewModel(
     AbstractViewModel() {
     val productListViewModel = MutableLiveData<ProductListResponsePayload>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
+    val productDetailsViewModel = MutableLiveData<ProductDetailResponsePayload>()
 
     fun getProductList(
         service: String,
@@ -78,6 +80,56 @@ class ProductListnViewModel(
 
                             productListViewModel.value =
                                 Gson().fromJson(error, ProductListResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun getProductDetails(
+        service: String,
+        user_id: String,
+        id: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.getProductDetails(
+                service,
+                user_id,
+                id
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    productDetailsViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            productDetailsViewModel.value =
+                                Gson().fromJson(error, ProductDetailResponsePayload::class.java)
                             searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 

@@ -19,8 +19,10 @@ import com.dartmic.yo2see.utils.Logger
 import com.google.gson.Gson
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONArray
 
 import retrofit2.HttpException
+import java.util.ArrayList
 
 class AddProductViewModel(
     private val addProductRepository: AddProductRepository,
@@ -38,7 +40,7 @@ class AddProductViewModel(
         type: RequestBody,
         images: MultipartBody.Part
     ) {
-        searchEvent.value = SearchEvent(isLoading = true)
+     //   searchEvent.value = SearchEvent(isLoading = true)
 
 
         launch {
@@ -48,8 +50,8 @@ class AddProductViewModel(
                 .subscribe({
                     Logger.Debug(msg = it.toString())
                     uploadImageModel.value = it
-                    searchEvent.value =
-                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+               /*     searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)*/
 
                 }, {
                     try {
@@ -65,9 +67,9 @@ class AddProductViewModel(
 
                             uploadImageModel.value =
                                 Gson().fromJson(error, UploadImageResponse::class.java)
-                            searchEvent.value =
+                           /* searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
-
+*/
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -101,8 +103,17 @@ class AddProductViewModel(
         publish_datetime: String,
         expiry_datetime: String,
         user_id: String,
-        photos_array: List<ImagePathResponse>,
-        rent_type_array: List<RentTypeResponse>
+        photos_array: JSONArray,
+        rent_type_array: JSONArray,
+        longitude: String,
+        latitude: String,
+        barter_text: String,
+        barter_exchange_text: String,
+        barter_product_title: String,
+        barter_product_desc: String,
+        barter_additional_text: String,
+        rent_product_detail: String,
+        rent_terms_and_condition: String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -131,7 +142,8 @@ class AddProductViewModel(
                 expiry_datetime,
                 user_id,
                 photos_array,
-                rent_type_array
+                rent_type_array,
+                longitude, latitude, barter_text, barter_exchange_text, barter_product_title, barter_product_desc, barter_additional_text, rent_product_detail, rent_terms_and_condition
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())

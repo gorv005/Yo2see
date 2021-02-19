@@ -75,7 +75,7 @@ class AdapterProductList(
             itemView.tvAddress?.text = allProducts.listingAddress
             itemView.tvDate?.text = allProducts.listingPublishDatetime
 
-           ImageRequestManager.with(itemView.imageProduct)
+           ImageRequestManager.with(itemView.imageProduct).url(allProducts.listingCoverImage)
                 .setPlaceholderImage(R.drawable.download)
                 .setScaleType(ScalingUtils.ScaleType.FIT_XY)
                 .build()
