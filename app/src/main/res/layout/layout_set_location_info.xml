@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="wrap_content"
-   >
+    android:orientation="vertical">
 
 
     <TextView
@@ -19,12 +18,18 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/tvUseCurrentLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/user_my_current_location"
         android:textColor="@color/red_a"
         android:textSize="12sp" />
+
+    <View
+        android:layout_width="150dp"
+        android:layout_height="1dp"
+        android:background="@color/red_a" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,12 +42,13 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etAddressOne"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/etAddressOne"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
+        android:lines="1"
         android:textColor="@color/disabled_text"
         android:textColorHint="@color/disabled_text" />
 
@@ -57,10 +63,10 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCity"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/etCity"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -77,13 +83,13 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPincode"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/etPincode"
-        android:inputType="number"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
+        android:inputType="number"
         android:textColor="@color/disabled_text"
         android:textColorHint="@color/disabled_text" />
 
@@ -98,10 +104,10 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etState"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/etState"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -119,9 +125,9 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etCountry"
         android:layout_width="match_parent"
         android:layout_height="39dp"
-        android:id="@+id/etCountry"
         android:layout_marginTop="5dp"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
@@ -147,8 +153,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/yes"
-            app:buttonTint="@color/red_a"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            app:buttonTint="@color/red_a" />
 
         <RadioButton
             android:id="@+id/rbNoDeliver"
@@ -156,9 +162,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/no"
-            app:buttonTint="@color/red_a"
             android:textColor="@color/black"
-          />
+            app:buttonTint="@color/red_a" />
 
 
     </LinearLayout>
@@ -174,12 +179,13 @@
         android:textSize="14sp" />
 
     <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etKm"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
-        android:id="@+id/etKm"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:inputType="numberDecimal"
         android:textColor="@color/disabled_text"
-        android:textColorHint="@color/disabled_text" /></LinearLayout>
+        android:textColorHint="@color/disabled_text" />
+</LinearLayout>

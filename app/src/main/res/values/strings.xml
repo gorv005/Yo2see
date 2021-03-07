@@ -39,6 +39,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="error_mobile_not_validation">Mobile number digits should be equal to 10 digit</string>
     <string name="error_password_not_validation"><![CDATA[Password should have !, @, #, $, & one of these special character]]></string>
+    <string name="welcome_">Welcome!</string>
 
     <string-array name="buy">
         <item>Buy</item>
@@ -115,16 +116,16 @@
     <string name="for_the_best_viewing_please_upload">For best viewing please upload High quality images of your product</string>
     <string name="are_you_open_to_negotiation">Are you open to negotiation?</string>
     <string name="please_set_your_address">Please set your address</string>
-    <string name="user_my_current_location">Use my current location></string>
+    <string name="user_my_current_location">Use my current location</string>
     <string name="city">City</string>
     <string name="pincode">Pincode</string>
     <string name="state">State/Provence</string>
     <string name="country">country</string>
     <string name="are_you_open_to_deliver">Are you open to deliver</string>
     <string name="up_till_what_km">up till what km would you deliver</string>
-    <string name="poster_infomation">Poster Information</string>
+    <string name="poster_infomation">Posters Information</string>
     <string name="has_been_part_ayo2see">Has been a part of YO2SEE since a year</string>
-    <string name="view_profile">View Profile></string>
+    <string name="view_profile">View Profile</string>
     <string name="add_listing">Add Listing</string>
     <string name="product_details">Product details</string>
     <string name="set_rent_term_and_condition">Set rent terms and conditions</string>
@@ -143,4 +144,27 @@
     <string name="title_camera">Camera</string>
     <string name="title_gallery">Gallery</string>
     <string name="select_images">Select Images</string>
+    <string name="this_profile_is_authenticated">This profile is Authenticated</string>
+    <string name="renting_term_condition"><![CDATA[Renting terms  & condition]]></string>
+    <string name="image_validation">Maximum 8 images can be selected</string>
+    <string name="my_yo2see">My YO2SEE</string>
+    <string name="my_account">My Account</string>
+    <string name="news">News</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout/ Change Account</string>
+    <string name="my_posts">My Posts</string>
+    <string name="add_new_post">Add New Post</string>
+    <string name="current_post">Current Posts</string>
+    <string name="previous_posts">Previous Posts</string>
+    <string name="our_story">Our Story</string>
+    <string name="carrers">Careers</string>
+    <string name="services">Services</string>
+    <string name="support">Support</string>
+    <string name="please_enter_otp">Please enter OTP sent on your \n mobile number</string>
+    <string name="submit">Submit</string>
+    <string name="get_otp">GET OTP</string>
+    <string name="once_your_enter_your_information">Once you enter your information you will\nreceive an OTP on your mentioned phone number</string>
+    <string name="select_an_account_type">Select account type</string>
+    <string name="private_">Private</string>
+    <string name="business">Business</string>
 </resources>

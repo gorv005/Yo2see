@@ -23,6 +23,10 @@ interface AddProductRepository {
                       type: RequestBody,
                      images: MultipartBody.Part
     ) : Single<UploadImageResponse>
+    fun getUser( service: String,
+                      user_id: String
+    ) : Single<LoginResponsePayload>
+
     fun addProduct(service: String,
                    category_id: String,
                    sub_cat_id: String,

@@ -10,6 +10,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.login.LoginActivity
+import com.dartmic.yo2see.ui.otp.OtpVerifyActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
@@ -42,6 +43,7 @@ class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel:
     }
     fun doRegister() {
 
+
         this?.let { UiUtils.hideSoftKeyboard(it) }
 
         val validateMobileError = AndroidUtils.mobilePasswordValidation(etPhonenumber.text.toString())
@@ -57,7 +59,12 @@ class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel:
             && TextUtils.isEmpty(validateMatchPasswordError)
 
         ) {
-            if (NetworkUtil.isInternetAvailable(this)) {
+            let {
+                startActivity(OtpVerifyActivity.getIntent(it,"User Signup",etPhonenumber.text.toString(),
+                    etFirstName.text.toString(),
+                    etEmail.text.toString(),etPassword.text.toString(),"12345","12345","12345","12345"))
+            }
+           /* if (NetworkUtil.isInternetAvailable(this)) {
                 model.register(
                     "User Signup",
                     etPhonenumber.text.toString(),
@@ -66,7 +73,7 @@ class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel:
                     etPassword.text.toString(),
                     "12345","12345","12345","12345"
                 )
-            }
+            }*/
 
         } else {
             etPhonenumber.error = validateMobileError

@@ -15,7 +15,7 @@ class ExploreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_explore)
         btnExplore.setOnClickListener {
             let {
-                startActivity(LoginActivity.getIntent(it))
+                startActivity(LandingActivity.getIntent(it,1))
             }
         }
     }

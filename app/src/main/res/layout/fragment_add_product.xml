@@ -156,88 +156,207 @@
                         android:layout_width="match_parent"
                         android:layout_height="90dp">
 
+                        <RelativeLayout
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/image_round_corner_bg"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
                         <ImageView
                             android:adjustViewBounds="true"
                             android:scaleType="centerCrop"
                             android:id="@+id/ivProduct1"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                            android:layout_width="65dp"
+                            android:layout_centerInParent="true"
+                            android:layout_height="65dp"
+                             />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove1"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                        <ImageView
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/ivProduct2"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="20dp"
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/image_round_corner_bg"
                             android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct2"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove2"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                        <ImageView
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/ivProduct3"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                        </RelativeLayout>
 
-                        <ImageView
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/ivProduct4"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="20dp"
+                        <RelativeLayout
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/image_round_corner_bg"
                             android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct3"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove3"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:background="@drawable/image_round_corner_bg"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct4"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove4"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp">
 
-                        <ImageView
-                            android:id="@+id/ivProduct5"
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
+                        <RelativeLayout
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/image_round_corner_bg"
                             android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct5"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove5"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                        <ImageView
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/ivProduct6"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                        </RelativeLayout>
 
-                        <ImageView
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/ivProduct7"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="20dp"
+                        <RelativeLayout
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/image_round_corner_bg"
                             android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct6"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove6"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-                        <ImageView
-                            android:adjustViewBounds="true"
-                            android:scaleType="centerCrop"
-                            android:id="@+id/ivProduct8"
-                            android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_marginStart="20dp"
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/image_round_corner_bg"
                             android:layout_weight="1"
-                            android:background="@drawable/edit_text_round_corner_bg" />
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct7"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove7"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:background="@drawable/image_round_corner_bg"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="80dp">
+                            <ImageView
+                                android:adjustViewBounds="true"
+                                android:scaleType="centerCrop"
+                                android:id="@+id/ivProduct8"
+                                android:layout_width="65dp"
+                                android:layout_centerInParent="true"
+                                android:layout_height="65dp"
+                                />
+                            <ImageView
+                                android:visibility="gone"
+                                android:id="@+id/ivRemove8"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentEnd="true"
+                                app:srcCompat="@drawable/ic_baseline_cancel_24"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </RelativeLayout>
                     </LinearLayout>
 
                 </LinearLayout>

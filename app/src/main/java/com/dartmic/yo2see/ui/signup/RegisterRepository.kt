@@ -1,7 +1,7 @@
 package com.gsa.ui.register
 
 
-
+import com.dartmic.yo2see.model.signUp.OTPResponsePayload
 import com.dartmic.yo2see.model.signUp.RegisterResponsePayload
 import io.reactivex.Single
 
@@ -17,6 +17,13 @@ interface RegisterRepository {
         longi: String
     ): Single<RegisterResponsePayload>
 
+    fun getOtp(
+        service: String, phone: String
+    ): Single<OTPResponsePayload>
+
+    fun verifyOtp(
+        service: String, phone: String,otp:String
+    ): Single<OTPResponsePayload>
 
 
 }

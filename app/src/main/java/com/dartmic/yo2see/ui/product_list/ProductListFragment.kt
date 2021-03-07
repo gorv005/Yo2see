@@ -2,9 +2,7 @@ package com.dartmic.yo2see.ui.product_list
 
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import androidx.core.content.ContextCompat
@@ -15,12 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
-import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.model.product.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
-import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.util.UiUtils
@@ -83,7 +79,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         init()
         rvProductList.layoutManager = manager
         activity?.let {
-            adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue)
+            adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue,type!!)
 
         }
         rvProductList.adapter = adapterProductList

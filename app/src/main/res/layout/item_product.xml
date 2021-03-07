@@ -55,6 +55,7 @@
             android:text="Grid View Item"
             android:textColor="@color/black"
             android:textSize="14sp"
+            android:maxLines="2"
             android:fontFamily="@font/poppins_regular" />
         <TextView
             android:id="@+id/tvAddress"

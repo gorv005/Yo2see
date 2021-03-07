@@ -87,6 +87,7 @@
                 </com.dartmic.yo2see.utils.NoScrollExListView>
             </LinearLayout>
             <ImageView
+                android:id="@+id/ivLogo"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="100dp"

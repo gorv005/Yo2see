@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
@@ -53,11 +54,15 @@ class AdapterHomeData(
             itemView.tvEventName?.text = allProducts.categoryName
             // itemView.ivEvents.setImageResource(allProducts.image!!)
             itemView.rlCategoryBack.setBackgroundResource(back)
-            ImageRequestManager.with(itemView.ivEvents)
+            Glide.with(activity).load(allProducts.catImage)
+                .placeholder(R.drawable.ic_clothing_white)
+                .into(itemView.ivEvents)
+
+         /*   ImageRequestManager.with(itemView.ivEvents)
                 .url(allProducts.catImage)
                 .setPlaceholderImage(R.drawable.ic_clothing_white)
-                .setScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-                .build()
+                .setScaleType(ScalingUtils.ScaleType.FIT_XY)
+                .build()*/
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
                     allProducts,

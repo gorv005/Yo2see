@@ -29,6 +29,10 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
         return restApi.uploadImage(service, user_id, type, images)
     }
 
+    override fun getUser(service: String, user_id: String): Single<LoginResponsePayload> {
+        return restApi.getUserList(service, user_id)
+    }
+
     override fun addProduct(
         service: String,
         category_id: String,

@@ -9,46 +9,46 @@ import com.dartmic.yo2see.utils.Config
 class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
 
 
-
     fun saveUserData(user: UserList?) {
         savePreference(Config.SharedPreferences.PROPERTY_USER_ID, user?.userId)
         savePreference(Config.SharedPreferences.PROPERTY_USER_NAME, user?.name)
         savePreference(Config.SharedPreferences.PROPERTY_USER_EMAIL, user?.email)
         savePreference(Config.SharedPreferences.PROPERTY_USER_PHONE, user?.phone)
+        savePreference(Config.SharedPreferences.PROPERTY_LOGIN_PREF, true)
 
     }
-   /* @SuppressLint("ApplySharedPref")
-    fun logOut() {
-        val fcmToken = getStringPreference(PROPERTY_FCM_REGISTRATION_TOKEN)
+    /* @SuppressLint("ApplySharedPref")
+     fun logOut() {
+         val fcmToken = getStringPreference(PROPERTY_FCM_REGISTRATION_TOKEN)
 
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        commitChangesInEditor(editor)
+         val editor = sharedPreferences.edit()
+         editor.clear()
+         commitChangesInEditor(editor)
 
-        savePreference(PROPERTY_FCM_REGISTRATION_TOKEN, fcmToken)
-    }*/
+         savePreference(PROPERTY_FCM_REGISTRATION_TOKEN, fcmToken)
+     }*/
 
 
-   /* fun loginUser(token: String?, user: User?,isRemember :Boolean) {
-        savePreference(Config.SharedPreferences.PROPERTY_JWT_TOKEN, token)
-        user?.let { saveUserData(it) }
-        savePreference(Config.SharedPreferences.PROPERTY_LOGIN_PREF, isRemember)
-    }
-*/
-
+    /* fun loginUser(token: String?, user: User?,isRemember :Boolean) {
+         savePreference(Config.SharedPreferences.PROPERTY_JWT_TOKEN, token)
+         user?.let { saveUserData(it) }
+         savePreference(Config.SharedPreferences.PROPERTY_LOGIN_PREF, isRemember)
+     }
+ */
 
 
     fun saveUserImage(userImage: String?) {
- //       savePreference(Config.SharedPreferences.PROPERTY_USER_IMAGE, userImage)
+        //       savePreference(Config.SharedPreferences.PROPERTY_USER_IMAGE, userImage)
     }
 
-  //  fun isUserFBLoggedIn() = getBooleanPreference(Config.SharedPreferences.PROPERTY_USER_IS_FB_LOGIN)
+    //  fun isUserFBLoggedIn() = getBooleanPreference(Config.SharedPreferences.PROPERTY_USER_IS_FB_LOGIN)
     fun isUserLoggedIn() = getBooleanPreference(Config.SharedPreferences.PROPERTY_LOGIN_PREF)
     fun getLoggedInUserName() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_NAME)
     fun getLoggedInUserEmail() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_EMAIL)
- //   fun getLoggedInUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
- //   fun getLoggedInUserImageThumb() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE_THUMB)
-    fun getLoggedInUserId() = getIntPreference(Config.SharedPreferences.PROPERTY_USER_ID)
+
+    //   fun getLoggedInUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
+    //   fun getLoggedInUserImageThumb() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE_THUMB)
+    fun getLoggedInUserId() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_ID)
 
 
     val sharedPreferences = context.getSharedPreferences(
@@ -77,7 +77,8 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
     fun getStringPreference(prefName: String, defaultValue: String? = null): String? =
         sharedPreferences.getString(prefName, defaultValue)
 
-    fun getIntPreference(prefName: String, defaultValue: Int = 0) = sharedPreferences.getInt(prefName, defaultValue)
+    fun getIntPreference(prefName: String, defaultValue: Int = 0) =
+        sharedPreferences.getInt(prefName, defaultValue)
 
     fun getBooleanPreference(prefName: String, defaultValue: Boolean = false) =
         sharedPreferences.getBoolean(prefName, defaultValue)
@@ -94,10 +95,11 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
 
     fun getDeviceTokenForFCM(): String? {
 
-        return getStringPreference(Config.SharedPreferences.PROPERTY_FCM_REGISTRATION_TOKEN,null)
+        return getStringPreference(Config.SharedPreferences.PROPERTY_FCM_REGISTRATION_TOKEN, null)
     }
-     fun getBearerToken(): String {
-        val token = sharedPreferences.getString(Config.SharedPreferences.PROPERTY_JWT_TOKEN,"")
+
+    fun getBearerToken(): String {
+        val token = sharedPreferences.getString(Config.SharedPreferences.PROPERTY_JWT_TOKEN, "")
         return "Bearer $token"
     }
 }

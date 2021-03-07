@@ -1,6 +1,9 @@
 package com.dartmic.yo2see.ui.product_list.adapter
 
 import android.app.Activity
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.UnderlineSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,28 +17,28 @@ import com.dartmic.yo2see.managers.ImageRequestManager
 import com.dartmic.yo2see.model.product.ListingItem
 import com.dartmic.yo2see.utils.Config
 import com.facebook.drawee.drawable.ScalingUtils
+import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.item_product.view.*
 
 
 class AdapterProductList(
     private val adapterViewClickListener: AdapterViewClickListener<ListingItem>?,
-    val activity: Activity, val back:Int
+    val activity: Activity, val back: Int, val type: Int
 ) : ListAdapter<ListingItem, AdapterProductList.ViewHolder>(
     AdapterProductListCallback()
-)
-{
+) {
     private var lastPosition = -1
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): AdapterProductList.ViewHolder {
         val itemView = LayoutInflater.from(
             parent.context
         ).inflate(R.layout.item_product, parent, false)
 
-      /*  val displayMetrics = DisplayMetrics()
-        activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val width = displayMetrics.widthPixels
+        /*  val displayMetrics = DisplayMetrics()
+          activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
+          val width = displayMetrics.widthPixels
 
-        itemView.layoutParams = RecyclerView.LayoutParams(width - (width / 5), RecyclerView.LayoutParams.WRAP_CONTENT)
-*/
+          itemView.layoutParams = RecyclerView.LayoutParams(width - (width / 5), RecyclerView.LayoutParams.WRAP_CONTENT)
+  */
 
         return ViewHolder(itemView, activity)
     }
@@ -47,8 +50,8 @@ class AdapterProductList(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), adapterViewClickListener,back)
-        setAnimation(holder.itemView,position)
+        holder.bind(getItem(position), adapterViewClickListener, back, type)
+        setAnimation(holder.itemView, position)
     }
 
     private fun setAnimation(viewToAnimate: View, position: Int) {
@@ -58,24 +61,39 @@ class AdapterProductList(
                 AnimationUtils.loadAnimation(activity, R.anim.slide_left_to_right)
             viewToAnimate.startAnimation(animation)
             lastPosition = position
-        }else{
+        } else {
             val animation: Animation =
                 AnimationUtils.loadAnimation(activity, R.anim.slide_in_from_right)
             viewToAnimate.startAnimation(animation)
             lastPosition = position
         }
     }
+
     class ViewHolder(itemView: View, val activity: Activity) : RecyclerView.ViewHolder(itemView) {
 
 
-        fun bind(allProducts: ListingItem, adapterViewClick: AdapterViewClickListener<ListingItem>?,back: Int) {
-
-            itemView.tvPrice?.text = allProducts.listingPrice
-            itemView.tvModel?.text = allProducts.listingTitle
-            itemView.tvAddress?.text = allProducts.listingAddress
+        fun bind(
+            allProducts: ListingItem,
+            adapterViewClick: AdapterViewClickListener<ListingItem>?,
+            back: Int, type: Int
+        ) {
+            if (type == Config.Constants.BARTER) {
+                itemView.tvPrice?.text = allProducts.barterText
+                itemView.tvModel?.text = "In exchange with " + allProducts.barterExchangeText
+            } else if (type == Config.Constants.RENT) {
+                itemView.tvPrice?.text = allProducts.payment + "/" + allProducts.rent_type
+                itemView.tvModel?.text = allProducts.listingTitle
+            } else {
+                itemView.tvPrice?.text = allProducts.listingPrice
+                itemView.tvModel?.text = allProducts.listingTitle
+            }
+            itemView.tvAddress?.text = allProducts.listingCity + ", " + allProducts.listingState
             itemView.tvDate?.text = allProducts.listingPublishDatetime
 
-           ImageRequestManager.with(itemView.imageProduct).url(allProducts.listingCoverImage)
+            val v = SpannableString( "View " + allProducts.userName + "'s listing")
+            v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            itemView.tvListing.text = v.toString()
+            ImageRequestManager.with(itemView.imageProduct).url(allProducts.listingCoverImage)
                 .setPlaceholderImage(R.drawable.download)
                 .setScaleType(ScalingUtils.ScaleType.FIT_XY)
                 .build()

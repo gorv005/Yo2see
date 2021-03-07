@@ -44,6 +44,9 @@ class ProductListRepositoryImpl(
             search_key
         )
     }
+    override fun getUser(service: String, user_id: String): Single<LoginResponsePayload> {
+        return restApi.getUserList(service, user_id)
+    }
 
     override fun getProductDetails(
         service: String,

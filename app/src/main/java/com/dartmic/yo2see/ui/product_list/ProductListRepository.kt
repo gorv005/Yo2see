@@ -10,6 +10,10 @@ import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import io.reactivex.Single
 
 interface ProductListRepository {
+    fun getUser( service: String,
+                 user_id: String
+    ) : Single<LoginResponsePayload>
+
     fun getProduct(
         service: String,
         category_id: String,

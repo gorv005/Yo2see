@@ -1,12 +1,20 @@
 package com.dartmic.yo2see.ui.addProduct
 
+import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.*
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,6 +26,7 @@ import com.dartmic.yo2see.interfaces.ResultListener
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.add_product.ImageItem
 import com.dartmic.yo2see.model.add_product.RentTypeResponse
+import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
@@ -32,12 +41,14 @@ import kotlinx.android.synthetic.main.layout_set_barter_info.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_payment.*
 import kotlinx.android.synthetic.main.layout_set_rent_sell_info.*
+import kotlinx.android.synthetic.main.layout_set_user_info.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONArray
 import java.io.File
 import java.io.FileNotFoundException
+import java.lang.Exception
 import java.util.*
 
 
@@ -51,7 +62,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [AddProductFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class) {
+class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class),
+    LocationListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -62,9 +74,16 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     private var isNagotiable: String? = ""
     private var isOpenTodeliver: String? = ""
     private var count: Int = 0
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+    var mprovider: String? = null
+    var isLocationClicked: Boolean = false
+
     var imageListURLs: java.util.ArrayList<String>? = null
     var rentTypeList: java.util.ArrayList<RentTypeResponse>? = null
-
+    lateinit var userList: UserList
+    private lateinit var locationManager: LocationManager
+    private val locationPermissionCode = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ImageList = java.util.ArrayList()
@@ -86,6 +105,20 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         init()
         subscribeLoading()
         subscribeUi()
+        getUser()
+
+        locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            OnGPS()
+        } else {
+            getLocation()
+        }
+        isLocationClicked = false
+        tvUseCurrentLocation.setOnClickListener {
+            isLocationClicked = true
+            getAddress()
+        }
         saveProductBtn.setOnClickListener {
             imageListURLs?.clear()
             showProgressDialog()
@@ -99,19 +132,29 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     }
 
 
+    fun getUser() {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            //  listingType = "Rent"
+
+            model.getUser(
+                "User List", "" + model?.getUserID()
+            )
+        }
+    }
+
     fun addProduct() {
         val imageArray = JSONArray(imageListURLs)
         rentTypeList?.clear()
-        if(checkboxWeekly.isChecked){
+        if (checkboxWeekly.isChecked) {
             rentTypeList?.add(RentTypeResponse("Weekly", etWeekly.text.toString()))
         }
-        if(checkboxHourly.isChecked){
+        if (checkboxHourly.isChecked) {
             rentTypeList?.add(RentTypeResponse("Hourly", etHourly.text.toString()))
         }
-        if(checkboxMonthly.isChecked){
+        if (checkboxMonthly.isChecked) {
             rentTypeList?.add(RentTypeResponse("Monthly", etMonthly.text.toString()))
         }
-        if(checkboxYearly.isChecked){
+        if (checkboxYearly.isChecked) {
             rentTypeList?.add(RentTypeResponse("Yearly", etYearly.text.toString()))
         }
 
@@ -146,11 +189,11 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 etKm.text.toString(),
                 "",
                 "",
-                "1",
+                model.getUserID()!!,
                 imageArray,
                 rentArray,
-                "222",
-                "255",
+                "" + latitude,
+                "" + longitude,
                 "",
                 "",
                 "",
@@ -181,11 +224,11 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 etKm.text.toString(),
                 "",
                 "",
-                "1",
+                model.getUserID()!!,
                 imageArray,
                 rentArray,
-                "222",
-                "255",
+                "" + latitude,
+                "" + longitude,
                 "",
                 "",
                 "",
@@ -216,11 +259,11 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 etKm.text.toString(),
                 "",
                 "",
-                "1",
+                model.getUserID()!!,
                 imageArray,
                 rentArray,
-                "222",
-                "255",
+                "" + latitude,
+                "" + longitude,
                 etwhatWouldtoLiketoBarter.text.toString(),
                 etwhatWouldtoLiketoExchange.text.toString(),
                 etExchangeProductTitle.text.toString(),
@@ -247,33 +290,38 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     }
 
     private fun showImageProviderDialog() {
-        DialogHelper.showChooseAppDialog(activity!!, object : ResultListener<ImageProvider> {
-            override fun onResult(t: ImageProvider?) {
-                t?.let {
-                    if (t.equals(ImageProvider.CAMERA)) {
-                        ImagePicker.with(activity!!)
-                            .crop()
-                            .cameraOnly()                    //Crop image(Optional), Check Customization for more option
-                            .compress(1024)     //Final image size will be less than 1 MB(Optional).maxResultSize(
-                            /*.maxResultSize(
+        if (ImageList?.size == 8) {
+            showSnackbar(AndroidUtils.getString(R.string.image_validation), false)
+        } else {
+            DialogHelper.showChooseAppDialog(activity!!, object : ResultListener<ImageProvider> {
+                override fun onResult(t: ImageProvider?) {
+                    t?.let {
+                        if (t.equals(ImageProvider.CAMERA)) {
+                            ImagePicker.with(activity!!)
+                                .crop()
+                                .cameraOnly()                    //Crop image(Optional), Check Customization for more option
+                                .compress(1024)     //Final image size will be less than 1 MB(Optional).maxResultSize(
+                                /*.maxResultSize(
                                 1080,
                                 1080
                             )  */ //Final image resolution will be less than 1080 x 1080(Optional)
-                            .start()
-                    } else {
-                        val intent = Intent(activity, Gallery::class.java)
+                                .start()
+                        } else {
+                            val m = 8 - ImageList?.size!!
+                            val intent = Intent(activity, Gallery::class.java)
 // Set the title for toolbar
-                        intent.putExtra("title", AndroidUtils.getString(R.string.select_images))
+                            intent.putExtra("title", AndroidUtils.getString(R.string.select_images))
 // Mode 1 for both images and videos selection, 2 for images only and 3 for videos!
-                        intent.putExtra("mode", 2)
-                        intent.putExtra("maxSelection", 8) // Optional
-                        startActivityForResult(intent, OPEN_MEDIA_PICKER_IMAGE_GALLRY)
+                            intent.putExtra("mode", 2)
+                            intent.putExtra("maxSelection", m) // Optional
+                            startActivityForResult(intent, OPEN_MEDIA_PICKER_IMAGE_GALLRY)
+
+                        }
 
                     }
-
                 }
-            }
-        })
+            })
+        }
     }
 
     private fun subscribeLoading() {
@@ -307,6 +355,15 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 } else {
                     uploadImage()
                 }
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
+        model.userViewModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+                userList = it?.userList!!
+                tvUserName.text = userList?.name
             } else {
                 showSnackbar(it.message, false)
             }
@@ -394,27 +451,57 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     }
 
     fun showImages() {
+        ivProduct1.setImageURI(null)
+        ivProduct2.setImageURI(null)
+        ivProduct3.setImageURI(null)
+        ivProduct4.setImageURI(null)
+        ivProduct5.setImageURI(null)
+        ivProduct6.setImageURI(null)
+        ivProduct7.setImageURI(null)
+        ivProduct8.setImageURI(null)
+        ivRemove1.visibility=View.GONE
+        ivRemove2.visibility=View.GONE
+        ivRemove3.visibility=View.GONE
+        ivRemove4.visibility=View.GONE
+        ivRemove5.visibility=View.GONE
+        ivRemove6.visibility=View.GONE
+        ivRemove7.visibility=View.GONE
+        ivRemove8.visibility=View.GONE
+
         when (ImageList?.size) {
+
 
             1 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
 
             }
             2 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
                 ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
 
             }
             3 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
                 ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
                 ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
+                ivRemove3.visibility=View.VISIBLE
+
             }
             4 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
                 ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
                 ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
                 ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
+                ivRemove3.visibility=View.VISIBLE
+                ivRemove4.visibility=View.VISIBLE
+
             }
             5 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
@@ -422,6 +509,11 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
                 ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
                 ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
+                ivRemove3.visibility=View.VISIBLE
+                ivRemove4.visibility=View.VISIBLE
+                ivRemove5.visibility=View.VISIBLE
 
             }
             6 -> {
@@ -431,6 +523,12 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
                 ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
                 ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
+                ivRemove3.visibility=View.VISIBLE
+                ivRemove4.visibility=View.VISIBLE
+                ivRemove5.visibility=View.VISIBLE
+                ivRemove6.visibility=View.VISIBLE
 
             }
             7 -> {
@@ -441,6 +539,13 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
                 ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
                 ivProduct7.setImageURI(ImageList?.get(6)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
+                ivRemove3.visibility=View.VISIBLE
+                ivRemove4.visibility=View.VISIBLE
+                ivRemove5.visibility=View.VISIBLE
+                ivRemove6.visibility=View.VISIBLE
+                ivRemove7.visibility=View.VISIBLE
 
             }
             8 -> {
@@ -452,6 +557,15 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
                 ivProduct7.setImageURI(ImageList?.get(6)?.fileUrl)
                 ivProduct8.setImageURI(ImageList?.get(7)?.fileUrl)
+                ivRemove1.visibility=View.VISIBLE
+                ivRemove2.visibility=View.VISIBLE
+                ivRemove3.visibility=View.VISIBLE
+                ivRemove4.visibility=View.VISIBLE
+                ivRemove5.visibility=View.VISIBLE
+                ivRemove6.visibility=View.VISIBLE
+                ivRemove7.visibility=View.VISIBLE
+                ivRemove8.visibility=View.VISIBLE
+
             }
         }
     }
@@ -547,9 +661,9 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 layout_barter_info.visibility = View.VISIBLE
                 layout_payment.visibility = View.GONE
 
-                tvSelectItemCondition.visibility=View.VISIBLE
-                tvSelectItemConditionHelperText.visibility=View.VISIBLE
-                etSelectItemCondition.visibility=View.VISIBLE
+                tvSelectItemCondition.visibility = View.VISIBLE
+                tvSelectItemConditionHelperText.visibility = View.VISIBLE
+                etSelectItemCondition.visibility = View.VISIBLE
 
                 ivCurveAddProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.yellow1)
@@ -574,6 +688,10 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         ivProduct6.setOnClickListener { showImageProviderDialog() }
         ivProduct7.setOnClickListener { showImageProviderDialog() }
         ivProduct8.setOnClickListener { showImageProviderDialog() }
+        ivRemove1.setOnClickListener {
+            ImageList?.removeAt(0)
+            showImages()
+        }
 
     }
 
@@ -629,6 +747,126 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         }
     }
 
-    override fun getLayoutId() = R.layout.fragment_add_product
+    private fun getLocation() {
+        if (ActivityCompat.checkSelfPermission(
+                activity!!, Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                activity!!, Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                activity!!,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationPermissionCode
+            )
+        } else {
+            val criteria = Criteria()
 
+            mprovider = locationManager.getBestProvider(criteria, false)
+            if (mprovider != null && !mprovider.equals("")) {
+                if (ActivityCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return
+                }
+                val location = locationManager.getLastKnownLocation(mprovider)
+                locationManager?.requestLocationUpdates(mprovider, 5000, 5.0f, this)
+                if (location != null)
+                    onLocationChanged(location)
+
+            }
+            val locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (locationGPS != null) {
+                val lat = locationGPS.latitude
+                val longi = locationGPS.longitude
+                latitude = lat
+                longitude = longi
+                getAddress()
+            } else {
+                Toast.makeText(activity!!, "Unable to find location.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun getLayoutId() = R.layout.fragment_add_product
+    override fun onLocationChanged(location: Location?) {
+        latitude = location?.latitude!!
+        longitude = location?.longitude!!
+        getAddress()
+
+    }
+
+    private fun OnGPS() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
+        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes",
+            DialogInterface.OnClickListener { dialog, which -> startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)) })
+            .setNegativeButton("No",
+                DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    fun getAddress() {
+        if (isLocationClicked) {
+
+            try {
+                val geocoder: Geocoder
+                val addresses: List<Address>
+                geocoder = Geocoder(activity, Locale.getDefault())
+
+                addresses = geocoder.getFromLocation(
+                    latitude,
+                    longitude,
+                    1
+                ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+
+                val address: String =
+                    addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+
+                val city: String = addresses[0].getLocality()
+                val state: String = addresses[0].getAdminArea()
+                val country: String = addresses[0].getCountryName()
+                val postalCode: String = addresses[0].getPostalCode()
+                //  val knownName: String = addresses[0].getFeatureName()
+
+                etAddressOne.setText(address)
+                etCity.setText(city)
+                etState.setText(state)
+                etCountry.setText(country)
+                etPincode.setText(postalCode)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+    }
+
+    override fun onProviderEnabled(provider: String?) {
+    }
+
+    override fun onProviderDisabled(provider: String?) {
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == locationPermissionCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getLocation()
+                //    Toast.makeText(activity, "Permission Granted", Toast.LENGTH_SHORT).show()
+            } else {
+                //   Toast.makeText(activity, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }

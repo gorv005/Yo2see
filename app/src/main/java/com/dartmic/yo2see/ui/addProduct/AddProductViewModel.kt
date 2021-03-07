@@ -33,6 +33,54 @@ class AddProductViewModel(
     val uploadImageModel = MutableLiveData<UploadImageResponse>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
     val addProductModel = MutableLiveData<AddProdcutResponse>()
+    val userViewModel = MutableLiveData<LoginResponsePayload>()
+
+
+
+    fun getUser(
+        service: String,
+        user_id: String
+    ) {
+        //   searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.getUser(service, user_id)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    userViewModel.value = it
+                    /*     searchEvent.value =
+                             SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)*/
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            userViewModel.value =
+                                Gson().fromJson(error, LoginResponsePayload::class.java)
+                            /* searchEvent.value =
+                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+ */
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
 
     fun uploadImage(
         service: RequestBody,
@@ -181,8 +229,8 @@ class AddProductViewModel(
         }
     }
 
-    public fun saveUserDetail(user: UserList?) {
-        pre.saveUserData(user)
+    public fun getUserID() :String?{
+       return pre.getLoggedInUserId()
     }
 
 }

@@ -52,7 +52,6 @@ class PostAnAddFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel:
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var adapterEvents: AdapterHomeEvents? = null
     private var adapterCategory: AdapterCategories? = null
     internal var adapter: ExpandableListAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,7 +73,13 @@ class PostAnAddFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel:
         ivBackAddanPost.setOnClickListener {
             activity?.onBackPressed()
         }
+        ivLogo.setOnClickListener {
+            activity?.let {
+                (activity as LandingActivity).switchToHome()
 
+            }
+
+        }
         subscribeUi()
         subscribeLoading()
         getCategoryData()
@@ -161,8 +166,15 @@ class PostAnAddFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel:
                 View.VISIBLE
             )
         }
+        activity?.let {
+            (activity as LandingActivity).updateStatusBarColor(
+                AndroidUtils.getColor(R.color.red_a),
+                2
+            )
+        }
 
     }
+
 
     override fun getLayoutId() = R.layout.fragment_post_an_add
     override fun onClickAdapterView(

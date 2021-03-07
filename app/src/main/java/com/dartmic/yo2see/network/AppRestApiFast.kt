@@ -10,6 +10,7 @@ import com.dartmic.yo2see.model.categories.FeatureListResponse
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.signUp.OTPResponsePayload
 import com.dartmic.yo2see.model.signUp.RegisterResponsePayload
 import com.dartmic.yo2see.utils.Config
 import io.reactivex.Single
@@ -93,6 +94,12 @@ interface AppRestApiFast {
 
 
     @FormUrlEncoded
+    @POST(Config.Endpoints.GET_USER_DATA_API)
+    fun getUserList(
+        @Field("service") service: String,@Field("user_id") user_id: String
+    ): Single<LoginResponsePayload>
+
+    @FormUrlEncoded
     @POST(Config.Endpoints.PRODUCT_ADD_API)
     fun addProdcut(
         @Field("service") service: String,
@@ -138,6 +145,22 @@ interface AppRestApiFast {
         @Field("user_id") user_id: String,
         @Field("id") id: String
     ): Single<ProductDetailResponsePayload>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.GET_OTP)
+    fun getOTP(
+        @Field("service") service: String,
+        @Field("phone") phone: String
+    ): Single<OTPResponsePayload>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.VERIFY_OTP)
+    fun verifyOTP(
+        @Field("service") service: String,
+        @Field("phone") phone: String,
+        @Field("otp") otp: String
+
+    ): Single<OTPResponsePayload>
 
 }
 

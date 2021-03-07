@@ -22,10 +22,69 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_yo2see_logo"
             android:text="@string/mobile_and_accessories" />
-
+        <TextView
+            android:id="@+id/tvSelectType"
+            android:layout_below="@+id/ivLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingLeft="40dp"
+            android:paddingEnd="10dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/select_an_account_type"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
         <LinearLayout
-            android:layout_below="@id/ivLogo"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/tvSelectType"
+            android:id="@+id/llBusinessType"
+            android:orientation="horizontal"
+            android:padding="1dp"
+            android:background="@drawable/account_type_red_bg"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <RelativeLayout
+                android:background="@color/red_a"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/private_"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:background="@color/light_red"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_centerInParent="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/business"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/llBusinessType"
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -173,6 +232,19 @@
                 android:textSize="16sp" tools:ignore="UnusedAttribute"/>
 
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingLeft="40dp"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:paddingEnd="10dp"
+                android:lineSpacingExtra="0.5dp"
+                android:text="@string/once_your_enter_your_information"
+                android:textColor="@color/grey"
+                android:textSize="14sp" />
 
             <CheckBox
                 android:layout_marginTop="20dp"
@@ -191,8 +263,7 @@
                 android:layout_marginTop="@dimen/margin5x3"
                 android:background="@drawable/rounded_corners_app_button_bg"
                 android:fontFamily="@font/poppins_regular"
-                android:text="@string/create_account"
-                android:textAllCaps="false"
+                android:text="@string/get_otp"
                 android:textColor="@color/white"
                 android:textSize="19sp"
                 app:layout_constraintEnd_toEndOf="parent"

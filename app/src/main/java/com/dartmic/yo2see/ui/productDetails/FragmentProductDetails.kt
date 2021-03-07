@@ -1,11 +1,9 @@
 package com.dartmic.yo2see.ui.productDetails
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
@@ -21,8 +19,10 @@ import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
+import kotlinx.android.synthetic.main.layout_set_user_info_product_detail.*
 import org.jetbrains.anko.backgroundColor
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
+import java.lang.StringBuilder
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,7 +64,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             //  listingType = "Rent"
 
             model.getProductDetails(
-                "Detail", "1", "" + listingItem.id
+                "Detail", model.getUserID()!!, listingItem.id
             )
         }
     }
@@ -101,20 +101,49 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
                     //    setSlideBorderMode(AutoScrollViewPager.SlideBorderMode.TO_PARENT)
                     // startAutoScroll()
                 }
-                if(it?.detail?.get(0)?.negotiationType.equals("yes")){
-                    llNagotiation.visibility=View.VISIBLE
-                }else{
-                    llNagotiation.visibility=View.INVISIBLE
+                if (it?.detail?.get(0)?.negotiationType.equals("yes")) {
+                    llNagotiation.visibility = View.VISIBLE
+                } else {
+                    llNagotiation.visibility = View.INVISIBLE
                 }
-             //   if (type?.equals(Config.Constants.SELL)!!) {
+                tvAddress.setText(it?.detail?.get(0)?.listingCity + ", " + it?.detail?.get(0)?.listingState)
+
+                if (type?.equals(Config.Constants.BARTER)!!) {
+                    tvProductName.setText(it?.detail?.get(0)?.barterProductTitle)
+                    tvPrice.setText(it?.detail?.get(0)?.barterText)
+                    tvModel.setText("In exchange with " + it?.detail?.get(0)?.barterExchangeText)
+                    tvDesc.setText(it?.detail?.get(0)?.barterProductDesc)
+                    tvDetails.setText(it?.detail?.get(0)?.barterAdditionalText)
+                    tvUserName.text = it?.loginUserDetails?.get(0)?.userName
+                    tvRentTermAndCondition.visibility = View.GONE
+                    tvRentTermAndConditionValue.visibility = View.GONE
+                } else if (type?.equals(Config.Constants.RENT)!!) {
                     tvProductName.setText(it?.detail?.get(0)?.listingTitle)
-                    tvAddress.setText(it?.detail?.get(0)?.listingAddress)
+                    var r: String = ""
+                    for (i in it?.rentTypeList!!) {
+                        r = r + i.payment + "/" + i.rentType + "\n"
+                    }
+                    val ind: Int = r.lastIndexOf("\n")
+                    if (ind >= 0)
+                        r = StringBuilder(r).replace(ind, ind + 1, "").toString()
+                    tvPrice.setText(
+                        r
+                    )
+                    tvModel.setText(it?.detail?.get(0)?.listingTitle)
+                    tvDesc.setText(it?.detail?.get(0)?.listingDescription)
+                    tvDetails.setText(it?.detail?.get(0)?.rentProductDetail)
+                    tvUserName.text = it?.loginUserDetails?.get(0)?.userName
+                    tvRentTermAndConditionValue.text = it?.detail?.get(0)?.rentTermsAndCondition
+                } else {
+                    tvProductName.setText(it?.detail?.get(0)?.listingTitle)
                     tvPrice.setText(it?.detail?.get(0)?.listingPrice)
                     tvModel.setText(it?.detail?.get(0)?.listingTitle)
                     tvDesc.setText(it?.detail?.get(0)?.listingDescription)
                     tvDetails.setText(it?.detail?.get(0)?.rentProductDetail)
-
-             //   }
+                    tvUserName.text = it?.loginUserDetails?.get(0)?.userName
+                    tvRentTermAndCondition.visibility = View.GONE
+                    tvRentTermAndConditionValue.visibility = View.GONE
+                }
             } else {
                 showSnackbar(it.message, false)
             }
@@ -136,6 +165,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             init()
             subscribeUi()
             subscribeLoading()
+            tvUserName.setText(listingItem.userName)
             getProductDetails()
 
 
@@ -168,6 +198,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
         when (type) {
             Config.Constants.SELL -> {
 
+                rluserInfo.setBackgroundResource(R.drawable.edit_text_corner_blue_bg)
                 ivCurveProductDetails.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue1)
                 )
@@ -178,6 +209,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             }
             Config.Constants.RENT -> {
 
+                rluserInfo.setBackgroundResource(R.drawable.edit_text_corner_voilet_bg)
 
                 ivCurveProductDetails.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.voilet)
@@ -188,6 +220,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
 
             }
             Config.Constants.BARTER -> {
+                rluserInfo.setBackgroundResource(R.drawable.edit_text_corner_yellow_bg)
 
                 ivCurveProductDetails.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.yellow1)
@@ -197,6 +230,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
 
             }
             Config.Constants.POST -> {
+                rluserInfo.setBackgroundResource(R.drawable.edit_text_corner_light_bg)
 
                 ivCurveProductDetails.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue)

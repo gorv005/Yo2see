@@ -114,8 +114,12 @@ dependencies {
     implementation 'com.github.florent37:viewanimator:1.1.0'
     implementation 'com.github.pzienowicz:androidx-auto-scroll-view-pager:1.1.0'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+    implementation 'com.github.GoodieBag:Pinview:v1.4'
 
     //Images
     implementation 'com.github.dhaval2404:imagepicker:1.7.4'
     implementation 'com.github.WrathChaos:MediaPickerLib:0.2.0'
+//Location
+    implementation 'com.github.prabhat1707:EasyWayLocation:2.0'
+
 }

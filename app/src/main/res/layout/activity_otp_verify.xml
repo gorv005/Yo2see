@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="none"
+    android:background="@color/red_a"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/ivBackVerify"
+        android:padding="20dp"
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_left_arrow_white"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_lock_screen_blue"
+            android:text="@string/mobile_and_accessories" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="-100dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/ivLoginCart"
+            app:srcCompat="@drawable/ic_logo_white_without_triange" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:paddingLeft="40dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:paddingEnd="10dp"
+            android:text="@string/please_enter_otp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+        <com.goodiebag.pinview.Pinview
+            android:id="@+id/pinview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:pinWidth="50dp"
+            android:layout_marginTop="@dimen/et_height_30"
+            app:pinHeight="60dp"
+            app:pinLength="4"
+            app:cursorVisible="false"
+            app:forceKeyboard="true"
+            app:hint=""
+            app:inputType="text"
+            app:password="false"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="@dimen/et_height_30"
+            android:background="@drawable/rounded_corners_app_yellow_back"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/submit"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="19sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
+
+    </LinearLayout>
+</RelativeLayout>

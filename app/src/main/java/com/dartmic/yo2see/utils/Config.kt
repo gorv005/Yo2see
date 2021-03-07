@@ -53,6 +53,9 @@ class Config {
         const val UPLOAD_IMAGE_API = BASE_PATH + "common/upload_image"
         const val PRODUCT_ADD_API = BASE_PATH + "common/add_listing"
         const val PRODUCT_DETAILS_DATA_API = BASE_PATH + "common/listing_detail"
+        const val GET_USER_DATA_API = BASE_PATH + "user/getUser"
+        const val GET_OTP = BASE_PATH + "user/generateotp"
+        const val VERIFY_OTP = BASE_PATH + "user/validate_otp"
 
 
     }
@@ -70,6 +73,7 @@ class Config {
         const val PROPERTY_USER_EMAIL = "PROPERTY_USER_EMAIL" // user email
         const val PROPERTY_USER_TYPE = "PROPERTY_USER_TYPE" // user email
         const val PROPERTY_USER_PHONE = "PROPERTY_USER_PHONE" // user email
+        const val PROPERTY_IS_USER_LOGIN = "PROPERTY_IS_USER_LOGIN" // user email
 
 
         // notification

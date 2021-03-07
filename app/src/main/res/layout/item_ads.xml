@@ -52,11 +52,10 @@
             android:layout_height="70dp"
             android:elevation="8dp">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/ivCategory"
                 android:layout_centerInParent="true"
                 app:srcCompat="@drawable/books"
-                app:placeholderImage="@drawable/books"
                 android:layout_width="35dp"
                 android:layout_height="35dp"/>
         </RelativeLayout>

@@ -106,11 +106,11 @@
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="230dp">
+                android:layout_height="280dp">
                 <pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="230dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
@@ -118,7 +118,7 @@
                 <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
                     android:id="@+id/worm_dots_indicator"
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="15dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     app:layout_constraintTop_toBottomOf="@id/view_pager"
@@ -140,7 +140,6 @@
                 android:layout_marginTop="10dp"
                 android:text="$1000"
                 android:layout_marginStart="20dp"
-
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:fontFamily="@font/poppins_semibold" />
@@ -191,6 +190,31 @@
                 android:layout_marginStart="20dp"
 
                 android:fontFamily="@font/poppins_light" />
+            <TextView
+                android:id="@+id/tvRentTermAndCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="@string/renting_term_condition"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_semibold" />
+            <TextView
+                android:id="@+id/tvRentTermAndConditionValue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="color:black"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_light" />
+            <include  layout="@layout/layout_set_user_info_product_detail"/>
         </LinearLayout>
 
         <ImageView

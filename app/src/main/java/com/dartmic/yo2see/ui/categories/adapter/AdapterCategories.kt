@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
@@ -58,11 +59,13 @@ class AdapterCategories(
             itemView.rlCategoryBack.setBackgroundResource(back)
 
             itemView.gridview_text?.text = product.categoryName
-                ImageRequestManager.with(itemView.ivCategory).url(product.catImage)
+               /* ImageRequestManager.with(itemView.ivCategory).url(product.catImage)
                     .setPlaceholderImage(R.drawable.ic_clothing_white)
-                    .setScaleType(ScalingUtils.ScaleType.FIT_CENTER)
-                    .build()
-
+                    .setScaleType(ScalingUtils.ScaleType.FIT_XY)
+                    .build()*/
+            Glide.with(activity).load(product.catImage)
+                .placeholder(R.drawable.ic_clothing_white)
+                .into(itemView.ivCategory)
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
                     product,
