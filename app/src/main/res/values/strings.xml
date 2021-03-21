@@ -167,4 +167,41 @@
     <string name="select_an_account_type">Select account type</string>
     <string name="private_">Private</string>
     <string name="business">Business</string>
+    <string name="my_profile">My Profile</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="delete_profile">Delete profile</string>
+    <string name="edit_profile_information">Edit Profile Information</string>
+    <string name="upload_profile_image">Upload profile image</string>
+    <string name="profile_link">Profile link</string>
+    <string name="you_currently_connect">You currently connect using</string>
+    <string name="save_changes">Save changes</string>
+    <string name="facebook_app_id">1124731504657373</string>
+    <string name="fb_login_protocol_scheme">fb1124731504657373</string>
+    <string name="search_mobile">Search for mobiles, furniture\'s, post</string>
+    <string name="search_for_mobiles">Search for mobiles, tablets, housing, renting etc...</string>
+    <string name="add_location">Add location</string>
+    <string name="category_type">Category type</string>
+    <string name="apply">Apply</string>
+    <string name="account_type">Account type</string>
+    <string name="liked_post">Liked posts</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_password_request">Change password request</string>
+    <string name="please_change_your_password">Please reset your password\nyour password must be a combination of\ncapital letters, numbers and special characters</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password_">Confirm Password</string>
+    <string name="capital_letter">capital letters, numbers and special characters</string>
+    <string name="reset_my_password">Reset my password</string>
+    <string name="old_password">Old password</string>
+    <string name="hi_there">Hi there!</string>
+    <string name="we_will_be_sending">we will be sending you your change\npassword details on your email</string>
+    <string name="sign_in">Sign in</string>
+    <string name="did_you_recieve_email_yet">Did you receive your email yet</string>
+    <string name="click_here_toresend_email">CLICK HERE TO RESEND EMAIL</string>
+
+    <string-array name="category_type">
+        <item>Rent</item>
+        <item>Sell</item>
+        <item>Barter</item>
+        <item>Post</item>
+    </string-array>
 </resources>

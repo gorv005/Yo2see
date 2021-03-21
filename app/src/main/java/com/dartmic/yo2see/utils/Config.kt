@@ -7,6 +7,7 @@ class Config {
 
         const val CLICK_VIEW_CATEGORY = 99
         const val CLICK_VIEW_PRODUCT = 100
+        const val CLICK_VIEW_FAV = 101
 
 
     }
@@ -45,6 +46,8 @@ class Config {
         /* AUTH RELATED */
         const val SIGN_UP_API = BASE_PATH + "user/signup"
         const val LOGIN_API = BASE_PATH + "user/login"
+        const val SOCIAL_LOGIN_API = BASE_PATH + "user/socialmedia"
+
         const val RESET_PASSWORD_API = BASE_PATH + "users/password_resets"
         const val CATEGORIES_API = BASE_PATH + "common/categorylist"
         const val FEATURE_API = BASE_PATH + "common/isfeaturelist"
@@ -56,6 +59,12 @@ class Config {
         const val GET_USER_DATA_API = BASE_PATH + "user/getUser"
         const val GET_OTP = BASE_PATH + "user/generateotp"
         const val VERIFY_OTP = BASE_PATH + "user/validate_otp"
+        const val GET_USER = BASE_PATH + "user/getUser"
+        const val UPDATE_USER_API = BASE_PATH + "user/update_profile"
+        const val REMOVE_ACCOUNT = BASE_PATH + "user/remove_account"
+        const val ADD_TO_FAVORITES = BASE_PATH + "common/addtofav"
+        const val PRODUCT_FAV_LIST_API = BASE_PATH + "common/userfavlist"
+        const val CHANGE_PASSWORD = BASE_PATH + "user/changepassword"
 
 
     }

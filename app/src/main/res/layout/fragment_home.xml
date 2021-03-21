@@ -35,7 +35,7 @@
                     android:src="@drawable/ic_location_pin" />
 
                 <ImageView
-
+                    android:id="@+id/ivSearch"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_search_icon_black" />

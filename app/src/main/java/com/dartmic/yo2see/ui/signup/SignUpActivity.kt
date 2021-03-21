@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
@@ -17,17 +18,34 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
-class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel::class) {
+class SignUpActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel::class) {
+    var userType: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         btnSignup.setOnClickListener {
             doRegister()
 
         }
+        rlPrivate.setOnClickListener {
+            userType="Private"
+            rlPrivate.setBackgroundColor(ContextCompat.getColor(this, R.color.red_a))
+            rlBusiness.setBackgroundColor(ContextCompat.getColor(this, R.color.light_red))
+            tvPrivate.setTextColor(ContextCompat.getColor(this, R.color.white))
+            tvBusiness.setTextColor(ContextCompat.getColor(this, R.color.black))
+
+        }
+        rlBusiness.setOnClickListener {
+            userType="Business"
+            rlBusiness.setBackgroundColor(ContextCompat.getColor(this, R.color.red_a))
+            rlPrivate.setBackgroundColor(ContextCompat.getColor(this, R.color.light_red))
+            tvBusiness.setTextColor(ContextCompat.getColor(this, R.color.white))
+            tvPrivate.setTextColor(ContextCompat.getColor(this, R.color.black))
+        }
         subscribeLoading()
         subscribeUi()
 
     }
+
     override fun layout(): Int = R.layout.activity_sign_up
 
     override fun tag(): String {
@@ -41,16 +59,21 @@ class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel:
     override fun titleColor(): Int {
         TODO("Not yet implemented")
     }
+
     fun doRegister() {
 
 
         this?.let { UiUtils.hideSoftKeyboard(it) }
 
-        val validateMobileError = AndroidUtils.mobilePasswordValidation(etPhonenumber.text.toString())
+        val validateMobileError =
+            AndroidUtils.mobilePasswordValidation(etPhonenumber.text.toString())
         val validatePasswordError = AndroidUtils.validateName(etPassword.text.toString())
         val validateNameError = AndroidUtils.validateName(etFirstName.text.toString())
         val validateEmailError = AndroidUtils.validateEmail(etEmail.text.toString())
-        val validateMatchPasswordError = AndroidUtils.validateMatchPassword(etPassword.text.toString(),etConfirmPassword.text.toString())
+        val validateMatchPasswordError = AndroidUtils.validateMatchPassword(
+            etPassword.text.toString(),
+            etConfirmPassword.text.toString()
+        )
 
 
         if (
@@ -60,20 +83,32 @@ class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel:
 
         ) {
             let {
-                startActivity(OtpVerifyActivity.getIntent(it,"User Signup",etPhonenumber.text.toString(),
-                    etFirstName.text.toString(),
-                    etEmail.text.toString(),etPassword.text.toString(),"12345","12345","12345","12345"))
-            }
-           /* if (NetworkUtil.isInternetAvailable(this)) {
-                model.register(
-                    "User Signup",
-                    etPhonenumber.text.toString(),
-                    etFirstName.text.toString(),
-                    etEmail.text.toString(),
-                    etPassword.text.toString(),
-                    "12345","12345","12345","12345"
+                startActivity(
+                    OtpVerifyActivity.getIntent(
+                        it,
+                        "User Signup",
+                        etPhonenumber.text.toString(),
+                        etFirstName.text.toString(),
+                        etEmail.text.toString(),
+                        etPassword.text.toString(),
+                        "12345",
+                        "12345",
+                        "12345",
+                        "12345",
+                        userType
+                    )
                 )
-            }*/
+            }
+            /* if (NetworkUtil.isInternetAvailable(this)) {
+                 model.register(
+                     "User Signup",
+                     etPhonenumber.text.toString(),
+                     etFirstName.text.toString(),
+                     etEmail.text.toString(),
+                     etPassword.text.toString(),
+                     "12345","12345","12345","12345"
+                 )
+             }*/
 
         } else {
             etPhonenumber.error = validateMobileError
@@ -120,6 +155,7 @@ class SignUpActivity: BaseActivity<RegistrationViewModel>(RegistrationViewModel:
     fun showProgressDialog() {
         showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
+
     companion object {
         const val KEY_TAB = "KEY_TAB"
 

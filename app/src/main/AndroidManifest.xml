@@ -20,29 +20,89 @@
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.otp.OtpVerifyActivity"></activity>
-        <activity android:name=".ui.more.MoreActivity" />
-        <activity android:name=".ui.postAdd.PostAnAddCategoriesActivity" />
-        <activity android:name=".tutorails.ExploreActivity" />
-        <activity android:name=".tutorails.PostTuteActivity" />
-        <activity android:name=".tutorails.BarterTuteActivity" />
-        <activity android:name=".tutorails.RentTuteActivity" />
-        <activity android:name=".tutorails.BuyTuteActivity" />
+        <activity android:name=".ui.change_password.ChangePasswordActivity"></activity>
+        <activity
+            android:name=".ui.search.SerachActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.UpdateProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.otp.OtpVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.more.MoreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.postAdd.PostAnAddCategoriesActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tutorails.ExploreActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tutorails.PostTuteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tutorails.BarterTuteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tutorails.RentTuteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".tutorails.BuyTuteActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.login.LoginActivity" />
-        <activity android:name=".ui.categories.CategoryActivity" />
-        <activity android:name=".ui.LandingActivity" />
-        <activity android:name=".ui.ads.ItemListActivity" />
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.categories.CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.LandingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.ads.ItemListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -92,7 +92,10 @@ data class ListingItem(
     @SerializedName("payment")
     val payment: String = "",
     @SerializedName("listing_publish_datetime")
-    val listingPublishDatetime: String = ""
+    val listingPublishDatetime: String = "",
+    @SerializedName("UserFavorite")
+    var UserFavorite:Int?
+
 ) : Parcelable
 
 

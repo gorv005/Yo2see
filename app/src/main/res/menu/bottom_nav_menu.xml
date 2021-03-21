@@ -11,7 +11,7 @@
         app:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_podcast"
+        android:id="@+id/action_fav"
         android:enabled="true"
         android:title="PODCAST"
         android:icon="@drawable/ic_heart_white"

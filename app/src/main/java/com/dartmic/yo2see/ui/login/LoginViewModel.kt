@@ -24,6 +24,53 @@ class LoginViewModel(
     AbstractViewModel() {
     val loginData = MutableLiveData<LoginResponsePayload>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
+    val socialLoginData = MutableLiveData<LoginResponsePayload>()
+
+    fun socialLogin(
+        service: String, user_name: String, email: String,phone: String,device_id: String,device_type: String,longitude: String
+        ,latitude: String,family_name: String,given_name: String,picture: String,locale: String,login_from: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            loginRepository.socialLogin(service, user_name, email, phone, device_id, device_type, longitude, latitude, family_name, given_name, picture, locale, login_from)
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    socialLoginData.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            socialLoginData.value =
+                                Gson().fromJson(error, LoginResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
 
     fun login(
         service: String,

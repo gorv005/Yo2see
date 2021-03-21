@@ -11,18 +11,26 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.arthurivanets.bottomsheets.BottomSheet
 import com.dartmic.yo2see.R
+import com.dartmic.yo2see.base.BaseApplication
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.managers.PreferenceManager
+import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.ui.AdsItems.sheet.SimpleAdsBottomSheet
 import com.dartmic.yo2see.ui.addProduct.AddProductFragment
+import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
+import com.dartmic.yo2see.ui.favorites.FragmentFavorites
 import com.dartmic.yo2see.ui.home.HomeFragment
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.more.MoreActivity
 import com.dartmic.yo2see.ui.postAdd.PostAnAddFragment
+import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.utils.AndroidUtils
+import com.dartmic.yo2see.utils.Config
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
@@ -30,12 +38,17 @@ import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
 import kotlinx.android.synthetic.main.activity_landing.*
+import kotlinx.android.synthetic.main.activity_landing.view.*
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.backgroundColorResource
+import org.jetbrains.anko.backgroundDrawable
 
 
 const val INDEX_HOME = FragNavController.TAB1
-const val INDEX_ADD_POST = FragNavController.TAB2
-const val INDEX_MY_ADS = FragNavController.TAB3
-const val INDEX_ACCOUNT = FragNavController.TAB4
+const val INDEX_FAV = FragNavController.TAB2
+const val INDEX_ADD_POST = FragNavController.TAB3
+const val INDEX_MY_ADS = FragNavController.TAB4
+const val INDEX_ACCOUNT = FragNavController.TAB5
 
 class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     FragNavController.TransactionListener, FragNavController.RootFragmentListener {
@@ -74,11 +87,11 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     override fun getRootFragment(index: Int): Fragment {
         when (index) {
             INDEX_HOME -> return HomeFragment.getInstance(0)
+            INDEX_FAV -> return FragmentFavorites.getInstance(0)
             INDEX_ADD_POST -> return PostAnAddFragment.getInstance(0)
             //   INDEX_RENT_BUY_SELL -> return HomeFragment.getInstance(0)
             INDEX_MY_ADS -> return HomeFragment.getInstance(0)
             INDEX_ACCOUNT -> return HomeFragment.getInstance(0)
-
         }
         throw IllegalStateException("Need to send an index that we know")
     }
@@ -104,7 +117,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
-        bottomBar.inflateMenu(R.menu.bottom_nav_menu)
+        //  bottomBar.inflateMenu(R.menu.bottom_nav_menu)
         fragNavController.apply {
             transactionListener = this@LandingActivity
             rootFragmentListener = this@LandingActivity
@@ -122,29 +135,72 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                 R.anim.slide_in_from_left,
                 R.anim.slide_out_to_right
             ).build()
-            fragmentHideStrategy = FragNavController.DETACH_ON_NAVIGATE_HIDE_ON_SWITCH
+            fragmentHideStrategy = FragNavController.HIDE
             navigationStrategy = UniqueTabHistoryStrategy(object : FragNavSwitchController {
                 override fun switchTab(index: Int, transactionOptions: FragNavTransactionOptions?) {
-                    bottomBar.getMenu().getItem(index).setChecked(true)
+                    // bottomBar.getMenu().getItem(index).setChecked(true)
+                    bottomBar.selectTabAtPosition(index)
+
                 }
             })
         }
-        fragNavController.initialize(INDEX_HOME, savedInstanceState)
+        fragNavController.initialize(INDEX_ADD_POST, savedInstanceState)
         val initial = savedInstanceState == null
         if (initial) {
-            bottomBar.getMenu().getItem(INDEX_HOME).setChecked(true)
-        }
+            // bottomBar.getMenu().getItem(INDEX_HOME).setChecked(true)
+            bottomBar.selectTabAtPosition(INDEX_ADD_POST)
 
+        }
+        bottomBar.setOnTabSelectListener({ tabId ->
+            when (tabId) {
+
+                R.id.navigation_home -> {
+
+                    if (checkUserLogin()) {
+                        startActivity(MoreActivity.getIntent(this))
+                    } else {
+                        startActivity(LoginActivity.getIntent(this))
+
+                    }
+                    // Respond to navigation item 2 click
+                    true
+                }
+                R.id.action_add_post -> {
+
+                    fragNavController.switchTab(INDEX_HOME)
+
+                    // Respond to navigation item 2 click
+                    true
+                }
+                R.id.action_fav -> {
+                    fragNavController.switchTab(INDEX_FAV)
+                    // Respond to navigation item 2 click
+                    true
+                }
+                else -> {
+                    fragNavController.switchTab(INDEX_HOME)
+                    false
+                }
+            }
+        }, initial)
+
+/*
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
 
                 R.id.navigation_home -> {
-                    startActivity(MoreActivity.getIntent(this))
+
+                    if (checkUserLogin()) {
+                        startActivity(MoreActivity.getIntent(this))
+                    } else {
+                        startActivity(LoginActivity.getIntent(this))
+
+                    }
                     // Respond to navigation item 2 click
                     true
                 }
-                R.id.action_podcast -> {
-                    fragNavController.switchTab(INDEX_HOME)
+                R.id.action_fav -> {
+                    fragNavController.switchTab(INDEX_FAV)
                     // Respond to navigation item 2 click
                     true
                 }
@@ -154,16 +210,24 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                 }
             }
         }
+*/
+/*
         bottomBar.setOnNavigationItemReselectedListener { item ->
             fragNavController.clearStack()
-            startActivity(MoreActivity.getIntent(this))
+            if (checkUserLogin()) {
+                startActivity(MoreActivity.getIntent(this))
+            } else {
+                startActivity(LoginActivity.getIntent(this))
+
+            }
 
         }
+*/
         fab.setOnClickListener {
-            var preferenceManager = PreferenceManager(this)
 
-            if (preferenceManager.isUserLoggedIn()) {
-                fragNavController.switchTab(INDEX_ADD_POST)
+            if (checkUserLogin()) {
+                pushFragment(PostAnAddFragment.getInstance(1))
+                //  fragNavController.switchTab(INDEX_ADD_POST)
             } else {
                 startActivity(LoginActivity.getIntent(this))
             }
@@ -171,10 +235,39 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         }
     }
 
+    fun checkUserLogin(): Boolean {
+        var preferenceManager = PreferenceManager(this)
+
+        return preferenceManager.isUserLoggedIn()
+    }
+
     override fun onBackPressed() {
         if (fragNavController.popFragment().not()) {
             super.onBackPressed()
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.run {
+            var query = getStringExtra("query")
+            var location = getStringExtra("location")
+            var type = getStringExtra("type")
+            var from = getStringExtra("from")
+            if (from.equals("search")) {
+                pushFragment(
+                    ProductListFragment
+                        .getInstance(
+                            1,
+                            AndroidUtils.getType(type),
+                            location,
+                            query,
+                            SubToSubListItem()
+                        )
+                )
+            }
+        }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -208,7 +301,8 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             window.setStatusBarColor(color)
         }
         bottomBar.setBackgroundColor(color)
-        bottomBar.setColorChange(color)
+        bottomBar.backgroundColor = color
+        // bottomBar.setColorChange(color)
         fab.setColorFilter(color)
         //fab.visibility = visbility
         /* if(bottomColor==1){

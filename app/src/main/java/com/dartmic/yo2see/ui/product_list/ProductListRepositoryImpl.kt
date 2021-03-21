@@ -19,6 +19,7 @@ class ProductListRepositoryImpl(
 
     override fun getProduct(
         service: String,
+        userId: String,
         category_id: String,
         sub_cat_id: String,
         sub_to_sub_cat_id: String,
@@ -32,6 +33,7 @@ class ProductListRepositoryImpl(
     ): Single<ProductListResponsePayload> {
         return restApi.getProductListing(
             service,
+            userId,
             category_id,
             sub_cat_id,
             sub_to_sub_cat_id,
@@ -44,6 +46,14 @@ class ProductListRepositoryImpl(
             search_key
         )
     }
+
+    override fun getFavList(service: String, userId: String): Single<ProductListResponsePayload> {
+        return restApi.getFavProductListing(
+            service,
+            userId
+        )
+    }
+
     override fun getUser(service: String, user_id: String): Single<LoginResponsePayload> {
         return restApi.getUserList(service, user_id)
     }
@@ -54,6 +64,15 @@ class ProductListRepositoryImpl(
         id: String
     ): Single<ProductDetailResponsePayload> {
         return restApi.getProductDetails(service, user_id, id)
+    }
+
+    override fun alterFavorites(
+        service: String,
+        user_id: String,
+        list_id: String,
+        fav_flag: Int
+    ): Single<LoginResponsePayload> {
+        return restApi.addToFavorites(service, user_id, list_id, fav_flag)
     }
 
 

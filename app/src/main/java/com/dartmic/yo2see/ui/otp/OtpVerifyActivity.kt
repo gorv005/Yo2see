@@ -30,6 +30,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
     private var latitude: String? = null
     private var longitude: String? = null
     private var service: String? = null
+    private var userType: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
             latitude = getStringExtra(Latitude)
             longitude = getStringExtra(Longitude)
             service = getStringExtra(Service)
-
+            userType= getStringExtra(UserType)
         }
         ivBackVerify.setOnClickListener {
             onBackPressed()
@@ -79,7 +80,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         if (NetworkUtil.isInternetAvailable(this)) {
             model.getOTP(
                 "OTP",
-                etPhonenumber.text.toString()
+                phonenumber!!
             )
         }
 
@@ -108,12 +109,12 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
 
         if (NetworkUtil.isInternetAvailable(this)) {
             model.register(
-                Service,
-                Phonenumber,
-                FirstName,
-                Email,
-                Password,
-                Device_id, Device_type, Latitude, Longitude
+                service!!,
+                phonenumber!!,
+                firstName!!,
+                email!!,
+                password!!,
+                device_id!!, device_type!!, latitude!!, longitude!!,userType!!
             )
         }
     }
@@ -141,7 +142,6 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
 
                 showSnackbar(it.message, true)
                 this.let { UiUtils.hideSoftKeyboard(it) }
-                onBackPressed()
             } else {
                 showSnackbar(it.message, true)
 
@@ -154,7 +154,6 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
 
                 doRegister()
                 this.let { UiUtils.hideSoftKeyboard(it) }
-                onBackPressed()
             } else {
                 showSnackbar(it.message, true)
 
@@ -178,6 +177,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         const val Latitude = "Latitude"
         const val Longitude = "Longitude"
         const val Service = "Service"
+        const val UserType = "UserType"
 
         fun getIntent(
             context: Context,
@@ -189,7 +189,8 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
             device_id: String,
             device_type: String,
             latitude: String,
-            longitude: String
+            longitude: String,
+            userType: String
         ): Intent? {
             val intent = Intent(context, OtpVerifyActivity::class.java).putExtra(
                 Phonenumber, phonenumber
@@ -209,7 +210,9 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
                 Longitude, longitude
             ).putExtra(
                 Service, service
-            )
+            ).putExtra(
+                UserType, userType
+                )
             return intent
         }
     }

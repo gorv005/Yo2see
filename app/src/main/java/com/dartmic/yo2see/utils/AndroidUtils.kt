@@ -148,6 +148,7 @@ class AndroidUtils {
             var d = i.parse(date)
             return o.format(d)
         }
+
         fun mobilePassword(mobile: String): CharSequence? {
             val REGEX: String? = "^(?:\\+971|00971|0)((?:3|4|5|6|7|9|50|51|52|55|56)[0-9]{7,})\$"
             var pattern = Pattern.compile(REGEX)
@@ -155,11 +156,11 @@ class AndroidUtils {
                 return AndroidUtils.getString(R.string.error_field_cant_blank)
             } else
                 if (!pattern.matcher(mobile).matches()) {
-                            return AndroidUtils.getString(
-                                R.string.error_mobile_not_validation
-                            )
+                    return AndroidUtils.getString(
+                        R.string.error_mobile_not_validation
+                    )
 
-                        }
+                }
 
             return null
         }
@@ -238,6 +239,7 @@ class AndroidUtils {
 
             return null
         }
+
         fun validateCode(name: String): CharSequence? {
 
             if (TextUtils.isEmpty(name)) {
@@ -316,7 +318,7 @@ class AndroidUtils {
             textView: TextView,
             text1: String,
             spanText: String,
-            color:Int
+            color: Int
         ): SpannableStringBuilder {
             val fcsRed = ForegroundColorSpan(color)
 
@@ -328,14 +330,15 @@ class AndroidUtils {
             return sb
             //textView.text = sb
         }
+
         @JvmStatic
         fun setTextWithSpan(
             textView: TextView,
             text1: String,
             spanText: String,
             sb: SpannableStringBuilder,
-            color:Int
-        ){
+            color: Int
+        ) {
             val fcsRed = ForegroundColorSpan(color)
 
             val start = text1.indexOf(spanText)
@@ -345,7 +348,24 @@ class AndroidUtils {
             textView.text = sb
         }
 
-    }
 
+        fun getType(type: String): Int {
+            when (type) {
+                Config.Constants.TYPE_SELL -> {
+                    return 1
+                }
+                Config.Constants.TYPE_RENT -> {
+                    return 2
+                }
+                Config.Constants.TYPE_POST -> {
+                    return 4
+                }
+                Config.Constants.TYPE_BARTER -> {
+                    return 3
+                }
+            }
+            return 2
+        }
+    }
 
 }

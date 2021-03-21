@@ -50,6 +50,11 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     var type: Int? = 0
     var listingType: String? = ""
     lateinit var subToSubListItem: SubToSubListItem
+    var query: String? = ""
+    var location: String? = ""
+    lateinit var listingItem: ListingItem
+    private var listingItemList = ArrayList<ListingItem>()
+    var pos: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,11 +80,13 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         val manager = GridLayoutManager(context, 2)
         type = arguments?.getInt(TYPE)
         subToSubListItem = arguments?.getParcelable(DATA)!!
+        query = arguments?.getString(QUERY)
+        location = arguments?.getString(LOCATION)
 
         init()
         rvProductList.layoutManager = manager
         activity?.let {
-            adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue,type!!)
+            adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue, type!!)
 
         }
         rvProductList.adapter = adapterProductList
@@ -98,10 +105,49 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
 
+            if (query.equals("")) {
+                model.getProductList(
+                    "List",
+                    model?.getUserID()!!,
+                    subToSubListItem.categoryId,
+                    subToSubListItem.subCategoryId,
+                    subToSubListItem.id,
+                    "",
+                    listingType!!,
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                )
+            } else {
+                model.getProductList(
+                    "List", model?.getUserID()!!, "", "",
+                    "", "", listingType!!, "",
+                    "", "", location!!, query!!
+                )
+
+            }
+        }
+    }
+
+    fun getProductDataFromSearch() {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            //  listingType = "Rent"
+
             model.getProductList(
-                "List", subToSubListItem.categoryId, subToSubListItem.subCategoryId,
-                subToSubListItem.id, "", listingType!!, "",
-                "", "", "", ""
+                "List",
+                model?.getUserID()!!,
+                subToSubListItem.categoryId,
+                subToSubListItem.subCategoryId,
+                subToSubListItem.id,
+                "",
+                listingType!!,
+                "",
+                "",
+                "",
+                "",
+                ""
             )
         }
     }
@@ -124,11 +170,22 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         model.productListViewModel.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
-
-
+                listingItemList = it?.listing!!
+                tvResult.setText("Found " + it?.listing?.size + " results")
                 adapterProductList?.submitList(it?.listing)
                 adapterProductList?.notifyDataSetChanged()
                 runLayoutAnimation(rvProductList)
+
+            } else {
+                showSnackbar(it.message, false)
+            }
+        })
+        model.favViewModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+                listingItemList.set(pos, listingItem)
+                adapterProductList?.notifyDataSetChanged()
+
 
             } else {
                 showSnackbar(it.message, false)
@@ -186,17 +243,22 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     companion object {
         const val TYPE = "type"
         const val DATA = "data"
+        const val LOCATION = "location"
+        const val QUERY = "query"
 
         @JvmStatic
         fun getInstance(
             instance: Int,
-            type: Int?,
+            type: Int?, location: String, query: String,
             categoryListItemData: SubToSubListItem?
         ): ProductListFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = ProductListFragment()
             bundle.putInt(TYPE, type!!)
+            bundle.putString(LOCATION, location)
+            bundle.putString(QUERY, query)
+
             bundle.putParcelable(DATA, categoryListItemData)
 
             fragment.arguments = bundle
@@ -225,19 +287,55 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                 }
 
             }
+            Config.AdapterClickViewTypes.CLICK_VIEW_FAV -> {
+
+                this?.let {
+                    pos = position
+                    listingItem = objectAtPosition
+                    if (objectAtPosition?.UserFavorite == 1) {
+                        model?.addAndRemoveToFavorites(
+                            "AddToFavList",
+                            model?.getUserID()!!,
+                            objectAtPosition?.id,
+                            0
+                        )
+                        listingItem.UserFavorite=0
+                    } else {
+                        model?.addAndRemoveToFavorites(
+                            "AddToFavList",
+                            model?.getUserID()!!,
+                            objectAtPosition?.id,
+                            1
+                        )
+                        listingItem.UserFavorite=1
+
+                    }
+                }
+
+            }
+
         }
     }
 
     fun init() {
-        tvSubTitleProductValue.text =
-            subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
+        if (query.equals("")) {
+            tvSubTitleProductValue.text =
+                subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
+        } else {
+            tvSubTitleProductValue.text = ""
+        }
         when (type) {
             Config.Constants.SELL -> {
                 listingType = Config.Constants.TYPE_SELL
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue1)
                 )
-
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.blue1),
+                        2
+                    )
+                }
             }
             Config.Constants.RENT -> {
 
@@ -246,7 +344,12 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.voilet)
                 )
-
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.voilet),
+                        2
+                    )
+                }
 
             }
             Config.Constants.BARTER -> {
@@ -255,14 +358,24 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.yellow1)
                 )
-
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.yellow1),
+                        2
+                    )
+                }
             }
             Config.Constants.POST -> {
                 Config.Constants.TYPE_POST
                 ivCurveProduct.setColorFilter(
                     ContextCompat.getColor(activity!!, R.color.blue)
                 )
-
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.blue),
+                        2
+                    )
+                }
             }
 
         }

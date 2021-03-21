@@ -104,7 +104,7 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
                         ProductListFragment
                             .getInstance(
                                 mInt + 1,
-                                type,
+                                type,"","",
                                 categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
                                     childPosition
                                 )

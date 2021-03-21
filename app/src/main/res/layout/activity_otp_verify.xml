@@ -56,11 +56,12 @@
             app:pinWidth="50dp"
             android:layout_marginTop="@dimen/et_height_30"
             app:pinHeight="60dp"
+
             app:pinLength="4"
             app:cursorVisible="false"
             app:forceKeyboard="true"
             app:hint=""
-            app:inputType="text"
+            app:inputType="number"
             app:password="false"/>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSubmit"

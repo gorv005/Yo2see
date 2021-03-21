@@ -49,11 +49,13 @@
             android:layout_height="40dp">
 
             <RelativeLayout
+                android:id="@+id/rlPrivate"
                 android:background="@color/red_a"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvPrivate"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,11 +67,13 @@
 
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rlBusiness"
                 android:background="@color/light_red"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/tvBusiness"
                     android:layout_centerInParent="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

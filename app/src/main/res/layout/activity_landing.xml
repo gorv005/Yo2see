@@ -40,13 +40,28 @@
         android:layout_width="match_parent"
         android:layout_height="60dp">
     <com.dartmic.yo2see.util.CustomBottomNavigationView1
-        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:itemIconTint="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
         app:labelVisibilityMode="unlabeled" />
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/bottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/red_a"
+            app:bb_activeTabAlpha="1"
+            app:bb_inActiveTabColor="@color/white"
+            app:bb_activeTabColor="@color/white"
+            app:itemIconTint="@color/white"
+            app:bb_behavior="shifting"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:bb_tabXmlResource="@xml/menu_bottombar"/>
+
         <com.dartmic.yo2see.util.CustomBottomNavigationViewBlue
             android:id="@+id/bottomBarBlue"
             android:layout_width="match_parent"

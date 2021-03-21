@@ -28,6 +28,7 @@ import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.home.adapter.AdapterAdsEvents
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
+import com.dartmic.yo2see.ui.search.SerachActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
@@ -63,7 +64,9 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         super.onViewCreated(view, savedInstanceState)
         visibilityGone()
         val fcsRed = ForegroundColorSpan(AndroidUtils.getColor(R.color.blue))
-
+        ivSearch.setOnClickListener {
+            startActivity(SerachActivity.getIntent(activity!!))
+        }
         AndroidUtils.setTextWithSpan(
             tvHomeWelecomeText,
             AndroidUtils.getString(R.string.welcome_text),"one of the categories", fcsRed

@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.ui.LandingActivity
-import com.dartmic.yo2see.ui.login.LoginActivity
+import com.dartmic.yo2see.ui.change_password.ChangePasswordActivity
+import com.dartmic.yo2see.ui.profile.ProfileActivity
 import com.dartmic.yo2see.utils.Config
 import kotlinx.android.synthetic.main.activity_more.*
 
@@ -26,6 +27,16 @@ class MoreActivity : AppCompatActivity() {
         tvUserName.text = username.toString()
         ivClose.setOnClickListener {
             finish()
+        }
+        tvMyAccount.setOnClickListener {
+            startActivity(ProfileActivity.getIntent(this))
+        }
+        tvUserName.setOnClickListener {
+            startActivity(ProfileActivity.getIntent(this))
+        }
+        tvChangePassword.setOnClickListener {
+            startActivity(ChangePasswordActivity.getIntent(this))
+
         }
         tvLogout.setOnClickListener {
             var preferenceManager = PreferenceManager(this)

@@ -56,7 +56,7 @@ class AdapterProductList(
 
     private fun setAnimation(viewToAnimate: View, position: Int) {
         // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
+      /*  if (position > lastPosition) {
             val animation: Animation =
                 AnimationUtils.loadAnimation(activity, R.anim.slide_left_to_right)
             viewToAnimate.startAnimation(animation)
@@ -66,7 +66,7 @@ class AdapterProductList(
                 AnimationUtils.loadAnimation(activity, R.anim.slide_in_from_right)
             viewToAnimate.startAnimation(animation)
             lastPosition = position
-        }
+        }*/
     }
 
     class ViewHolder(itemView: View, val activity: Activity) : RecyclerView.ViewHolder(itemView) {
@@ -90,13 +90,29 @@ class AdapterProductList(
             itemView.tvAddress?.text = allProducts.listingCity + ", " + allProducts.listingState
             itemView.tvDate?.text = allProducts.listingPublishDatetime
 
-            val v = SpannableString( "View " + allProducts.userName + "'s listing")
+            val v = SpannableString("View " + allProducts.userName + "'s listing")
             v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             itemView.tvListing.text = v.toString()
+            itemView.ivFav.pressOnTouch(true);
+
+            if (allProducts?.UserFavorite == 1) {
+                itemView.ivFav.setChecked(true);
+                itemView.ivFav.playAnimation()
+            } else {
+                itemView.ivFav.setChecked(false)
+
+            }
             ImageRequestManager.with(itemView.imageProduct).url(allProducts.listingCoverImage)
                 .setPlaceholderImage(R.drawable.download)
                 .setScaleType(ScalingUtils.ScaleType.FIT_XY)
                 .build()
+            itemView.ivFav.setOnClickListener {
+                adapterViewClick?.onClickAdapterView(
+                    allProducts,
+                    Config.AdapterClickViewTypes.CLICK_VIEW_FAV, adapterPosition
+                )
+
+            }
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
                     allProducts,

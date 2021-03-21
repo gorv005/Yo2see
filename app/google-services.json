@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "380180756715",
+    "project_id": "yo2see",
+    "storage_bucket": "yo2see.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380180756715:android:cf21d902acc8151785e6ae",
+        "android_client_info": {
+          "package_name": "com.yo2see"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380180756715-a4h0gou568k9hglto1uj4ce4peaug2p4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yo2see",
+            "certificate_hash": "b9da0ad42270e013fcb18c1d6e3b7a60e1f7f667"
+          }
+        },
+        {
+          "client_id": "380180756715-ij04n0a7a33mvc87gd308vvmae2us6nf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-gxH0eHwVJKt19ST0ECTo9D6HfaIzP-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380180756715-ij04n0a7a33mvc87gd308vvmae2us6nf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

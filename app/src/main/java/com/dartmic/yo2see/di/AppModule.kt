@@ -36,7 +36,7 @@ object AppModule {
         viewModel { LoginViewModel(get(), get(), get()) }
 
         single<RegisterRepository> { RegisterRepositoryImpl(get(), get()) }
-        viewModel { RegistrationViewModel(get(), get()) }
+        viewModel { RegistrationViewModel(get(), get(),get()) }
 
         single<CategoryRepository> { CategoryRepositoryImpl(get(), get()) }
         viewModel { CategoriesViewModel(get(), get(), get()) }

@@ -10,6 +10,7 @@ import com.dartmic.yo2see.model.categories.FeatureListResponse
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.model.signUp.OTPResponsePayload
 import com.dartmic.yo2see.model.signUp.RegisterResponsePayload
 import com.dartmic.yo2see.utils.Config
@@ -34,14 +35,37 @@ interface AppRestApiFast {
             : Single<LoginResponsePayload>
 
     @FormUrlEncoded
+    @POST(Config.Endpoints.SOCIAL_LOGIN_API)
+    fun socialLogin(
+        @Field("service") service: String,
+        @Field("user_name") username: String,
+        @Field("email") email: String,
+        @Field("phone") phone: String,
+        @Field("device_id") device_id: String,
+        @Field("device_type") device_type: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("family_name") family_name: String,
+        @Field("given_name") given_name: String,
+        @Field("picture") picture: String,
+        @Field("locale") locale: String,
+        @Field("login_from") login_from: String
+    )
+            : Single<LoginResponsePayload>
+
+    @FormUrlEncoded
     @POST(Config.Endpoints.SIGN_UP_API)
     fun register(
-        @Field("service") service: String, @Field("phone") phone: String,
+        @Field("service") service: String,
+        @Field("phone") phone: String,
         @Field("user_name") name: String,
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("device_type") device_type: String, @Field("device_id") device_id: String,
-        @Field("longitude") longitude: String, @Field("latitude") latitude: String
+        @Field("device_type") device_type: String,
+        @Field("device_id") device_id: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("usertype") usertype: String
     ): Single<RegisterResponsePayload>
 
     @FormUrlEncoded
@@ -69,6 +93,7 @@ interface AppRestApiFast {
     @POST(Config.Endpoints.PRODUCT_DATA_API)
     fun getProductListing(
         @Field("service") service: String,
+        @Field("user_id") user_id: String,
         @Field("category_id") category_id: String,
         @Field("sub_cat_id") sub_cat_id: String,
         @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
@@ -96,7 +121,7 @@ interface AppRestApiFast {
     @FormUrlEncoded
     @POST(Config.Endpoints.GET_USER_DATA_API)
     fun getUserList(
-        @Field("service") service: String,@Field("user_id") user_id: String
+        @Field("service") service: String, @Field("user_id") user_id: String
     ): Single<LoginResponsePayload>
 
     @FormUrlEncoded
@@ -161,6 +186,60 @@ interface AppRestApiFast {
         @Field("otp") otp: String
 
     ): Single<OTPResponsePayload>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.GET_USER)
+    fun getUser(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String
+    ): Single<UserInforesponse>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.REMOVE_ACCOUNT)
+    fun removeAccount(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String
+    ): Single<UserInforesponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.UPDATE_USER_API)
+    fun updateUser(
+        @Field("service") service: String, @Field("user_id") user_id: String,
+        @Field("name") name: String,
+        @Field("email") email: String,
+        @Field("phone") password: String,
+        @Field("picture") device_type: String
+    ): Single<UserInforesponse>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.ADD_TO_FAVORITES)
+    fun addToFavorites(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("list_id") list_id: String,
+    @Field("fav_flag") fav_flag: Int
+
+
+    ): Single<LoginResponsePayload>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_FAV_LIST_API)
+    fun getFavProductListing(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String
+    ): Single<ProductListResponsePayload>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.CHANGE_PASSWORD)
+    fun changePassword(
+        @Field("user_id") user_id: String,
+        @Field("old_password") old_password: String,
+        @Field("new_password") new_password: String
+
+    ): Single<UserInforesponse>
 
 }
 

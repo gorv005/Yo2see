@@ -1,0 +1,174 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/search_mobile"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etSearchQuery"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding3x4"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/padding3x4"
+                    android:animateLayoutChanges="@bool/show"
+                    android:background="@drawable/edit_text_corner_red_bg"
+                    android:drawablePadding="@dimen/margin5x2"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingStart="20dp"
+                    android:singleLine="@bool/show"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:lineSpacingExtra="0.5dp"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/search_for_mobiles"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/add_location"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:lineSpacingExtra="0.5dp"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/user_my_current_location"
+                    android:textColor="@color/grey"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/locationSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/padding3x4"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/padding3x4"
+                    android:animateLayoutChanges="@bool/show"
+                    android:background="@drawable/edit_text_corner_red_bg"
+                    android:drawablePadding="@dimen/margin5x2"
+                    android:fontFamily="@font/poppins_regular"
+                    android:paddingStart="20dp"
+                    android:singleLine="@bool/show"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/category_type"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:id="@+id/layoutChannel1"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginRight="@dimen/dimen_10"
+                    android:background="@drawable/edit_text_corner_red_bg"
+
+                    android:layout_height="43dp">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/categoryType"
+                        tools:listitem="@layout/item_custom_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:spinnerMode="dropdown"
+                        />
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/et_height_30"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnCancel"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="160dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/rounded_corners_app_red_back"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/action_cancel"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="19sp"
+                        />
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnApply"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_width="160dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="45dp"
+                        android:background="@drawable/rounded_corners_app_red_back"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="@string/apply"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="19sp"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivBackSearch"
+                android:padding="20dp"
+                app:tint="@color/red_a"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_left_arrow_white"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

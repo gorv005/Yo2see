@@ -1,0 +1,293 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvCategoriesHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/et_height_20"
+                android:layout_marginEnd="18dp"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center_horizontal"
+                android:text="@string/edit_profile_information"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="160dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/round_bg" >
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/ivProfile"
+                        android:src="@drawable/ic_logo"
+                        android:scaleType="centerCrop"
+                        app:riv_corner_radius="30dip"
+                        app:riv_border_width="2dip"
+                        android:padding="5dp"
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:riv_border_color="#ffffff"
+                        app:riv_mutate_background="true"
+                        app:riv_tile_mode="repeat"
+                        app:riv_oval="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvChangeImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/et_height_20"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_horizontal"
+                    android:text="@string/upload_profile_image"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+        <View
+            android:layout_gravity="center_horizontal"
+            android:background="@color/red_a"
+            android:layout_width="200dp"
+            android:layout_height="1dp"/>
+                <LinearLayout
+                    android:id="@+id/mainLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/llBusinessType"
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_padding">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/first_name"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etName"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/padding3x4"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="@dimen/padding3x4"
+                        android:animateLayoutChanges="@bool/show"
+                        android:background="@drawable/rounded_corners_app_grey_white_edittext_bg"
+                        android:drawablePadding="@dimen/margin5x2"
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingStart="20dp"
+                        android:singleLine="@bool/show"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="15dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/phone_number"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etPhonenumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/padding3x4"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="@dimen/padding3x4"
+                        android:animateLayoutChanges="@bool/show"
+                        android:background="@drawable/rounded_corners_app_grey_white_edittext_bg"
+                        android:drawablePadding="@dimen/margin5x2"
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingStart="20dp"
+                        android:singleLine="@bool/show"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="UnusedAttribute" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="15dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/email_id"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/padding3x4"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="@dimen/padding3x4"
+                        android:animateLayoutChanges="@bool/show"
+                        android:background="@drawable/rounded_corners_app_grey_white_edittext_bg"
+                        android:drawablePadding="@dimen/margin5x2"
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingStart="20dp"
+                        android:singleLine="@bool/show"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="UnusedAttribute" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="15dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/account_type"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etProfileLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/padding3x4"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="@dimen/padding3x4"
+                        android:animateLayoutChanges="@bool/show"
+                        android:background="@drawable/rounded_corners_app_grey_white_edittext_bg"
+                        android:drawablePadding="@dimen/margin5x2"
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingStart="20dp"
+                        android:singleLine="@bool/show"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="UnusedAttribute" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="15dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/you_currently_connect"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/padding3x4"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="@dimen/padding3x4"
+                        android:animateLayoutChanges="@bool/show"
+                        android:background="@drawable/rounded_corners_app_grey_white_edittext_bg"
+                        android:drawablePadding="@dimen/margin5x2"
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingStart="20dp"
+                        android:singleLine="@bool/show"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        tools:ignore="UnusedAttribute" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center_horizontal"
+                        android:lineSpacingExtra="0.5dp"
+                        android:paddingLeft="40dp"
+                        android:paddingEnd="10dp"
+                        android:visibility="gone"
+                        android:text="@string/once_your_enter_your_information"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp" />
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnUpdateProfile"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="@dimen/margin5x3"
+                        android:background="@drawable/rounded_corners_app_red_back"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="@string/save_changes"
+                        android:textColor="@color/white"
+                        android:textSize="19sp"
+                        android:textAllCaps="false"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_yo2see_logo"
+                android:text="@string/mobile_and_accessories" />
+
+            <ImageView
+                android:id="@+id/ivCornerImage"
+                android:layout_width="150dp"
+                android:layout_height="170dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/curve_buysell"
+                app:tint="@color/red_a" />
+
+            <ImageView
+                android:id="@+id/ivBackUpdateProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:src="@drawable/ic_left_arrow_white" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

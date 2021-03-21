@@ -12,6 +12,7 @@ import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.google.gson.Gson
@@ -28,6 +29,8 @@ class ProductListnViewModel(
     val searchEvent = SingleLiveEvent<SearchEvent>()
     val productDetailsViewModel = MutableLiveData<ProductDetailResponsePayload>()
     val userViewModel = MutableLiveData<LoginResponsePayload>()
+    val favViewModel = MutableLiveData<LoginResponsePayload>()
+
     fun getUser(
         service: String,
         user_id: String
@@ -73,8 +76,58 @@ class ProductListnViewModel(
         }
     }
 
+
+    fun getFavProductList(
+        service: String,
+        userId: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.getFavList(
+                service,
+                userId
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    productListViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            productListViewModel.value =
+                                Gson().fromJson(error, ProductListResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     fun getProductList(
         service: String,
+        userId: String,
         category_id: String,
         sub_cat_id: String,
         sub_to_sub_cat_id: String,
@@ -92,6 +145,7 @@ class ProductListnViewModel(
         launch {
             productListRepository.getProduct(
                 service,
+                userId,
                 category_id,
                 sub_cat_id,
                 sub_to_sub_cat_id,
@@ -125,6 +179,59 @@ class ProductListnViewModel(
 
                             productListViewModel.value =
                                 Gson().fromJson(error, ProductListResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+
+    fun addAndRemoveToFavorites(
+        service: String,
+        user_id: String,
+        id: String,
+        fav_flag: Int
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.alterFavorites(
+                service,
+                user_id,
+                id,
+                fav_flag
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    favViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            favViewModel.value =
+                                Gson().fromJson(error, LoginResponsePayload::class.java)
                             searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 
@@ -189,7 +296,7 @@ class ProductListnViewModel(
         }
     }
 
-    public fun getUserID() :String?{
+    public fun getUserID(): String? {
         return pre.getLoggedInUserId()
     }
 

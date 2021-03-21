@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
@@ -9,7 +9,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.appiness.yo2see"
+        applicationId "com.yo2see"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -115,11 +115,21 @@ dependencies {
     implementation 'com.github.pzienowicz:androidx-auto-scroll-view-pager:1.1.0'
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
     implementation 'com.github.GoodieBag:Pinview:v1.4'
+    implementation 'com.facebook.android:facebook-login:6.+'
 
     //Images
     implementation 'com.github.dhaval2404:imagepicker:1.7.4'
     implementation 'com.github.WrathChaos:MediaPickerLib:0.2.0'
 //Location
     implementation 'com.github.prabhat1707:EasyWayLocation:2.0'
+    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.google.firebase:firebase-auth:20.0.3'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.github.varunest:sparkbutton:1.0.6'
+    implementation "com.roughike:bottom-bar:2.3.1"
 
 }

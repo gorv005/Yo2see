@@ -4,11 +4,13 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Typeface
 import android.os.Build
-
 import android.text.TextUtils.isEmpty
+import android.util.Base64.encode
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -19,11 +21,15 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.common.CommonBoolean
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.LogUtils
+import com.google.android.material.snackbar.Snackbar
+import java.net.URLEncoder.encode
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import java.util.*
 
 
 class UiUtils {
@@ -34,6 +40,7 @@ class UiUtils {
         private var toast: Toast? = null
         private var progressDialog: ProgressDialog? = null
         private var alertDialog: AlertDialog? = null
+
 
         fun loadImage(@DrawableRes id: Int, imageView: ImageView?) {
             try {
@@ -108,7 +115,12 @@ class UiUtils {
             val alert11 = builder1.create()
             alert11.show()
 
-            alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.black))
+            alert11.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(
+                ContextCompat.getColor(
+                    context,
+                    R.color.black
+                )
+            )
 
 
         }
@@ -125,7 +137,12 @@ class UiUtils {
             toast?.cancel()
         }
 
-        fun showProgressDialog(context: Context?, title: String?, message: String?, cancelable: Boolean) {
+        fun showProgressDialog(
+            context: Context?,
+            title: String?,
+            message: String?,
+            cancelable: Boolean
+        ) {
             try {
                 dismissProgressDialog()
 
@@ -134,11 +151,12 @@ class UiUtils {
                 }
 
                 progressDialog = ProgressDialog.show(
-                        context,
-                        title,
-                        message,
-                        true,
-                        cancelable)
+                    context,
+                    title,
+                    message,
+                    true,
+                    cancelable
+                )
             } catch (e: Exception) {
                 LogUtils.e(e)
             }
@@ -157,15 +175,17 @@ class UiUtils {
             }
         }
 
-        fun showAlertDialog(context: Context?,
-                            title: String?,
-                            message: String?,
-                            positiveText: String = "OK",
-                            positiveClickListener: DialogInterface.OnClickListener? = null,
-                            showNegativeButton: Boolean = false,
-                            negativeText: String = "CANCEL",
-                            negativeClickListener: DialogInterface.OnClickListener? = null,
-                            cancelable: Boolean = false) {
+        fun showAlertDialog(
+            context: Context?,
+            title: String?,
+            message: String?,
+            positiveText: String = "OK",
+            positiveClickListener: DialogInterface.OnClickListener? = null,
+            showNegativeButton: Boolean = false,
+            negativeText: String = "CANCEL",
+            negativeClickListener: DialogInterface.OnClickListener? = null,
+            cancelable: Boolean = false
+        ) {
             try {
                 hideAlertDialog()
 
@@ -247,7 +267,11 @@ class UiUtils {
 
         fun getStatusBarHeight(context: Context): Int {
             var result = 0
-            val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+            val resourceId = context.resources.getIdentifier(
+                "status_bar_height",
+                "dimen",
+                "android"
+            )
             if (resourceId > 0) {
                 result = context.resources.getDimensionPixelSize(resourceId)
             }
