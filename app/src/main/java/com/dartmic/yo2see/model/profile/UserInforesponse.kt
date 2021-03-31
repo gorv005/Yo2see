@@ -2,6 +2,7 @@ package com.dartmic.yo2see.model.profile
 
 
 import android.os.Parcelable
+import com.dartmic.yo2see.model.login.UserList
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 

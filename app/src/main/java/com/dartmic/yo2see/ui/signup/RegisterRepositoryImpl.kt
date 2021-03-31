@@ -34,7 +34,7 @@ class RegisterRepositoryImpl(
         device_type: String,
         lat: String,
         longi: String,
-        user_type:String
+        user_type: String
     ): Single<RegisterResponsePayload> {
         return restApi.register(
             service,
@@ -73,6 +73,10 @@ class RegisterRepositoryImpl(
         return restApi.verifyOTP(service, phone, otp)
     }
 
+    override fun resendEmail(service: String, user_id: String): Single<UserInforesponse> {
+        return restApi.resendEmail(service, user_id)
+    }
+
     override fun removeAccount(service: String, user_id: String): Single<UserInforesponse> {
         return restApi.removeAccount(service, user_id)
     }
@@ -87,7 +91,11 @@ class RegisterRepositoryImpl(
         old_password: String,
         new_password: String
     ): Single<UserInforesponse> {
-        return restApi.changePassword( user_id,old_password,new_password)
+        return restApi.changePassword(user_id, old_password, new_password)
+    }
+
+    override fun forgotPassword(service: String, email: String): Single<UserInforesponse> {
+        return restApi.forgotPassword(service, email)
     }
 
 

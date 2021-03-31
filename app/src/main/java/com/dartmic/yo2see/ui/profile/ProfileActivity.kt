@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.item_product.view.*
 
 class ProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel::class) {
 
-    lateinit var user: UserList
+    lateinit var user: com.dartmic.yo2see.model.login.UserList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +101,7 @@ class ProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMode
 
 
                 user = it?.userList!!
+                model?.saveUserDetail(user)
                 tvUserName.text = it?.userList?.name
                 tvEmail.text = it?.userList?.email
                 tvLink.text = it?.userList?.phone

@@ -20,7 +20,8 @@
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.change_password.ChangePasswordActivity"></activity>
+        <activity android:name=".ui.forgot_password.ForgotPasswordActivity"></activity>
+        <activity android:name=".ui.change_password.ChangePasswordActivity" />
         <activity
             android:name=".ui.search.SerachActivity"
             android:screenOrientation="portrait" />

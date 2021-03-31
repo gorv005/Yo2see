@@ -241,5 +241,21 @@ interface AppRestApiFast {
 
     ): Single<UserInforesponse>
 
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.RESEND_EMAIL)
+    fun resendEmail(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String
+    ): Single<UserInforesponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.FORGOT_PASSWORD)
+    fun forgotPassword(
+        @Field("service") user_id: String,
+        @Field("user_email") user_email: String
+    ): Single<UserInforesponse>
+
 }
 

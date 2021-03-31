@@ -21,7 +21,7 @@
         />
     <tab
         icon="@drawable/ic_chat_bubbles_white"
-        id="@+id/action_account"
+        id="@+id/action_chat"
         title=""
         />
 

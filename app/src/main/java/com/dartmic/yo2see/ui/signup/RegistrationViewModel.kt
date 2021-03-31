@@ -8,6 +8,7 @@ import com.dartmic.yo2see.interfaces.SchedulerProvider
 import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.ImageUpload.UploadImageResponse
 import com.dartmic.yo2see.model.SearchEvent
+import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.model.signUp.OTPResponsePayload
 import com.dartmic.yo2see.model.signUp.RegisterResponsePayload
@@ -20,7 +21,7 @@ import retrofit2.HttpException
 
 class RegistrationViewModel(
     private val registerRepository: RegisterRepository,
-    private val scheduler: SchedulerProvider,     private val pre: PreferenceManager
+    private val scheduler: SchedulerProvider, private val pre: PreferenceManager
 
 ) :
     AbstractViewModel() {
@@ -34,6 +35,8 @@ class RegistrationViewModel(
     val uploadImageModel = MutableLiveData<UploadImageResponse>()
     val removeAccountModel = MutableLiveData<UserInforesponse>()
     val changePasswordModel = MutableLiveData<UserInforesponse>()
+    val resendEmailModel = MutableLiveData<UserInforesponse>()
+    val forgotPasswordModel = MutableLiveData<UserInforesponse>()
 
     fun uploadImage(
         service: RequestBody,
@@ -152,7 +155,7 @@ class RegistrationViewModel(
 
         launch {
             registerRepository.register(
-                service, phone, name, email, password, device_id, device_type, lat, longi,userType
+                service, phone, name, email, password, device_id, device_type, lat, longi, userType
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -237,10 +240,59 @@ class RegistrationViewModel(
 
         }
     }
+
+    fun resendEmail(
+        service: String,
+        user_id: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+
+        launch {
+            registerRepository.resendEmail(
+                service, user_id
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    resendEmailModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            resendEmailModel.value =
+                                Gson().fromJson(error, UserInforesponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     fun verifyOtp(
         service: String,
         phone: String,
-        otp:String
+        otp: String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -248,7 +300,7 @@ class RegistrationViewModel(
 
         launch {
             registerRepository.verifyOtp(
-                service, phone,otp
+                service, phone, otp
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -336,19 +388,65 @@ class RegistrationViewModel(
     }
 
 
+    fun forgotPassword(
+        service: String,
+        email: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
 
 
+
+        launch {
+            registerRepository.forgotPassword(
+                service, email
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    forgotPasswordModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            forgotPasswordModel.value =
+                                Gson().fromJson(error, UserInforesponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
 
     fun changePassword(
         service: String,
-        user_id: String, old_password: String, new_password: String) {
+        user_id: String, old_password: String, new_password: String
+    ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
 
 
         launch {
             registerRepository.changePassword(
-                service,user_id,old_password,new_password
+                service, user_id, old_password, new_password
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -388,14 +486,15 @@ class RegistrationViewModel(
 
     fun removeAccount(
         service: String,
-        user_id: String) {
+        user_id: String
+    ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
 
 
         launch {
             registerRepository.removeAccount(
-                service,user_id
+                service, user_id
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -432,8 +531,14 @@ class RegistrationViewModel(
 
         }
     }
+    public fun saveUserDetail(user: UserList?) {
+        pre.saveUserData(user)
+    }
 
-    public fun getUserID() :String?{
+    public fun getUserID(): String? {
         return pre.getLoggedInUserId()
+    }
+    public fun getName(): String? {
+        return pre.getLoggedInUserName()
     }
 }

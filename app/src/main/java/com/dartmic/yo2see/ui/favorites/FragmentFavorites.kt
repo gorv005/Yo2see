@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.model.product.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.home.HomeFragment
@@ -39,10 +40,11 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class FragmentFavorites : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class),
-    AdapterViewClickListener<ListingItem> {
+    AdapterViewClickListener<ListingItem>, SortImpl {
     private var adapterProductList: AdapterFavProductList? = null
     var pos: Int = -1
     private var listingItemList = ArrayList<ListingItem>()
+    internal var sort_selected: String = ""
 
     override fun getLayoutId() = R.layout.fragment_favorites
 
@@ -54,6 +56,7 @@ class FragmentFavorites : BaseFragment<ProductListnViewModel>(ProductListnViewMo
                 View.VISIBLE
             )
         }
+        getFavProductData()
 
     }
 
@@ -77,17 +80,21 @@ class FragmentFavorites : BaseFragment<ProductListnViewModel>(ProductListnViewMo
             adapterProductList = AdapterFavProductList(this, it, R.drawable.round_circle_blue)
 
         }
+        rlSort.setOnClickListener {
+            (activity as LandingActivity).sortBy(this, sort_selected)
+
+        }
         rvFavProductList.adapter = adapterProductList
         //  adapterProductList?.submitList(getProducts())
         // runAnimationAgain()
         subscribeUi()
         subscribeLoading()
-        getFavProductData()
         ivBackFav.setOnClickListener {
             activity?.onBackPressed()
         }
 
     }
+
 
     fun getFavProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
@@ -211,6 +218,27 @@ class FragmentFavorites : BaseFragment<ProductListnViewModel>(ProductListnViewMo
 
             }
 
+        }
+    }
+
+    override fun sortBy(sort: String) {
+        when (sort) {
+            AndroidUtils.getString(R.string.the_pos_user_like_week_back) -> {
+                sort_selected = AndroidUtils.getString(R.string.the_pos_user_like_week_back)
+
+            }
+            AndroidUtils.getString(R.string.the_pos_user_like_month_back) -> {
+                sort_selected = AndroidUtils.getString(R.string.the_pos_user_like_month_back)
+
+            }
+            AndroidUtils.getString(R.string.the_pos_user_like_year_back) -> {
+                sort_selected = AndroidUtils.getString(R.string.the_pos_user_like_year_back)
+
+            }
+            AndroidUtils.getString(R.string.view_all_post) -> {
+                sort_selected = AndroidUtils.getString(R.string.view_all_post)
+
+            }
         }
     }
 

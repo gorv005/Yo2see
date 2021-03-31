@@ -28,7 +28,7 @@
         android:title="MY ADS"
         app:showAsAction="ifRoom"/>
     <item
-        android:id="@+id/action_account"
+        android:id="@+id/action_chat"
         android:enabled="true"
         android:title="ACCOUNT"
         android:icon="@drawable/ic_chat_bubbles_white"

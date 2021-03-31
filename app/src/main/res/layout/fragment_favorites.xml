@@ -34,6 +34,35 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
                 android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rlSort"
+                    android:layout_marginTop="@dimen/et_height_20"
+                    android:background="@color/red_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                    <LinearLayout
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:text="@string/sort"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <ImageView
+                        android:layout_marginStart="10dp"
+                        app:tint="@color/white"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_low_to_high_blue"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                    </LinearLayout>
+                </RelativeLayout>
                 <com.dartmic.yo2see.utils.CustomGridRecyclerView
                     android:id="@+id/rvFavProductList"
                     android:layout_width="match_parent"

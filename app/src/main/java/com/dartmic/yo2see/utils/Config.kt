@@ -65,6 +65,8 @@ class Config {
         const val ADD_TO_FAVORITES = BASE_PATH + "common/addtofav"
         const val PRODUCT_FAV_LIST_API = BASE_PATH + "common/userfavlist"
         const val CHANGE_PASSWORD = BASE_PATH + "user/changepassword"
+        const val RESEND_EMAIL = BASE_PATH + "user/resend_email"
+        const val FORGOT_PASSWORD = BASE_PATH + "user/forgetpwd"
 
 
     }
@@ -83,6 +85,7 @@ class Config {
         const val PROPERTY_USER_TYPE = "PROPERTY_USER_TYPE" // user email
         const val PROPERTY_USER_PHONE = "PROPERTY_USER_PHONE" // user email
         const val PROPERTY_IS_USER_LOGIN = "PROPERTY_IS_USER_LOGIN" // user email
+        const val PROPERTY_USER_IMAGE = "PROPERTY_USER_IMAGE" // user id
 
 
         // notification

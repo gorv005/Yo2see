@@ -43,6 +43,11 @@ interface RegisterRepository {
     fun verifyOtp(
         service: String, phone: String,otp:String
     ): Single<OTPResponsePayload>
+
+    fun resendEmail(
+        service: String, user_id: String
+    ): Single<UserInforesponse>
+
     fun removeAccount(
         service: String, user_id: String
     ): Single<UserInforesponse>
@@ -53,5 +58,10 @@ interface RegisterRepository {
     fun changePassword(
         service: String,
         user_id: String, old_password: String, new_password: String
+    ): Single<UserInforesponse>
+
+    fun forgotPassword(
+        service: String,
+        email:String
     ): Single<UserInforesponse>
 }

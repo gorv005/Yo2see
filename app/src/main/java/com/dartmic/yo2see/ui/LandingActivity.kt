@@ -18,12 +18,15 @@ import com.arthurivanets.bottomsheets.BottomSheet
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseApplication
 import com.dartmic.yo2see.base.BaseFragment
+import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.ui.AdsItems.sheet.SimpleAdsBottomSheet
 import com.dartmic.yo2see.ui.addProduct.AddProductFragment
 import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
+import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.favorites.FragmentFavorites
+import com.dartmic.yo2see.ui.favorites.SortByBottomSheet
 import com.dartmic.yo2see.ui.home.HomeFragment
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.more.MoreActivity
@@ -48,12 +51,12 @@ const val INDEX_HOME = FragNavController.TAB1
 const val INDEX_FAV = FragNavController.TAB2
 const val INDEX_ADD_POST = FragNavController.TAB3
 const val INDEX_MY_ADS = FragNavController.TAB4
-const val INDEX_ACCOUNT = FragNavController.TAB5
+const val INDEX_CHAT = FragNavController.TAB5
 
 class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     FragNavController.TransactionListener, FragNavController.RootFragmentListener {
 
-    override val numberOfRootFragments: Int = 4
+    override val numberOfRootFragments: Int = 5
     private val fragNavController: FragNavController =
         FragNavController(supportFragmentManager, R.id.container)
 
@@ -91,7 +94,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             INDEX_ADD_POST -> return PostAnAddFragment.getInstance(0)
             //   INDEX_RENT_BUY_SELL -> return HomeFragment.getInstance(0)
             INDEX_MY_ADS -> return HomeFragment.getInstance(0)
-            INDEX_ACCOUNT -> return HomeFragment.getInstance(0)
+            INDEX_CHAT -> return ChatListFragment.getInstance(0)
         }
         throw IllegalStateException("Need to send an index that we know")
     }
@@ -174,6 +177,11 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                 }
                 R.id.action_fav -> {
                     fragNavController.switchTab(INDEX_FAV)
+                    // Respond to navigation item 2 click
+                    true
+                }
+                R.id.action_chat -> {
+                    fragNavController.switchTab(INDEX_CHAT)
                     // Respond to navigation item 2 click
                     true
                 }
@@ -300,8 +308,9 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.setStatusBarColor(color)
         }
-        bottomBar.setBackgroundColor(color)
-        bottomBar.backgroundColor = color
+        rlBottomBarBack.setBackgroundColor(color)
+        // bottomBar.setBackgroundColor(color)
+        //  bottomBar.backgroundColor = color
         // bottomBar.setColorChange(color)
         fab.setColorFilter(color)
         //fab.visibility = visbility
@@ -352,4 +361,15 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
 
         }
     }
+
+    fun sortBy(sortImpl: SortImpl, sort_by: String) {
+        val sortByBottomSheet = SortByBottomSheet(this, sortImpl, sort_by)
+
+        if (sortByBottomSheet.isAdded) {
+            sortByBottomSheet.dismiss()
+        }
+        sortByBottomSheet.isCancelable = false
+        sortByBottomSheet.show(supportFragmentManager, SortByBottomSheet.TAG)
+    }
+
 }

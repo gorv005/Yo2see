@@ -300,5 +300,10 @@ class ProductListnViewModel(
         return pre.getLoggedInUserId()
     }
 
-
+    public fun getUserImage(): String? {
+        return pre.getUserImage()
+    }
+    public fun getLoggedInUserName(): String? {
+        return pre.getLoggedInUserName()
+    }
 }

@@ -46,12 +46,17 @@
         app:itemIconTint="@color/white"
         android:visibility="gone"
         app:labelVisibilityMode="unlabeled" />
+        <RelativeLayout
+            android:id="@+id/rlBottomBarBack"
+            android:background="@color/red_a"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"/>
         <com.roughike.bottombar.BottomBar
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/red_a"
+            android:background="@color/transparent1"
             app:bb_activeTabAlpha="1"
             app:bb_inActiveTabColor="@color/white"
             app:bb_activeTabColor="@color/white"

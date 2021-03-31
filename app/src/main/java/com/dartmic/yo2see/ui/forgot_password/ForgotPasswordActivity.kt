@@ -1,4 +1,4 @@
-package com.dartmic.yo2see.ui.change_password
+package com.dartmic.yo2see.ui.forgot_password
 
 import android.content.Context
 import android.content.Intent
@@ -7,20 +7,23 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
+import com.dartmic.yo2see.ui.change_password.ChangePasswordActivity
 import com.dartmic.yo2see.ui.login.LoginActivity
-import com.dartmic.yo2see.ui.profile.ProfileActivity
 import com.dartmic.yo2see.ui.signup.RegistrationViewModel
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
-import kotlinx.android.synthetic.main.activity_change_password.*
+import kotlinx.android.synthetic.main.activity_forgot_password.*
 
-class ChangePasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel::class) {
-    override fun layout(): Int = R.layout.activity_change_password
+class ForgotPasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel::class) {
+
+
+    override fun layout(): Int = R.layout.activity_forgot_password
+
+
     override fun tag(): String {
         TODO("Not yet implemented")
     }
@@ -33,14 +36,17 @@ class ChangePasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationV
         TODO("Not yet implemented")
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tvNameChangePassword.setText("Hello "+model?.getName()+"!")
-        btnChangePassword.setOnClickListener {
-            changePassword()
+        btnSendEmail.setOnClickListener {
+            forgotPassword()
         }
-
+        btnSignInChangePassword.setOnClickListener {
+            startActivity(LoginActivity.getIntent(this))
+        }
+        llResendEmail.setOnClickListener {
+            forgotPassword()
+        }
         subscribeLoading()
         subscribeUi()
         ivBackChangePassword.setOnClickListener {
@@ -50,43 +56,23 @@ class ChangePasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationV
     }
 
 
-    fun resendEmail() {
-
-        if (NetworkUtil.isInternetAvailable(this)) {
-            model.resendEmail(
-                "ResendEmail",
-                model?.getUserID()!!
-            )
-        }
+    fun forgotPassword() {
+        val validateEmailError = AndroidUtils.validateEmail(etEmailForgot.text.toString())
 
 
-    }
-
-    fun changePassword() {
-        val validateOldPasswordError = AndroidUtils.validateName(etOldPassword.text.toString())
-
-        val validateMatchPasswordError = AndroidUtils.validateMatchPassword(
-            etPasswordsignUp.text.toString(),
-            etConfirmPasswordsignUp.text.toString()
-        )
         this?.let { UiUtils.hideSoftKeyboard(it) }
         if (
-            TextUtils.isEmpty(validateOldPasswordError) && TextUtils.isEmpty(
-                validateMatchPasswordError
-            )
+            TextUtils.isEmpty(validateEmailError)
         ) {
             if (NetworkUtil.isInternetAvailable(this)) {
-                model.changePassword(
-                    "Remove",
-                    model?.getUserID()!!,
-                    etOldPassword.text.toString(),
-                    etConfirmPasswordsignUp.text.toString()
+                model.forgotPassword(
+                    "Forget Password",
+                    etEmailForgot.text.toString()
                 )
             }
 
         } else {
-            etOldPassword.error = validateOldPasswordError
-            etConfirmPasswordsignUp.error = validateMatchPasswordError
+            etEmailForgot.error = validateEmailError
         }
     }
 
@@ -100,7 +86,7 @@ class ChangePasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationV
             }
             it.error?.run {
                 UiUtils.showInternetDialog(
-                    this@ChangePasswordActivity,
+                    this@ForgotPasswordActivity,
                     R.string.something_went_wrong
                 )
             }
@@ -109,24 +95,12 @@ class ChangePasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationV
     }
 
     private fun subscribeUi() {
-        model.changePasswordModel.observe(this, Observer {
+        model.forgotPasswordModel.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
-                etOldPassword.setText("")
-                etPasswordsignUp.setText("")
-                etConfirmPasswordsignUp.setText("")
+                llForgotPasswordRequest.visibility = View.GONE
+                llForgotPassword.visibility = View.VISIBLE
                  showSnackbar(it.message, true)
-                this.let { UiUtils.hideSoftKeyboard(it) }
-            } else {
-                showSnackbar(it.message, false)
-
-            }
-        })
-        model.resendEmailModel.observe(this, Observer {
-            Logger.Debug("DEBUG", it.toString())
-            if (it.status) {
-
-                showSnackbar(it.message, true)
                 this.let { UiUtils.hideSoftKeyboard(it) }
             } else {
                 showSnackbar(it.message, false)
@@ -144,9 +118,8 @@ class ChangePasswordActivity : BaseActivity<RegistrationViewModel>(RegistrationV
         const val KEY_TAB = "KEY_TAB"
 
         fun getIntent(context: Context): Intent? {
-            val intent = Intent(context, ChangePasswordActivity::class.java)
+            val intent = Intent(context, ForgotPasswordActivity::class.java)
             return intent
         }
     }
-
 }

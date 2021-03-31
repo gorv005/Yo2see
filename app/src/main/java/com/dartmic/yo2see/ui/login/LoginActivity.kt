@@ -16,6 +16,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
 import com.dartmic.yo2see.callbacks.GifEndListener
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.forgot_password.ForgotPasswordActivity
 import com.dartmic.yo2see.ui.signup.SignUpActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
@@ -40,7 +41,7 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
     lateinit var callbackManager: CallbackManager
 
     lateinit var mGoogleSignInClient: GoogleSignInClient
-    val Req_Code:Int=123
+    val Req_Code: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
     var id = ""
     var firstName = ""
@@ -68,13 +69,16 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-        mGoogleSignInClient= GoogleSignIn.getClient(this,gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        firebaseAuth= FirebaseAuth.getInstance()
+        firebaseAuth = FirebaseAuth.getInstance()
 
-        btnSignInGoogle.setOnClickListener{ view: View? ->
-            Toast.makeText(this,"Logging In",Toast.LENGTH_SHORT).show()
+        btnSignInGoogle.setOnClickListener { view: View? ->
+            Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show()
             signInGoogle()
+        }
+        tvForgotpassword.setOnClickListener {
+            startActivity(ForgotPasswordActivity.getIntent(this))
         }
         LoginManager.getInstance()
             .registerCallback(callbackManager, object : FacebookCallback<LoginResult?> {
@@ -103,11 +107,12 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
         subscribeUiLogin()
     }
 
-    private  fun signInGoogle(){
+    private fun signInGoogle() {
 
-        val signInIntent: Intent =mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent,Req_Code)
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, Req_Code)
     }
+
     fun doSignIn() {
 
         this?.let { UiUtils.hideSoftKeyboard(it) }
@@ -369,31 +374,31 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode==Req_Code){
+        if (requestCode == Req_Code) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             handleResult(task)
 //            firebaseAuthWithGoogle(account!!)
-        }else {
+        } else {
             callbackManager.onActivityResult(requestCode, resultCode, data)
             super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
-    private fun handleResult(completedTask: Task<GoogleSignInAccount>){
+    private fun handleResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            val account: GoogleSignInAccount? =completedTask.getResult(ApiException::class.java)
+            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             if (account != null) {
                 UpdateUI(account)
             }
-        } catch (e: ApiException){
-            Toast.makeText(this,e.toString(), Toast.LENGTH_SHORT).show()
+        } catch (e: ApiException) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun UpdateUI(account: GoogleSignInAccount){
-        val credential= GoogleAuthProvider.getCredential(account.idToken,null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener {task->
-            if(task.isSuccessful) {
+    private fun UpdateUI(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
 
                 if (NetworkUtil.isInternetAvailable(this)) {
                     model.socialLogin(
@@ -412,11 +417,11 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
                         "Gmail"
                     )
                 }
-              //  SavedPreference.setEmail(this,account.email.toString())
-            //    SavedPreference.setUsername(this,account.displayName.toString())
-               /* val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()*/
+                //  SavedPreference.setEmail(this,account.email.toString())
+                //    SavedPreference.setUsername(this,account.displayName.toString())
+                /* val intent = Intent(this, MainActivity::class.java)
+                 startActivity(intent)
+                 finish()*/
             }
         }
     }

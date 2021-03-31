@@ -14,8 +14,6 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
 import com.dartmic.yo2see.common.ImageProvider
 import com.dartmic.yo2see.interfaces.ResultListener
-import com.dartmic.yo2see.model.add_product.ImageItem
-import com.dartmic.yo2see.model.profile.UserList
 import com.dartmic.yo2see.ui.signup.RegistrationViewModel
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.*
@@ -30,7 +28,7 @@ import java.io.File
 import java.io.FileNotFoundException
 
 class UpdateProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel::class) {
-    lateinit var user: UserList
+    lateinit var user: com.dartmic.yo2see.model.login.UserList
     val OPEN_MEDIA_PICKER_IMAGE_GALLRY = 2 // Request code
     var fileUrl: Uri? = null
 
@@ -84,7 +82,7 @@ class UpdateProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationVi
         const val KEY_TAB = "KEY_TAB"
         const val DATA = "DATA"
 
-        fun getIntent(context: Context, data: UserList): Intent? {
+        fun getIntent(context: Context, data: com.dartmic.yo2see.model.login.UserList): Intent? {
             val intent = Intent(context, UpdateProfileActivity::class.java)
             intent.putExtra(DATA, data)
             return intent

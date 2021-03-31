@@ -15,6 +15,7 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
         savePreference(Config.SharedPreferences.PROPERTY_USER_EMAIL, user?.email)
         savePreference(Config.SharedPreferences.PROPERTY_USER_PHONE, user?.phone)
         savePreference(Config.SharedPreferences.PROPERTY_LOGIN_PREF, true)
+        savePreference(Config.SharedPreferences.PROPERTY_USER_IMAGE, user?.picture)
 
     }
     /* @SuppressLint("ApplySharedPref")
@@ -49,6 +50,7 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
     //   fun getLoggedInUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
     //   fun getLoggedInUserImageThumb() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE_THUMB)
     fun getLoggedInUserId() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_ID)
+    fun getUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
 
 
     val sharedPreferences = context.getSharedPreferences(
