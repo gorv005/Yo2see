@@ -208,7 +208,20 @@
     <string name="the_pos_user_like_year_back">The post user like year back</string>
     <string name="the_pos_user_like_month_back">The post user like month back</string>
     <string name="view_profile_"><u>View Profile</u></string>
-
+    <string name="yo2see_inc">Yo2see Inc. was incorporated in the province of Alberta on September 21, 2019.</string>
+    <string name="what_we_offer">WHAT WE OFFER</string>
+    <string name="yo2see_inc_offer">Yo2see inc. (\'the Company\') is envisioned to be a classified website for renting, buying, selling, and tranding goods and services at certain price and duration with added features for freelance articles, blogs, podcasts and posts.</string>
+    <string name="the_stron_old_branch">The strong old branch of buy and\nsell. I know you already have sat\non same before. Have you fallen\nthere? I did too</string>
+    <string name="choose_from_our_22_listing">Choose from our 22 listing</string>
+    <string name="read_through_descriptions_and_details"><![CDATA[Read through descriptions\n& details]]></string>
+    <string name="make_an_or_negotiate_your_final_offer">Make an or negotiate your\nfinal offer</string>
+    <string name="i_present_you_a_branch_for_charter_fans">I present you a branch for charter\nfans!</string>
+    <string name="a_one_stop_trade_off_spot_for">A one stop trade off spot for\neveryone to shop!</string>
+    <string name="get_through_to_share_come_post_it_here">Get a thought to share, come post\n it here!</string>
+    <string name="we_believe_in_sustainability">"We believe in sustainability. Protect the earth\nby giving users a chance to recycle and reuse\nproducts and services "</string>
+    <string-array name="text">
+    <item>WHAT WE OFFER</item>
+    </string-array>
     <string-array name="category_type">
         <item>Rent</item>
         <item>Sell</item>

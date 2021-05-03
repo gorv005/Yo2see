@@ -1,18 +1,20 @@
 package com.dartmic.yo2see
 
-import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import com.dartmic.yo2see.callbacks.GifEndListener
 import com.dartmic.yo2see.tutorails.BuyTuteActivity
-import com.dartmic.yo2see.ui.categories.CategoryActivity
-import com.dartmic.yo2see.ui.login.LoginActivity
-import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.GifUtil
+import com.dartmic.yo2see.utils.TransitionHelper
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.ivLoginCart
 
 
 class MainActivity : AppCompatActivity(),GifEndListener {
@@ -23,37 +25,12 @@ class MainActivity : AppCompatActivity(),GifEndListener {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         setContentView(R.layout.activity_main)
-       // parentView.visibility=View.VISIBLE
-        /*ivsell.visibility=View.GONE
-        ivbarter.visibility=View.GONE
-        ivbuy.visibility=View.GONE
-        ivpost.visibility=View.GONE
-        ivrent.visibility=View.GONE*/
-       /*let {
-           gifUtil = GifUtil(this)
-           gifUtil?.setImage(this,gifImageView)
-        }*/
-        ivbuy.setOnClickListener {
-            let {
-               // parentView.visibility=View.GONE
-                UiUtils.hideSoftKeyboard(it)
-                startActivity(
-                    CategoryActivity.getIntent(
-                        it
-                    ),
-                    ActivityOptions.makeSceneTransitionAnimation(it).toBundle()
-                )
-            }
 
+        let {
+            gifUtil = GifUtil(this)
+            gifUtil?.setImage(this, ivLoginCart, R.drawable.moving_cart)
         }
 
-        //   Glide.with(this).load(R.drawable.tree_gif).into(imageView).loa
-        /* rlBuy.setOnClickListener {
-             startActivity(
-                 ItemListActivity.getIntent(this),
-                 ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-             )
-         }*/
         btnNext.setOnClickListener {
             let {
                 startActivity(BuyTuteActivity.getIntent(it))
@@ -73,12 +50,10 @@ class MainActivity : AppCompatActivity(),GifEndListener {
     }
     override fun animationEnd() {
 
-       /* ivsell.visibility=View.VISIBLE
-        ivbarter.visibility=View.VISIBLE
-        ivbuy.visibility=View.VISIBLE
-        ivpost.visibility=View.VISIBLE
-        ivrent.visibility=View.VISIBLE
-*/
+        let {
+            gifUtil?.setImage(this, ivLoginCart, R.drawable.moving_cart)
+
+        }
 
     }
 
@@ -91,4 +66,12 @@ class MainActivity : AppCompatActivity(),GifEndListener {
             return intent
         }
     }
+
+   /* fun transitionTo(i: Intent?) {
+        var pairs: Array<Pair<View, String>> =
+            TransitionHelper.createSafeTransitionParticipants(this, true)
+        val transitionActivityOptions =
+            ActivityOptionsCompat.makeSceneTransitionAnimation(this, pairs)
+        startActivity(i, transitionActivityOptions.toBundle())
+    }*/
 }

@@ -42,18 +42,28 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tutorails.ExploreActivity"
+            android:theme="@style/AppFullScreenTheme"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".tutorails.PostTuteActivity"
+            android:theme="@style/AppFullScreenTheme"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".tutorails.BarterTuteActivity"
+            android:theme="@style/AppFullScreenTheme"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".tutorails.RentTuteActivity"
+            android:theme="@style/AppFullScreenTheme"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".tutorails.BuyTuteActivity"
+            android:theme="@style/AppFullScreenTheme"
+
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.signup.SignUpActivity"
@@ -82,6 +92,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:theme="@style/AppFullScreenTheme"
             android:screenOrientation="portrait" />
 
         <meta-data

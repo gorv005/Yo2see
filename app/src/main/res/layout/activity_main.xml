@@ -1,153 +1,196 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parentView"
     android:layout_width="match_parent"
-        android:orientation="vertical"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <ImageView
+        android:id="@+id/ivCornerImage"
+        android:layout_width="130dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/curve_buysell"
+        app:tint="@color/red_a" />
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="80dp"
+        android:layout_height="150dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_red_bottom_background"
+        app:tint="@color/red_a" />
 
-     <LinearLayout
-         android:layout_weight="2.2"
-         android:layout_marginTop="100dp"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-   >
-         <ImageView
-             android:adjustViewBounds="true"
-             android:id="@+id/mainTree"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_centerInParent="true"
-             android:src="@drawable/tree_main" />
-
-     </LinearLayout>
-    <RelativeLayout
-        android:layout_weight="0.8"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:orientation="vertical"
-
+        android:layout_height="match_parent"
+        >
+    <LinearLayout
+        android:layout_marginEnd="@dimen/et_height_40"
+        android:layout_marginStart="40dp"
+        android:layout_weight="2.6"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnNext"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/button_round_selected_red"
-        android:fontFamily="@font/poppins_regular"
-        android:text="@string/next"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-    <LinearLayout
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp">
-        <ImageView
-            android:id="@+id/ivTute1"
-            android:layout_width="15dp"
-            android:src="@drawable/round_circle_red"
-            android:layout_height="15dp"/>
-        <ImageView
-            android:id="@+id/ivTute2"
-            android:layout_marginStart="5dp"
-            android:layout_width="15dp"
-            android:src="@drawable/round_circle_grey"
-            android:layout_height="15dp"/>
-        <ImageView
-            android:id="@+id/ivTute3"
-            android:layout_marginStart="5dp"
-            android:layout_width="15dp"
-            android:src="@drawable/round_circle_grey"
-            android:layout_height="15dp"/>
-        <ImageView
-            android:id="@+id/ivTute4"
-            android:layout_marginStart="5dp"
-            android:layout_width="15dp"
-            android:src="@drawable/round_circle_grey"
-            android:layout_height="15dp"/>
-        <ImageView
-            android:id="@+id/ivTute5"
-            android:layout_marginStart="5dp"
-            android:layout_width="15dp"
-            android:src="@drawable/round_circle_grey"
-            android:layout_height="15dp"/>
+
+        <RelativeLayout
+            android:layout_weight="0.4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_alignParentStart="true"
+            android:id="@+id/ivLoginCart"
+            app:srcCompat="@drawable/moving_cart" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="0.8"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:text="@string/yo2see_inc"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/what_we_offer"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                android:textSize="16sp" />
+                <com.tomer.fadingtextview.FadingTextView
+                    android:layout_marginTop="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/what_we_offer"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:texts="@array/text"
+                    app:timeout="500" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:text="@string/yo2see_inc_offer"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.9"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:layout_weight="0.45"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/ic_buy_sell_updated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_weight="0.3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/ic_rent_updated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="0.45"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:gravity="center_horizontal"
+                   android:layout_gravity="center_horizontal"
+                    android:layout_weight="0.3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/ic_trends_updated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_weight="0.3"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:src="@drawable/ic_barter_updated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_weight="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
     </LinearLayout>
-    </RelativeLayout>
-    <RelativeLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_centerInParent="true">
-
-        <ImageView
-            android:id="@+id/gifImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_tree_without_circles1" />
 
 
-        <ImageView
-            android:id="@+id/ivsell"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="55dp"
-            android:layout_marginTop="150dp"
 
-            android:src="@drawable/sell"
-            android:visibility="visible"></ImageView>
+    </LinearLayout>
+    <ImageView
+        android:padding="@dimen/et_height_50"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_red_next_button"
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
-        <ImageView
-            android:id="@+id/ivbarter"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="60dp"
-
-            android:layout_marginEnd="40dp"
-            android:layout_toRightOf="@id/ivrent"
-            android:src="@drawable/barter"
-            android:visibility="visible"></ImageView>
-
-        <ImageView
-            android:id="@+id/ivbuy"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="75dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/buy"
-            android:visibility="visible"></ImageView>
-
-        <ImageView
-            android:id="@+id/ivrent"
-
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/rent"
-            android:visibility="visible"></ImageView>
-
-        <ImageView
-            android:id="@+id/ivpost"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="160dp"
-            android:layout_marginEnd="40dp"
-            android:src="@drawable/post"
-            android:visibility="visible"></ImageView>
-    </RelativeLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

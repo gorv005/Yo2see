@@ -7,21 +7,27 @@ import android.os.Bundle
 import com.dartmic.yo2see.MainActivity
 import com.dartmic.yo2see.R
 import kotlinx.android.synthetic.main.activity_buy_tute.*
+import kotlinx.android.synthetic.main.activity_buy_tute.ivBackArrow
 
 class BuyTuteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buy_tute)
-        ivNext.setOnClickListener {
+        btnNext.setOnClickListener {
             let {
                 startActivity(RentTuteActivity.getIntent(it))
             }
         }
+        ivBackArrow.setOnClickListener {
+            onBackPressed()
+        }
+/*
         tvSkip.setOnClickListener {
             let {
                 startActivity(ExploreActivity.getIntent(it))
             }
         }
+*/
     }
 
     companion object {

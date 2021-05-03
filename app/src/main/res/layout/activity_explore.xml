@@ -5,34 +5,69 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:adjustViewBounds="true"
+        android:id="@+id/ivBackArrow"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_red_back_arrow" />
 
     <LinearLayout
-        android:layout_weight="2.2"
-        android:layout_marginTop="100dp"
+        android:layout_weight="1.8"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         >
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:adjustViewBounds="true"
-            android:id="@+id/mainTree"
+            android:id="@+id/ivExploreTree"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:src="@drawable/tree_main" />
+            android:src="@drawable/old_tree" />
 
     </LinearLayout>
-    <RelativeLayout
-        android:layout_weight="0.8"
+    <LinearLayout
+        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center_horizontal"
+            android:text="@string/we_believe_in_sustainability"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@drawable/ic_recycle_sign_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_marginStart="50dp"
+                android:src="@drawable/ic_recycle_sign_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnExplore"
             android:layout_width="200dp"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_marginStart="40dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginEnd="40dp"
             android:background="@drawable/button_round_selected_red"
@@ -41,44 +76,6 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp" />
-        <LinearLayout
-            android:layout_marginBottom="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp">
-            <ImageView
-                android:id="@+id/ivTute1"
-                android:layout_width="15dp"
-                android:src="@drawable/round_circle_red"
-                android:layout_height="15dp"/>
-            <ImageView
-                android:id="@+id/ivTute2"
-                android:layout_marginStart="5dp"
-                android:layout_width="15dp"
-                android:src="@drawable/round_circle_blue"
-                android:layout_height="15dp"/>
-            <ImageView
-                android:id="@+id/ivTute3"
-                android:layout_marginStart="5dp"
-                android:layout_width="15dp"
-                android:src="@drawable/round_circle_purple"
-                android:layout_height="15dp"/>
-            <ImageView
-                android:id="@+id/ivTute4"
-                android:layout_marginStart="5dp"
-                android:layout_width="15dp"
-                android:src="@drawable/round_circle_yellow"
-                android:layout_height="15dp"/>
-            <ImageView
-                android:id="@+id/ivTute5"
-                android:layout_marginStart="5dp"
-                android:layout_width="15dp"
-                android:src="@drawable/round_circle_light_blue"
-                android:layout_height="15dp"/>
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

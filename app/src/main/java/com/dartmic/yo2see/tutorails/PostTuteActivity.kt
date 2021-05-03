@@ -5,21 +5,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dartmic.yo2see.R
-import kotlinx.android.synthetic.main.activity_buy_tute.*
+import kotlinx.android.synthetic.main.activity_post_tute.*
+import kotlinx.android.synthetic.main.activity_post_tute.ivBackArrow
 
 class PostTuteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_tute)
-        ivNext.setOnClickListener {
+        btnNext.setOnClickListener {
             let {
                 startActivity(ExploreActivity.getIntent(it))
             }
         }
-        tvSkip.setOnClickListener {
-            let {
-                startActivity(ExploreActivity.getIntent(it))
-            }
+        ivBackArrow.setOnClickListener {
+            onBackPressed()
         }
     }
     companion object {
