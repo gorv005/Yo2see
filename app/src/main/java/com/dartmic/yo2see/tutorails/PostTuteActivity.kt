@@ -20,6 +20,11 @@ class PostTuteActivity : AppCompatActivity() {
         ivBackArrow.setOnClickListener {
             onBackPressed()
         }
+        tvSkip.setOnClickListener {
+            let {
+                startActivity(ExploreActivity.getIntent(it))
+            }
+        }
     }
     companion object {
         const val KEY_TAB = "KEY_TAB"

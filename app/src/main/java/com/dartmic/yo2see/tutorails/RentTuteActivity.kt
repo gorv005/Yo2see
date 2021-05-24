@@ -20,13 +20,13 @@ class RentTuteActivity : AppCompatActivity() {
         ivBackArrow.setOnClickListener {
             onBackPressed()
         }
-/*
+
         tvSkip.setOnClickListener {
             let {
                 startActivity(ExploreActivity.getIntent(it))
             }
         }
-*/
+
     }
 
     companion object {

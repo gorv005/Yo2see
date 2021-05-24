@@ -101,7 +101,7 @@
     <string name="confirm_term_and_condition">Confirm the terms and conditions</string>
     <string name="open_to_nagotiation">This Item is open to nagotiation</string>
     <string name="address"><u>Greater Toronto</u></string>
-    <string name="skip">SKIP</string>
+    <string name="skip"><u>SKIP</u></string>
     <string name="explore">Explore</string>
     <string name="post_an_add">Post an Add</string>
     <string name="select_an_posting_category">Select the posting category</string>
@@ -214,11 +214,21 @@
     <string name="the_stron_old_branch">The strong old branch of buy and\nsell. I know you already have sat\non same before. Have you fallen\nthere? I did too</string>
     <string name="choose_from_our_22_listing">Choose from our 22 listing</string>
     <string name="read_through_descriptions_and_details"><![CDATA[Read through descriptions\n& details]]></string>
-    <string name="make_an_or_negotiate_your_final_offer">Make an or negotiate your\nfinal offer</string>
+    <string name="make_an_or_negotiate_your_final_offer">Make an or negotiate your\nfinal offer and enjoy using\nyour new product</string>
     <string name="i_present_you_a_branch_for_charter_fans">I present you a branch for charter\nfans!</string>
     <string name="a_one_stop_trade_off_spot_for">A one stop trade off spot for\neveryone to shop!</string>
     <string name="get_through_to_share_come_post_it_here">Get a thought to share, come post\n it here!</string>
     <string name="we_believe_in_sustainability">"We believe in sustainability. Protect the earth\nby giving users a chance to recycle and reuse\nproducts and services "</string>
+    <string name="product_added_in_this_can_be_">"Product added in this can\n be directly exchanged for\nmoney described by the seller "</string>
+    <string name="read_through_descriptions_and_details_buy"><![CDATA[Read through descriptions\n& details brows through\nimage using our image\ngallery tab]]></string>
+    <string name="product_added_in_this_category_rent">Product added in this\ncategory are exchanged\ntemporarily this could be\n(daily, monthly or yearly)</string>
+    <string name="read_through_descriptions_and_details_rent"><![CDATA[Read through descriptions\n& details brows through\nimage using our image\ngallery tab. check for\npricing using our rental\npricing feature]]></string>
+    <string name="product_added_in_this_can_be_barter">Products added in this tab\ncan be exchanged with\nproducts with similar value\nor more</string>
+    <string name="read_through_descriptions_and_details_barter"><![CDATA[Read through descriptions\n& details brows through\nimage using our image\ngallery tab]]></string>
+    <string name="this_tab_keeps_post">This tab keeps you\nupdated with currents\ntrends happening around\nyou (jobs, events, farmers\nmarket etc)</string>
+    <string name="check_out_events">check our events sections\nto stay updated with the\nlatest events</string>
+    <string name="make_your_next_event">Enjoy your next event</string>
+
     <string-array name="text">
     <item>WHAT WE OFFER</item>
     </string-array>
