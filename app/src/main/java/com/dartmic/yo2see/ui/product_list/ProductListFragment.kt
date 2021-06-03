@@ -83,7 +83,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         query = arguments?.getString(QUERY)
         location = arguments?.getString(LOCATION)
 
-        init()
+       // init()
         rvProductList.layoutManager = manager
         activity?.let {
             adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue, type!!)
@@ -373,6 +373,18 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                 activity?.let {
                     (activity as LandingActivity).updateStatusBarColor(
                         AndroidUtils.getColor(R.color.blue),
+                        2
+                    )
+                }
+            }
+            Config.Constants.PRODUCT -> {
+
+                ivCurveProduct.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.red_a)
+                )
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.red_a),
                         2
                     )
                 }

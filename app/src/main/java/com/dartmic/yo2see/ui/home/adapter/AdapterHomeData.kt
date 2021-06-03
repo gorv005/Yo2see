@@ -10,23 +10,23 @@ import com.bumptech.glide.Glide
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.EventsItems
 import com.dartmic.yo2see.model.categories.CategoryListItem
 import com.dartmic.yo2see.utils.Config
-import com.facebook.drawee.drawable.ScalingUtils
-import kotlinx.android.synthetic.main.item_events.view.*
+import kotlinx.android.synthetic.main.item_products.view.*
 
 
 class AdapterHomeData(
-    private val adapterViewClickListener: AdapterViewClickListener<CategoryListItem>?,
+    private val adapterViewClickListener: AdapterViewClickListener<CategoryListItemData>?,
     val activity: Activity, val back: Int
-) : ListAdapter<CategoryListItem, AdapterHomeData.ViewHolder>(
+) : ListAdapter<CategoryListItemData, AdapterHomeData.ViewHolder>(
     AdapterHomeDataCallback()
 ) {
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): AdapterHomeData.ViewHolder {
         val itemView = LayoutInflater.from(
             parent.context
-        ).inflate(R.layout.item_events, parent, false)
+        ).inflate(R.layout.item_products, parent, false)
 
         /*  val displayMetrics = DisplayMetrics()
           activity.windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -46,15 +46,15 @@ class AdapterHomeData(
 
 
         fun bind(
-            allProducts: CategoryListItem,
-            adapterViewClick: AdapterViewClickListener<CategoryListItem>?,
+            allProducts: CategoryListItemData,
+            adapterViewClick: AdapterViewClickListener<CategoryListItemData>?,
             back: Int
         ) {
 
-            itemView.tvEventName?.text = allProducts.categoryName
+            itemView.tvProductName?.text = allProducts.categoryName
             // itemView.ivEvents.setImageResource(allProducts.image!!)
-            itemView.rlCategoryBack.setBackgroundResource(back)
-            Glide.with(activity).load(allProducts.catImage)
+          //  itemView.rlCategoryBack.setBackgroundResource(back)
+            Glide.with(activity).load(allProducts.catImage).error(R.drawable.ic_mobiles)
                 .placeholder(R.drawable.ic_clothing_white)
                 .into(itemView.ivEvents)
 

@@ -14,7 +14,7 @@ class CategoryRepositoryImpl(
     private val restApi: AppRestApiFast,
     private val pre: PreferenceManager
 ) : CategoryRepository {
-    override fun getCategories(service: String,type: String): Single<CategoriesResponse> {
+    override fun getCategories(service: String,type: String): Single<CategoryDataResponsePayload> {
         return restApi.getCategories(service,type)
     }
 

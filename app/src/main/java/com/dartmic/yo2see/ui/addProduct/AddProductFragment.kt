@@ -37,10 +37,8 @@ import com.google.gson.reflect.TypeToken
 import com.gsa.ui.login.AddProductViewModel
 import kotlinx.android.synthetic.main.fragment_add_product.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
-import kotlinx.android.synthetic.main.layout_set_barter_info.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_payment.*
-import kotlinx.android.synthetic.main.layout_set_rent_sell_info.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -102,7 +100,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         subToSubListItem = arguments?.getParcelable(ProductListFragment.DATA)!!
         tvProductPath.text =
             subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
-        init()
+      //  init()
         subscribeLoading()
         subscribeUi()
         getUser()
@@ -235,7 +233,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 "",
                 "",
                 etProductDetails.text.toString(),
-                etRentTermAndCondition.text.toString()
+                ""
             )
         } else if (type.equals(Config.Constants.TYPE_BARTER)) {
             model.addProduct(
@@ -265,10 +263,10 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 "" + latitude,
                 "" + longitude,
                 etwhatWouldtoLiketoBarter.text.toString(),
-                etwhatWouldtoLiketoExchange.text.toString(),
-                etExchangeProductTitle.text.toString(),
-                etExchangeProductTitleDescription.text.toString(),
-                etAdditionalDetails.text.toString(),
+                "",
+               "",
+                "",
+                "",
                 "",
                 ""
             )
@@ -620,8 +618,8 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
                 rbSell.isChecked = false
                 rbBarter.isChecked = false
-                layout_rent_sell.visibility = View.VISIBLE
-                layout_barter_info.visibility = View.GONE
+          /*      layout_rent_sell.visibility = View.VISIBLE
+                layout_barter_info.visibility = View.GONE*/
 
                 tvSetPrice.visibility = View.GONE
                 etSetPrice.visibility = View.GONE
@@ -632,12 +630,12 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 etProductDetails.visibility = View.VISIBLE
                 tvProductDetailsHelperText.visibility = View.VISIBLE
 
-                tvRentTermAndCondition.visibility = View.VISIBLE
+               /* tvRentTermAndCondition.visibility = View.VISIBLE
                 etRentTermAndCondition.visibility = View.VISIBLE
-                tvRentTermAndConditionHelperText.visibility = View.VISIBLE
+                tvRentTermAndConditionHelperText.visibility = View.VISIBLE*/
 
                 ivCurveAddProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.voilet)
+                    ContextCompat.getColor(activity!!, R.color.red_a)
                 )
 
                 activity?.let {
@@ -657,8 +655,8 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 rbSell.isChecked = false
                 rbRent.isChecked = false
                 rbBarter.isChecked = true
-                layout_rent_sell.visibility = View.GONE
-                layout_barter_info.visibility = View.VISIBLE
+               /* layout_rent_sell.visibility = View.GONE
+                layout_barter_info.visibility = View.VISIBLE*/
                 layout_payment.visibility = View.GONE
 
                 tvSelectItemCondition.visibility = View.VISIBLE
@@ -700,16 +698,16 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         type = Config.Constants.TYPE_SELL
         rbRent.isChecked = false
         rbBarter.isChecked = false
-        layout_rent_sell.visibility = View.VISIBLE
-        layout_barter_info.visibility = View.GONE
+       /* layout_rent_sell.visibility = View.VISIBLE
+        layout_barter_info.visibility = View.GONE*/
 
         tvProductDetailsHelperText.visibility = View.GONE
         etProductDetails.visibility = View.GONE
         tvProductDetails.visibility = View.GONE
-
+/*
         etRentTermAndCondition.visibility = View.GONE
         tvRentTermAndCondition.visibility = View.GONE
-        tvRentTermAndConditionHelperText.visibility = View.GONE
+        tvRentTermAndConditionHelperText.visibility = View.GONE*/
 
         tvSetPrice.visibility = View.VISIBLE
         etSetPrice.visibility = View.VISIBLE

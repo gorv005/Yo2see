@@ -87,6 +87,38 @@
             android:textColor="@color/blue"
             android:textSize="14sp"
             android:fontFamily="@font/poppins_regular" />
+        <TextView
+            android:id="@+id/tvProductAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/grid_image"
+            android:layout_marginTop="5dp"
+            android:text="This product is avaliable\nfor Buy, Rent, Barter"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppins_regular" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_buysell_icon_small_blue" />
+            <ImageView
+                android:layout_marginStart="@dimen/et_height_10"
+                android:src="@drawable/ic_rent_icon_small_purple"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <ImageView
+                android:layout_marginStart="@dimen/et_height_10"
+                android:src="@drawable/ic_barter_icon_small_purple"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_weight="2"
@@ -99,29 +131,39 @@
                 android:layout_width="wrap_content"
                 android:layout_height="20dp">
                 <ImageView
+                    app:tint="@color/red_a"
+
                     android:id="@+id/ivTute1"
                     android:layout_width="17dp"
                     android:src="@drawable/ic_full_star"
                     android:layout_height="17dp"/>
                 <ImageView
+                    app:tint="@color/red_a"
+
                     android:id="@+id/ivTute2"
                     android:layout_marginStart="2dp"
                     android:layout_width="17dp"
                     android:src="@drawable/ic_full_star"
                     android:layout_height="17dp"/>
                 <ImageView
+                    app:tint="@color/red_a"
+
                     android:id="@+id/ivTute3"
                     android:layout_marginStart="2dp"
                     android:layout_width="17dp"
                     android:src="@drawable/ic_full_star"
                     android:layout_height="17dp"/>
                 <ImageView
+                    app:tint="@color/red_a"
+
                     android:id="@+id/ivTute4"
                     android:layout_marginStart="2dp"
                     android:layout_width="17dp"
                     android:src="@drawable/ic_half_star"
                     android:layout_height="17dp"/>
                 <ImageView
+                    app:tint="@color/red_a"
+
                     android:id="@+id/ivTute5"
                     android:layout_marginStart="2dp"
                     android:layout_width="17dp"
@@ -139,6 +181,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageView
+                app:tint="@color/red_a"
+
                 android:src="@drawable/ic_share_black"
                 android:layout_width="20dp"
                 android:layout_height="20dp"/>
@@ -155,6 +199,7 @@
                     android:layout_width="20dp"
                     android:layout_marginStart="15dp"
                     android:layout_height="20dp"
+                    app:tint="@color/red_a"
                     app:sparkbutton_activeImage="@drawable/heart_like"
                     app:sparkbutton_inActiveImage="@drawable/ic_heart_black"
                     app:sparkbutton_iconSize="20dp"

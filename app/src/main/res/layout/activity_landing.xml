@@ -8,12 +8,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <RelativeLayout
-        android:background="@drawable/pattern_back"
         android:layout_above="@+id/rlBottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <FrameLayout
+            android:paddingBottom="@dimen/et_height_30"
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -30,7 +30,7 @@
         app:borderWidth="0dp"
         android:tint="@color/red_a"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="25dp"
         android:clickable="true"
         android:focusable="true" />
 
@@ -38,7 +38,7 @@
         android:id="@+id/rlBottomBar"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="50dp">
     <com.dartmic.yo2see.util.CustomBottomNavigationView1
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,13 +50,12 @@
             android:id="@+id/rlBottomBarBack"
             android:background="@color/red_a"
             android:layout_width="match_parent"
-            android:layout_height="60dp"/>
+            android:layout_height="50dp"/>
         <com.roughike.bottombar.BottomBar
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/transparent1"
             app:bb_activeTabAlpha="1"
             app:bb_inActiveTabColor="@color/white"
             app:bb_activeTabColor="@color/white"

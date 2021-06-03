@@ -8,7 +8,7 @@ import com.dartmic.yo2see.model.categories.FeatureListResponse
 import io.reactivex.Single
 
 interface CategoryRepository {
-    fun getCategories(service :String, type: String) : Single<CategoriesResponse>
+    fun getCategories(service :String, type: String) : Single<CategoryDataResponsePayload>
     fun getCategoriesData(service :String, type: String) : Single<CategoryDataResponsePayload>
 
     fun getFeatureProducts(service :String) : Single<FeatureListResponse>

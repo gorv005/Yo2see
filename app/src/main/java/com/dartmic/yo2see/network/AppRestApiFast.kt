@@ -69,11 +69,11 @@ interface AppRestApiFast {
     ): Single<RegisterResponsePayload>
 
     @FormUrlEncoded
-    @POST(Config.Endpoints.CATEGORIES_API)
+    @POST(Config.Endpoints.ALL_TYPE_API)
     fun getCategories(
         @Field("service") service: String, @Field("type") type: String
 
-    ): Single<CategoriesResponse>
+    ): Single<CategoryDataResponsePayload>
 
     @FormUrlEncoded
     @POST(Config.Endpoints.CATEGORIES_DATA_API)

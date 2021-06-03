@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/llChildView"
-    android:background="@color/light_blue"
+    android:background="@drawable/rounded_corners_app_light_red_back"
     android:orientation="vertical">
 
     <TextView

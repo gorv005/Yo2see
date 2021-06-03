@@ -1,8 +1,8 @@
 package com.dartmic.yo2see.ui.home
 
 
-import android.app.ActivityOptions
 import android.content.Context
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
@@ -10,32 +10,37 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
+import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.callbacks.AdapterViewItemClickListener
 import com.dartmic.yo2see.model.AdsItems
-import com.dartmic.yo2see.model.EventsItems
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.categories.CategoryListItem
 import com.dartmic.yo2see.ui.LandingActivity
-import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
+import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
-import com.dartmic.yo2see.ui.home.adapter.AdapterAdsEvents
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
-import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
+import com.dartmic.yo2see.ui.home.adapter.TabFragmentAdapter
+import com.dartmic.yo2see.ui.home.products.ProductFragment
+import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.ui.search.SerachActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
-import com.github.florent37.viewanimator.ViewAnimator
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_product.*
 import kotlinx.android.synthetic.main.tree.*
 
 
@@ -43,12 +48,16 @@ import kotlinx.android.synthetic.main.tree.*
  * A simple [Fragment] subclass.
  */
 class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::class),
-    AdapterViewClickListener<CategoryListItem>,
+    AdapterViewClickListener<CategoryListItemData>,
     AdapterViewItemClickListener<AdsItems> {
 
 
     private var adapterEvents: AdapterHomeData? = null
     private var adapterAds: AdapterHomeData? = null
+    private var indicatorWidth = 0
+    private var adapterProducts: AdapterHomeData? = null
+    private var adapterEventsData: AdapterHomeData? = null
+    var type: Int? = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,15 +71,21 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        visibilityGone()
+        //visibilityGone()
         val fcsRed = ForegroundColorSpan(AndroidUtils.getColor(R.color.blue))
+        type = arguments?.getInt(ProductListFragment.TYPE)
+        if(type==Config.Constants.POST_AN_ADD){
+            tvHomeWelecomeText.setText(AndroidUtils.getString(R.string.post_an_add))
+            rlCat.visibility=View.GONE
+            tvBrows.setText(AndroidUtils.getString(R.string.what_product_you_would))
+        }
         ivSearch.setOnClickListener {
             startActivity(SerachActivity.getIntent(activity!!))
         }
-        AndroidUtils.setTextWithSpan(
+        /*AndroidUtils.setTextWithSpan(
             tvHomeWelecomeText,
-            AndroidUtils.getString(R.string.welcome_text),"one of the categories", fcsRed
-        )
+            AndroidUtils.getString(R.string.welcome_text), "one of the categories", fcsRed
+        )*/
         val manager = GridLayoutManager(context, 4)
         rvEvents.layoutManager = manager
         activity?.let {
@@ -82,100 +97,124 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         val manager1 = GridLayoutManager(context, 4)
         rvAds.layoutManager = manager1
         activity?.let {
-            adapterAds = AdapterHomeData(this, it,R.drawable.round_circle_light_blue)
+            adapterAds = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
 
         }
         rvAds.adapter = adapterAds
 
 
-        ivsell.setOnClickListener {
 
-            val p: ArrayList<Pair<View, String>> = ArrayList()
-            p.add(Pair(ivsell, "buy"))
-
-            mFragmentNavigation.pushFragment(
-                CategoriesListFragment
-                    .getInstance(mInt + 1, Config.Constants.SELL), p
-            )
+        rvHomeProducts.setHasFixedSize(true)
+        var itemDecoration = DividerItemDecoration(
+            activity,
+            DividerItemDecoration.HORIZONTAL
+        )
+        activity?.let {
+            var d = it?.getDrawable(R.drawable.divider)!!
+            itemDecoration?.setDrawable(d)
+        }
+        rvHomeProducts.addItemDecoration(
+            itemDecoration
+        )
+        var itemDecoration1 = DividerItemDecoration(
+            activity,
+            DividerItemDecoration.VERTICAL
+        )
+        activity?.let {
+            var d = it?.getDrawable(R.drawable.divider)!!
+            itemDecoration1?.setDrawable(d)
+        }
+        rvHomeProducts.addItemDecoration(
+            itemDecoration1
+        )
+        val manager4 = GridLayoutManager(context, 3)
+        rvHomeEvents.layoutManager = manager4
+        activity?.let {
+            adapterEventsData = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
 
         }
-        ivrent.setOnClickListener {
-
-            val p: ArrayList<Pair<View, String>> = ArrayList()
-            p.add(Pair(ivsell, "buy"))
-
-            mFragmentNavigation.pushFragment(
-                CategoriesListFragment
-                    .getInstance(mInt + 1, Config.Constants.RENT), p
-            )
-
-        }
-        ivbarter.setOnClickListener {
-
-            val p: ArrayList<Pair<View, String>> = ArrayList()
-            p.add(Pair(ivsell, "buy"))
-
-            mFragmentNavigation.pushFragment(
-                CategoriesListFragment
-                    .getInstance(mInt + 1, Config.Constants.BARTER), p
-            )
-
-        }
-        ivpost.setOnClickListener {
-
-            val p: ArrayList<Pair<View, String>> = ArrayList()
-            p.add(Pair(ivsell, "buy"))
-
-            mFragmentNavigation.pushFragment(
-                CategoriesListFragment
-                    .getInstance(mInt + 1, Config.Constants.POST), p
-            )
-
-        }
-
-        ViewAnimator
-            .animate(ivsell)
-            .scale(1.3f, 1f)
-            .onStart({})
-            .onStop({})
-            .start()
-        ViewAnimator
-            .animate(ivpost)
-            .scale(1.3f, 1f)
-            .onStart({})
-            .onStop({})
-            .start()
-        ViewAnimator
-            .animate(ivbarter)
-            .scale(1.3f, 1f)
-            .onStart({})
-            .onStop({ })
-            .start()
-        ViewAnimator
-            .animate(ivrent)
-            .scale(1.3f, 1f)
-            .onStart({})
-            .onStop({})
-            .start()
+        rvHomeEvents.adapter = adapterEventsData
+        adapterEventsData?.submitList(getEvents())
+        adapterEventsData?.notifyDataSetChanged()
 
 
+        rvHomeEvents.addItemDecoration(
+            itemDecoration1
+        )
+        rvHomeEvents.addItemDecoration(
+            itemDecoration
+        )
+        val manager3 = GridLayoutManager(context, 3)
+        rvHomeProducts.layoutManager = manager3
+
+
+
+        val adapter = TabFragmentAdapter(activity?.getSupportFragmentManager()!!)
+        adapter.addFragment(ProductFragment.getInstance(), getString(R.string.products))
+        adapter.addFragment(ProductFragment.getInstance(), getString(R.string.events_))
+        viewPager.setAdapter(adapter)
+        tab.setupWithViewPager(viewPager)
+
+        //Determine indicator width at runtime
+
+        //Determine indicator width at runtime
+        tab.post(Runnable {
+            indicatorWidth = tab.getWidth() / tab.getTabCount()
+
+            //Assign new width
+            val indicatorParams = indicator?.getLayoutParams() as FrameLayout.LayoutParams
+            indicatorParams.width = indicatorWidth
+            indicator?.setLayoutParams(indicatorParams)
+        })
+
+        viewPager.addOnPageChangeListener(object : OnPageChangeListener {
+            //To move the indicator as the user scroll, we will need the scroll offset values
+            //positionOffset is a value from [0..1] which represents how far the page has been scrolled
+            //see https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener
+            override fun onPageScrolled(i: Int, positionOffset: Float, positionOffsetPx: Int) {
+                if(i==0){
+                    tvEvents.visibility=View.GONE
+                    tvProducts.visibility=View.VISIBLE
+
+                    rvHomeProducts.visibility=View.VISIBLE
+                    rvHomeEvents.visibility=View.GONE
+                }else{
+                    tvEvents.visibility=View.VISIBLE
+                    tvProducts.visibility=View.GONE
+                    rvHomeProducts.visibility=View.GONE
+                    rvHomeEvents.visibility=View.VISIBLE
+
+                }
+                var params = indicator?.getLayoutParams() as FrameLayout.LayoutParams
+
+                //Multiply positionOffset with indicatorWidth to get translation
+                val translationOffset: Float = (positionOffset + i) * indicatorWidth
+                params.leftMargin = translationOffset.toInt()
+                indicator?.setLayoutParams(params)
+            }
+
+            override fun onPageSelected(i: Int) {}
+            override fun onPageScrollStateChanged(i: Int) {}
+        })
 
         subscribeLoading()
         subscribeUi()
-        getAdsData()
-        getEventsData()
+           getCategories()
+        // getEventsData()
     }
 
-    fun getAdsData(){
+    fun getCategories() {
         if (NetworkUtil.isInternetAvailable(activity)) {
-            model.getCategoriesAds("Category List","Ads")
+            model.getCategories("Category List", "Product")
         }
     }
-    fun getEventsData(){
+
+    fun getEventsData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
-            model.getCategoriesEvents("Category List","Event")
+        //    model.getCategoriesEvents("Category List", "Event")
         }
     }
+
     private fun subscribeLoading() {
 
         model.searchEvent.observe(this, Observer {
@@ -193,12 +232,12 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     private fun subscribeUi() {
         model.categoryModelEvents.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
-            if (it.status) {
-            //    showSnackbar(it.message, true)
-                var i=0
-                while(i<it?.categoryList?.size!!){
+            /*if (it.status) {
+                //    showSnackbar(it.message, true)
+                var i = 0
+                while (i < it?.categoryList?.size!!) {
 
-                    it?.categoryList.get(i).image= R.drawable.ic_suitcase_white
+                    it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
                     i++
                 }
                 adapterEvents?.submitList(it?.categoryList)
@@ -206,39 +245,68 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                 activity?.let { UiUtils.hideSoftKeyboard(it) }
                 runLayoutAnimation(rvEvents)
 
-            }
-            else{
+            } else {
                 showSnackbar(it.message, false)
 
-            }
+            }*/
         })
 
         model.categoryModelAds.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
-            if (it.status) {
-       //         showSnackbar(it.message, true)
-                var i=0
-                while(i<it?.categoryList?.size!!){
+           /* if (it.status) {
+                //         showSnackbar(it.message, true)
+                var i = 0
+                while (i < it?.categoryList?.size!!) {
 
-                    it?.categoryList.get(i).image= R.drawable.ic_suitcase_white
+                    it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
                     i++
                 }
+                activity?.let {
+                    adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
+
+                }
+                rvHomeProducts.adapter = adapterProducts
                 adapterAds?.submitList(it?.categoryList)
                 ViewCompat.setNestedScrollingEnabled(rvAds, false)
 
                 activity?.let { UiUtils.hideSoftKeyboard(it) }
                 runLayoutAnimation(rvAds)
-            }
-            else{
+            } else {
+                showSnackbar(it.message, false)
+
+            }*/
+        })
+        model.categoryModel.observe(this, Observer {
+            Logger.Debug("DEBUG", it.toString())
+            if (it.status) {
+                //         showSnackbar(it.message, true)
+               /* var i = 0
+                while (i < it?.categoryList?.size!!) {
+
+                    it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
+                    i++
+                }*/
+                activity?.let {
+                    adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
+
+                }
+                rvHomeProducts.adapter = adapterProducts
+                adapterProducts?.submitList(it?.categoryList)
+                adapterProducts?.notifyDataSetChanged()
+                activity?.let { UiUtils.hideSoftKeyboard(it) }
+                runLayoutAnimation(rvHomeProducts)
+            } else {
                 showSnackbar(it.message, false)
 
             }
         })
 
     }
+
     fun showProgressDialog() {
         showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
+
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
         try {
             val context: Context = recyclerView.context
@@ -247,16 +315,18 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             recyclerView.layoutAnimation = controller
             recyclerView.adapter!!.notifyDataSetChanged()
             recyclerView.scheduleLayoutAnimation()
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     companion object {
+        const val TYPE = "type"
 
-        fun getInstance(instance: Int): HomeFragment {
+        fun getInstance(instance: Int,type: Int): HomeFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
+            bundle.putInt(TYPE, type)
 
             val fragment = HomeFragment()
             fragment.arguments = bundle
@@ -302,36 +372,243 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
     }
 
-    fun getEvents(): ArrayList<EventsItems> {
+
+    fun getProducts(): ArrayList<CategoryListItem> {
         AndroidUtils.getString(R.string.jobs)
-        val events = arrayListOf<EventsItems>()
+        val events = arrayListOf<CategoryListItem>()
 
         events?.add(
-            EventsItems(
-                1,
-                AndroidUtils.getString(R.string.jobs),
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.events), "1",
                 R.drawable.ic_suitcase_white
             )
         )
         events?.add(
-            EventsItems(
-                1,
-                AndroidUtils.getString(R.string.events),
-                R.drawable.ic_calendar_white
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.events), "1",
+                R.drawable.ic_suitcase_white
             )
         )
         events?.add(
-            EventsItems(
-                1,
-                AndroidUtils.getString(R.string.real_estate),
-                R.drawable.ic_key_white
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.events), "1",
+                R.drawable.ic_suitcase_white
             )
         )
         events?.add(
-            EventsItems(
-                1,
-                AndroidUtils.getString(R.string.free_stuff),
-                R.drawable.ic_free_tag_white
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.events), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.events), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+        events?.add(
+            CategoryListItem(
+                "",
+
+                AndroidUtils.getString(R.string.free_stuff), "1",
+                R.drawable.ic_suitcase_white
+            )
+        )
+
+
+        return events
+
+    }
+
+    fun getEvents(): ArrayList<CategoryListItemData> {
+        AndroidUtils.getString(R.string.jobs)
+        val events = arrayListOf<CategoryListItemData>()
+
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
+            )
+        )
+        events?.add(
+            CategoryListItemData(
+                "",
+
+                AndroidUtils.getString(R.string.jobs), null,
+                "1"
             )
         )
 
@@ -342,21 +619,28 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     override fun onResume() {
         super.onResume()
         activity?.let {
-            (activity as LandingActivity).updateStatusBarColor(AndroidUtils.getColor(R.color.red_a),1)
+            (activity as LandingActivity).updateStatusBarColor(
+                AndroidUtils.getColor(R.color.red_a),
+                1
+            )
         }
     }
-    override fun onClickAdapterView(objectAtPosition: CategoryListItem, viewType: Int, position: Int) {
+
+    override fun onClickAdapterView(
+        objectAtPosition: CategoryListItemData,
+        viewType: Int,
+        position: Int
+    ) {
         when (viewType) {
 
             Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY -> {
 
                 this?.let {
 
-                   /* mFragmentNavigation.pushFragment(
-                        CategoriesListFragment
-                            .getInstance(mInt + 1)
+                    mFragmentNavigation.pushFragment(
+                        SubCategoriesFragment
+                            .getInstance(mInt + 1,type,objectAtPosition)
                     )
-*/
 
                 }
 

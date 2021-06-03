@@ -4,6 +4,8 @@
     <string name="buy">Buy</string>
     <string name="sell">Sell</string>
     <string name="rent">Rent</string>
+    <string name="buy_sell">Buy/Sell</string>
+
     <string name="post">Post</string>
     <string name="back">Back</string>
     <string name="something_went_wrong">Something went wrong. Please try again</string>
@@ -74,7 +76,7 @@
     <string name="sign_in_facebook">Sign in with Facebook</string>
     <string name="sign_in_twitter">Sign in with Twitter</string>
     <string name="sign_in_gmail">Sign in with Gmail</string>
-    <string name="welcome_text">welcome!\nPlease select one of the categories to\ndetermine what would you like to do today?</string>
+    <string name="welcome_text">YO2SEE\nwhere you can find products on</string>
     <string name="events">Events</string>
     <string name="dont_miss">Don\'t miss what\'s happening around you</string>
     <string name="ads">Ads</string>
@@ -103,7 +105,7 @@
     <string name="address"><u>Greater Toronto</u></string>
     <string name="skip"><u>SKIP</u></string>
     <string name="explore">Explore</string>
-    <string name="post_an_add">Post an Add</string>
+    <string name="post_an_add">POST AN ADD</string>
     <string name="select_an_posting_category">Select the posting category</string>
     <string name="barter">Barter</string>
     <string name="add_a_title_to_your_post">Add a title to your post</string>
@@ -228,9 +230,17 @@
     <string name="this_tab_keeps_post">This tab keeps you\nupdated with currents\ntrends happening around\nyou (jobs, events, farmers\nmarket etc)</string>
     <string name="check_out_events">check our events sections\nto stay updated with the\nlatest events</string>
     <string name="make_your_next_event">Enjoy your next event</string>
+    <string name="brows_through_our_products">Brows through our products to get\nto know what\'s in for\nbuying, renting and bartering</string>
+    <string name="products">PRODUCTS</string>
+    <string name="events_">EVENTS</string>
+    <string name="what_product_you_would">What products you would like to post\ntoday each products can be posted\nfor any sell, rent, barter</string>
+    <string name="category">CATEGORY</string>
+    <string name="how_would_you_like_the_post">How would you like to post the product. you can select all options if necessary, this will help you get the best offer against your product</string>
+    <string name="add_description">ADD DESCRIPTION</string>
+    <string name="set_a_rent_price">Set a renting price</string>
 
     <string-array name="text">
-    <item>WHAT WE OFFER</item>
+        <item>WHAT WE OFFER</item>
     </string-array>
     <string-array name="category_type">
         <item>Rent</item>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        icon="@drawable/ic_hamburger_white"
+        icon="@drawable/ic_baseline_home_24"
         id="@+id/navigation_home"
         title=""
         />
     <tab
-        icon="@drawable/ic_heart_white"
-        id="@+id/action_fav"
+        icon="@drawable/ic_chat_bubbles_white"
+        id="@+id/action_chat"
         title=""
         />
     <tab
@@ -16,12 +16,13 @@
         />
     <tab
         icon="@drawable/ic_bell_white"
-        id="@+id/action_my_ads"
+        id="@+id/action_notification"
+
         title=""
         />
     <tab
-        icon="@drawable/ic_chat_bubbles_white"
-        id="@+id/action_chat"
+        icon="@drawable/ic_hamburger_white"
+        id="@+id/action_more"
         title=""
         />
 

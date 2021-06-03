@@ -75,6 +75,10 @@ class CategoriesExpandableListView internal constructor(
                 llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_red))
 
             }
+            Config.Constants.PRODUCT -> {
+              //  llChildView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_red))
+
+            }
         }
 
         return convertView
@@ -137,6 +141,10 @@ class CategoriesExpandableListView internal constructor(
 
             }
             Config.Constants.POST_AN_ADD -> {
+                rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_red_back)
+
+            }
+            Config.Constants.PRODUCT -> {
                 rlParentView.setBackgroundResource(R.drawable.rounded_corners_app_red_back)
 
             }

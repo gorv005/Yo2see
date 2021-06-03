@@ -115,7 +115,7 @@ class CategoryActivity : BaseActivity<CategoriesViewModel>(CategoriesViewModel::
 
         model.categoryModel.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
-            showData(it)
+            //showData(it)
 
         })
         model.featureProductyModel.observe(this, Observer {

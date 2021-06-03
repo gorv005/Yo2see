@@ -82,7 +82,7 @@ class PostAnAddFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel:
         }
         subscribeUi()
         subscribeLoading()
-        getCategoryData()
+       // getCategoryData()
 
     }
 

@@ -25,7 +25,7 @@ class ExploreActivity : AppCompatActivity() , GifEndListener {
         }
         let {
             gifUtil = GifUtil(this)
-            gifUtil?.setImage(this, ivExploreTree, R.drawable.old_tree)
+            gifUtil?.setImage(this, ivExploreTree, R.drawable.tree_colored_updated)
         }
         ivBackArrow.setOnClickListener {
             onBackPressed()

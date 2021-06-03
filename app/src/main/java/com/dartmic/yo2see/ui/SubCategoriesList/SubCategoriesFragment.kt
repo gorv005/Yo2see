@@ -192,7 +192,7 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
         }
 
     fun init() {
-        tvSubTitleValue.text = categoryListItemData?.categoryName + "/"
+        tvSubTitleValue.text = categoryListItemData?.categoryName
         when (type) {
             Config.Constants.SELL -> {
 
@@ -229,6 +229,19 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
 
             }
             Config.Constants.POST_AN_ADD -> {
+
+                subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_red))
+                ivCurve.setColorFilter(
+                    ContextCompat.getColor(activity!!, R.color.red_a)
+                )
+                activity?.let {
+                    (activity as LandingActivity).updateStatusBarColor(
+                        AndroidUtils.getColor(R.color.red_a),
+                        2
+                    )
+                }
+            }
+            Config.Constants.PRODUCT -> {
 
                 subategoriesExpandableListView.setChildDivider(activity!!.getDrawable(R.drawable.child_divider_red))
                 ivCurve.setColorFilter(

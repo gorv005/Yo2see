@@ -23,7 +23,7 @@ class CategoriesViewModel(
 ) : AbstractViewModel() {
 
 
-    val categoryModel= MutableLiveData<CategoriesResponse>()
+    val categoryModel= MutableLiveData<CategoryDataResponsePayload>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
     val featureProductyModel = MutableLiveData<FeatureListResponse>()
     val categoryModelEvents = MutableLiveData<CategoriesResponse>()
@@ -56,7 +56,7 @@ class CategoriesViewModel(
                             //  val json = Gson().toJson(error)
 
                             categoryModel.value =
-                                Gson().fromJson(error, CategoriesResponse::class.java)
+                                Gson().fromJson(error, CategoryDataResponsePayload::class.java)
                             searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 
@@ -69,6 +69,7 @@ class CategoriesViewModel(
         }
     }
 
+/*
     fun getCategoriesEvents(service :String, type: String) {
         searchEvent.value = SearchEvent(isLoading = true)
         launch {
@@ -107,7 +108,9 @@ class CategoriesViewModel(
                 })
         }
     }
+*/
 
+/*
     fun getCategoriesAds(service :String, type: String) {
         searchEvent.value = SearchEvent(isLoading = true)
         launch {
@@ -146,6 +149,7 @@ class CategoriesViewModel(
                 })
         }
     }
+*/
     fun getCategoriesMenu(service :String, type: String) {
         searchEvent.value = SearchEvent(isLoading = true)
         launch {

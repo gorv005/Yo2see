@@ -10,6 +10,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import com.dartmic.yo2see.callbacks.GifEndListener
 import com.dartmic.yo2see.tutorails.BuyTuteActivity
+import com.dartmic.yo2see.tutorails.ExploreActivity
 import com.dartmic.yo2see.utils.GifUtil
 import com.dartmic.yo2see.utils.TransitionHelper
 import kotlinx.android.synthetic.main.activity_login.*
@@ -28,12 +29,17 @@ class MainActivity : AppCompatActivity(),GifEndListener {
 
         let {
             gifUtil = GifUtil(this)
-            gifUtil?.setImage(this, ivLoginCart, R.drawable.moving_cart)
+            gifUtil?.setImage(this, ivLoginCart, R.drawable.cart)
         }
 
         btnNext.setOnClickListener {
             let {
                 startActivity(BuyTuteActivity.getIntent(it))
+            }
+        }
+        tvSkip.setOnClickListener {
+            let {
+                startActivity(ExploreActivity.getIntent(it))
             }
         }
     }
@@ -51,7 +57,7 @@ class MainActivity : AppCompatActivity(),GifEndListener {
     override fun animationEnd() {
 
         let {
-            gifUtil?.setImage(this, ivLoginCart, R.drawable.moving_cart)
+            gifUtil?.setImage(this, ivLoginCart, R.drawable.cart)
 
         }
 

@@ -25,7 +25,6 @@ import com.dartmic.yo2see.ui.AdsItems.sheet.SimpleAdsBottomSheet
 import com.dartmic.yo2see.ui.addProduct.AddProductFragment
 import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
 import com.dartmic.yo2see.ui.chat_list.ChatListFragment
-import com.dartmic.yo2see.ui.favorites.FragmentFavorites
 import com.dartmic.yo2see.ui.favorites.SortByBottomSheet
 import com.dartmic.yo2see.ui.home.HomeFragment
 import com.dartmic.yo2see.ui.login.LoginActivity
@@ -48,10 +47,10 @@ import org.jetbrains.anko.backgroundDrawable
 
 
 const val INDEX_HOME = FragNavController.TAB1
-const val INDEX_FAV = FragNavController.TAB2
+const val INDEX_NOTIFICATION= FragNavController.TAB4
 const val INDEX_ADD_POST = FragNavController.TAB3
-const val INDEX_MY_ADS = FragNavController.TAB4
-const val INDEX_CHAT = FragNavController.TAB5
+const val INDEX_MORE = FragNavController.TAB5
+const val INDEX_CHAT = FragNavController.TAB2
 
 class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     FragNavController.TransactionListener, FragNavController.RootFragmentListener {
@@ -89,11 +88,11 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
 
     override fun getRootFragment(index: Int): Fragment {
         when (index) {
-            INDEX_HOME -> return HomeFragment.getInstance(0)
-            INDEX_FAV -> return FragmentFavorites.getInstance(0)
+            INDEX_HOME -> return HomeFragment.getInstance(0,Config.Constants.PRODUCT)
+            INDEX_NOTIFICATION -> return ChatListFragment.getInstance(0)
             INDEX_ADD_POST -> return PostAnAddFragment.getInstance(0)
             //   INDEX_RENT_BUY_SELL -> return HomeFragment.getInstance(0)
-            INDEX_MY_ADS -> return HomeFragment.getInstance(0)
+            INDEX_MORE -> return HomeFragment.getInstance(0,Config.Constants.PRODUCT)
             INDEX_CHAT -> return ChatListFragment.getInstance(0)
         }
         throw IllegalStateException("Need to send an index that we know")
@@ -151,7 +150,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         val initial = savedInstanceState == null
         if (initial) {
             // bottomBar.getMenu().getItem(INDEX_HOME).setChecked(true)
-            bottomBar.selectTabAtPosition(INDEX_ADD_POST)
+            bottomBar.selectTabAtPosition(INDEX_HOME)
 
         }
         bottomBar.setOnTabSelectListener({ tabId ->
@@ -159,12 +158,9 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
 
                 R.id.navigation_home -> {
 
-                    if (checkUserLogin()) {
-                        startActivity(MoreActivity.getIntent(this))
-                    } else {
-                        startActivity(LoginActivity.getIntent(this))
 
-                    }
+                    fragNavController.switchTab(INDEX_HOME)
+
                     // Respond to navigation item 2 click
                     true
                 }
@@ -175,8 +171,8 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                     // Respond to navigation item 2 click
                     true
                 }
-                R.id.action_fav -> {
-                    fragNavController.switchTab(INDEX_FAV)
+                R.id.action_notification -> {
+                    fragNavController.switchTab(INDEX_NOTIFICATION)
                     // Respond to navigation item 2 click
                     true
                 }
@@ -185,8 +181,13 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                     // Respond to navigation item 2 click
                     true
                 }
-                else -> {
-                    fragNavController.switchTab(INDEX_HOME)
+                R.id.action_more -> {
+                    if (checkUserLogin()) {
+                        startActivity(MoreActivity.getIntent(this))
+                    } else {
+                        startActivity(LoginActivity.getIntent(this))
+
+                    }
                     false
                 }
             }
@@ -232,13 +233,16 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         }
 */
         fab.setOnClickListener {
+            bottomBar.selectTabAtPosition(INDEX_ADD_POST)
 
-            if (checkUserLogin()) {
-                pushFragment(PostAnAddFragment.getInstance(1))
+            pushFragment(HomeFragment.getInstance(1,Config.Constants.POST_AN_ADD))
+
+           /* if (checkUserLogin()) {
+                pushFragment(HomeFragment.getInstance(1,Config.Constants.POST_AN_ADD))
                 //  fragNavController.switchTab(INDEX_ADD_POST)
             } else {
                 startActivity(LoginActivity.getIntent(this))
-            }
+            }*/
 
         }
     }
