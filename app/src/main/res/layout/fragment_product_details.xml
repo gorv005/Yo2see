@@ -131,6 +131,102 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:selectedDotColor="@color/blue1" />
             </LinearLayout>
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false">
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabProductDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:background="@drawable/gradient_bg"
+                    app:tabGravity="fill"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="#ffffff"
+                    app:tabIndicatorColor="@null"
+                    app:tabRippleColor="@null"/>
+
+                <View
+                    android:id="@+id/indicatorProductDetails"
+                    android:layout_width="0dp"
+                    android:elevation="2dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_round_red_tab"/>
+
+                <LinearLayout
+                    android:id="@+id/llTab"
+                    android:weightSum="3"
+                    android:elevation="2dp"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="43dp">
+                    <RelativeLayout
+                        android:id="@+id/rlBuyP"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:id="@+id/tvBuy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/buy_"
+                            android:layout_centerInParent="true"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rlRentP"
+                        android:visibility="gone"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tvRent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/rent_"
+                            android:layout_centerInParent="true"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rlbarterP"
+
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:visibility="gone"
+                            android:id="@+id/tvBarter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="@string/barter_"
+                            android:layout_centerInParent="true"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPagerProductDetail"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:id="@+id/tvPrice"

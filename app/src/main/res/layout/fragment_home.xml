@@ -219,7 +219,7 @@
                 android:layout_centerVertical="true"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/cloud" />
+                android:src="@drawable/ic_cloud_updated" />
 
             <TextView
                 android:id="@+id/tvBrows"

@@ -15,7 +15,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.interfaces.SortImpl
-import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.home.HomeFragment
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
@@ -191,7 +191,7 @@ class FragmentFavorites : BaseFragment<ProductListnViewModel>(ProductListnViewMo
                         FragmentProductDetails
                             .getInstance(
                                 mInt + 1,
-                                AndroidUtils.getType(objectAtPosition?.listingType),
+                                0,
                                 objectAtPosition
                             )
                     )

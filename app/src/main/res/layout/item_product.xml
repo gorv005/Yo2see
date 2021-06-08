@@ -35,6 +35,47 @@
                 app:srcCompat="@drawable/download"
                 fresco:placeholderImage="@drawable/download"
                 />
+            <RelativeLayout
+                android:background="#59000000"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tvModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="model"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:fontFamily="@font/poppins_medium" />
+            <TextView
+                android:paddingStart="5dp"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="Grid View Item"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins_regular" />
+            <TextView
+                android:paddingEnd="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/grid_image"
+                android:layout_marginTop="5dp"
+                android:text="Grid View Item"
+                android:textColor="@color/white"
+                android:textSize="9sp"
+                android:fontFamily="@font/poppins_regular" />
+            </RelativeLayout>
         </RelativeLayout>
         <TextView
             android:id="@+id/tvPrice"
@@ -44,39 +85,9 @@
             android:layout_marginTop="10dp"
             android:text="Grid View Item"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:fontFamily="@font/poppins_semibold" />
-        <TextView
-            android:id="@+id/tvModel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/grid_image"
-            android:layout_marginTop="5dp"
-            android:text="Grid View Item"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:maxLines="2"
+            android:textSize="13sp"
             android:fontFamily="@font/poppins_regular" />
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/grid_image"
-            android:layout_marginTop="5dp"
-            android:text="Grid View Item"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:fontFamily="@font/poppins_regular" />
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/grid_image"
-            android:layout_marginTop="5dp"
-            android:text="Grid View Item"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:fontFamily="@font/poppins_regular" />
+
         <TextView
             android:id="@+id/tvListing"
             android:layout_width="match_parent"
@@ -105,15 +116,19 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:id="@+id/ivBuy"
                 android:layout_width="24dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_buysell_icon_small_blue" />
             <ImageView
+                android:id="@+id/ivRent"
                 android:layout_marginStart="@dimen/et_height_10"
                 android:src="@drawable/ic_rent_icon_small_purple"
                 android:layout_width="30dp"
                 android:layout_height="30dp"/>
             <ImageView
+                android:id="@+id/ivBarter"
+
                 android:layout_marginStart="@dimen/et_height_10"
                 android:src="@drawable/ic_barter_icon_small_purple"
                 android:layout_width="30dp"

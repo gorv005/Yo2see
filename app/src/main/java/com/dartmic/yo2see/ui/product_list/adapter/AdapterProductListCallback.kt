@@ -1,7 +1,7 @@
 package com.dartmic.yo2see.ui.product_list.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.model.product_info.ListingItem
 
 
 class AdapterProductListCallback : DiffUtil.ItemCallback<ListingItem>() {

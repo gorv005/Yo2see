@@ -7,6 +7,7 @@ import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.network.AppRestApiFast
 
 import io.reactivex.Single
@@ -30,7 +31,7 @@ class ProductListRepositoryImpl(
         state: String,
         city: String,
         search_key: String
-    ): Single<ProductListResponsePayload> {
+    ): Single<ProductListInfoResponsePayload> {
         return restApi.getProductListing(
             service,
             userId,
@@ -47,7 +48,7 @@ class ProductListRepositoryImpl(
         )
     }
 
-    override fun getFavList(service: String, userId: String): Single<ProductListResponsePayload> {
+    override fun getFavList(service: String, userId: String): Single<ProductListInfoResponsePayload> {
         return restApi.getFavProductListing(
             service,
             userId

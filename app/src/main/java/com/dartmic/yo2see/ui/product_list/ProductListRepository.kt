@@ -6,6 +6,7 @@ import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 
 import io.reactivex.Single
 
@@ -27,12 +28,12 @@ interface ProductListRepository {
         state: String,
         city: String,
         search_key: String
-    ): Single<ProductListResponsePayload>
+    ): Single<ProductListInfoResponsePayload>
 
     fun getFavList(
         service: String,
         userId:String
-    ): Single<ProductListResponsePayload>
+    ): Single<ProductListInfoResponsePayload>
 
     fun getProductDetails(
         service: String,

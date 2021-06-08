@@ -39,7 +39,9 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
         sub_cat_id: String,
         sub_to_sub_cat_id: String,
         brand: String,
-        listing_type: String,
+        isRent: String,
+        isBarter: String,
+        isSell: String,
         listing_price: String,
         country: String,
         state: String,
@@ -67,7 +69,9 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
         rent_product_detail: String,
         rent_terms_and_condition: String
     ): Single<AddProdcutResponse> {
-        return restApi.addProdcut(service, category_id, sub_cat_id, sub_to_sub_cat_id, brand, listing_type, listing_price, country, state, city, pincode, address, title, description, item_condition, negotiation_type, open_to_deliver, km_range, publish_datetime, expiry_datetime, user_id, photos_array, rent_type_array,longitude, latitude, barter_text, barter_exchange_text, barter_product_title, barter_product_desc, barter_additional_text, rent_product_detail, rent_terms_and_condition)
+        return restApi.addProdcut(service, category_id, sub_cat_id, sub_to_sub_cat_id, brand, isRent,
+            isBarter,
+            isSell, listing_price, country, state, city, pincode, address, title, description, item_condition, negotiation_type, open_to_deliver, km_range, publish_datetime, expiry_datetime, user_id, photos_array, rent_type_array,longitude, latitude, barter_text, barter_exchange_text, barter_product_title, barter_product_desc, barter_additional_text, rent_product_detail, rent_terms_and_condition)
     }
 
 

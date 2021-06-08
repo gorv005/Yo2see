@@ -52,6 +52,8 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         btnSubmit.setOnClickListener {
             verifyOTP()
         }
+        this.let { UiUtils.hideSoftKeyboard(it) }
+
         getOTP()
         subscribeLoading()
         subscribeUi()

@@ -55,9 +55,9 @@ class Config {
 
         const val FEATURE_API = BASE_PATH + "common/isfeaturelist"
         const val CATEGORIES_DATA_API = BASE_PATH + "common/alltypelist"
-        const val PRODUCT_DATA_API = BASE_PATH + "common/listing"
+        const val PRODUCT_DATA_API = BASE_PATH + "product/listing"
         const val UPLOAD_IMAGE_API = BASE_PATH + "common/upload_image"
-        const val PRODUCT_ADD_API = BASE_PATH + "common/add_listing"
+        const val PRODUCT_ADD_API = BASE_PATH + "product/add_product"
         const val PRODUCT_DETAILS_DATA_API = BASE_PATH + "common/listing_detail"
         const val GET_USER_DATA_API = BASE_PATH + "user/getUser"
         const val GET_OTP = BASE_PATH + "user/generateotp"

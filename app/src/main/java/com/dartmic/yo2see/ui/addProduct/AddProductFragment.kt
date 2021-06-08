@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.*
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -36,7 +37,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.gsa.ui.login.AddProductViewModel
 import kotlinx.android.synthetic.main.fragment_add_product.*
-import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_payment.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
@@ -68,7 +68,6 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     lateinit var subToSubListItem: SubToSubListItem
     val OPEN_MEDIA_PICKER_IMAGE_GALLRY = 2 // Request code
     var ImageList: java.util.ArrayList<ImageItem>? = null
-    private var type: String? = ""
     private var isNagotiable: String? = ""
     private var isOpenTodeliver: String? = ""
     private var count: Int = 0
@@ -76,7 +75,9 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     private var longitude: Double = 0.0
     var mprovider: String? = null
     var isLocationClicked: Boolean = false
-
+    var isSell = "no"
+    var isRent = "no"
+    var isBarter = "no"
     var imageListURLs: java.util.ArrayList<String>? = null
     var rentTypeList: java.util.ArrayList<RentTypeResponse>? = null
     lateinit var userList: UserList
@@ -100,7 +101,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         subToSubListItem = arguments?.getParcelable(ProductListFragment.DATA)!!
         tvProductPath.text =
             subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
-      //  init()
+        init()
         subscribeLoading()
         subscribeUi()
         getUser()
@@ -165,112 +166,43 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         val rentArray = JSONArray(listString)
 
         Log.e("DEBUG json array", imageArray.toString())
-        if (type.equals(Config.Constants.TYPE_SELL)) {
-            model.addProduct(
-                "AddListing",
-                subToSubListItem.categoryId,
-                subToSubListItem.subCategoryId,
-                subToSubListItem.id,
-                "",
-                type!!,
-                etSetPrice.text.toString(),
-                etCountry.text.toString(),
-                etState.text.toString(),
-                etCity.text.toString(),
-                etPincode.text.toString(),
-                etAddressOne.text.toString(),
-                etAddatitle.text.toString(),
-                etDescription.text.toString(),
-                etSelectItemCondition.text.toString(),
-                isNagotiable!!,
-                isOpenTodeliver!!,
-                etKm.text.toString(),
-                "",
-                "",
-                model.getUserID()!!,
-                imageArray,
-                rentArray,
-                "" + latitude,
-                "" + longitude,
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
-            )
-        } else if (type.equals(Config.Constants.TYPE_RENT)) {
-            model.addProduct(
-                "AddListing",
-                subToSubListItem.categoryId,
-                subToSubListItem.subCategoryId,
-                subToSubListItem.id,
-                "",
-                type!!,
-                "",
-                etCountry.text.toString(),
-                etState.text.toString(),
-                etCity.text.toString(),
-                etPincode.text.toString(),
-                etAddressOne.text.toString(),
-                etAddatitle.text.toString(),
-                etDescription.text.toString(),
-                etSelectItemCondition.text.toString(),
-                isNagotiable!!,
-                isOpenTodeliver!!,
-                etKm.text.toString(),
-                "",
-                "",
-                model.getUserID()!!,
-                imageArray,
-                rentArray,
-                "" + latitude,
-                "" + longitude,
-                "",
-                "",
-                "",
-                "",
-                "",
-                etProductDetails.text.toString(),
-                ""
-            )
-        } else if (type.equals(Config.Constants.TYPE_BARTER)) {
-            model.addProduct(
-                "AddListing",
-                subToSubListItem.categoryId,
-                subToSubListItem.subCategoryId,
-                subToSubListItem.id,
-                "",
-                type!!,
-                "",
-                etCountry.text.toString(),
-                etState.text.toString(),
-                etCity.text.toString(),
-                etPincode.text.toString(),
-                etAddressOne.text.toString(),
-                "",
-                "",
-                etSelectItemCondition.text.toString(),
-                isNagotiable!!,
-                isOpenTodeliver!!,
-                etKm.text.toString(),
-                "",
-                "",
-                model.getUserID()!!,
-                imageArray,
-                rentArray,
-                "" + latitude,
-                "" + longitude,
-                etwhatWouldtoLiketoBarter.text.toString(),
-                "",
-               "",
-                "",
-                "",
-                "",
-                ""
-            )
-        }
+
+        model.addProduct(
+            "AddProduct",
+            subToSubListItem.categoryId,
+            subToSubListItem.subCategoryId,
+            subToSubListItem.id,
+            etBrand.text.toString(),
+            isRent,
+            isBarter,
+            isSell,
+            etSetPrice.text.toString(),
+            etCountry.text.toString(),
+            etState.text.toString(),
+            etCity.text.toString(),
+            etPincode.text.toString(),
+            etAddressOne.text.toString(),
+            etAddatitle.text.toString(),
+            etDescription.text.toString(),
+            etSelectItemCondition.text.toString(),
+            isNagotiable!!,
+            isOpenTodeliver!!,
+            etKm.text.toString(),
+            "",
+            "",
+            model.getUserID()!!,
+            imageArray,
+            rentArray,
+            "" + latitude,
+            "" + longitude,
+            etwhatWouldtoLiketoBarter.text.toString(),
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        )
 
     }
 
@@ -372,12 +304,14 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-
+                val handler = Handler()
+                handler.postDelayed({
+                    onBackPressed()
+                }, 1000)
             } else {
                 showSnackbar(it.message, false)
             }
         })
-
     }
 
     fun showProgressDialog() {
@@ -457,37 +391,37 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         ivProduct6.setImageURI(null)
         ivProduct7.setImageURI(null)
         ivProduct8.setImageURI(null)
-        ivRemove1.visibility=View.GONE
-        ivRemove2.visibility=View.GONE
-        ivRemove3.visibility=View.GONE
-        ivRemove4.visibility=View.GONE
-        ivRemove5.visibility=View.GONE
-        ivRemove6.visibility=View.GONE
-        ivRemove7.visibility=View.GONE
-        ivRemove8.visibility=View.GONE
+        ivRemove1.visibility = View.GONE
+        ivRemove2.visibility = View.GONE
+        ivRemove3.visibility = View.GONE
+        ivRemove4.visibility = View.GONE
+        ivRemove5.visibility = View.GONE
+        ivRemove6.visibility = View.GONE
+        ivRemove7.visibility = View.GONE
+        ivRemove8.visibility = View.GONE
 
         when (ImageList?.size) {
 
 
             1 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
 
             }
             2 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
                 ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
 
             }
             3 -> {
                 ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
                 ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
                 ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
-                ivRemove3.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
+                ivRemove3.visibility = View.VISIBLE
 
             }
             4 -> {
@@ -495,10 +429,10 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
                 ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
                 ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
-                ivRemove3.visibility=View.VISIBLE
-                ivRemove4.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
+                ivRemove3.visibility = View.VISIBLE
+                ivRemove4.visibility = View.VISIBLE
 
             }
             5 -> {
@@ -507,11 +441,11 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
                 ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
                 ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
-                ivRemove3.visibility=View.VISIBLE
-                ivRemove4.visibility=View.VISIBLE
-                ivRemove5.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
+                ivRemove3.visibility = View.VISIBLE
+                ivRemove4.visibility = View.VISIBLE
+                ivRemove5.visibility = View.VISIBLE
 
             }
             6 -> {
@@ -521,12 +455,12 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
                 ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
                 ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
-                ivRemove3.visibility=View.VISIBLE
-                ivRemove4.visibility=View.VISIBLE
-                ivRemove5.visibility=View.VISIBLE
-                ivRemove6.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
+                ivRemove3.visibility = View.VISIBLE
+                ivRemove4.visibility = View.VISIBLE
+                ivRemove5.visibility = View.VISIBLE
+                ivRemove6.visibility = View.VISIBLE
 
             }
             7 -> {
@@ -537,13 +471,13 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
                 ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
                 ivProduct7.setImageURI(ImageList?.get(6)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
-                ivRemove3.visibility=View.VISIBLE
-                ivRemove4.visibility=View.VISIBLE
-                ivRemove5.visibility=View.VISIBLE
-                ivRemove6.visibility=View.VISIBLE
-                ivRemove7.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
+                ivRemove3.visibility = View.VISIBLE
+                ivRemove4.visibility = View.VISIBLE
+                ivRemove5.visibility = View.VISIBLE
+                ivRemove6.visibility = View.VISIBLE
+                ivRemove7.visibility = View.VISIBLE
 
             }
             8 -> {
@@ -555,21 +489,21 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
                 ivProduct7.setImageURI(ImageList?.get(6)?.fileUrl)
                 ivProduct8.setImageURI(ImageList?.get(7)?.fileUrl)
-                ivRemove1.visibility=View.VISIBLE
-                ivRemove2.visibility=View.VISIBLE
-                ivRemove3.visibility=View.VISIBLE
-                ivRemove4.visibility=View.VISIBLE
-                ivRemove5.visibility=View.VISIBLE
-                ivRemove6.visibility=View.VISIBLE
-                ivRemove7.visibility=View.VISIBLE
-                ivRemove8.visibility=View.VISIBLE
+                ivRemove1.visibility = View.VISIBLE
+                ivRemove2.visibility = View.VISIBLE
+                ivRemove3.visibility = View.VISIBLE
+                ivRemove4.visibility = View.VISIBLE
+                ivRemove5.visibility = View.VISIBLE
+                ivRemove6.visibility = View.VISIBLE
+                ivRemove7.visibility = View.VISIBLE
+                ivRemove8.visibility = View.VISIBLE
 
             }
         }
     }
 
     fun init() {
-        rbSell.isChecked = true
+        checkboxSell.isChecked = true
         rbYes.isChecked = true
         rbYesDeliver.isChecked = true
         isNagotiable = "yes"
@@ -605,77 +539,42 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 isOpenTodeliver = "no"
             }
         }
-        rbSell.setOnCheckedChangeListener { buttonView, isChecked ->
+        checkboxSell.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 sellViews()
-            }
-        }
-        rbRent.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                type = Config.Constants.TYPE_RENT
-
-                rbRent.isChecked = true
-
-                rbSell.isChecked = false
-                rbBarter.isChecked = false
-          /*      layout_rent_sell.visibility = View.VISIBLE
-                layout_barter_info.visibility = View.GONE*/
-
+            } else {
+                isSell = "no"
                 tvSetPrice.visibility = View.GONE
                 etSetPrice.visibility = View.GONE
                 tvSetPriceHelperText.visibility = View.GONE
-                layout_payment.visibility = View.VISIBLE
 
-                tvProductDetails.visibility = View.VISIBLE
-                etProductDetails.visibility = View.VISIBLE
-                tvProductDetailsHelperText.visibility = View.VISIBLE
-
-               /* tvRentTermAndCondition.visibility = View.VISIBLE
-                etRentTermAndCondition.visibility = View.VISIBLE
-                tvRentTermAndConditionHelperText.visibility = View.VISIBLE*/
-
-                ivCurveAddProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.red_a)
-                )
-
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.voilet),
-                        2
-                    )
-                    saveProductBtn.setBackgroundResource(R.drawable.btn_app_selected_voilet)
-
-                }
             }
         }
-        rbBarter.setOnCheckedChangeListener { buttonView, isChecked ->
+        checkboxRent.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                type = Config.Constants.TYPE_BARTER
+                isRent = "yes"
+                tvSetAPriceLabel.visibility = View.VISIBLE
+                tvRentHelperText.visibility = View.VISIBLE
+                layout_payment.visibility = View.VISIBLE
 
-                rbSell.isChecked = false
-                rbRent.isChecked = false
-                rbBarter.isChecked = true
-               /* layout_rent_sell.visibility = View.GONE
-                layout_barter_info.visibility = View.VISIBLE*/
+            } else {
+                isRent = "no"
+                tvSetAPriceLabel.visibility = View.GONE
+                tvRentHelperText.visibility = View.GONE
                 layout_payment.visibility = View.GONE
-
-                tvSelectItemCondition.visibility = View.VISIBLE
-                tvSelectItemConditionHelperText.visibility = View.VISIBLE
-                etSelectItemCondition.visibility = View.VISIBLE
-
-                ivCurveAddProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.yellow1)
-                )
-
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.yellow1),
-                        2
-                    )
-                    saveProductBtn.setBackgroundResource(R.drawable.btn_app_selected_yellow)
-
-                }
-
+            }
+        }
+        checkboxBarter.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                isBarter = "yes"
+                tvBarterLabel.visibility = View.VISIBLE
+                etwhatWouldtoLiketoBarter.visibility = View.VISIBLE
+                tvBarterHelperText.visibility = View.VISIBLE
+            } else {
+                isBarter = "no"
+                tvBarterLabel.visibility = View.GONE
+                etwhatWouldtoLiketoBarter.visibility = View.GONE
+                tvBarterHelperText.visibility = View.GONE
             }
         }
         ivProduct1.setOnClickListener { showImageProviderDialog() }
@@ -693,39 +592,12 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
     }
 
+
     fun sellViews() {
-        rbSell.isChecked = true
-        type = Config.Constants.TYPE_SELL
-        rbRent.isChecked = false
-        rbBarter.isChecked = false
-       /* layout_rent_sell.visibility = View.VISIBLE
-        layout_barter_info.visibility = View.GONE*/
-
-        tvProductDetailsHelperText.visibility = View.GONE
-        etProductDetails.visibility = View.GONE
-        tvProductDetails.visibility = View.GONE
-/*
-        etRentTermAndCondition.visibility = View.GONE
-        tvRentTermAndCondition.visibility = View.GONE
-        tvRentTermAndConditionHelperText.visibility = View.GONE*/
-
+        isSell = "yes"
         tvSetPrice.visibility = View.VISIBLE
         etSetPrice.visibility = View.VISIBLE
         tvSetPriceHelperText.visibility = View.VISIBLE
-
-        layout_payment.visibility = View.GONE
-
-        ivCurveAddProduct.setColorFilter(
-            ContextCompat.getColor(activity!!, R.color.blue1)
-        )
-
-        activity?.let {
-            (activity as LandingActivity).updateStatusBarColor(
-                AndroidUtils.getColor(R.color.blue1),
-                2
-            )
-            saveProductBtn.setBackgroundResource(R.drawable.btn_app_selected)
-        }
     }
 
     companion object {

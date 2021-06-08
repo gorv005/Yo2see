@@ -15,7 +15,7 @@ import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
-import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
@@ -113,7 +113,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                     subToSubListItem.subCategoryId,
                     subToSubListItem.id,
                     "",
-                    listingType!!,
+                    "",
                     "",
                     "",
                     "",
@@ -292,14 +292,14 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                 this?.let {
                     pos = position
                     listingItem = objectAtPosition
-                    if (objectAtPosition?.UserFavorite == 1) {
+                    if (objectAtPosition?.userFavorite == 1) {
                         model?.addAndRemoveToFavorites(
                             "AddToFavList",
                             model?.getUserID()!!,
                             objectAtPosition?.id,
                             0
                         )
-                        listingItem.UserFavorite=0
+                        listingItem.userFavorite=0
                     } else {
                         model?.addAndRemoveToFavorites(
                             "AddToFavList",
@@ -307,7 +307,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                             objectAtPosition?.id,
                             1
                         )
-                        listingItem.UserFavorite=1
+                        listingItem.userFavorite=1
 
                     }
                 }

@@ -2,13 +2,17 @@ package com.dartmic.yo2see.ui.productDetails
 
 import android.os.Bundle
 import android.view.View
+import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
-import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.home.adapter.TabFragmentAdapter
+import com.dartmic.yo2see.ui.home.products.ProductFragment
 import com.dartmic.yo2see.ui.productDetails.adapter.ProductImagesAdapter
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
@@ -17,6 +21,7 @@ import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.layout_set_user_info_product_detail.*
@@ -155,6 +160,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
     fun showProgressDialog() {
         showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
+    private var indicatorWidth = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -175,6 +181,64 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
         ivBackDetails.setOnClickListener {
             activity?.onBackPressed()
         }
+
+        val adapter = TabFragmentAdapter(activity?.getSupportFragmentManager()!!)
+     //   adapter.addFragment(ProductFragment.getInstance(), getString(R.string.buy_))
+     //   adapter.addFragment(ProductFragment.getInstance(), getString(R.string.rent_))
+        adapter.addFragment(ProductFragment.getInstance(), getString(R.string.barter_))
+
+        viewPagerProductDetail.setAdapter(adapter)
+        tabProductDetail.setupWithViewPager(viewPagerProductDetail)
+
+        tabProductDetail.post(Runnable {
+            indicatorWidth = tabProductDetail.getWidth() / tabProductDetail.getTabCount()
+
+            //Assign new width
+            val indicatorParams = indicatorProductDetails?.getLayoutParams() as FrameLayout.LayoutParams
+            indicatorParams.width = indicatorWidth
+            indicatorProductDetails?.setLayoutParams(indicatorParams)
+        })
+
+        viewPagerProductDetail.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            //To move the indicator as the user scroll, we will need the scroll offset values
+            //positionOffset is a value from [0..1] which represents how far the page has been scrolled
+            //see https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener
+            override fun onPageScrolled(i: Int, positionOffset: Float, positionOffsetPx: Int) {
+                if(i==0){
+                    tvBarter.visibility=View.GONE
+                    tvRent.visibility=View.GONE
+                    tvBuy.visibility=View.VISIBLE
+
+
+                }
+                else if(i==1){
+                    tvBarter.visibility=View.GONE
+                    tvRent.visibility=View.VISIBLE
+                    tvBuy.visibility=View.GONE
+
+
+                }else{
+                    tvBarter.visibility=View.VISIBLE
+                    tvRent.visibility=View.GONE
+                    tvBuy.visibility=View.GONE
+
+                }
+                var params = indicatorProductDetails?.getLayoutParams() as FrameLayout.LayoutParams
+
+                //Multiply positionOffset with indicatorWidth to get translation
+                val translationOffset: Float = (positionOffset + i) * indicatorWidth
+                params.leftMargin = translationOffset.toInt()
+                indicatorProductDetails?.setLayoutParams(params)
+            }
+
+            override fun onPageSelected(i: Int) {}
+            override fun onPageScrollStateChanged(i: Int) {}
+        })
+
+        rlRentP.visibility=View.GONE
+        rlBuyP.visibility=View.GONE
+
+        llTab.weightSum=1.0f
     }
 
     companion object {

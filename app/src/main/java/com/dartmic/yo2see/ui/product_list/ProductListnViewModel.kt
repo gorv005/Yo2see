@@ -12,6 +12,7 @@ import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
@@ -25,7 +26,7 @@ class ProductListnViewModel(
     private val pre: PreferenceManager
 ) :
     AbstractViewModel() {
-    val productListViewModel = MutableLiveData<ProductListResponsePayload>()
+    val productListViewModel = MutableLiveData<ProductListInfoResponsePayload>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
     val productDetailsViewModel = MutableLiveData<ProductDetailResponsePayload>()
     val userViewModel = MutableLiveData<LoginResponsePayload>()
@@ -110,7 +111,7 @@ class ProductListnViewModel(
                             //  val json = Gson().toJson(error)
 
                             productListViewModel.value =
-                                Gson().fromJson(error, ProductListResponsePayload::class.java)
+                                Gson().fromJson(error, ProductListInfoResponsePayload::class.java)
                             searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 
@@ -178,7 +179,7 @@ class ProductListnViewModel(
                             //  val json = Gson().toJson(error)
 
                             productListViewModel.value =
-                                Gson().fromJson(error, ProductListResponsePayload::class.java)
+                                Gson().fromJson(error, ProductListInfoResponsePayload::class.java)
                             searchEvent.value =
                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 

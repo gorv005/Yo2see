@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
-import com.dartmic.yo2see.model.product.ListingItem
+import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductListCallback
 import com.dartmic.yo2see.utils.Config
 import com.facebook.drawee.drawable.ScalingUtils
@@ -76,18 +76,9 @@ class AdapterFavProductList(
             allProducts: ListingItem,
             adapterViewClick: AdapterViewClickListener<ListingItem>?,
             back: Int
-        ) {
-            if (allProducts.listingType.equals( Config.Constants.TYPE_BARTER)) {
-                itemView.tvPrice?.text = allProducts.barterText
-                itemView.tvModel?.text = "In exchange with " + allProducts.barterExchangeText
-            } else if (allProducts.listingType.equals( Config.Constants.TYPE_RENT)) {
+        ) {                itemView.tvModel?.text = allProducts.listingTitle
 
-                itemView.tvPrice?.text = allProducts.payment + "/" + allProducts.rent_type
-                itemView.tvModel?.text = allProducts.listingTitle
-            } else {
-                itemView.tvPrice?.text = allProducts.listingPrice
-                itemView.tvModel?.text = allProducts.listingTitle
-            }
+
             itemView.tvAddress?.text = allProducts.listingCity + ", " + allProducts.listingState
             itemView.tvDate?.text = allProducts.listingPublishDatetime
 
@@ -96,7 +87,7 @@ class AdapterFavProductList(
             itemView.tvListing.text = v.toString()
             itemView.ivFav.pressOnTouch(true);
 
-            if (allProducts?.UserFavorite == 1) {
+            if (allProducts?.userFavorite == 1) {
                 itemView.ivFav.setChecked(true);
                 itemView.ivFav.playAnimation()
             } else {

@@ -10,6 +10,7 @@ import com.dartmic.yo2see.model.categories.FeatureListResponse
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.model.signUp.OTPResponsePayload
 import com.dartmic.yo2see.model.signUp.RegisterResponsePayload
@@ -104,7 +105,7 @@ interface AppRestApiFast {
         @Field("state") state: String,
         @Field("city") city: String,
         @Field("search_key") search_key: String
-    ): Single<ProductListResponsePayload>
+    ): Single<ProductListInfoResponsePayload>
 
 
     @Multipart
@@ -132,7 +133,9 @@ interface AppRestApiFast {
         @Field("sub_cat_id") sub_cat_id: String,
         @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
         @Field("brand") brand: String,
-        @Field("listing_type") listing_type: String,
+        @Field("is_rent") is_rent: String,
+        @Field("is_barter") is_barter: String,
+        @Field("is_sell") is_sell: String,
         @Field("listing_price") listing_price: String,
         @Field("country") country: String,
         @Field("state") state: String,
@@ -229,7 +232,7 @@ interface AppRestApiFast {
     fun getFavProductListing(
         @Field("service") service: String,
         @Field("user_id") user_id: String
-    ): Single<ProductListResponsePayload>
+    ): Single<ProductListInfoResponsePayload>
 
 
     @FormUrlEncoded

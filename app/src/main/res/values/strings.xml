@@ -238,6 +238,12 @@
     <string name="how_would_you_like_the_post">How would you like to post the product. you can select all options if necessary, this will help you get the best offer against your product</string>
     <string name="add_description">ADD DESCRIPTION</string>
     <string name="set_a_rent_price">Set a renting price</string>
+    <string name="Brand">Brand</string>
+    <string name="payment_type">PAYMENT TYPE</string>
+    <string name="address_">Address</string>
+    <string name="barter_">BARTER</string>
+    <string name="rent_">RENT $/hr</string>
+    <string name="buy_">BUY $</string>
 
     <string-array name="text">
         <item>WHAT WE OFFER</item>
