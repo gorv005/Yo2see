@@ -8,6 +8,8 @@ class Config {
         const val CLICK_VIEW_CATEGORY = 99
         const val CLICK_VIEW_PRODUCT = 100
         const val CLICK_VIEW_FAV = 101
+        const val CLICK_ADD_IMAGE = 102
+        const val CLICK_REMOVE_IMAGE = 103
 
 
     }

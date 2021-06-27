@@ -9,6 +9,8 @@ data class ImageItem(
     val fileUrl: Uri?,
     @SerializedName("id")
     val id: Int = 0,
+    @SerializedName("viewType")
+    val viewType: Int = 0,
     @SerializedName("thumb_url")
     val serverurl: String?=""
 

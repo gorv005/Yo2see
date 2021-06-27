@@ -20,16 +20,23 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import com.coursion.freakycoder.mediapicker.galleries.Gallery
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
+import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.common.ImageProvider
 import com.dartmic.yo2see.interfaces.ResultListener
+import com.dartmic.yo2see.model.AdsItems
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.add_product.ImageItem
 import com.dartmic.yo2see.model.add_product.RentTypeResponse
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.addProduct.adapter.AdapterImage
+import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
+import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.*
@@ -38,6 +45,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.gsa.ui.login.AddProductViewModel
 import kotlinx.android.synthetic.main.fragment_add_product.*
+import kotlinx.android.synthetic.main.fragment_product.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_payment.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
@@ -62,6 +70,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class),
+    AdapterViewClickListener<ImageItem>,
     LocationListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -84,6 +93,8 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     lateinit var userList: UserList
     private lateinit var locationManager: LocationManager
     private val locationPermissionCode = 2
+    private var adapterImage: AdapterImage? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ImageList = java.util.ArrayList()
@@ -321,7 +332,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     }
 
     private fun showImageProviderDialog() {
-        if (ImageList?.size == 8) {
+        if (ImageList?.size == 21) {
             showSnackbar(AndroidUtils.getString(R.string.image_validation), false)
         } else {
             DialogHelper.showChooseAppDialog(activity!!, object : ResultListener<ImageProvider> {
@@ -338,7 +349,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                             )  */ //Final image resolution will be less than 1080 x 1080(Optional)
                                 .start()
                         } else {
-                            val m = 8 - ImageList?.size!!
+                            val m = 21 - ImageList?.size!!
                             val intent = Intent(activity, Gallery::class.java)
 // Set the title for toolbar
                             intent.putExtra("title", AndroidUtils.getString(R.string.select_images))
@@ -434,7 +445,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                         ImageList?.add(
                             ImageItem(
                                 uriFromPath!!,
-                                0,
+                                0, AdapterImage.VIEW_TYPE_ONE,
                                 ""
                             )
                         )
@@ -454,7 +465,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
                 //Image Uri will not be null for RESULT_OK
                 val fileUri = data?.data
-                ImageList?.add(ImageItem(fileUri!!, 0, ""))
+                ImageList?.add(ImageItem(fileUri!!, 0, AdapterImage.VIEW_TYPE_ONE, ""))
                 showImages()
 
 
@@ -484,126 +495,34 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     }
 
     fun showImages() {
-        ivProduct1.setImageURI(null)
-        ivProduct2.setImageURI(null)
-        ivProduct3.setImageURI(null)
-        ivProduct4.setImageURI(null)
-        ivProduct5.setImageURI(null)
-        ivProduct6.setImageURI(null)
-        ivProduct7.setImageURI(null)
-        ivProduct8.setImageURI(null)
-        ivRemove1.visibility = View.GONE
-        ivRemove2.visibility = View.GONE
-        ivRemove3.visibility = View.GONE
-        ivRemove4.visibility = View.GONE
-        ivRemove5.visibility = View.GONE
-        ivRemove6.visibility = View.GONE
-        ivRemove7.visibility = View.GONE
-        ivRemove8.visibility = View.GONE
 
-        when (ImageList?.size) {
+        adapterImage?.notifyDataSetChanged()
+    }
 
 
-            1 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
+    fun getImage(): ArrayList<ImageItem>? {
 
-            }
-            2 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-
-            }
-            3 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-                ivRemove3.visibility = View.VISIBLE
-
-            }
-            4 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-                ivRemove3.visibility = View.VISIBLE
-                ivRemove4.visibility = View.VISIBLE
-
-            }
-            5 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
-                ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-                ivRemove3.visibility = View.VISIBLE
-                ivRemove4.visibility = View.VISIBLE
-                ivRemove5.visibility = View.VISIBLE
-
-            }
-            6 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
-                ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
-                ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-                ivRemove3.visibility = View.VISIBLE
-                ivRemove4.visibility = View.VISIBLE
-                ivRemove5.visibility = View.VISIBLE
-                ivRemove6.visibility = View.VISIBLE
-
-            }
-            7 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
-                ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
-                ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
-                ivProduct7.setImageURI(ImageList?.get(6)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-                ivRemove3.visibility = View.VISIBLE
-                ivRemove4.visibility = View.VISIBLE
-                ivRemove5.visibility = View.VISIBLE
-                ivRemove6.visibility = View.VISIBLE
-                ivRemove7.visibility = View.VISIBLE
-
-            }
-            8 -> {
-                ivProduct1.setImageURI(ImageList?.get(0)?.fileUrl)
-                ivProduct2.setImageURI(ImageList?.get(1)?.fileUrl)
-                ivProduct3.setImageURI(ImageList?.get(2)?.fileUrl)
-                ivProduct4.setImageURI(ImageList?.get(3)?.fileUrl)
-                ivProduct5.setImageURI(ImageList?.get(4)?.fileUrl)
-                ivProduct6.setImageURI(ImageList?.get(5)?.fileUrl)
-                ivProduct7.setImageURI(ImageList?.get(6)?.fileUrl)
-                ivProduct8.setImageURI(ImageList?.get(7)?.fileUrl)
-                ivRemove1.visibility = View.VISIBLE
-                ivRemove2.visibility = View.VISIBLE
-                ivRemove3.visibility = View.VISIBLE
-                ivRemove4.visibility = View.VISIBLE
-                ivRemove5.visibility = View.VISIBLE
-                ivRemove6.visibility = View.VISIBLE
-                ivRemove7.visibility = View.VISIBLE
-                ivRemove8.visibility = View.VISIBLE
-
-            }
-        }
+        ImageList?.add(
+            ImageItem(
+                null,
+                0,
+                AdapterImage.VIEW_TYPE_TWO, ""
+            )
+        )
+        return ImageList
     }
 
     fun init() {
+
+        val manager1 = GridLayoutManager(context, 3)
+        rvImages.layoutManager = manager1
+        activity?.let {
+            adapterImage = AdapterImage(this, it)
+
+        }
+        rvImages.adapter = adapterImage
+        adapterImage?.submitList(getImage())
+
         checkboxSell.isChecked = true
         rbYes.isChecked = true
         rbYesDeliver.isChecked = true
@@ -678,18 +597,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 tvBarterHelperText.visibility = View.GONE
             }
         }
-        ivProduct1.setOnClickListener { showImageProviderDialog() }
-        ivProduct2.setOnClickListener { showImageProviderDialog() }
-        ivProduct3.setOnClickListener { showImageProviderDialog() }
-        ivProduct4.setOnClickListener { showImageProviderDialog() }
-        ivProduct5.setOnClickListener { showImageProviderDialog() }
-        ivProduct6.setOnClickListener { showImageProviderDialog() }
-        ivProduct7.setOnClickListener { showImageProviderDialog() }
-        ivProduct8.setOnClickListener { showImageProviderDialog() }
-        ivRemove1.setOnClickListener {
-            ImageList?.removeAt(0)
-            showImages()
-        }
+
 
     }
 
@@ -839,5 +747,28 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 //   Toast.makeText(activity, "Permission Denied", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    override fun onClickAdapterView(objectAtPosition: ImageItem, viewType: Int, position: Int) {
+        when (viewType) {
+            Config.AdapterClickViewTypes.CLICK_ADD_IMAGE -> {
+
+                this?.let {
+                    showImageProviderDialog()
+                }
+
+            }
+            Config.AdapterClickViewTypes.CLICK_REMOVE_IMAGE -> {
+
+                this?.let {
+
+                    ImageList?.removeAt(position)
+                    adapterImage?.notifyDataSetChanged()
+                }
+
+            }
+
+        }
+
     }
 }

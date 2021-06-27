@@ -148,7 +148,7 @@
     <string name="select_images">Select Images</string>
     <string name="this_profile_is_authenticated">This profile is Authenticated</string>
     <string name="renting_term_condition"><![CDATA[Renting terms  & condition]]></string>
-    <string name="image_validation">Maximum 8 images can be selected</string>
+    <string name="image_validation">Maximum 20 images can be selected</string>
     <string name="my_yo2see">My YO2SEE</string>
     <string name="my_account">My Account</string>
     <string name="news">News</string>
