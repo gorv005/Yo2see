@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.text.*
+import android.text.format.DateUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
@@ -365,6 +366,39 @@ class AndroidUtils {
                 }
             }
             return 2
+        }
+        val onlyTime = SimpleDateFormat("h:mm a", Locale.US) // the format of your date
+        val onlyDate = SimpleDateFormat("d MMM", Locale.US) // the format of your date
+
+        fun getFormattedTime(timeInMilis: Long): String {
+            val date = Date(timeInMilis * 1000L) // *1000 is to convert seconds to milliseconds
+
+            return when {
+                isToday(date) -> onlyTime.format(date)
+                isYesterday(date) -> "Yesterday"
+                else -> onlyDate.format(date)
+            }
+
+        }
+        fun isYesterday(d: Date): Boolean {
+            return DateUtils.isToday(d.time + DateUtils.DAY_IN_MILLIS)
+        }
+
+        fun isToday(d: Date): Boolean {
+            return DateUtils.isToday(d.time)
+        }
+
+
+        fun getFormattedTimeChatLog(timeInMilis: Long): String {
+            val date = Date(timeInMilis * 1000L) // *1000 is to convert seconds to milliseconds
+            val fullFormattedTime = SimpleDateFormat("d MMM, h:mm a", Locale.US) // the format of your date
+            val onlyTime = SimpleDateFormat("h:mm a", Locale.US) // the format of your date
+
+            return when {
+                isToday(date) -> onlyTime.format(date)
+                else -> fullFormattedTime.format(date)
+            }
+
         }
     }
 

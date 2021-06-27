@@ -29,8 +29,10 @@ import com.dartmic.yo2see.ui.favorites.SortByBottomSheet
 import com.dartmic.yo2see.ui.home.HomeFragment
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.more.MoreActivity
+import com.dartmic.yo2see.ui.more.MoreFragment
 import com.dartmic.yo2see.ui.postAdd.PostAnAddFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.ui.product_list.adapter.SortByProductBottomSheet
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +49,7 @@ import org.jetbrains.anko.backgroundDrawable
 
 
 const val INDEX_HOME = FragNavController.TAB1
-const val INDEX_NOTIFICATION= FragNavController.TAB4
+const val INDEX_NOTIFICATION = FragNavController.TAB4
 const val INDEX_ADD_POST = FragNavController.TAB3
 const val INDEX_MORE = FragNavController.TAB5
 const val INDEX_CHAT = FragNavController.TAB2
@@ -88,11 +90,11 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
 
     override fun getRootFragment(index: Int): Fragment {
         when (index) {
-            INDEX_HOME -> return HomeFragment.getInstance(0,Config.Constants.PRODUCT)
+            INDEX_HOME -> return HomeFragment.getInstance(0, Config.Constants.PRODUCT)
             INDEX_NOTIFICATION -> return ChatListFragment.getInstance(0)
             INDEX_ADD_POST -> return PostAnAddFragment.getInstance(0)
             //   INDEX_RENT_BUY_SELL -> return HomeFragment.getInstance(0)
-            INDEX_MORE -> return HomeFragment.getInstance(0,Config.Constants.PRODUCT)
+            INDEX_MORE -> return MoreFragment.getInstance(0)
             INDEX_CHAT -> return ChatListFragment.getInstance(0)
         }
         throw IllegalStateException("Need to send an index that we know")
@@ -183,7 +185,8 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                 }
                 R.id.action_more -> {
                     if (checkUserLogin()) {
-                        startActivity(MoreActivity.getIntent(this))
+                        fragNavController.switchTab(INDEX_MORE)
+
                     } else {
                         startActivity(LoginActivity.getIntent(this))
 
@@ -192,6 +195,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                 }
             }
         }, initial)
+        bottomBar.setOnTabReselectListener { fragNavController.clearStack() }
 
 /*
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -233,16 +237,16 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         }
 */
         fab.setOnClickListener {
-            bottomBar.selectTabAtPosition(INDEX_ADD_POST)
+            /* bottomBar.selectTabAtPosition(INDEX_ADD_POST)
 
-            pushFragment(HomeFragment.getInstance(1,Config.Constants.POST_AN_ADD))
+             pushFragment(HomeFragment.getInstance(1,Config.Constants.POST_AN_ADD))*/
 
-           /* if (checkUserLogin()) {
-                pushFragment(HomeFragment.getInstance(1,Config.Constants.POST_AN_ADD))
+            if (checkUserLogin()) {
+                pushFragment(HomeFragment.getInstance(1, Config.Constants.POST_AN_ADD))
                 //  fragNavController.switchTab(INDEX_ADD_POST)
             } else {
                 startActivity(LoginActivity.getIntent(this))
-            }*/
+            }
 
         }
     }
@@ -374,6 +378,16 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         }
         sortByBottomSheet.isCancelable = false
         sortByBottomSheet.show(supportFragmentManager, SortByBottomSheet.TAG)
+    }
+
+    fun sortByProduct(sortImpl: SortImpl, sort_by: String) {
+        val sortByBottomSheet = SortByProductBottomSheet(this, sortImpl, sort_by)
+
+        if (sortByBottomSheet.isAdded) {
+            sortByBottomSheet.dismiss()
+        }
+        sortByBottomSheet.isCancelable = false
+        sortByBottomSheet.show(supportFragmentManager, SortByProductBottomSheet.TAG)
     }
 
 }

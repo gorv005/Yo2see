@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivCornerImage"
-        android:layout_width="130dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/et_width_120"
+        android:layout_height="100dp"
         android:scaleType="fitXY"
         android:src="@drawable/ic_blue_top_background"
         app:tint="@color/red_a" />
@@ -25,8 +25,7 @@
         android:adjustViewBounds="true"
         android:id="@+id/ivBackArrow"
         android:layout_width="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp"
+        android:padding="@dimen/et_height_20"
         android:layout_height="wrap_content"
         app:tint="@color/white"
         android:src="@drawable/ic_red_back_arrow" />

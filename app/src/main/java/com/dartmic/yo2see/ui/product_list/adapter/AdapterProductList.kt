@@ -84,9 +84,12 @@ class AdapterProductList(
             itemView.tvAddress?.text = HtmlCompat.fromHtml("<u>"+allProducts.listingCity+"</u>", HtmlCompat.FROM_HTML_MODE_LEGACY)
             itemView.tvDate?.text = allProducts.listingPublishDatetime.split(" ")[0]
 
-            val v = SpannableString("View " + allProducts.userName + "'s listing")
+          /*  val v = SpannableString("View " + allProducts.userName + "'s listing")
             v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            itemView.tvListing.text = v.toString()
+            itemView.tvListing.text = v.toString()*/
+            val v="<u>View"+allProducts.userName + "'s listing</u>"
+            itemView.tvListing.setText(HtmlCompat.fromHtml(v, HtmlCompat.FROM_HTML_MODE_LEGACY))
+
             itemView.ivFav.pressOnTouch(true)
             var s="This product is available\nfor "
             var p=""

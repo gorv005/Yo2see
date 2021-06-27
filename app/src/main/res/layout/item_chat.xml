@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:id="@+id/llBack"
-    android:background="@color/light_red"
+    android:background="@color/white"
     android:layout_height="wrap_content"
    >
 
@@ -26,9 +26,9 @@
 
             <RelativeLayout
                 android:id="@+id/rlImageProfile"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/round_bg" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/no_image2" />
 
             <LinearLayout
                 android:layout_toRightOf="@id/rlImageProfile"

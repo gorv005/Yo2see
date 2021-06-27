@@ -1,10 +1,13 @@
 package com.dartmic.yo2see.ui.chat_list
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,9 +15,19 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.EventsItems
+import com.dartmic.yo2see.model.chat.ChatMessage
+import com.dartmic.yo2see.model.chat.User
 import com.dartmic.yo2see.ui.chat_list.adapter.AdapterChat
+import com.dartmic.yo2see.ui.chat_list.adapter.LatestMessageRow
+import com.dartmic.yo2see.ui.otp.OtpVerifyActivity
+import com.dartmic.yo2see.ui.signup.SignUpActivity
 import com.dartmic.yo2see.utils.AndroidUtils
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
 import com.gsa.ui.login.ProductListnViewModel
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_chat_list.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -33,13 +46,15 @@ class ChatListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewMod
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var adapterChat: AdapterChat
-
+    private val adapter = GroupAdapter<ViewHolder>()
+    private val latestMessagesMap = HashMap<String, ChatMessage>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+       // performLogin()
     }
 
     override fun getLayoutId() = R.layout.fragment_chat_list
@@ -56,14 +71,31 @@ class ChatListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewMod
         ivChatFav.setOnClickListener {
             onBackPressed()
         }
-        rvChat.adapter = adapterChat
-        adapterChat.submitList(getEvents())
+        // rvChat.adapter = ada++pterChat
+        //   adapterChat.submitList(getEvents())
         tvUserName.setText(model?.getLoggedInUserName())
-        Glide.with(this).load("https://yo2see.com/app/admin/" + model?.getUserImage())
+      /*  Glide.with(this).load("https://yo2see.com/app/admin/" + model?.getUserImage())
             .placeholder(R.drawable.ic_clothing_white).circleCrop()
-            .into(ivProfileChat)
+            .into(ivProfileChat)*/
+        verifyUserIsLoggedIn()
+        rvChat.adapter = adapter
+
+        listenForLatestMessages()
+        adapter.setOnItemClickListener { item, _ ->
+            val intent = Intent(activity, NewMessageChatActivity::class.java)
+            val row = item as LatestMessageRow
+            intent.putExtra(NewMessageChatActivity.USER_KEY, row.chatPartnerUser)
+        //    intent.putExtra(NewMessageChatActivity.UID, row.chatMessage?.toId)
+
+            startActivity(intent)
+        }
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        fetchCurrentUser()
+    }
     fun getEvents(): ArrayList<EventsItems> {
         AndroidUtils.getString(R.string.jobs)
         val events = arrayListOf<EventsItems>()
@@ -116,6 +148,8 @@ class ChatListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewMod
     }
 
     companion object {
+        val TAG = ChatListFragment::class.java.simpleName!!
+        var currentUser: User? = null
 
         fun getInstance(instance: Int): ChatListFragment {
             val bundle = Bundle()
@@ -131,4 +165,82 @@ class ChatListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewMod
     }
 
 
+    private fun refreshRecyclerViewMessages() {
+        adapter.clear()
+        latestMessagesMap.values.forEach {
+            adapter.add(LatestMessageRow(it, activity!!))
+        }
+    }
+
+    private fun listenForLatestMessages() {
+        val fromId = FirebaseAuth.getInstance().uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("/latest-messages/$fromId")
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.d(TAG, "database error: " + databaseError.message)
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                Log.d(TAG, "has children: " + dataSnapshot.hasChildren())
+                if (!dataSnapshot.hasChildren()) {
+                }
+            }
+
+        })
+
+
+        ref.addChildEventListener(object : ChildEventListener {
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+
+            override fun onChildMoved(dataSnapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onChildChanged(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                dataSnapshot.getValue(ChatMessage::class.java)?.let {
+                    latestMessagesMap[dataSnapshot.key!!] = it
+                    refreshRecyclerViewMessages()
+                }
+            }
+
+            override fun onChildAdded(dataSnapshot: DataSnapshot, previousChildName: String?) {
+                dataSnapshot.getValue(ChatMessage::class.java)?.let {
+                    latestMessagesMap[dataSnapshot.key!!] = it
+                    refreshRecyclerViewMessages()
+                }
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+
+        })
+    }
+
+    private fun fetchCurrentUser() {
+        val user = FirebaseAuth.getInstance().currentUser
+            var name= user?.displayName
+        val uid = FirebaseAuth.getInstance().uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+      //  val ref = FirebaseDatabase.getInstance().getReference().child("users").child(uid)
+
+        ref.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(databaseError: DatabaseError) {
+            }
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                currentUser = dataSnapshot.getValue(User::class.java)
+            }
+
+        })
+    }
+
+    private fun verifyUserIsLoggedIn() {
+        val uid = FirebaseAuth.getInstance().uid
+        if (uid == null) {
+            val intent = Intent(activity, SignUpActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+    }
 }

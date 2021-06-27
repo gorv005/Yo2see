@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -119,17 +120,117 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
             getAddress()
         }
         saveProductBtn.setOnClickListener {
-            imageListURLs?.clear()
-            showProgressDialog()
-            count = 0
-            if (ImageList?.size!! > 0) {
-                uploadImage()
+
+            if (checkboxSell.isChecked || checkboxRent.isChecked || checkboxBarter.isChecked) {
+                var validateTitle = AndroidUtils.validateName(etAddatitle.text.toString())
+                var validateBrand = AndroidUtils.validateName(etBrand.text.toString())
+                var validateDescription = AndroidUtils.validateName(etDescription.text.toString())
+                var validateItemCondition =
+                    AndroidUtils.validateName(etSelectItemCondition.text.toString())
+                var validateAddress = AndroidUtils.validateName(etAddressOne.text.toString())
+                var validateetCity = AndroidUtils.validateName(etCity.text.toString())
+                var validateetPincode = AndroidUtils.validateName(etPincode.text.toString())
+                var validateetState = AndroidUtils.validateName(etState.text.toString())
+                var validateetCountry = AndroidUtils.validateName(etCountry.text.toString())
+                var validateetKm = AndroidUtils.validateName(etKm.text.toString())
+
+                if (TextUtils.isEmpty(validateTitle) &&
+                    TextUtils.isEmpty(validateBrand) &&
+                    TextUtils.isEmpty(validateDescription) &&
+                    TextUtils.isEmpty(validateItemCondition) &&
+                    TextUtils.isEmpty(validateAddress) &&
+                    TextUtils.isEmpty(validateetCity) &&
+                    TextUtils.isEmpty(validateetPincode) &&
+                    TextUtils.isEmpty(validateetState) &&
+                    TextUtils.isEmpty(validateetCountry) &&
+                    TextUtils.isEmpty(validateetKm)
+                ) {
+
+                    if (validatePrice()) {
+                        if (ImageList?.size!! > 0) {
+                            imageListURLs?.clear()
+                            showProgressDialog()
+                            count = 0
+                            uploadImage()
+                        } else {
+                            //addProduct()
+                            showSnackbar(
+                                AndroidUtils.getString(R.string.please_select_atleast_one_image),
+                                false
+                            )
+
+                        }
+                    }
+                } else {
+                    etAddatitle.setError(validateTitle)
+                    etBrand.setError(validateBrand)
+                    etDescription.setError(validateDescription)
+                    etSelectItemCondition.setError(validateItemCondition)
+                    etAddressOne.setError(validateAddress)
+                    etCity.setError(validateetCity)
+                    etPincode.setError(validateetPincode)
+                    etState.setError(validateetState)
+                    etCountry.setError(validateetCountry)
+                    etKm.setError(validateetKm)
+                }
             } else {
-                addProduct()
+                showSnackbar(AndroidUtils.getString(R.string.please_select_onecategory), false)
+
             }
         }
     }
 
+
+    fun validatePrice(): Boolean {
+        if (checkboxSell.isChecked) {
+            if (etSetPrice.text.toString().length == 0) {
+                showSnackbar(AndroidUtils.getString(R.string.please_set_price), false)
+                etSetPrice.setError(AndroidUtils.getString(R.string.please_set_price))
+                return false
+            }
+        }
+        if (checkboxRent.isChecked) {
+            if (checkboxHourly.isChecked || checkboxWeekly.isChecked || checkboxMonthly.isChecked || checkboxYearly.isChecked) {
+
+                if (checkboxHourly.isChecked) {
+                    if (etHourly.text.toString().length == 0) {
+                        etHourly.setError(AndroidUtils.getString(R.string.please_set_price))
+                        return false
+                    }
+                }
+                if (checkboxWeekly.isChecked) {
+                    if (etWeekly.text.toString().length == 0) {
+                        etWeekly.setError(AndroidUtils.getString(R.string.please_set_price))
+                        return false
+                    }
+                }
+                if (checkboxMonthly.isChecked) {
+                    if (etMonthly.text.toString().length == 0) {
+                        etMonthly.setError(AndroidUtils.getString(R.string.please_set_price))
+                        return false
+                    }
+                }
+                if (checkboxYearly.isChecked) {
+                    if (etYearly.text.toString().length == 0) {
+                        etYearly.setError(AndroidUtils.getString(R.string.please_set_price))
+                        return false
+                    }
+                }
+            } else {
+                showSnackbar(AndroidUtils.getString(R.string.please_set_rent_price), false)
+
+                return false
+            }
+
+        }
+        if (checkboxBarter.isChecked) {
+            if (etwhatWouldtoLiketoBarter.text.toString().length == 0) {
+                etwhatWouldtoLiketoBarter.setError(AndroidUtils.getString(R.string.please_set_barter_text))
+                return false
+            }
+        }
+        return true
+    }
 
     fun getUser() {
         if (NetworkUtil.isInternetAvailable(activity)) {

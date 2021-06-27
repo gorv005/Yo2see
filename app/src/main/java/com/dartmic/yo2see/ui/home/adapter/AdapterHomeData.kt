@@ -55,7 +55,7 @@ class AdapterHomeData(
             // itemView.ivEvents.setImageResource(allProducts.image!!)
           //  itemView.rlCategoryBack.setBackgroundResource(back)
             Glide.with(activity).load(allProducts.catImage).error(R.drawable.ic_mobiles)
-                .placeholder(R.drawable.ic_clothing_white)
+                .placeholder(R.drawable.ic_mobiles)
                 .into(itemView.ivEvents)
 
          /*   ImageRequestManager.with(itemView.ivEvents)

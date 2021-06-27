@@ -26,7 +26,7 @@ class CategoriesViewModel(
     val categoryModel= MutableLiveData<CategoryDataResponsePayload>()
     val searchEvent = SingleLiveEvent<SearchEvent>()
     val featureProductyModel = MutableLiveData<FeatureListResponse>()
-    val categoryModelEvents = MutableLiveData<CategoriesResponse>()
+    val categoryModelEvents = MutableLiveData<CategoryDataResponsePayload>()
     val categoryModelAds= MutableLiveData<CategoriesResponse>()
     val categoryModelMenu = MutableLiveData<CategoryDataResponsePayload>()
 
@@ -69,9 +69,9 @@ class CategoriesViewModel(
         }
     }
 
-/*
+
     fun getCategoriesEvents(service :String, type: String) {
-        searchEvent.value = SearchEvent(isLoading = true)
+      //  searchEvent.value = SearchEvent(isLoading = true)
         launch {
             categoryRepository.getCategories(service,type)
                 .subscribeOn(scheduler.io())
@@ -79,8 +79,8 @@ class CategoriesViewModel(
                 .subscribe({
                     Logger.Debug(msg = it.toString())
                     categoryModelEvents.value = it
-                    searchEvent.value =
-                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+//                    searchEvent.value =
+//                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
 
                 }, {
 
@@ -96,9 +96,9 @@ class CategoriesViewModel(
                             //  val json = Gson().toJson(error)
 
                             categoryModelEvents.value =
-                                Gson().fromJson(error, CategoriesResponse::class.java)
-                            searchEvent.value =
-                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                                Gson().fromJson(error, CategoryDataResponsePayload::class.java)
+//                            searchEvent.value =
+//                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
 
                         }
 
@@ -108,7 +108,7 @@ class CategoriesViewModel(
                 })
         }
     }
-*/
+
 
 /*
     fun getCategoriesAds(service :String, type: String) {
@@ -275,4 +275,10 @@ class CategoriesViewModel(
     fun saveCartValue(cartValue:Int?){
         return pre.savePreference(Config.SharedPreferences.PROPERTY_IS_CART_VALUE,cartValue,0)
     }*/
+   public fun getEmail(): String? {
+       return pre.getLoggedInUserEmail()
+   }
+    public fun getUserPassword(): String? {
+        return pre.getLoggedInUserPassword()
+    }
 }

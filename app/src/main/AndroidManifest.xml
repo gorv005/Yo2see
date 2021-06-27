@@ -20,8 +20,16 @@
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.forgot_password.ForgotPasswordActivity"></activity>
-        <activity android:name=".ui.change_password.ChangePasswordActivity" />
+        <activity android:name=".ui.chat_list.NewMessageChatActivity"></activity>
+        <activity
+            android:name=".ui.filter.FilterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.forgot_password.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.change_password.ChangePasswordActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.search.SerachActivity"
             android:screenOrientation="portrait" />
@@ -42,29 +50,24 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".tutorails.ExploreActivity"
-            android:theme="@style/AppFullScreenTheme"
-
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".tutorails.PostTuteActivity"
-            android:theme="@style/AppFullScreenTheme"
-
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".tutorails.BarterTuteActivity"
-            android:theme="@style/AppFullScreenTheme"
-
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".tutorails.RentTuteActivity"
-            android:theme="@style/AppFullScreenTheme"
-
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".tutorails.BuyTuteActivity"
-            android:theme="@style/AppFullScreenTheme"
-
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
         <activity
             android:name=".ui.signup.SignUpActivity"
             android:screenOrientation="portrait" />
@@ -92,8 +95,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppFullScreenTheme"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppFullScreenTheme" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

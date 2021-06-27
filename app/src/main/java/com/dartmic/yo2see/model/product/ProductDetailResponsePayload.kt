@@ -115,7 +115,15 @@ data class DetailItem(
     @SerializedName("ItemRating")
     val itemRating: String = "",
     @SerializedName("listing_publish_datetime")
-    val listingPublishDatetime: String = ""
+    val listingPublishDatetime: String = "",
+    @SerializedName("is_rent")
+    val isRent: String = "",
+    @SerializedName("UserFavorite")
+    var userFavorite: Int?,
+    @SerializedName("is_sell")
+    val isSell: String = "",
+    @SerializedName("is_barter")
+    val isBarter: String = ""
 )
 
 

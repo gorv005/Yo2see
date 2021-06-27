@@ -42,7 +42,15 @@ class CategoriesExpandableListView internal constructor(
         val llChildView = convertView!!.findViewById<LinearLayout>(R.id.llChildView)
 
         expandedListTextView.text = expandedListText
+        llChildView.setBackgroundResource(R.drawable.app_light_red_back)
 
+       /* if(expandedListPosition==0){
+            llChildView.setBackgroundResource(R.drawable.rounded_corners_app_light_red_back)
+        }else if(isLastChild){
+            llChildView.setBackgroundResource(R.drawable.rounded_bottom_corners_app_light_red_back)
+        }else {
+            llChildView.setBackgroundResource(R.drawable.app_light_red_back)
+        }*/
 
         when (type) {
             Config.Constants.SELL -> {

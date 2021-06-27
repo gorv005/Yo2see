@@ -4,10 +4,15 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
+import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
+import com.dartmic.yo2see.model.chat.User
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.signup.RegistrationViewModel
 import com.dartmic.yo2see.ui.signup.SignUpActivity
@@ -15,6 +20,8 @@ import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_otp_verify.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
@@ -44,7 +51,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
             latitude = getStringExtra(Latitude)
             longitude = getStringExtra(Longitude)
             service = getStringExtra(Service)
-            userType= getStringExtra(UserType)
+            userType = getStringExtra(UserType)
         }
         ivBackVerify.setOnClickListener {
             onBackPressed()
@@ -116,7 +123,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
                 firstName!!,
                 email!!,
                 password!!,
-                device_id!!, device_type!!, latitude!!, longitude!!,userType!!
+                device_id!!, device_type!!, latitude!!, longitude!!, userType!!
             )
         }
     }
@@ -125,11 +132,16 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         model.registerData.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
+                performRegistration(email!!, password!!)
 
                 showSnackbar(it.message, true)
                 this.let { UiUtils.hideSoftKeyboard(it) }
                 this.let {
-                    startActivity(LoginActivity.getIntent(it))
+                    val handler = Handler()
+                    handler.postDelayed({
+                        startActivity(LoginActivity.getIntent(it))
+
+                    }, 1000)
                 }
 
             } else {
@@ -141,7 +153,6 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         model.otpData.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
-
                 showSnackbar(it.message, true)
                 this.let { UiUtils.hideSoftKeyboard(it) }
             } else {
@@ -164,11 +175,60 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
 
     }
 
+    private fun performRegistration(email: String, password: String) {
+
+
+        // Firebase Authentication to create a user with email and password
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) return@addOnCompleteListener
+
+                // else if successful
+                Log.e(TAG, "Successfully created user with uid: ${it.result!!.user?.uid}")
+                // uploadImageToFirebaseStorage()
+                saveUserToFirebaseDatabase(firstName!!)
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "Failed to create user: ${it.message}")
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
+            }
+    }
+
+
+    private fun saveUserToFirebaseDatabase(name: String) {
+        val uid = FirebaseAuth.getInstance().uid ?: return
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+       /* val user = if (profileImageUrl == null) {
+            User(uid, name, null)
+        } else {
+            User(uid, name_edittext_register.text.toString(), profileImageUrl)
+        }*/
+        val user=  User(uid, name, null)
+
+        ref.setValue(user)
+            .addOnSuccessListener {
+                Log.d(TAG, "Finally we saved the user to Firebase Database")
+
+               /* val intent = Intent(this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                overridePendingTransition(R.anim.enter, R.anim.exit)*/
+            }
+            .addOnFailureListener {
+                Log.d(TAG, "Failed to set value to database: ${it.message}")
+             /*   loading_view.visibility = View.GONE
+                already_have_account_text_view.visibility = View.VISIBLE*/
+            }
+    }
+
     fun showProgressDialog() {
         showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
 
     companion object {
+        val TAG = OtpVerifyActivity::class.java.simpleName!!
+
         const val KEY_TAB = "KEY_TAB"
         const val Phonenumber = "Phonenumber"
         const val FirstName = "FirstName"
@@ -214,7 +274,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
                 Service, service
             ).putExtra(
                 UserType, userType
-                )
+            )
             return intent
         }
     }

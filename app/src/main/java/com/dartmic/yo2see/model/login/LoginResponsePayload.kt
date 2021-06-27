@@ -8,27 +8,23 @@ import kotlinx.android.parcel.Parcelize
 data class LoginResponsePayload(@SerializedName("user_list")
                                 var userList: UserList?,
                                 @SerializedName("message")
-                                var message: String = "",
+                                var message: String?,
                                 @SerializedName("status")
                                 var status: Boolean = false)
 
 @Parcelize
 data class UserList(@SerializedName("user_id")
-                    val userId: String = "",
+                    val userId: String?,
                     @SerializedName("phone")
-                    val phone: String = "",
+                    val phone: String?,
                     @SerializedName("name")
-                    val name: String = "",
-                    @SerializedName("created_date")
-                    val createdDate: String = "",
-                    @SerializedName("is_user_login")
-                    val isUserLogin: Boolean = false,
+                    val name: String?,
                     @SerializedName("email")
-                    val email: String = "",
+                    val email: String?,
                     @SerializedName("login_from")
                     val loginFrom: String?,
                     @SerializedName("status")
-                    val status: String = "",
+                    val status: String?,
                     @SerializedName("last_name")
                     val lastName: String?,
                     @SerializedName("first_name")

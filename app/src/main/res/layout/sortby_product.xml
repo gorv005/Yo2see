@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/llSortOption"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/margin5x4">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/sort_by"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+                android:id="@+id/ivCancel"
+            android:layout_alignParentRight="true"
+            app:tint="@color/gmail_color"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_baseline_clear_24"
+            android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <View
+            android:layout_marginTop="18dp"
+            android:background="@color/red_a"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <RadioButton
+                android:layout_marginTop="5dp"
+                android:id="@+id/radioPopularity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:buttonTint="@color/red_a"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/popularity"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:layout_marginTop="5dp"
+                android:id="@+id/radioPrice_high_to_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:buttonTint="@color/red_a"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/price_high_to_low"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:layout_marginTop="5dp"
+                android:id="@+id/radioPrice_low_high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:buttonTint="@color/red_a"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/price_low_high"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <RadioButton
+                android:layout_marginTop="5dp"
+                android:id="@+id/radioOpen_to_nagotiation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:buttonTint="@color/red_a"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/open_to_nagotiation_"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+        </RadioGroup>
+    </LinearLayout>
+
+
+</LinearLayout>

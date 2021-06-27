@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.filter.FilterActivity
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.util.UiUtils
@@ -42,7 +44,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class),
-    AdapterViewClickListener<ListingItem> {
+    AdapterViewClickListener<ListingItem>, SortImpl {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -55,6 +57,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     lateinit var listingItem: ListingItem
     private var listingItemList = ArrayList<ListingItem>()
     var pos: Int = -1
+    internal var sort_selected: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,11 +86,19 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         query = arguments?.getString(QUERY)
         location = arguments?.getString(LOCATION)
 
-       // init()
+        init()
         rvProductList.layoutManager = manager
         activity?.let {
             adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue, type!!)
 
+        }
+        rlSort.setOnClickListener {
+            (activity as LandingActivity).sortByProduct(this, sort_selected)
+        }
+        rlFilter.setOnClickListener {
+            activity?.let {
+                startActivity(FilterActivity.getIntent(it))
+            }
         }
         rvProductList.adapter = adapterProductList
         //  adapterProductList?.submitList(getProducts())
@@ -299,7 +310,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                             objectAtPosition?.id,
                             0
                         )
-                        listingItem.userFavorite=0
+                        listingItem.userFavorite = 0
                     } else {
                         model?.addAndRemoveToFavorites(
                             "AddToFavList",
@@ -307,7 +318,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                             objectAtPosition?.id,
                             1
                         )
-                        listingItem.userFavorite=1
+                        listingItem.userFavorite = 1
 
                     }
                 }
@@ -324,6 +335,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         } else {
             tvSubTitleProductValue.text = ""
         }
+/*
         when (type) {
             Config.Constants.SELL -> {
                 listingType = Config.Constants.TYPE_SELL
@@ -391,6 +403,29 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             }
 
         }
+*/
+    }
+
+    override fun sortBy(sort: String) {
+        when (sort) {
+            AndroidUtils.getString(R.string.popularity) -> {
+                sort_selected = AndroidUtils.getString(R.string.popularity)
+
+            }
+            AndroidUtils.getString(R.string.price_high_to_low) -> {
+                sort_selected = AndroidUtils.getString(R.string.price_high_to_low)
+
+            }
+            AndroidUtils.getString(R.string.price_low_high) -> {
+                sort_selected = AndroidUtils.getString(R.string.price_low_high)
+
+            }
+            AndroidUtils.getString(R.string.open_to_nagotiation_) -> {
+                sort_selected = AndroidUtils.getString(R.string.open_to_nagotiation_)
+
+            }
+        }
+
     }
 
 }

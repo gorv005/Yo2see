@@ -101,7 +101,7 @@
     <string name="confirm_password">Confirm Password*</string>
     <string name="create_account">Create account</string>
     <string name="confirm_term_and_condition">Confirm the terms and conditions</string>
-    <string name="open_to_nagotiation">This Item is open to nagotiation</string>
+    <string name="open_to_nagotiation">This Item is open to negotiation</string>
     <string name="address"><u>Greater Toronto</u></string>
     <string name="skip"><u>SKIP</u></string>
     <string name="explore">Explore</string>
@@ -244,6 +244,20 @@
     <string name="barter_">BARTER</string>
     <string name="rent_">RENT $/hr</string>
     <string name="buy_">BUY $</string>
+    <string name="please_select_onecategory">"Please select one category "</string>
+    <string name="please_select_atleast_one_image">Please select atleast one image</string>
+    <string name="please_set_price">Please set a price for product</string>
+    <string name="please_set_rent_price">Please set rent price</string>
+    <string name="please_set_barter_text">Please type what would you like to barter</string>
+    <string name="my_favorites">My Favorites</string>
+    <string name="filter">Filter</string>
+    <string name="popularity">Popularity</string>
+    <string name="price_high_to_low">Price: high to low</string>
+    <string name="price_low_high">Price: low to high</string>
+    <string name="open_to_nagotiation_">Open to negotiation</string>
+    <string name="filter_by">Filter</string>
+    <string name="close">Close</string>
+    <string name="message_sender">Message Sender</string>
 
     <string-array name="text">
         <item>WHAT WE OFFER</item>
@@ -254,4 +268,11 @@
         <item>Barter</item>
         <item>Post</item>
     </string-array>
+
+    <string-array name="filter_type">
+        <item>Category</item>
+        <item>Brand</item>
+        <item>Price</item>
+    </string-array>
+
 </resources>

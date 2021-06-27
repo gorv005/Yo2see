@@ -43,7 +43,7 @@ data class CategoryListItemData(@SerializedName("cat_image")
 
 @Parcelize
 data class CategoryDataResponsePayload(@SerializedName("CategoryList")
-                                       val categoryList: List<CategoryListItemData>?,
+                                       val categoryList: ArrayList<CategoryListItemData>?,
                                        @SerializedName("message")
                                        val message: String = "",
                                        @SerializedName("status")

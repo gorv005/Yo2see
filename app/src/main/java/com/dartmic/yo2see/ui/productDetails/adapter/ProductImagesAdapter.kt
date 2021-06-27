@@ -20,7 +20,7 @@ class ProductImagesAdapter(var list: List<GalleryListItem>) : PagerAdapter() {
         )
         val ivBanner: SimpleDraweeView = item.findViewById(R.id.ivOnboarding)
         //    ivBanner.setImageResource(list[position])
-        ImageRequestManager.with(ivBanner).url(list?.get(position).imageName!!)
+        ImageRequestManager.with(ivBanner).url(list?.get(position)?.imageName)
             .setScaleType(
                 ScalingUtils.ScaleType.FIT_XY
             )

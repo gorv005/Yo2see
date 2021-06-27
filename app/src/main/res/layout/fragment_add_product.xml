@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_semibold"
+                    android:fontFamily="@font/poppins_regular"
                     android:gravity="center_horizontal"
                     android:text="Samsung galaxy s8"
                     android:layout_marginLeft="20dp"
@@ -64,10 +64,11 @@
                                 android:textSize="20sp" />
 
                             <ImageView
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_mobiles" />
+                                android:src="@drawable/ic_list" />
                         </RelativeLayout>
 
                         <View
@@ -158,10 +159,12 @@
                                 android:textSize="20sp" />
 
                             <ImageView
+                                android:layout_centerVertical="true"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_mobiles" />
+                                android:src="@drawable/ic_description_1" />
                         </RelativeLayout>
 
                         <View
@@ -186,7 +189,6 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_round_corner_bg"
                             android:focusableInTouchMode="true"
-                            android:inputType="textEmailAddress|textNoSuggestions"
                             android:textColor="@color/disabled_text"
                             android:textColorHint="@color/disabled_text" />
 
@@ -215,7 +217,6 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_round_corner_bg"
                             android:focusableInTouchMode="true"
-                            android:inputType="textEmailAddress|textNoSuggestions"
                             android:textColor="@color/disabled_text"
                             android:textColorHint="@color/disabled_text" />
 
@@ -244,7 +245,7 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_round_corner_bg"
                             android:focusableInTouchMode="true"
-                            android:inputType="textEmailAddress|textNoSuggestions"
+                            android:inputType="textMultiLine"
                             android:textColor="@color/disabled_text"
                             android:textColorHint="@color/disabled_text" />
 
@@ -272,7 +273,6 @@
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/etProductDetails"
                             android:visibility="gone"
-
                             android:layout_width="match_parent"
                             android:layout_height="70dp"
                             android:layout_marginTop="5dp"
@@ -284,7 +284,6 @@
 
                         <TextView
                             android:visibility="gone"
-
                             android:id="@+id/tvProductDetailsHelperText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -324,10 +323,12 @@
                                 android:textSize="20sp" />
 
                             <ImageView
+                                android:layout_centerVertical="true"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_mobiles" />
+                                android:src="@drawable/ic_credit_card" />
                         </RelativeLayout>
 
                         <View
@@ -369,6 +370,7 @@
                             android:textSize="12sp" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/tvSetAPriceLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -380,6 +382,8 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:visibility="gone"
+
                             android:id="@+id/tvRentHelperText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -390,10 +394,14 @@
                             android:textSize="12sp" />
 
                         <include
+                            android:visibility="gone"
+
                             android:id="@+id/layout_payment"
                             layout="@layout/layout_set_payment" />
 
                         <TextView
+                            android:visibility="gone"
+
                             android:id="@+id/tvBarterLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -405,6 +413,8 @@
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
+                            android:visibility="gone"
+
                             android:id="@+id/etwhatWouldtoLiketoBarter"
                             android:layout_width="match_parent"
                             android:layout_height="39dp"
@@ -416,6 +426,8 @@
                             android:textColorHint="@color/disabled_text" />
 
                         <TextView
+                            android:visibility="gone"
+
                             android:id="@+id/tvBarterHelperText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -456,10 +468,12 @@
                                 android:textSize="20sp" />
 
                             <ImageView
+                                android:layout_centerVertical="true"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_mobiles" />
+                                android:src="@drawable/ic_description_1" />
                         </RelativeLayout>
 
                         <View
@@ -810,10 +824,12 @@
                                 android:textSize="20sp" />
 
                             <ImageView
+                                android:layout_centerVertical="true"
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_mobiles" />
+                                android:src="@drawable/ic_home_loction" />
                         </RelativeLayout>
 
                         <View
@@ -852,7 +868,7 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/poppins_semibold"
                 android:scaleType="fitXY"
@@ -864,7 +880,7 @@
                 android:layout_width="@dimen/et_width_120"
                 android:layout_height="100dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/curve_buysell"
+                android:src="@drawable/ic_blue_top_background"
                 app:tint="@color/red_a" />
 
             <ImageView

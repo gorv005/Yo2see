@@ -307,4 +307,11 @@ class ProductListnViewModel(
     public fun getLoggedInUserName(): String? {
         return pre.getLoggedInUserName()
     }
+
+    public fun getEmail(): String? {
+        return pre.getLoggedInUserEmail()
+    }
+    public fun getUserPassword(): String? {
+        return pre.getLoggedInUserPassword()
+    }
 }

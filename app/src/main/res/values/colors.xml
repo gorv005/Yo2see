@@ -33,6 +33,8 @@
     <color name="light_purple">#FDEBFF</color>
     <color name="light_red">#FFECEE</color>
     <color name="light_red_1">#FFE6F2</color>
+    <color name="grey_6">#4d4d4d</color>
+    <color name="grey_4">#c2c2c2</color>
 
 
     <color name="disabled_text">#5D596E</color>

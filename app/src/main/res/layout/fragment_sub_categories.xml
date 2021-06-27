@@ -35,9 +35,10 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="45dp"
                 android:layout_marginEnd="20dp"
-                android:childDivider="@color/light_blue"
+                android:background="@color/white"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="15dp"
+                android:childDivider="@color/white"
                 android:groupIndicator="@null"
                 android:scrollbars="none">
 
@@ -62,7 +63,7 @@
             android:layout_width="@dimen/et_width_120"
             android:layout_height="100dp"
             android:scaleType="fitXY"
-            android:src="@drawable/curve_buysell" />
+            android:src="@drawable/ic_blue_top_background" />
 
         <ImageView
             android:id="@+id/ivBackSubCategories"

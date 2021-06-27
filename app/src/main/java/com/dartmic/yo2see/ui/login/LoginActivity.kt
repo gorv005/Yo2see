@@ -165,7 +165,7 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
                 showSnackbar(it.message, true)
 
                 model.saveUserDetail(it?.userList)
-
+                model.savePassword(etPasswordLogin.text.toString())
 
                 this.let { UiUtils.hideSoftKeyboard(it) }
 

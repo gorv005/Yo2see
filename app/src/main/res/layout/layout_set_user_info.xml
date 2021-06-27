@@ -75,7 +75,16 @@
                         android:background="@color/blue1"
                         android:layout_width="80dp"
                         android:layout_height="1dp"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_autentication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
                 <TextView
+                    android:layout_marginStart="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
@@ -85,7 +94,7 @@
                     android:textColor="@color/grey"
                     android:textSize="14sp" />
 
-
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

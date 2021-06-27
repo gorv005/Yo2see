@@ -127,7 +127,11 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.6.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-    implementation 'com.google.firebase:firebase-auth:20.0.3'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation "com.google.firebase:firebase-core:19.0.0"
+    implementation "com.google.firebase:firebase-storage:20.0.0"
+    implementation "com.google.firebase:firebase-database:20.0.0"
+
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
@@ -142,9 +146,11 @@ dependencies {
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.github.stfalcon:StfalconPriceRangeBar:0.1.2'
 
 
     implementation 'com.tomer:fadingtextview:2.5'
 
+    implementation "com.xwray:groupie:2.1.0"
 
 }

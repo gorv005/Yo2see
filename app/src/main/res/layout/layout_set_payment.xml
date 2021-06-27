@@ -164,10 +164,10 @@
                 android:paddingStart="25dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etMonthly"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginTop="5dp"
-                    android:id="@+id/etMonthly"
                     android:background="@drawable/edit_text_round_corner_bg"
                     android:focusableInTouchMode="true"
                     android:inputType="numberDecimal"

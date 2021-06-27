@@ -13,6 +13,7 @@
         android:id="@+id/ivEvents"
         android:layout_gravity="center_horizontal"
         android:layout_width="50dp"
+        app:tint="@color/red_a"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_mobiles"
 

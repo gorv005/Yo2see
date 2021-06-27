@@ -28,14 +28,14 @@
                 android:layout_marginEnd="10dp">
 
                 <ImageView
-
+                    app:tint="@color/red_a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="30dp"
                     android:src="@drawable/ic_location_pin" />
 
                 <ImageView
-
+                    app:tint="@color/red_a"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_search_icon_black" />
@@ -49,7 +49,7 @@
                 android:layout_gravity="end"
                 android:layout_marginTop="30dp"
                 android:layout_marginStart="80dp"
-                android:background="@color/blue1"
+                android:background="@color/red_a"
                 android:id="@+id/llNagotiation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
@@ -182,7 +182,6 @@
                     </RelativeLayout>
                     <RelativeLayout
                         android:id="@+id/rlRentP"
-                        android:visibility="gone"
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent">
@@ -228,17 +227,198 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:id="@+id/llBuySellPrice"
+                android:layout_marginStart="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/round_circle_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text="$1000"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_medium" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+
+                android:visibility="visible"
+                android:id="@+id/llRentPrice"
+                android:layout_weight="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/rlPrice1"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                   <LinearLayout
+                       android:layout_centerHorizontal="true"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/round_circle_red"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:id="@+id/tvPrice1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/grid_image"
+                        android:text="$1000"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/poppins_medium" />
+                   </LinearLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlPrice2"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/round_circle_red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/tvPrice2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/grid_image"
+                            android:text="$1000"
+                            android:layout_marginStart="5dp"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/poppins_medium" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlPrice3"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/round_circle_red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/tvPrice3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/grid_image"
+                            android:text="$1000"
+                            android:layout_marginStart="5dp"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/poppins_medium" />
+                    </LinearLayout>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rlPrice4"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_centerHorizontal="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/round_circle_red"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/tvPrice4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/grid_image"
+                            android:text="$1000"
+                            android:layout_marginStart="5dp"
+                            android:textColor="@color/black"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/poppins_medium" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:id="@+id/llBarterPrice"
+                android:layout_marginStart="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/round_circle_red"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tvPrice5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text=""
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_medium" />
+            </LinearLayout>
+
+            <View
+                android:layout_marginTop="5dp"
+                android:background="@color/red_a"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+
             <TextView
-                android:id="@+id/tvPrice"
+                android:id="@+id/tvProductAvailabilityDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/grid_image"
-                android:layout_marginTop="10dp"
-                android:text="$1000"
-                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:text="dmd"
                 android:textColor="@color/black"
                 android:textSize="14sp"
-                android:fontFamily="@font/poppins_semibold" />
+                android:layout_marginStart="20dp"
+
+                android:fontFamily="@font/poppins_light" />
+
             <TextView
                 android:id="@+id/tvModel"
                 android:layout_width="match_parent"
@@ -286,37 +466,14 @@
                 android:layout_marginStart="20dp"
 
                 android:fontFamily="@font/poppins_light" />
-            <TextView
-                android:id="@+id/tvRentTermAndCondition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/grid_image"
-                android:layout_marginTop="5dp"
-                android:text="@string/renting_term_condition"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginStart="20dp"
 
-                android:fontFamily="@font/poppins_semibold" />
-            <TextView
-                android:id="@+id/tvRentTermAndConditionValue"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/grid_image"
-                android:layout_marginTop="5dp"
-                android:text="color:black"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:layout_marginStart="20dp"
-
-                android:fontFamily="@font/poppins_light" />
             <include  layout="@layout/layout_set_user_info_product_detail"/>
         </LinearLayout>
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="40dp"
             android:fontFamily="@font/poppins_semibold"
             android:scaleType="fitXY"
@@ -325,10 +482,11 @@
 
         <ImageView
             android:id="@+id/ivCurveProductDetails"
-            android:layout_width="150dp"
-            android:layout_height="170dp"
+            android:layout_width="@dimen/et_width_120"
+            android:layout_height="100dp"
             android:scaleType="fitXY"
-            android:src="@drawable/curve_buysell" />
+            app:tint="@color/red_a"
+            android:src="@drawable/ic_blue_top_background" />
         <ImageView
             android:id="@+id/ivBackDetails"
             android:padding="20dp"

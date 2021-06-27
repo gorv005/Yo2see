@@ -29,6 +29,7 @@ class SplashActivity : AppCompatActivity(), GifEndListener {
             var preferenceManager = PreferenceManager(this)
 
             if (!preferenceManager.isUserLoggedIn()) {
+
                 startActivity(MainActivity.getIntent(it))
             } else {
                 startActivity(LandingActivity.getIntent(it, 1))
@@ -36,4 +37,6 @@ class SplashActivity : AppCompatActivity(), GifEndListener {
             }
         }
     }
+
+
 }

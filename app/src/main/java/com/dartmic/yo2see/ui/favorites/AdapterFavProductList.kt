@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.R
@@ -79,14 +80,53 @@ class AdapterFavProductList(
         ) {                itemView.tvModel?.text = allProducts.listingTitle
 
 
-            itemView.tvAddress?.text = allProducts.listingCity + ", " + allProducts.listingState
-            itemView.tvDate?.text = allProducts.listingPublishDatetime
+            itemView.tvModel?.text = allProducts?.listingTitle
 
-            val v = SpannableString("View " + allProducts.userName + "'s listing")
-            v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            itemView.tvListing.text = v.toString()
-            itemView.ivFav.pressOnTouch(true);
+            itemView.tvAddress?.text = HtmlCompat.fromHtml("<u>"+allProducts.listingCity+"</u>", HtmlCompat.FROM_HTML_MODE_LEGACY)
+            itemView.tvDate?.text = allProducts.listingPublishDatetime.split(" ")[0]
 
+            /*  val v = SpannableString("View " + allProducts.userName + "'s listing")
+              v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+              itemView.tvListing.text = v.toString()*/
+            val v="<u>View"+allProducts.userName + "'s listing</u>"
+            itemView.tvListing.setText(HtmlCompat.fromHtml(v, HtmlCompat.FROM_HTML_MODE_LEGACY))
+
+            itemView.ivFav.pressOnTouch(true)
+            var s="This product is available\nfor "
+            var p=""
+            if(allProducts?.isSell!=null &&allProducts?.isSell?.equals("yes")){
+                p="<b>Sell $</b>"+allProducts?.listingPrice
+                s=s+"Buy"
+                itemView.ivBuy.visibility=View.VISIBLE
+                if(allProducts?.isRent!=null &&allProducts?.isRent?.equals("yes") || allProducts?.isBarter!=null &&allProducts?.isBarter?.equals("yes")){
+                    p=p+ "<br />"
+                }
+            }
+            else{
+                itemView.ivBuy.visibility=View.GONE
+            }
+            if(allProducts?.isRent!=null &&allProducts?.isRent?.equals("yes")){
+                p=p+"<b>Rent $</b>"+allProducts?.rentType?.get(0)?.payment+"/"+allProducts?.rentType?.get(0)?.rentType
+                s=s+", Rent"
+                itemView.ivRent.visibility=View.VISIBLE
+                if( allProducts?.isBarter!=null &&allProducts?.isBarter?.equals("yes")){
+                    p=p+ "<br />"
+                }
+            }else{
+                itemView.ivRent.visibility=View.GONE
+            }
+            if(allProducts?.isBarter!=null &&allProducts?.isBarter?.equals("yes")){
+                p=p+"<b>Barter</b> "+allProducts?.barterText
+                s=s+", Barter"
+                itemView.ivBarter.visibility=View.VISIBLE
+            }else{
+                itemView.ivBarter.visibility=View.GONE
+
+            }
+
+            itemView.tvPrice.setText(HtmlCompat.fromHtml(p, HtmlCompat.FROM_HTML_MODE_LEGACY))
+
+            itemView.tvProductAvailability.setText(s)
             if (allProducts?.userFavorite == 1) {
                 itemView.ivFav.setChecked(true);
                 itemView.ivFav.playAnimation()

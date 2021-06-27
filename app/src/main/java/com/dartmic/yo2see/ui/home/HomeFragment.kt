@@ -5,12 +5,14 @@ import android.content.Context
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -24,11 +26,14 @@ import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.callbacks.AdapterViewItemClickListener
 import com.dartmic.yo2see.model.AdsItems
+import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryDataResponsePayload
 import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.categories.CategoryListItem
+import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
+import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
 import com.dartmic.yo2see.ui.home.adapter.TabFragmentAdapter
 import com.dartmic.yo2see.ui.home.products.ProductFragment
@@ -39,6 +44,7 @@ import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_product.*
 import kotlinx.android.synthetic.main.tree.*
@@ -58,6 +64,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     private var adapterProducts: AdapterHomeData? = null
     private var adapterEventsData: AdapterHomeData? = null
     var type: Int? = 0
+    private var eventDataResponseList = ArrayList<CategoryListItemData>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -74,9 +81,9 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         //visibilityGone()
         val fcsRed = ForegroundColorSpan(AndroidUtils.getColor(R.color.blue))
         type = arguments?.getInt(ProductListFragment.TYPE)
-        if(type==Config.Constants.POST_AN_ADD){
+        if (type == Config.Constants.POST_AN_ADD) {
             tvHomeWelecomeText.setText(AndroidUtils.getString(R.string.post_an_add))
-            rlCat.visibility=View.GONE
+            rlCat.visibility = View.GONE
             tvBrows.setText(AndroidUtils.getString(R.string.what_product_you_would))
         }
         ivSearch.setOnClickListener {
@@ -102,7 +109,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         }
         rvAds.adapter = adapterAds
 
-
+        performLogin()
 
         rvHomeProducts.setHasFixedSize(true)
         var itemDecoration = DividerItemDecoration(
@@ -148,7 +155,6 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         rvHomeProducts.layoutManager = manager3
 
 
-
         val adapter = TabFragmentAdapter(activity?.getSupportFragmentManager()!!)
         adapter.addFragment(ProductFragment.getInstance(), getString(R.string.products))
         adapter.addFragment(ProductFragment.getInstance(), getString(R.string.events_))
@@ -172,17 +178,17 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             //positionOffset is a value from [0..1] which represents how far the page has been scrolled
             //see https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener
             override fun onPageScrolled(i: Int, positionOffset: Float, positionOffsetPx: Int) {
-                if(i==0){
-                    tvEvents.visibility=View.GONE
-                    tvProducts.visibility=View.VISIBLE
+                if (i == 0) {
+                    tvEvents.visibility = View.GONE
+                    tvProducts.visibility = View.VISIBLE
 
-                    rvHomeProducts.visibility=View.VISIBLE
-                    rvHomeEvents.visibility=View.GONE
-                }else{
-                    tvEvents.visibility=View.VISIBLE
-                    tvProducts.visibility=View.GONE
-                    rvHomeProducts.visibility=View.GONE
-                    rvHomeEvents.visibility=View.VISIBLE
+                    rvHomeProducts.visibility = View.VISIBLE
+                    rvHomeEvents.visibility = View.GONE
+                } else {
+                    tvEvents.visibility = View.VISIBLE
+                    tvProducts.visibility = View.GONE
+                    rvHomeProducts.visibility = View.GONE
+                    rvHomeEvents.visibility = View.VISIBLE
 
                 }
                 var params = indicator?.getLayoutParams() as FrameLayout.LayoutParams
@@ -199,7 +205,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
         subscribeLoading()
         subscribeUi()
-           getCategories()
+        getCategories()
         // getEventsData()
     }
 
@@ -211,7 +217,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
     fun getEventsData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
-        //    model.getCategoriesEvents("Category List", "Event")
+            model.getCategoriesEvents("Category List", "Event")
         }
     }
 
@@ -232,60 +238,55 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     private fun subscribeUi() {
         model.categoryModelEvents.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
-            /*if (it.status) {
-                //    showSnackbar(it.message, true)
-                var i = 0
-                while (i < it?.categoryList?.size!!) {
+            eventDataResponseList=it?.categoryList!!
+            activity?.let {
+                adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
 
-                    it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
-                    i++
-                }
-                adapterEvents?.submitList(it?.categoryList)
-                ViewCompat.setNestedScrollingEnabled(rvEvents, false)
-                activity?.let { UiUtils.hideSoftKeyboard(it) }
-                runLayoutAnimation(rvEvents)
+            }
 
-            } else {
-                showSnackbar(it.message, false)
+            rvHomeEvents.adapter = adapterProducts
+            adapterProducts?.submitList(it?.categoryList)
+            adapterProducts?.notifyDataSetChanged()
+            activity?.let { UiUtils.hideSoftKeyboard(it) }
+            //runLayoutAnimation(rvHomeEvents)
 
-            }*/
         })
 
         model.categoryModelAds.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
-           /* if (it.status) {
-                //         showSnackbar(it.message, true)
-                var i = 0
-                while (i < it?.categoryList?.size!!) {
+            /* if (it.status) {
+                 //         showSnackbar(it.message, true)
+                 var i = 0
+                 while (i < it?.categoryList?.size!!) {
 
-                    it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
-                    i++
-                }
-                activity?.let {
-                    adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
+                     it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
+                     i++
+                 }
+                 activity?.let {
+                     adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
 
-                }
-                rvHomeProducts.adapter = adapterProducts
-                adapterAds?.submitList(it?.categoryList)
-                ViewCompat.setNestedScrollingEnabled(rvAds, false)
+                 }
+                 rvHomeProducts.adapter = adapterProducts
+                 adapterAds?.submitList(it?.categoryList)
+                 ViewCompat.setNestedScrollingEnabled(rvAds, false)
 
-                activity?.let { UiUtils.hideSoftKeyboard(it) }
-                runLayoutAnimation(rvAds)
-            } else {
-                showSnackbar(it.message, false)
+                 activity?.let { UiUtils.hideSoftKeyboard(it) }
+                 runLayoutAnimation(rvAds)
+             } else {
+                 showSnackbar(it.message, false)
 
-            }*/
+             }*/
         })
         model.categoryModel.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
                 //         showSnackbar(it.message, true)
-               /* var i = 0
-                while (i < it?.categoryList?.size!!) {
+                /* var i = 0
+                 while (i < it?.categoryList?.size!!) {
 
-                    it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
-                    i++
-                }*/
+                     it?.categoryList.get(i).image = R.drawable.ic_suitcase_white
+                     i++
+                 }*/
                 activity?.let {
                     adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
 
@@ -295,6 +296,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                 adapterProducts?.notifyDataSetChanged()
                 activity?.let { UiUtils.hideSoftKeyboard(it) }
                 runLayoutAnimation(rvHomeProducts)
+                getEventsData()
             } else {
                 showSnackbar(it.message, false)
 
@@ -323,7 +325,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     companion object {
         const val TYPE = "type"
 
-        fun getInstance(instance: Int,type: Int): HomeFragment {
+        fun getInstance(instance: Int, type: Int): HomeFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             bundle.putInt(TYPE, type)
@@ -639,7 +641,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
                     mFragmentNavigation.pushFragment(
                         SubCategoriesFragment
-                            .getInstance(mInt + 1,type,objectAtPosition)
+                            .getInstance(mInt + 1, type, objectAtPosition)
                     )
 
                 }
@@ -661,6 +663,25 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         ivrentWhite.visibility = View.GONE
         ivsellWhite.visibility = View.GONE
 
+    }
+    private fun performLogin() {
+
+
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(model?.getEmail()!!, model?.getUserPassword()!!)
+            .addOnCompleteListener {
+                if (!it.isSuccessful) return@addOnCompleteListener
+                Log.e(ChatListFragment.TAG, "Successfully logged in: ${it.result!!.user?.uid}")
+
+                /*  val intent = Intent(this, LatestMessagesActivity::class.java)
+                  intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                  startActivity(intent)
+                  overridePendingTransition(R.anim.enter, R.anim.exit)*/
+            }
+            .addOnFailureListener {
+                Toast.makeText(activity!!, "${it.message}", Toast.LENGTH_SHORT).show()
+
+            }
     }
 
 }

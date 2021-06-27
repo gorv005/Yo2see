@@ -126,5 +126,8 @@ class LoginViewModel(
     public fun saveUserDetail(user: UserList?) {
         pre.saveUserData(user)
     }
+    public fun savePassword(password: String) {
+        pre.savePreference(Config.SharedPreferences.PROPERTY_USER_PASSWORD,password)
+    }
 
 }

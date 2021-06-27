@@ -46,6 +46,7 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
     fun isUserLoggedIn() = getBooleanPreference(Config.SharedPreferences.PROPERTY_LOGIN_PREF)
     fun getLoggedInUserName() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_NAME)
     fun getLoggedInUserEmail() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_EMAIL)
+    fun getLoggedInUserPassword() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_PASSWORD)
 
     //   fun getLoggedInUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
     //   fun getLoggedInUserImageThumb() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE_THUMB)

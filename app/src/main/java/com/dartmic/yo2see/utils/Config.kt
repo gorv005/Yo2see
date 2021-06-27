@@ -90,6 +90,7 @@ class Config {
         const val PROPERTY_IS_USER_LOGIN = "PROPERTY_IS_USER_LOGIN" // user email
         const val PROPERTY_USER_IMAGE = "PROPERTY_USER_IMAGE" // user id
 
+        const val PROPERTY_USER_PASSWORD = "PROPERTY_USER_PASSWORD" // PASSWORD
 
         // notification
         const val PROPERTY_FCM_REGISTRATION_TOKEN = "PROPERTY_FCM_REGISTRATION_TOKEN"
