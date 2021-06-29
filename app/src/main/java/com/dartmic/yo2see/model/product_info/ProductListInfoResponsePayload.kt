@@ -99,6 +99,8 @@ data class ListingItem(@SerializedName("UserMobile")
                        val listingExpiryDatetime: String = "",
                        @SerializedName("ItemRating")
                        val itemRating: String = "",
+                       @SerializedName("UserUID")
+                       val userUID: String = "",
                        @SerializedName("listing_publish_datetime")
                        val listingPublishDatetime: String = "",
                        @SerializedName("RentType")

@@ -8,7 +8,9 @@ data class LoginRequest(val service: String = "",
                         val device_id: String = "",
                         val device_type: String = "",
                         val longitude: String = "",
-                        val latitude: String = ""
-                        )
+                        val latitude: String = "",
+                        val uid: String = ""
+
+)
 
 

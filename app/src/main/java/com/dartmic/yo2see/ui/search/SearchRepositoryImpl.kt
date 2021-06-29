@@ -34,7 +34,7 @@ class SearchRepositoryImpl(private val restApi: AppRestApiFast, private val pre:
 
 
     override fun loginResponse(data: LoginRequest): Single<LoginResponsePayload> {
-        return restApi.login(data.service,data.user_name,data.password,data.device_type,data.device_id,data.longitude,data.latitude)
+        return restApi.login(data.service,data.user_name,data.password,data.device_type,data.device_id,data.longitude,data.latitude,"")
     }
 
 

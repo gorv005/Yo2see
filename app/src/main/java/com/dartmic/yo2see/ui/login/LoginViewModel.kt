@@ -79,11 +79,12 @@ class LoginViewModel(
         device_id: String,
         device_type: String,
         lat: String,
-        longi: String
+        longi: String,
+        uid: String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
-        val user = LoginRequest(service, userName, password, device_id, device_type, lat, longi)
+        val user = LoginRequest(service, userName, password, device_id, device_type, lat, longi,uid)
 
         launch {
             loginRepository.loginResponse(user)

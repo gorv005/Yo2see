@@ -34,7 +34,8 @@ class RegisterRepositoryImpl(
         device_type: String,
         lat: String,
         longi: String,
-        user_type: String
+        user_type: String,
+        uid: String
     ): Single<RegisterResponsePayload> {
         return restApi.register(
             service,
@@ -46,7 +47,8 @@ class RegisterRepositoryImpl(
             device_type,
             lat,
             longi,
-            user_type
+            user_type,
+            uid
         )
     }
 

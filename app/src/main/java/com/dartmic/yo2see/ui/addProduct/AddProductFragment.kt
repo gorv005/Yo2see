@@ -479,6 +479,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
     fun uploadImage() {
         if (NetworkUtil.isInternetAvailable(activity)) {
+            ImageList?.removeAt(0)
             if (count < ImageList?.size!!) {
                 var f = File(RealPathUtil.getRealPath(activity, ImageList?.get(count)?.fileUrl))
                 var service = RequestBody.create(MediaType.parse("multipart/form-data"), "Upload")

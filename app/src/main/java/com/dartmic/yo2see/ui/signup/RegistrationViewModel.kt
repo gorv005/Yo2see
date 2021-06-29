@@ -147,7 +147,8 @@ class RegistrationViewModel(
         device_type: String,
         lat: String,
         longi: String,
-        userType: String
+        userType: String,
+        uid: String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -155,7 +156,7 @@ class RegistrationViewModel(
 
         launch {
             registerRepository.register(
-                service, phone, name, email, password, device_id, device_type, lat, longi, userType
+                service, phone, name, email, password, device_id, device_type, lat, longi, userType,uid
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())

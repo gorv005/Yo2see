@@ -16,6 +16,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
 import com.dartmic.yo2see.callbacks.GifEndListener
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.forgot_password.ForgotPasswordActivity
 import com.dartmic.yo2see.ui.signup.SignUpActivity
 import com.dartmic.yo2see.util.UiUtils
@@ -97,7 +98,7 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
             })
 
         btnLogin.setOnClickListener {
-            doSignIn()
+            performLogin()
         }
         let {
             gifUtil = GifUtil(this)
@@ -113,7 +114,7 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
         startActivityForResult(signInIntent, Req_Code)
     }
 
-    fun doSignIn() {
+    fun doSignIn(uid:String?) {
 
         this?.let { UiUtils.hideSoftKeyboard(it) }
 
@@ -132,7 +133,8 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
                     "12345",
                     "Android",
                     "12345",
-                    "12345"
+                    "12345",
+                    uid!!
                 )
             }
 
@@ -425,4 +427,22 @@ class LoginActivity : BaseActivity<LoginViewModel>(LoginViewModel::class), GifEn
             }
         }
     }
+    private fun performLogin() {
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(etUserName.text.toString(), etPasswordLogin.text.toString())
+            .addOnCompleteListener {
+                if (!it.isSuccessful) return@addOnCompleteListener
+                Log.e(ChatListFragment.TAG, "Successfully logged in: ${it.result!!.user?.uid}")
+                doSignIn(it.result!!.user?.uid)
+                /*  val intent = Intent(this, LatestMessagesActivity::class.java)
+                  intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                  startActivity(intent)
+                  overridePendingTransition(R.anim.enter, R.anim.exit)*/
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "${it.message}", Toast.LENGTH_SHORT).show()
+
+            }
+    }
+
 }

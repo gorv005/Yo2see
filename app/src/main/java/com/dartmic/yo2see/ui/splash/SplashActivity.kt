@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity(), GifEndListener {
         setContentView(R.layout.activity_splash)
         let {
             gifUtil = GifUtil(this)
-            gifUtil?.setImage(this, gifImageView, R.drawable.animation_with_icon_splash)
+            gifUtil?.setImage(this, gifImageView, R.drawable.animation_with_icon)
         }
     }
 

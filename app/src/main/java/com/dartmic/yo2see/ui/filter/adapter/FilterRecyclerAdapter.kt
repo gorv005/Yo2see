@@ -34,13 +34,13 @@ class FilterRecyclerAdapter(
 
         if (filterViewHolder.filterName.isSelected) {
             if (filterModels[i].title == "Category") {
-                   filterViewHolder.filterName.setTextColor(Color.parseColor("#ef4076"))
+                   filterViewHolder.filterName.setTextColor(Color.parseColor("#EF0618"))
                 filterViewHolder.filterName.text = "Category"
             } else if (filterModels[i].title == "Brand") {
-                filterViewHolder.filterName.setTextColor(Color.parseColor("#ef4076"))
+                filterViewHolder.filterName.setTextColor(Color.parseColor("#EF0618"))
                 filterViewHolder.filterName.text = "Brand"
             } else if (filterModels[i].title == "Price") {
-                filterViewHolder.filterName.setTextColor(Color.parseColor("#ef4076"))
+                filterViewHolder.filterName.setTextColor(Color.parseColor("#EF0618"))
                 filterViewHolder.filterName.text = "Price"
             }
         } else {

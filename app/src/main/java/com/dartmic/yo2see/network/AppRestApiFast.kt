@@ -31,7 +31,7 @@ interface AppRestApiFast {
         @Field("service") service: String,
         @Field("user_name") username: String, @Field("password") password: String,
         @Field("device_type") device_type: String, @Field("device_id") device_id: String,
-        @Field("longitude") longitude: String, @Field("latitude") latitude: String
+        @Field("longitude") longitude: String, @Field("latitude") latitude: String,@Field("uid") uid: String
     )
             : Single<LoginResponsePayload>
 
@@ -66,7 +66,9 @@ interface AppRestApiFast {
         @Field("device_id") device_id: String,
         @Field("longitude") longitude: String,
         @Field("latitude") latitude: String,
-        @Field("usertype") usertype: String
+        @Field("usertype") usertype: String,
+        @Field("uid") uid: String
+
     ): Single<RegisterResponsePayload>
 
     @FormUrlEncoded

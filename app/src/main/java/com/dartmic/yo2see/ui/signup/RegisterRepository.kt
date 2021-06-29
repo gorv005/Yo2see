@@ -25,7 +25,9 @@ interface RegisterRepository {
         device_type: String,
         lat: String,
         longi: String,
-        user_type:String
+        user_type:String,
+        uid:String
+
     ): Single<RegisterResponsePayload>
     fun updateUser(
         service: String,

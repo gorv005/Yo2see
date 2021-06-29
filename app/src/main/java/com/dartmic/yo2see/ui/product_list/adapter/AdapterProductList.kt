@@ -87,7 +87,7 @@ class AdapterProductList(
           /*  val v = SpannableString("View " + allProducts.userName + "'s listing")
             v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             itemView.tvListing.text = v.toString()*/
-            val v="<u>View"+allProducts.userName + "'s listing</u>"
+            val v="<u>View "+allProducts.userName + "'s listing</u>"
             itemView.tvListing.setText(HtmlCompat.fromHtml(v, HtmlCompat.FROM_HTML_MODE_LEGACY))
 
             itemView.ivFav.pressOnTouch(true)

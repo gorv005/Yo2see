@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dartmic.yo2see.R
+import com.dartmic.yo2see.model.filter.BrandItem
 import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.filter.MainFilterModel
 import com.dartmic.yo2see.ui.filter.adapter.FilterRecyclerAdapter
@@ -31,13 +32,20 @@ class FilterActivity : AppCompatActivity() {
     private var brandMultipleListModels = ArrayList<FilterDefaultMultipleListModel>()
 
     private val filterModels = ArrayList<MainFilterModel>()
+    private var brandList = ArrayList<BrandItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
         tv_tool_title.text = getString(R.string.filter_by)
         initRangeBar()
-
+        rlClose.setOnClickListener {
+            onBackPressed()
+        }
+        rlApply.setOnClickListener {
+            onBackPressed()
+        }
+        getData()
         rootFilters = Arrays.asList(*this.resources.getStringArray(R.array.filter_type))
         for (i in rootFilters!!.indices) {
             /* Create new MainFilterModel object and set array value to @model
@@ -86,14 +94,47 @@ class FilterActivity : AppCompatActivity() {
 
         filterItemListClicked(0, null)
         adapter!!.setItemSelected(0)
+        if (brandMultipleListModels?.size == 0) {
+            for (brand in brandList) {
 
+                val model = FilterDefaultMultipleListModel()
+                model.name = brand?.name
+                model.id = brand?.id
+                brandMultipleListModels.add(model)
+            }
+        }
     }
 
 
+    fun getData(): ArrayList<BrandItem> {
 
+        brandList?.add(
+            BrandItem(
+                "Samsung",
+                0
+            )
+        )
+        brandList?.add(
+            BrandItem(
+                "Nokia",
+                1
+            )
+        )
+        brandList?.add(
+            BrandItem(
+                "One plus",
+                2
+            )
+        )
+
+
+
+        return brandList
+
+    }
 
     private fun filterItemListClicked(position: Int, v: View?) {
-        if (position == 0) {
+        /*if (position == 0) {
             rlRange.visibility = View.GONE
             filter_value_listview.visibility = View.VISIBLE
             filterValAdapter = FilterValRecyclerAdapter(
@@ -102,7 +143,7 @@ class FilterActivity : AppCompatActivity() {
                 categoryMultipleListModels,
                 MainFilterModel.Model.CATEGORY
             )
-        } else if (position == 1) {
+        }*/  if (position == 0) {
             rlRange.visibility = View.GONE
             filter_value_listview.visibility = View.VISIBLE
             filterValAdapter = FilterValRecyclerAdapter(

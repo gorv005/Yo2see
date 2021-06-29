@@ -83,7 +83,7 @@ class SearchViewModel(
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
-        val user = LoginRequest(service, userName, password, device_id, device_type, lat, longi)
+        val user = LoginRequest(service, userName, password, device_id, device_type, lat, longi,"")
 
         launch {
             loginRepository.loginResponse(user)

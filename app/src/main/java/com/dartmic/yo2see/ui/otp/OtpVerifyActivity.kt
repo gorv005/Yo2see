@@ -113,7 +113,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
 
     }
 
-    fun doRegister() {
+    fun doRegister(uid:String) {
         this?.let { UiUtils.hideSoftKeyboard(it) }
 
         if (NetworkUtil.isInternetAvailable(this)) {
@@ -123,7 +123,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
                 firstName!!,
                 email!!,
                 password!!,
-                device_id!!, device_type!!, latitude!!, longitude!!, userType!!
+                device_id!!, device_type!!, latitude!!, longitude!!, userType!!,uid
             )
         }
     }
@@ -132,7 +132,6 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         model.registerData.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
-                performRegistration(email!!, password!!)
 
                 showSnackbar(it.message, true)
                 this.let { UiUtils.hideSoftKeyboard(it) }
@@ -165,7 +164,8 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
 
-                doRegister()
+                performRegistration(email!!, password!!)
+
                 this.let { UiUtils.hideSoftKeyboard(it) }
             } else {
                 showSnackbar(it.message, true)
@@ -209,7 +209,7 @@ class OtpVerifyActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMo
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(TAG, "Finally we saved the user to Firebase Database")
-
+                doRegister(uid)
                /* val intent = Intent(this, LatestMessagesActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)

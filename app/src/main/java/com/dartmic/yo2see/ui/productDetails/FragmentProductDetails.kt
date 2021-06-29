@@ -427,7 +427,8 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
     override fun getLayoutId() = R.layout.fragment_product_details
 
     private fun fetchCurrentUser() {
-        val uid = "hUJc668PNFeZTtyYMZPS0lpdjv93"
+    //    val uid = "hUJc668PNFeZTtyYMZPS0lpdjv93"
+        val uid = listingItem?.userUID
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(databaseError: DatabaseError) {
