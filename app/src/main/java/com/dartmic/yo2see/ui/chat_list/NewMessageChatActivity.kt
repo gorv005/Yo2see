@@ -35,7 +35,7 @@ class NewMessageChatActivity : AppCompatActivity() {
 
     // Bundle Data
     private val toUser: User
-        get() = intent.getParcelableExtra(USER_KEY)
+        get() = intent.getParcelableExtra(USER_KEY)!!
 
     /* private val uid: String
          get() = intent.getStringExtra(UID)

@@ -286,9 +286,10 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
                 this?.let {
 
+
                     mFragmentNavigation.pushFragment(
                         FragmentProductDetails
-                            .getInstance(mInt + 1, type, objectAtPosition)
+                            .getInstance(mInt + 1, type, objectAtPosition,position)
                     )
                     /* mFragmentNavigation.pushFragment(
                          SubCategoriesFragment

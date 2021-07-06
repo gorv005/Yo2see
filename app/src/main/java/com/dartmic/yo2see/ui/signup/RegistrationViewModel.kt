@@ -37,6 +37,7 @@ class RegistrationViewModel(
     val changePasswordModel = MutableLiveData<UserInforesponse>()
     val resendEmailModel = MutableLiveData<UserInforesponse>()
     val forgotPasswordModel = MutableLiveData<UserInforesponse>()
+    val rateUserModel = MutableLiveData<UserInforesponse>()
 
     fun uploadImage(
         service: RequestBody,
@@ -532,6 +533,59 @@ class RegistrationViewModel(
 
         }
     }
+
+
+    fun sendFeedback(
+        service: String,
+        to_user_id: String,
+        from_user_id: String,
+        rating: String
+
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+
+        launch {
+            registerRepository.sendFeedback(
+                service, to_user_id, from_user_id,rating
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    rateUserModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            rateUserModel.value =
+                                Gson().fromJson(error, UserInforesponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     public fun saveUserDetail(user: UserList?) {
         pre.saveUserData(user)
     }

@@ -35,7 +35,7 @@ class UpdateProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent?.run {
-            user = getParcelableExtra(DATA)
+            user = getParcelableExtra(DATA)!!
             etName.setText(user?.name)
             etPhonenumber.setText(user?.phone)
             etEmail.setText(user?.email)
@@ -114,7 +114,7 @@ class UpdateProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationVi
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK && data != null) {
                 val selectionResult = data.getStringArrayListExtra("result")
-                selectionResult.forEach {
+                selectionResult?.forEach {
                     try {
                         Log.d("MyApp", "Image Path : " + it)
                         val uriFromPath = Uri.fromFile(File(it))

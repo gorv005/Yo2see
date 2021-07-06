@@ -20,7 +20,8 @@
         android:roundIcon="@drawable/logo_yo2see"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.chat_list.NewMessageChatActivity"></activity>
+        <activity android:name=".ui.profile.UserProfileActivity"></activity>
+        <activity android:name=".ui.chat_list.NewMessageChatActivity" />
         <activity
             android:name=".ui.filter.FilterActivity"
             android:screenOrientation="portrait" />

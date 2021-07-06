@@ -258,6 +258,7 @@
     <string name="filter_by">Filter</string>
     <string name="close">Close</string>
     <string name="message_sender">Message Sender</string>
+    <string name="rating">Rate User</string>
 
     <string-array name="text">
         <item>WHAT WE OFFER</item>

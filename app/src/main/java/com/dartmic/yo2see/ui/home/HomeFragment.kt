@@ -108,8 +108,11 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
 
         }
         rvAds.adapter = adapterAds
+        if ((activity as LandingActivity).checkUserLogin()) {
 
-        performLogin()
+            performLogin()
+        }
+
 
         rvHomeProducts.setHasFixedSize(true)
         var itemDecoration = DividerItemDecoration(
@@ -238,7 +241,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     private fun subscribeUi() {
         model.categoryModelEvents.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
-            eventDataResponseList=it?.categoryList!!
+            eventDataResponseList = it?.categoryList!!
             activity?.let {
                 adapterProducts = AdapterHomeData(this, it, R.drawable.round_circle_light_blue)
 
@@ -664,6 +667,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         ivsellWhite.visibility = View.GONE
 
     }
+
     private fun performLogin() {
 
 

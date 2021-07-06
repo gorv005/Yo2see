@@ -72,6 +72,7 @@ class Config {
         const val CHANGE_PASSWORD = BASE_PATH + "user/changepassword"
         const val RESEND_EMAIL = BASE_PATH + "user/resend_email"
         const val FORGOT_PASSWORD = BASE_PATH + "user/forgetpwd"
+        const val FEEDBACK = BASE_PATH + "user/user_rating"
 
 
     }

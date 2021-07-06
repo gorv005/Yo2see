@@ -6,12 +6,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.yo2see"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -152,5 +152,8 @@ dependencies {
     implementation 'com.tomer:fadingtextview:2.5'
 
     implementation "com.xwray:groupie:2.1.0"
+
+
+    implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
 
 }

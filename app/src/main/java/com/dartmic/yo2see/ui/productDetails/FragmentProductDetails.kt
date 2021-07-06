@@ -2,6 +2,8 @@ package com.dartmic.yo2see.ui.productDetails
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
@@ -19,6 +21,7 @@ import com.dartmic.yo2see.ui.home.adapter.TabFragmentAdapter
 import com.dartmic.yo2see.ui.home.products.ProductFragment
 import com.dartmic.yo2see.ui.productDetails.adapter.ProductImagesAdapter
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.ui.profile.UserProfileActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
@@ -55,6 +58,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
     private var param2: String? = null
     var type: Int? = 0
     lateinit var listingItem: ListingItem
+    var clickPos: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -176,6 +180,8 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
         super.onViewCreated(view, savedInstanceState)
         try {
             type = arguments?.getInt(ProductListFragment.TYPE)
+            clickPos = arguments?.getInt(CLICKPOSITION)
+
             listingItem = arguments?.getParcelable(DATA)!!
             var s = "This product is available for "
 
@@ -190,6 +196,12 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             }
             btnStartMessage.setOnClickListener {
                 fetchCurrentUser()
+            }
+
+            tvViewProfile.setOnClickListener {
+                activity?.let {
+                    startActivity(UserProfileActivity?.getIntent(it,listingItem))
+                }
             }
             tvProductAvailabilityDesc.setText(s)
             init()
@@ -248,6 +260,76 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             //positionOffset is a value from [0..1] which represents how far the page has been scrolled
             //see https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener
             override fun onPageScrolled(i: Int, positionOffset: Float, positionOffsetPx: Int) {
+
+/*
+                if (i == 0) {
+                    if (listingItem.isSell != null && listingItem.isSell.equals("yes")) {
+                        tvBuy.visibility = View.VISIBLE
+                        tvBarter.visibility = View.GONE
+                        tvRent.visibility = View.GONE
+                        llBuySellPrice.visibility = View.VISIBLE
+                        tvPrice.setText("$" + listingItem?.listingPrice)
+                        llRentPrice.visibility = View.GONE
+                        llBarterPrice.visibility = View.GONE
+
+                    } else {
+                        if (listingItem.isRent != null && listingItem.isRent.equals("yes")) {
+                            tvBuy.visibility = View.GONE
+                            tvBarter.visibility = View.GONE
+                            tvRent.visibility = View.VISIBLE
+
+                            setPriceRent()
+                        } else {
+                            if (listingItem.isBarter != null && listingItem.isBarter.equals("yes")) {
+                                tvBuy.visibility = View.GONE
+                                tvBarter.visibility = View.VISIBLE
+                                tvRent.visibility = View.GONE
+                                llBarterPrice.visibility = View.VISIBLE
+                                llRentPrice.visibility = View.GONE
+                                llBuySellPrice.visibility = View.GONE
+                                tvPrice5.setText("I would want to have a " + listingItem?.barterText + " in place of my product")
+                            }
+                        }
+                    }
+                } else if (i == 1) {
+                    if (listingItem.isRent != null && listingItem.isRent.equals("yes")) {
+                        tvBuy.visibility = View.GONE
+                        tvBarter.visibility = View.GONE
+                        tvRent.visibility = View.VISIBLE
+                        setPriceRent()
+                    } else {
+                        if (listingItem.isBarter != null && listingItem.isBarter.equals("yes")) {
+                            tvBuy.visibility = View.GONE
+                            tvBarter.visibility = View.VISIBLE
+                            tvRent.visibility = View.GONE
+                            llBarterPrice.visibility = View.VISIBLE
+                            llRentPrice.visibility = View.GONE
+                            llBuySellPrice.visibility = View.GONE
+                            tvPrice5.setText("I would want to have a " + listingItem?.barterText + " in place of my product")
+                        }
+                    }
+
+                } else {
+                    tvBarter.visibility = View.VISIBLE
+                    tvRent.visibility = View.GONE
+                    tvBuy.visibility = View.GONE
+                    llBarterPrice.visibility = View.VISIBLE
+                    llRentPrice.visibility = View.GONE
+                    llBuySellPrice.visibility = View.GONE
+                    tvPrice5.setText("I would want to have a " + listingItem?.barterText + " in place of my product")
+                }
+
+                var params = indicatorProductDetails?.getLayoutParams() as FrameLayout.LayoutParams
+
+                //Multiply positionOffset with indicatorWidth to get translation
+                val translationOffset: Float = (positionOffset + i) * indicatorWidth
+                params.leftMargin = translationOffset.toInt()
+                indicatorProductDetails?.setLayoutParams(params)
+*/
+            }
+
+            override fun onPageSelected(i: Int) {
+
                 if (i == 0) {
                     if (listingItem.isSell != null && listingItem.isSell.equals("yes")) {
                         tvBuy.visibility = View.VISIBLE
@@ -307,15 +389,17 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
                 var params = indicatorProductDetails?.getLayoutParams() as FrameLayout.LayoutParams
 
                 //Multiply positionOffset with indicatorWidth to get translation
-                val translationOffset: Float = (positionOffset + i) * indicatorWidth
+                val translationOffset: Float = (0.0f + i) * indicatorWidth
                 params.leftMargin = translationOffset.toInt()
                 indicatorProductDetails?.setLayoutParams(params)
             }
 
-            override fun onPageSelected(i: Int) {}
             override fun onPageScrollStateChanged(i: Int) {}
         })
 
+        Handler(Looper.getMainLooper()).postDelayed({
+            viewPagerProductDetail.setCurrentItem(clickPos!!, true)
+        }, 300)
     }
 
     fun setPriceRent() {
@@ -361,10 +445,18 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
         const val TYPE = "type"
         const val DATA = "data"
         var currentUser: User? = null
+        const val CLICKPOSITION = "CLICKPostion"
 
-        fun getInstance(instance: Int, type: Int?, data: ListingItem): FragmentProductDetails {
+        fun getInstance(
+            instance: Int,
+            type: Int?,
+            data: ListingItem,
+            clickPos: Int
+        ): FragmentProductDetails {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
+            bundle.putInt(CLICKPOSITION, clickPos)
+
             val fragment = FragmentProductDetails()
             bundle.putInt(TYPE, type!!)
             bundle.putParcelable(DATA, data!!)
@@ -427,7 +519,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
     override fun getLayoutId() = R.layout.fragment_product_details
 
     private fun fetchCurrentUser() {
-    //    val uid = "hUJc668PNFeZTtyYMZPS0lpdjv93"
+        //    val uid = "hUJc668PNFeZTtyYMZPS0lpdjv93"
         val uid = listingItem?.userUID
         val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
         ref.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -439,7 +531,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
                 val intent = Intent(activity, NewMessageChatActivity::class.java)
 
                 intent.putExtra(NewMessageChatActivity.USER_KEY, currentUser)
-           //     intent.putExtra(NewMessageChatActivity.UID, uid)
+                //     intent.putExtra(NewMessageChatActivity.UID, uid)
 
                 startActivity(intent)
             }

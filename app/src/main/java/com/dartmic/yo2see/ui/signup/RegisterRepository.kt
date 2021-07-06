@@ -66,4 +66,11 @@ interface RegisterRepository {
         service: String,
         email:String
     ): Single<UserInforesponse>
+
+    fun sendFeedback(
+        service: String,
+        to_user_id: String,
+        from_user_id: String,
+        rating: String
+    ): Single<UserInforesponse>
 }

@@ -29,9 +29,13 @@ interface AppRestApiFast {
     @POST(Config.Endpoints.LOGIN_API)
     fun login(
         @Field("service") service: String,
-        @Field("user_name") username: String, @Field("password") password: String,
-        @Field("device_type") device_type: String, @Field("device_id") device_id: String,
-        @Field("longitude") longitude: String, @Field("latitude") latitude: String,@Field("uid") uid: String
+        @Field("user_name") username: String,
+        @Field("password") password: String,
+        @Field("device_type") device_type: String,
+        @Field("device_id") device_id: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("uid") uid: String
     )
             : Single<LoginResponsePayload>
 
@@ -223,7 +227,7 @@ interface AppRestApiFast {
         @Field("service") service: String,
         @Field("user_id") user_id: String,
         @Field("list_id") list_id: String,
-    @Field("fav_flag") fav_flag: Int
+        @Field("fav_flag") fav_flag: Int
 
 
     ): Single<LoginResponsePayload>
@@ -262,5 +266,13 @@ interface AppRestApiFast {
         @Field("user_email") user_email: String
     ): Single<UserInforesponse>
 
+    @FormUrlEncoded
+    @POST(Config.Endpoints.FEEDBACK)
+    fun sendFeedback(
+        @Field("service") user_id: String,
+        @Field("to_user_id") to_user_id: String,
+        @Field("from_user_id") from_user_id: String, @Field("rating") rating: String
+
+    ): Single<UserInforesponse>
 }
 

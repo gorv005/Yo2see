@@ -100,5 +100,14 @@ class RegisterRepositoryImpl(
         return restApi.forgotPassword(service, email)
     }
 
+    override fun sendFeedback(
+        service: String,
+        to_user_id: String,
+        from_user_id: String,
+        rating: String
+    ): Single<UserInforesponse> {
+        return restApi.sendFeedback(service, to_user_id,from_user_id,rating)
+    }
+
 
 }

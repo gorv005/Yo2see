@@ -108,7 +108,7 @@ class ProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationViewMode
                 val equals = it?.userList?.equals("")
                 if (it?.userList?.picture != null&& !it?.userList?.picture.equals("")) {
                     Glide.with(this).load("https://yo2see.com/app/admin/"+it?.userList?.picture)
-                        .placeholder(R.drawable.ic_clothing_white).circleCrop()
+                        .placeholder(R.drawable.no_image2).circleCrop()
                         .into(ivProfileL)
                 }
                 showSnackbar(it.message, true)

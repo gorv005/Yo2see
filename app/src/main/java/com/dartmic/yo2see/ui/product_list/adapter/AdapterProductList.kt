@@ -147,10 +147,53 @@ class AdapterProductList(
             itemView.setOnClickListener {
                 adapterViewClick?.onClickAdapterView(
                     allProducts,
-                    Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT, adapterPosition
+                    Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT, 0
                 )
             }
+            itemView.ivBuy.setOnClickListener {
+                adapterViewClick?.onClickAdapterView(
+                    allProducts,
+                    Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT,  getClickPosition(allProducts,"S")
+                )
+            }
+            itemView.ivRent.setOnClickListener {
+                adapterViewClick?.onClickAdapterView(
+                    allProducts,
+                    Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT,  getClickPosition(allProducts,"R")
+                )
+            }
+            itemView.ivBarter.setOnClickListener {
+                adapterViewClick?.onClickAdapterView(
+                    allProducts,
+                    Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT, getClickPosition(allProducts,"B")
+                )
+            }
+
         }
+        fun getClickPosition(product: ListingItem, type:String):Int{
+            if(product?.isSell.equals("yes") && type.equals("S")){
+                return 0
+            }
+            else if(product?.isSell.equals("yes") && product?.isRent.equals("yes") && type.equals("R")){
+                return 1
+            }
+            else if(product?.isSell.equals("yes") && product?.isRent.equals("yes") && product?.isBarter.equals("yes") && type.equals("B")){
+                return 2
+            }
+            else if(!product?.isSell.equals("yes") && product?.isRent.equals("yes") && type.equals("R")){
+                return 0
+            }
+            else if(!product?.isSell.equals("yes") && product?.isRent.equals("yes") && product?.isBarter.equals("yes") && type.equals("B")){
+                return 1
+            }
+            else if(!product?.isSell.equals("yes") && !product?.isRent.equals("yes") && product?.isBarter.equals("yes") && type.equals("B")){
+                return 0
+            }
+            return 0
+        }
+
     }
+
+
 
 }

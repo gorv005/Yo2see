@@ -438,7 +438,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
             // Make sure the request was successful
             if (resultCode == Activity.RESULT_OK && data != null) {
                 val selectionResult = data.getStringArrayListExtra("result")
-                selectionResult.forEach {
+                selectionResult?.forEach {
                     try {
                         Log.d("MyApp", "Image Path : " + it)
                         val uriFromPath = Uri.fromFile(File(it))
@@ -654,8 +654,8 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 ) {
                     return
                 }
-                val location = locationManager.getLastKnownLocation(mprovider)
-                locationManager?.requestLocationUpdates(mprovider, 5000, 5.0f, this)
+                val location = locationManager.getLastKnownLocation(mprovider!!)
+                locationManager?.requestLocationUpdates(mprovider!!, 5000, 5.0f, this)
                 if (location != null)
                     onLocationChanged(location)
 
@@ -674,12 +674,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
     }
 
     override fun getLayoutId() = R.layout.fragment_add_product
-    override fun onLocationChanged(location: Location?) {
-        latitude = location?.latitude!!
-        longitude = location?.longitude!!
-        getAddress()
 
-    }
 
     private fun OnGPS() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -726,14 +721,15 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         }
     }
 
+    override fun onLocationChanged(location: Location) {
+        latitude = location?.latitude!!
+        longitude = location?.longitude!!
+        getAddress()
+    }
+
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
     }
 
-    override fun onProviderEnabled(provider: String?) {
-    }
-
-    override fun onProviderDisabled(provider: String?) {
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

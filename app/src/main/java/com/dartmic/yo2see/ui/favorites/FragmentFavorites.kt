@@ -192,7 +192,8 @@ class FragmentFavorites : BaseFragment<ProductListnViewModel>(ProductListnViewMo
                             .getInstance(
                                 mInt + 1,
                                 0,
-                                objectAtPosition
+                                objectAtPosition,
+                                position
                             )
                     )
                     /* mFragmentNavigation.pushFragment(

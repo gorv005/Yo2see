@@ -11,31 +11,27 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.arthurivanets.bottomsheets.BottomSheet
 import com.dartmic.yo2see.R
-import com.dartmic.yo2see.base.BaseApplication
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.ui.AdsItems.sheet.SimpleAdsBottomSheet
 import com.dartmic.yo2see.ui.addProduct.AddProductFragment
-import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
 import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.favorites.SortByBottomSheet
 import com.dartmic.yo2see.ui.home.HomeFragment
+import com.dartmic.yo2see.ui.home.products.ProductFragment
 import com.dartmic.yo2see.ui.login.LoginActivity
-import com.dartmic.yo2see.ui.more.MoreActivity
 import com.dartmic.yo2see.ui.more.MoreFragment
 import com.dartmic.yo2see.ui.postAdd.PostAnAddFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.ui.product_list.adapter.SortByProductBottomSheet
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
@@ -43,9 +39,6 @@ import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
 import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.activity_landing.view.*
-import org.jetbrains.anko.backgroundColor
-import org.jetbrains.anko.backgroundColorResource
-import org.jetbrains.anko.backgroundDrawable
 
 
 const val INDEX_HOME = FragNavController.TAB1
@@ -242,7 +235,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
              pushFragment(HomeFragment.getInstance(1,Config.Constants.POST_AN_ADD))*/
 
             if (checkUserLogin()) {
-                pushFragment(HomeFragment.getInstance(1, Config.Constants.POST_AN_ADD))
+                pushFragment(HomeFragment.getInstance(2, Config.Constants.POST_AN_ADD))
                 //  fragNavController.switchTab(INDEX_ADD_POST)
             } else {
                 startActivity(LoginActivity.getIntent(this))
@@ -251,7 +244,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         }
     }
 
-    fun checkUserLogin(): Boolean {
+   public fun checkUserLogin(): Boolean {
         var preferenceManager = PreferenceManager(this)
 
         return preferenceManager.isUserLoggedIn()
@@ -275,9 +268,9 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                     ProductListFragment
                         .getInstance(
                             1,
-                            AndroidUtils.getType(type),
-                            location,
-                            query,
+                            AndroidUtils.getType(type!!),
+                            location!!,
+                            query!!,
                             SubToSubListItem()
                         )
                 )
@@ -363,10 +356,13 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            var f = getVisibleFragment() as AddProductFragment
-            f.onActivityResult(requestCode, resultCode, data)
+            if(getVisibleFragment() is ProductFragment) {
+                var f = getVisibleFragment() as ProductFragment
+               // (( Fragment)ProductFragment).onActivityResult(requestCode, resultCode, data)
+                (supportFragmentManager.findFragmentById(R.id.container) as AddProductFragment?)?.onActivityResult(requestCode, resultCode, data)
+            }
         } catch (e: Exception) {
-
+            e.printStackTrace()
         }
     }
 
