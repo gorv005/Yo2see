@@ -242,8 +242,8 @@
     <string name="payment_type">PAYMENT TYPE</string>
     <string name="address_">Address</string>
     <string name="barter_">BARTER</string>
-    <string name="rent_">RENT $/hr</string>
-    <string name="buy_">BUY $</string>
+    <string name="rent_">RENT</string>
+    <string name="buy_">BUY</string>
     <string name="please_select_onecategory">"Please select one category "</string>
     <string name="please_select_atleast_one_image">Please select atleast one image</string>
     <string name="please_set_price">Please set a price for product</string>
@@ -259,6 +259,25 @@
     <string name="close">Close</string>
     <string name="message_sender">Message Sender</string>
     <string name="rating">Rate User</string>
+    <string name="name_title">Name/Title</string>
+    <string name="job_description">Job Description</string>
+    <string name="level">Level</string>
+    <string name="required_skills">Required Skills</string>
+    <string name="job_responsibilities">Job Responsubilities</string>
+    <string name="job_type">Job type</string>
+    <string name="pay_range">Pay range</string>
+    <string name="pay">Pay</string>
+    <string name="event_name">Event name</string>
+    <string name="event_discription">Event discription</string>
+    <string name="event_type">Event Type</string>
+    <string name="cost_if_applicable">COST IF APPLICABLE</string>
+    <string name="cost">Cost</string>
+    <string name="date">DATE</string>
+    <string name="from">From</string>
+    <string name="to">TO</string>
+    <string name="start_date_and_end_date_not_same">Please enter a valid date</string>
+    <string name="event_time">Event Time</string>
+    <string name="event_date">Event Date</string>
 
     <string-array name="text">
         <item>WHAT WE OFFER</item>

@@ -28,15 +28,18 @@ import com.dartmic.yo2see.callbacks.AdapterViewItemClickListener
 import com.dartmic.yo2see.model.AdsItems
 import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryDataResponsePayload
 import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
+import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.categories.CategoryListItem
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
+import com.dartmic.yo2see.ui.addProduct.AddEventFragment
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
 import com.dartmic.yo2see.ui.home.adapter.TabFragmentAdapter
 import com.dartmic.yo2see.ui.home.products.ProductFragment
+import com.dartmic.yo2see.ui.product_list.EventListingFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.ui.search.SerachActivity
 import com.dartmic.yo2see.util.UiUtils
@@ -202,7 +205,23 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                 indicator?.setLayoutParams(params)
             }
 
-            override fun onPageSelected(i: Int) {}
+            override fun onPageSelected(i: Int) {
+
+                if (i == 0) {
+                    tvEvents.visibility = View.GONE
+                    tvProducts.visibility = View.VISIBLE
+
+                    rvHomeProducts.visibility = View.VISIBLE
+                    rvHomeEvents.visibility = View.GONE
+                } else {
+                    tvEvents.visibility = View.VISIBLE
+                    tvProducts.visibility = View.GONE
+                    rvHomeProducts.visibility = View.GONE
+                    rvHomeEvents.visibility = View.VISIBLE
+
+                }
+            }
+
             override fun onPageScrollStateChanged(i: Int) {}
         })
 
@@ -641,11 +660,45 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             Config.AdapterClickViewTypes.CLICK_VIEW_CATEGORY -> {
 
                 this?.let {
+                    if (type == Config.Constants.POST_AN_ADD) {
+                        if (objectAtPosition.categoryName.equals("Events")) {
+                            mFragmentNavigation.pushFragment(
+                                AddEventFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            "0",
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        }
+                    } else {
+                        if (objectAtPosition.categoryName.equals("Events")) {
+                            mFragmentNavigation.pushFragment(
 
-                    mFragmentNavigation.pushFragment(
-                        SubCategoriesFragment
-                            .getInstance(mInt + 1, type, objectAtPosition)
-                    )
+                                EventListingFragment.getInstance(
+                                    mInt + 1, type, "", "", SubToSubListItem(
+                                        "",
+                                        "",
+                                        "0",
+                                        "0",
+                                        objectAtPosition.categoryName,
+                                        "0"
+                                    )
+                                )
+                            )
+                        } else {
+                            mFragmentNavigation.pushFragment(
+                                SubCategoriesFragment
+                                    .getInstance(mInt + 1, type, objectAtPosition)
+                            )
+                        }
+                    }
 
                 }
 

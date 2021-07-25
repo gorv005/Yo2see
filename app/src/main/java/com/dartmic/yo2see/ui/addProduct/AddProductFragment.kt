@@ -38,6 +38,7 @@ import com.dartmic.yo2see.ui.addProduct.adapter.AdapterImage
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.ui.profile.ProfileActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.*
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -189,6 +190,10 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
             }
         }
+
+        tvSetPrice.setText(AndroidUtils.getString(R.string.set_a_price)+" ("+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+")")
+        tvSetAPriceLabel.setText(AndroidUtils.getString(R.string.set_a_rent_price)+" ("+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+")")
+
     }
 
 
@@ -559,6 +564,10 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 rbNoDeliver.isChecked = true
                 isOpenTodeliver = "no"
             }
+        }
+        tvUserProfile.setOnClickListener {
+            startActivity(ProfileActivity.getIntent(activity!!))
+
         }
         checkboxSell.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {

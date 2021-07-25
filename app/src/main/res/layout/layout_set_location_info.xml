@@ -134,58 +134,5 @@
         android:textColor="@color/disabled_text"
         android:textColorHint="@color/disabled_text" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center_horizontal"
-        android:text="@string/are_you_open_to_deliver"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/rbYesDeliver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/yes"
-            android:textColor="@color/black"
-            app:buttonTint="@color/red_a" />
-
-        <RadioButton
-            android:id="@+id/rbNoDeliver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/no"
-            android:textColor="@color/black"
-            app:buttonTint="@color/red_a" />
-
-
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:gravity="center_horizontal"
-        android:text="@string/up_till_what_km"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etKm"
-        android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/edit_text_round_corner_bg"
-        android:focusableInTouchMode="true"
-        android:inputType="numberDecimal"
-        android:textColor="@color/disabled_text"
-        android:textColorHint="@color/disabled_text" />
 </LinearLayout>

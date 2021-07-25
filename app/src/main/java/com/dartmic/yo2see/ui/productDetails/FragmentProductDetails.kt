@@ -200,7 +200,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
 
             tvViewProfile.setOnClickListener {
                 activity?.let {
-                    startActivity(UserProfileActivity?.getIntent(it,listingItem))
+                    startActivity(UserProfileActivity?.getIntent(it, listingItem))
                 }
             }
             tvProductAvailabilityDesc.setText(s)
@@ -221,14 +221,14 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
         var w = 3.0f
         val adapter = TabFragmentAdapter(activity?.getSupportFragmentManager()!!)
         if (listingItem.isSell != null && listingItem.isSell.equals("yes")) {
-            adapter.addFragment(ProductFragment.getInstance(), getString(R.string.buy_))
+            adapter.addFragment(ProductFragment.getInstance(), getString(R.string.buy_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()))
         } else {
             rlBuyP.visibility = View.GONE
             llTab.weightSum = w - 1
 
         }
         if (listingItem.isRent != null && listingItem.isRent.equals("yes")) {
-            adapter.addFragment(ProductFragment.getInstance(), getString(R.string.rent_))
+            adapter.addFragment(ProductFragment.getInstance(), getString(R.string.rent_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+"/hr"  )
         } else {
             rlRentP.visibility = View.GONE
             llTab.weightSum = w - 1
@@ -260,6 +260,67 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             //positionOffset is a value from [0..1] which represents how far the page has been scrolled
             //see https://developer.android.com/reference/android/support/v4/view/ViewPager.OnPageChangeListener
             override fun onPageScrolled(i: Int, positionOffset: Float, positionOffsetPx: Int) {
+                if (i == 0) {
+                    if (listingItem.isSell != null && listingItem.isSell.equals("yes")) {
+                        tvBuy.visibility = View.VISIBLE
+                        tvBuy.text=getString(R.string.buy_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())
+
+                        tvBarter.visibility = View.GONE
+                        tvRent.visibility = View.GONE
+                        llBuySellPrice.visibility = View.VISIBLE
+                        tvPrice.setText(AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + listingItem?.listingPrice)
+                        llRentPrice.visibility = View.GONE
+                        llBarterPrice.visibility = View.GONE
+
+                    } else {
+                        if (listingItem.isRent != null && listingItem.isRent.equals("yes")) {
+                            tvBuy.visibility = View.GONE
+                            tvBarter.visibility = View.GONE
+                            tvRent.visibility = View.VISIBLE
+                            tvRent.setText(getString(R.string.rent_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+"/hr" )
+
+                            setPriceRent()
+                        } else {
+                            if (listingItem.isBarter != null && listingItem.isBarter.equals("yes")) {
+                                tvBuy.visibility = View.GONE
+                                tvBarter.visibility = View.VISIBLE
+                                tvRent.visibility = View.GONE
+                                llBarterPrice.visibility = View.VISIBLE
+                                llRentPrice.visibility = View.GONE
+                                llBuySellPrice.visibility = View.GONE
+                                tvPrice5.setText("I would want to have a " + listingItem?.barterText + " in place of my product")
+                            }
+                        }
+                    }
+                } else if (i == 1) {
+                    if (listingItem.isRent != null && listingItem.isRent.equals("yes")) {
+                        tvBuy.visibility = View.GONE
+                        tvBarter.visibility = View.GONE
+                        tvRent.visibility = View.VISIBLE
+                        tvRent.setText(getString(R.string.rent_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+"/hr" )
+
+                        setPriceRent()
+                    } else {
+                        if (listingItem.isBarter != null && listingItem.isBarter.equals("yes")) {
+                            tvBuy.visibility = View.GONE
+                            tvBarter.visibility = View.VISIBLE
+                            tvRent.visibility = View.GONE
+                            llBarterPrice.visibility = View.VISIBLE
+                            llRentPrice.visibility = View.GONE
+                            llBuySellPrice.visibility = View.GONE
+                            tvPrice5.setText("I would want to have a " + listingItem?.barterText + " in place of my product")
+                        }
+                    }
+
+                } else {
+                    tvBarter.visibility = View.VISIBLE
+                    tvRent.visibility = View.GONE
+                    tvBuy.visibility = View.GONE
+                    llBarterPrice.visibility = View.VISIBLE
+                    llRentPrice.visibility = View.GONE
+                    llBuySellPrice.visibility = View.GONE
+                    tvPrice5.setText("I would want to have a " + listingItem?.barterText + " in place of my product")
+                }
 
 /*
                 if (i == 0) {
@@ -333,10 +394,12 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
                 if (i == 0) {
                     if (listingItem.isSell != null && listingItem.isSell.equals("yes")) {
                         tvBuy.visibility = View.VISIBLE
+                        tvBuy.text=getString(R.string.buy_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())
+
                         tvBarter.visibility = View.GONE
                         tvRent.visibility = View.GONE
                         llBuySellPrice.visibility = View.VISIBLE
-                        tvPrice.setText("$" + listingItem?.listingPrice)
+                        tvPrice.setText(AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + listingItem?.listingPrice)
                         llRentPrice.visibility = View.GONE
                         llBarterPrice.visibility = View.GONE
 
@@ -345,6 +408,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
                             tvBuy.visibility = View.GONE
                             tvBarter.visibility = View.GONE
                             tvRent.visibility = View.VISIBLE
+                            tvRent.setText(getString(R.string.rent_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+"/hr" )
 
                             setPriceRent()
                         } else {
@@ -364,6 +428,8 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
                         tvBuy.visibility = View.GONE
                         tvBarter.visibility = View.GONE
                         tvRent.visibility = View.VISIBLE
+                        tvRent.setText(getString(R.string.rent_)+" "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+"/hr" )
+
                         setPriceRent()
                     } else {
                         if (listingItem.isBarter != null && listingItem.isBarter.equals("yes")) {
@@ -404,35 +470,34 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
 
     fun setPriceRent() {
         llRentPrice.visibility = View.VISIBLE
-        llBarterPrice.visibility = View.GONE
-        llBuySellPrice.visibility = View.GONE
+
         var i = 0
         while (i < listingItem?.rentType?.size!!) {
             if (i == 0) {
                 rlPrice1.visibility = View.VISIBLE
                 tvPrice1.setText(
-                    "$" + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
+                    AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
                         i
                     )?.rentType
                 )
             } else if (i == 1) {
                 rlPrice2.visibility = View.VISIBLE
                 tvPrice2.setText(
-                    "$" + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
+                    AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
                         i
                     )?.rentType
                 )
             } else if (i == 2) {
                 rlPrice3.visibility = View.VISIBLE
                 tvPrice3.setText(
-                    "$" + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
+                    AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
                         i
                     )?.rentType
                 )
             } else if (i == 3) {
                 rlPrice4.visibility = View.VISIBLE
                 tvPrice4.setText(
-                    "$" + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
+                    AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + listingItem?.rentType?.get(i)?.payment + "/" + listingItem?.rentType?.get(
                         i
                     )?.rentType
                 )

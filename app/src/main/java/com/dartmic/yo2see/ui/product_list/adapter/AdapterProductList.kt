@@ -17,6 +17,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.managers.ImageRequestManager
 import com.dartmic.yo2see.model.product_info.ListingItem
+import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import com.facebook.drawee.drawable.ScalingUtils
 import kotlinx.android.synthetic.main.fragment_product_details.*
@@ -79,6 +80,99 @@ class AdapterProductList(
             adapterViewClick: AdapterViewClickListener<ListingItem>?,
             back: Int, type: Int
         ) {
+
+            if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()>0){
+                if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<1){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_half_star)
+                    itemView.ivStar1.visibility=View.VISIBLE
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<1.5){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar1.visibility=View.VISIBLE
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<2){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_half_star)
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<2.5){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<3){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar3.setImageResource(R.drawable.ic_half_star)
+
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                    itemView.ivStar3.visibility=View.VISIBLE
+
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<3.5){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar3.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                    itemView.ivStar3.visibility=View.VISIBLE
+
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<4){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar3.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar4.setImageResource(R.drawable.ic_half_star)
+
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                    itemView.ivStar3.visibility=View.VISIBLE
+                    itemView.ivStar4.visibility=View.VISIBLE
+
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<4.5){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar3.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar4.setImageResource(R.drawable.ic_full_star)
+
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                    itemView.ivStar3.visibility=View.VISIBLE
+                    itemView.ivStar4.visibility=View.VISIBLE
+
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()<5){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar3.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar4.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar5.setImageResource(R.drawable.ic_half_star)
+
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                    itemView.ivStar3.visibility=View.VISIBLE
+                    itemView.ivStar4.visibility=View.VISIBLE
+                    itemView.ivStar5.visibility=View.VISIBLE
+
+                }
+                else if(allProducts.AvgRatingUser!=null && allProducts.AvgRatingUser.toDouble()==5.0){
+                    itemView.ivStar1.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar2.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar3.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar4.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar5.setImageResource(R.drawable.ic_full_star)
+                    itemView.ivStar1.visibility=View.VISIBLE
+                    itemView.ivStar2.visibility=View.VISIBLE
+                    itemView.ivStar3.visibility=View.VISIBLE
+                    itemView.ivStar4.visibility=View.VISIBLE
+                    itemView.ivStar5.visibility=View.VISIBLE
+
+                }
+            }
             itemView.tvModel?.text = allProducts?.listingTitle
 
             itemView.tvAddress?.text = HtmlCompat.fromHtml("<u>"+allProducts.listingCity+"</u>", HtmlCompat.FROM_HTML_MODE_LEGACY)
@@ -94,7 +188,7 @@ class AdapterProductList(
             var s="This product is available\nfor "
             var p=""
             if(allProducts?.isSell!=null &&allProducts?.isSell?.equals("yes")){
-                p="<b>Sell $</b>"+allProducts?.listingPrice
+                p="<b>Sell "+ AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + "</b>"+allProducts?.listingPrice
                 s=s+"Buy"
                 itemView.ivBuy.visibility=View.VISIBLE
                 if(allProducts?.isRent!=null &&allProducts?.isRent?.equals("yes") || allProducts?.isBarter!=null &&allProducts?.isBarter?.equals("yes")){
@@ -105,7 +199,7 @@ class AdapterProductList(
                 itemView.ivBuy.visibility=View.GONE
             }
             if(allProducts?.isRent!=null &&allProducts?.isRent?.equals("yes")){
-                p=p+"<b>Rent $</b>"+allProducts?.rentType?.get(0)?.payment+"/"+allProducts?.rentType?.get(0)?.rentType
+                p=p+"<b>Rent "+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+"</b>"+allProducts?.rentType?.get(0)?.payment+"/"+allProducts?.rentType?.get(0)?.rentType
                 s=s+", Rent"
                 itemView.ivRent.visibility=View.VISIBLE
                 if( allProducts?.isBarter!=null &&allProducts?.isBarter?.equals("yes")){
@@ -166,6 +260,12 @@ class AdapterProductList(
                 adapterViewClick?.onClickAdapterView(
                     allProducts,
                     Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT, getClickPosition(allProducts,"B")
+                )
+            }
+            itemView.ivShare.setOnClickListener {
+                adapterViewClick?.onClickAdapterView(
+                    allProducts,
+                    Config.AdapterClickViewTypes.CLICK_SHARE, getClickPosition(allProducts,"SH")
                 )
             }
 

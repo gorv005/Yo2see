@@ -3,12 +3,15 @@ package com.dartmic.yo2see.ui.product_list
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dartmic.yo2see.BuildConfig
 import com.dartmic.yo2see.R
@@ -17,10 +20,13 @@ import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
+import com.dartmic.yo2see.model.product.job.ListingItemJob
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
+import com.dartmic.yo2see.ui.productDetails.JobDetailsFragment
+import com.dartmic.yo2see.ui.product_list.adapter.AdapterJobProductList
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
@@ -28,11 +34,7 @@ import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
-import kotlinx.android.synthetic.main.fragment_categories_list.*
-import kotlinx.android.synthetic.main.fragment_product_details.*
-import kotlinx.android.synthetic.main.fragment_product_list.*
-import kotlinx.android.synthetic.main.fragment_sub_categories.*
-
+import kotlinx.android.synthetic.main.fragment_job_listing.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,24 +43,23 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ProductListFragment.newInstance] factory method to
+ * Use the [JobListingFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class),
-    AdapterViewClickListener<ListingItem>, SortImpl {
+class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class),
+    AdapterViewClickListener<ListingItemJob> {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var adapterProductList: AdapterProductList? = null
+    private var adapterProductList: AdapterJobProductList? = null
     var type: Int? = 0
     var listingType: String? = ""
     lateinit var subToSubListItem: SubToSubListItem
     var query: String? = ""
     var location: String? = ""
-    lateinit var listingItem: ListingItem
-    private var listingItemList = ArrayList<ListingItem>()
+    lateinit var listingItem: ListingItemJob
+    private var listingItemList = ArrayList<ListingItemJob>()
     var pos: Int = -1
-    internal var sort_selected: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,27 +82,28 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val manager = GridLayoutManager(context, 2)
+        var manager = LinearLayoutManager(
+            activity!!,
+            LinearLayoutManager.VERTICAL, false
+        )
         type = arguments?.getInt(TYPE)
         subToSubListItem = arguments?.getParcelable(DATA)!!
         query = arguments?.getString(QUERY)
         location = arguments?.getString(LOCATION)
 
         init()
-        rvProductList.layoutManager = manager
+        rvProductJobList.layoutManager = manager
         activity?.let {
-            adapterProductList = AdapterProductList(this, it, R.drawable.round_circle_blue, type!!)
+            adapterProductList =
+                AdapterJobProductList(this, it, R.drawable.round_circle_blue, type!!)
 
-        }
-        rlSort.setOnClickListener {
-            (activity as LandingActivity).sortByProduct(this, sort_selected)
         }
         rlFilter.setOnClickListener {
             activity?.let {
                 startActivity(FilterActivity.getIntent(it))
             }
         }
-        rvProductList.adapter = adapterProductList
+        rvProductJobList.adapter = adapterProductList
         //  adapterProductList?.submitList(getProducts())
         // runAnimationAgain()
         subscribeUi()
@@ -118,13 +120,14 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             //  listingType = "Rent"
 
             if (query.equals("")) {
-                model.getProductList(
+                model.getJobProductList(
                     "List",
                     model?.getUserID()!!,
                     subToSubListItem.categoryId,
                     subToSubListItem.subCategoryId,
                     subToSubListItem.id,
                     "",
+                    "Job",
                     "",
                     "",
                     "",
@@ -143,26 +146,6 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         }
     }
 
-    fun getProductDataFromSearch() {
-        if (NetworkUtil.isInternetAvailable(activity)) {
-            //  listingType = "Rent"
-
-            model.getProductList(
-                "List",
-                model?.getUserID()!!,
-                subToSubListItem.categoryId,
-                subToSubListItem.subCategoryId,
-                subToSubListItem.id,
-                "",
-                listingType!!,
-                "",
-                "",
-                "",
-                "",
-                ""
-            )
-        }
-    }
 
     private fun subscribeLoading() {
 
@@ -179,14 +162,14 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     }
 
     private fun subscribeUi() {
-        model.productListViewModel.observe(this, Observer {
+        model.productJobListViewModel.observe(this, Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
                 listingItemList = it?.listing!!
                 tvResult.setText("Found " + it?.listing?.size + " results")
                 adapterProductList?.submitList(it?.listing)
                 adapterProductList?.notifyDataSetChanged()
-                runLayoutAnimation(rvProductList)
+                //runLayoutAnimation(rvProductJobList)
 
             } else {
                 showSnackbar(it.message, false)
@@ -197,7 +180,6 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             if (it.status) {
                 listingItemList.set(pos, listingItem)
                 adapterProductList?.notifyDataSetChanged()
-
 
             } else {
                 showSnackbar(it.message, false)
@@ -211,23 +193,8 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         showProgressDialog(null, AndroidUtils.getString(R.string.please_wait))
     }
 
-    fun getProducts(): ArrayList<ProductItems> {
-        AndroidUtils.getString(R.string.jobs)
-        val events = arrayListOf<ProductItems>()
 
-        for (i in 1..30) {
-            events?.add(
-                ProductItems(
-                    1,
-                    "$ 10000", "Samsung galaxy s8", "Greater Noida", "Oct 04th",
-                    R.drawable.ic_devices_white
-                )
-            )
-        }
-        return events
-
-    }
-
+/*
     private fun runLayoutAnimation(recyclerView: RecyclerView) {
         try {
             val context: Context = recyclerView.context
@@ -240,17 +207,8 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             e.printStackTrace()
         }
     }
+*/
 
-    private fun runAnimationAgain() {
-        val controller =
-            AnimationUtils.loadLayoutAnimation(
-                activity,
-                R.anim.gridlayout_animation_from_bottom
-            )
-        rvProductList.setLayoutAnimation(controller)
-        adapterProductList?.notifyDataSetChanged()
-        rvProductList.scheduleLayoutAnimation()
-    }
 
     companion object {
         const val TYPE = "type"
@@ -263,10 +221,10 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             instance: Int,
             type: Int?, location: String, query: String,
             categoryListItemData: SubToSubListItem?
-        ): ProductListFragment {
+        ): JobListingFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
-            val fragment = ProductListFragment()
+            val fragment = JobListingFragment()
             bundle.putInt(TYPE, type!!)
             bundle.putString(LOCATION, location)
             bundle.putString(QUERY, query)
@@ -278,14 +236,18 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         }
     }
 
-    override fun getLayoutId() = R.layout.fragment_product_list
+    override fun getLayoutId() = R.layout.fragment_job_listing
 
 
-    override fun onClickAdapterView(objectAtPosition: ListingItem, viewType: Int, position: Int) {
+    override fun onClickAdapterView(
+        objectAtPosition: ListingItemJob,
+        viewType: Int,
+        position: Int
+    ) {
         when (viewType) {
             Config.AdapterClickViewTypes.CLICK_SHARE -> {
                 this?.let {
-                  share()
+                    share()
                 }
             }
 
@@ -293,7 +255,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
 
                 this?.let {
                     mFragmentNavigation.pushFragment(
-                        FragmentProductDetails
+                        JobDetailsFragment
                             .getInstance(mInt + 1, type, objectAtPosition, position)
                     )
 
@@ -309,7 +271,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                         model?.addAndRemoveToFavorites(
                             "AddToFavList",
                             model?.getUserID()!!,
-                            objectAtPosition?.id,
+                            objectAtPosition?.id!!,
                             0
                         )
                         listingItem.userFavorite = 0
@@ -317,7 +279,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
                         model?.addAndRemoveToFavorites(
                             "AddToFavList",
                             model?.getUserID()!!,
-                            objectAtPosition?.id,
+                            objectAtPosition?.id!!,
                             1
                         )
                         listingItem.userFavorite = 1
@@ -330,7 +292,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         }
     }
 
-    fun share(){
+    fun share() {
         var shareMessage = "\nLet me recommend you this application\n\n"
         shareMessage =
             """
@@ -346,102 +308,13 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         val shareIntent = Intent.createChooser(sendIntent, "Choose one")
         startActivity(shareIntent)
     }
+
     fun init() {
         if (query.equals("")) {
             tvSubTitleProductValue.text =
                 subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
         } else {
             tvSubTitleProductValue.text = ""
-        }
-/*
-        when (type) {
-            Config.Constants.SELL -> {
-                listingType = Config.Constants.TYPE_SELL
-                ivCurveProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.blue1)
-                )
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.blue1),
-                        2
-                    )
-                }
-            }
-            Config.Constants.RENT -> {
-
-                listingType = Config.Constants.TYPE_RENT
-
-                ivCurveProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.voilet)
-                )
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.voilet),
-                        2
-                    )
-                }
-
-            }
-            Config.Constants.BARTER -> {
-                listingType = Config.Constants.TYPE_BARTER
-
-                ivCurveProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.yellow1)
-                )
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.yellow1),
-                        2
-                    )
-                }
-            }
-            Config.Constants.POST -> {
-                Config.Constants.TYPE_POST
-                ivCurveProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.blue)
-                )
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.blue),
-                        2
-                    )
-                }
-            }
-            Config.Constants.PRODUCT -> {
-
-                ivCurveProduct.setColorFilter(
-                    ContextCompat.getColor(activity!!, R.color.red_a)
-                )
-                activity?.let {
-                    (activity as LandingActivity).updateStatusBarColor(
-                        AndroidUtils.getColor(R.color.red_a),
-                        2
-                    )
-                }
-            }
-
-        }
-*/
-    }
-
-    override fun sortBy(sort: String) {
-        when (sort) {
-            AndroidUtils.getString(R.string.popularity) -> {
-                sort_selected = AndroidUtils.getString(R.string.popularity)
-
-            }
-            AndroidUtils.getString(R.string.price_high_to_low) -> {
-                sort_selected = AndroidUtils.getString(R.string.price_high_to_low)
-
-            }
-            AndroidUtils.getString(R.string.price_low_high) -> {
-                sort_selected = AndroidUtils.getString(R.string.price_low_high)
-
-            }
-            AndroidUtils.getString(R.string.open_to_nagotiation_) -> {
-                sort_selected = AndroidUtils.getString(R.string.open_to_nagotiation_)
-
-            }
         }
 
     }

@@ -1,4 +1,4 @@
-package com.dartmic.yo2see.ui.profile
+    package com.dartmic.yo2see.ui.profile
 
 import android.content.Context
 import android.content.Intent
@@ -65,8 +65,8 @@ class UserProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationView
         if (NetworkUtil.isInternetAvailable(this)) {
             model.sendFeedback(
                 "UserRating",
-               listingItem?.userId,
                 model?.getUserID()+"",
+               listingItem?.userId,
                 rate
                 )
         }

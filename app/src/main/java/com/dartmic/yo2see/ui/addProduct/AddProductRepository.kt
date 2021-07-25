@@ -5,6 +5,7 @@ import com.dartmic.yo2see.model.ImageUpload.UploadImageResponse
 import com.dartmic.yo2see.model.add_product.AddProdcutResponse
 import com.dartmic.yo2see.model.add_product.ImagePathResponse
 import com.dartmic.yo2see.model.add_product.RentTypeResponse
+import com.dartmic.yo2see.model.list_dropdown.ListOfDropDownResponse
 import com.dartmic.yo2see.model.login.LoginRequest
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
@@ -26,6 +27,10 @@ interface AddProductRepository {
     fun getUser( service: String,
                       user_id: String
     ) : Single<LoginResponsePayload>
+
+    fun getType( service: String,
+                 gen_type: String
+    ) : Single<ListOfDropDownResponse>
 
     fun addProduct(service: String,
                    category_id: String,
@@ -64,5 +69,54 @@ interface AddProductRepository {
 
 
                    ) : Single<AddProdcutResponse>
+
+
+    fun addJob(service: String,
+               user_id: String,
+               category_id: String,
+               sub_cat_id: String,
+               sub_to_sub_cat_id: String,
+               listing_price: String,
+               country: String,
+               state: String,
+               city: String,
+               pincode: String,
+               address: String,
+               title: String,
+               description: String,
+               open_to_deliver: String,
+               km_range: String,
+               publish_datetime: String,
+               longitude: String,
+               latitude: String,
+               job_skills: String,
+               job_level: String,
+               job_type: String,
+               job_responsibility: String
+
+
+    ) : Single<AddProdcutResponse>
+
+    fun addEvent( service: String,
+                user_id: String,
+                category_id: String,
+                sub_cat_id: String,
+                sub_to_sub_cat_id: String,
+                listing_price: String,
+                country: String,
+                state: String,
+                city: String,
+                pincode: String,
+                address: String,
+                title: String,
+                description: String,
+                event_from: String,
+                event_to: String,
+                longitude: String,
+                latitude: String,
+                event_type: String
+
+
+    ) : Single<AddProdcutResponse>
 
 }

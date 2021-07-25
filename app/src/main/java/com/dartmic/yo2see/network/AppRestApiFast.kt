@@ -7,9 +7,12 @@ import com.dartmic.yo2see.model.add_product.ImagePathResponse
 import com.dartmic.yo2see.model.add_product.RentTypeResponse
 import com.dartmic.yo2see.model.categories.CategoriesResponse
 import com.dartmic.yo2see.model.categories.FeatureListResponse
+import com.dartmic.yo2see.model.list_dropdown.ListOfDropDownResponse
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
+import com.dartmic.yo2see.model.product.job.JobListingResponsePayload
 import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.model.signUp.OTPResponsePayload
@@ -113,6 +116,41 @@ interface AppRestApiFast {
         @Field("search_key") search_key: String
     ): Single<ProductListInfoResponsePayload>
 
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_JOB_DATA_API)
+    fun getJobProductListing(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("brand") brand: String,
+        @Field("ntype") ntype: String,
+        @Field("listing_type") listing_type: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("search_key") search_key: String
+    ): Single<JobListingResponsePayload>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_JOB_DATA_API)
+    fun getEventProductListing(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("brand") brand: String,
+        @Field("ntype") ntype: String,
+        @Field("listing_type") listing_type: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("search_key") search_key: String
+    ): Single<EventListingResponsePayload>
 
     @Multipart
     @POST(Config.Endpoints.UPLOAD_IMAGE_API)
@@ -130,6 +168,13 @@ interface AppRestApiFast {
     fun getUserList(
         @Field("service") service: String, @Field("user_id") user_id: String
     ): Single<LoginResponsePayload>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.GET_GEN_DATA_API)
+    fun getTypelist(
+        @Field("service") service: String, @Field("gen_type") gen_type: String
+    ): Single<ListOfDropDownResponse>
 
     @FormUrlEncoded
     @POST(Config.Endpoints.PRODUCT_ADD_API)
@@ -171,6 +216,59 @@ interface AppRestApiFast {
 
     ): Single<AddProdcutResponse>
 
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_ADD_JOB_API)
+    fun addJob(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id")  category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("pincode")   pincode: String,
+        @Field("address")   address: String,
+        @Field("title")   title: String,
+        @Field("description")  description: String,
+        @Field("open_to_deliver")  open_to_deliver: String,
+        @Field("km_range")  km_range: String,
+        @Field("publish_datetime") publish_datetime: String,
+        @Field("longitude")  longitude: String,
+        @Field("latitude")  latitude: String,
+        @Field("job_skills")  job_skills: String,
+        @Field("job_level")   job_level: String,
+        @Field("job_type")   job_type: String,
+        @Field("job_responsibility")  job_responsibility: String
+
+
+    ): Single<AddProdcutResponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_ADD_EVENT_API)
+    fun addEvent(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id")  category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("pincode")   pincode: String,
+        @Field("address")   address: String,
+        @Field("title")   title: String,
+        @Field("description")  description: String,
+        @Field("event_from")  event_from: String,
+        @Field("event_to")  event_to: String,
+        @Field("longitude")  longitude: String,
+        @Field("latitude")  latitude: String,
+        @Field("event_type")  event_type: String,
+    ): Single<AddProdcutResponse>
 
     @FormUrlEncoded
     @POST(Config.Endpoints.PRODUCT_DETAILS_DATA_API)

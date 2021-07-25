@@ -59,7 +59,7 @@
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:gravity="center_horizontal"
-                                android:text="@string/category"
+                                android:text="@string/name_title"
                                 android:textColor="@color/red_a"
                                 android:textSize="20sp" />
 
@@ -82,53 +82,103 @@
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/poppins_regular"
                             android:gravity="center_horizontal"
-                            android:text="@string/select_an_posting_category"
+                            android:text="@string/event_name"
                             android:textColor="@color/black"
                             android:textSize="12sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:lineSpacingExtra="0.001dp"
                             android:fontFamily="@font/poppins_regular"
-                            android:text="@string/how_would_you_like_the_post"
+                            android:text="Helper text"
                             android:textColor="@color/grey1"
                             android:textSize="12sp" />
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etEventname"
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
+                            android:layout_marginTop="5dp"
+                            android:lines="1"
+                            android:background="@drawable/edit_text_round_corner_bg"
+                            android:focusableInTouchMode="true"
+                            android:textColor="@color/disabled_text"
+                            android:textColorHint="@color/disabled_text" />
 
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_horizontal"
+                            android:text="@string/event_discription"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="0.001dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Helper text"
+                            android:textColor="@color/grey1"
+                            android:textSize="12sp" />
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etEventDiscription"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="5dp"
+                            android:lines="1"
+                            android:background="@drawable/edit_text_round_corner_bg"
+                            android:focusableInTouchMode="true"
+                            android:textColor="@color/disabled_text"
+                            android:textColorHint="@color/disabled_text" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_horizontal"
+                            android:text="@string/event_type"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="0.001dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Helper text"
+                            android:textColor="@color/grey1"
+                            android:textSize="12sp" />
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
 
-                            <CheckBox
-                                android:id="@+id/checkboxSell"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/sell"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a" />
+                            android:background="@drawable/spinner_drawable"
 
-                            <CheckBox
-                                android:id="@+id/checkboxRent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/rent"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a" />
-
-                            <CheckBox
-                                android:id="@+id/checkboxBarter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/barter"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a" />
-
+                            android:orientation="vertical">
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/eventTypeSpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:dropDownWidth="match_parent"
+                                android:paddingEnd="@dimen/spinner_padding"
+                                style="@style/SpinnerTheme"
+                                android:dropDownSelector="@drawable/custom_edit_text_drawable"
+                                android:popupBackground="@drawable/spinner_drawable"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@layout/item_custom_spinner"
+                                tools:ignore="RtlSymmetry" />
                         </LinearLayout>
+
                     </LinearLayout>
                 </RelativeLayout>
+
 
 
                 <RelativeLayout
@@ -154,173 +204,8 @@
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:gravity="center_horizontal"
-                                android:text="@string/add_description"
-                                android:textColor="@color/red_a"
-                                android:textSize="20sp" />
-
-                            <ImageView
-                                android:layout_centerVertical="true"
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_description_1" />
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/red_a" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/add_a_title_to_your_post"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etAddatitle"
-                            android:layout_width="match_parent"
-                            android:layout_height="39dp"
-                            android:layout_marginTop="5dp"
-                            android:lines="1"
-                            android:background="@drawable/edit_text_round_corner_bg"
-                            android:focusableInTouchMode="true"
-                            android:textColor="@color/disabled_text"
-                            android:textColorHint="@color/disabled_text" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:gravity="center_horizontal"
-                            android:text="Helper text"
-                            android:textColor="@color/grey"
-                            android:textSize="12sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/Brand"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etBrand"
-                            android:layout_width="match_parent"
-                            android:layout_height="39dp"
-                            android:layout_marginTop="5dp"
-                            android:lines="1"
-                            android:background="@drawable/edit_text_round_corner_bg"
-                            android:focusableInTouchMode="true"
-                            android:textColor="@color/disabled_text"
-                            android:textColorHint="@color/disabled_text" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:gravity="center_horizontal"
-                            android:text="Helper text"
-                            android:textColor="@color/grey"
-                            android:textSize="12sp" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/description"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etDescription"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edit_text_round_corner_bg"
-                            android:focusableInTouchMode="true"
-                            android:inputType="textMultiLine"
-                            android:textColor="@color/disabled_text"
-                            android:textColorHint="@color/disabled_text" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:gravity="center_horizontal"
-                            android:text="Helper text"
-                            android:textColor="@color/grey"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:visibility="gone"
-                            android:id="@+id/tvProductDetails"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/product_details"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etProductDetails"
-                            android:visibility="gone"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edit_text_round_corner_bg"
-                            android:focusableInTouchMode="true"
-                            android:inputType="textEmailAddress|textNoSuggestions"
-                            android:textColor="@color/disabled_text"
-                            android:textColorHint="@color/disabled_text" />
-
-                        <TextView
-                            android:visibility="gone"
-                            android:id="@+id/tvProductDetailsHelperText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:gravity="center_horizontal"
-                            android:text="Helper text"
-                            android:textColor="@color/grey"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:background="@drawable/shadow_back"
-                    app:elevation="8dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/et_height_20">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:fontFamily="@font/poppins_medium"
-                                android:gravity="center_horizontal"
-                                android:text="@string/payment_type"
+                                android:text="@string/cost_if_applicable"
+                                android:textAllCaps="true"
                                 android:textColor="@color/red_a"
                                 android:textSize="20sp" />
 
@@ -339,18 +224,18 @@
                             android:background="@color/red_a" />
 
                         <TextView
-                            android:id="@+id/tvSetPrice"
+                            android:id="@+id/tvCost"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_horizontal"
-                            android:text="@string/set_a_price"
+                            android:text="@string/cost"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etSetPrice"
+                            android:id="@+id/etCost"
 
                             android:layout_width="match_parent"
                             android:layout_height="39dp"
@@ -371,75 +256,10 @@
                             android:textColor="@color/grey"
                             android:textSize="12sp" />
 
-                        <TextView
-                            android:visibility="gone"
-                            android:id="@+id/tvSetAPriceLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/set_a_rent_price"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
 
-                        <TextView
-                            android:visibility="gone"
-
-                            android:id="@+id/tvRentHelperText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:gravity="center_horizontal"
-                            android:text="Helper text"
-                            android:textColor="@color/grey"
-                            android:textSize="12sp" />
-
-                        <include
-                            android:visibility="gone"
-
-                            android:id="@+id/layout_payment"
-                            layout="@layout/layout_set_payment" />
-
-                        <TextView
-                            android:visibility="gone"
-
-                            android:id="@+id/tvBarterLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/what_would_you_like_to_barter"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:visibility="gone"
-
-                            android:id="@+id/etwhatWouldtoLiketoBarter"
-                            android:layout_width="match_parent"
-                            android:layout_height="39dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edit_text_round_corner_bg"
-                            android:focusableInTouchMode="true"
-                            android:inputType="textEmailAddress|textNoSuggestions"
-                            android:textColor="@color/disabled_text"
-                            android:textColorHint="@color/disabled_text" />
-
-                        <TextView
-                            android:visibility="gone"
-
-                            android:id="@+id/tvBarterHelperText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_regular"
-                            android:gravity="center_horizontal"
-                            android:text="Helper text"
-                            android:textColor="@color/grey"
-                            android:textSize="12sp" />
                     </LinearLayout>
                 </RelativeLayout>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -464,18 +284,11 @@
                                 android:layout_marginTop="10dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:gravity="center_horizontal"
+                                android:text="@string/date"
                                 android:textAllCaps="true"
-                                android:text="@string/product_details"
                                 android:textColor="@color/red_a"
                                 android:textSize="20sp" />
 
-                            <ImageView
-                                android:layout_centerVertical="true"
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:src="@drawable/ic_description_1" />
                         </RelativeLayout>
 
                         <View
@@ -483,32 +296,31 @@
                             android:layout_height="1dp"
                             android:background="@color/red_a" />
 
-
                         <TextView
-                            android:id="@+id/tvSelectItemCondition"
+                            android:id="@+id/tvFrom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_horizontal"
-                            android:text="@string/select_an_item"
+                            android:text="@string/from"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatEditText
-
+                            android:id="@+id/etFrom"
                             android:layout_width="match_parent"
                             android:layout_height="39dp"
                             android:layout_marginTop="5dp"
-                            android:id="@+id/etSelectItemCondition"
+                            android:clickable="true"
+                            android:focusable="false"
                             android:background="@drawable/edit_text_round_corner_bg"
                             android:focusableInTouchMode="true"
-                            android:inputType="textEmailAddress|textNoSuggestions"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/disabled_text"
                             android:textColorHint="@color/disabled_text" />
 
                         <TextView
-                            android:id="@+id/tvSelectItemConditionHelperText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_regular"
@@ -517,72 +329,42 @@
                             android:textColor="@color/grey"
                             android:textSize="12sp" />
                         <TextView
+                            android:id="@+id/tvTo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:fontFamily="@font/poppins_semibold"
                             android:gravity="center_horizontal"
-                            android:text="@string/are_you_open_to_negotiation"
+                            android:text="@string/to"
                             android:textColor="@color/black"
                             android:textSize="14sp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <RadioButton
-                                android:id="@+id/rbYes"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/yes"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a" />
-
-                            <RadioButton
-                                android:id="@+id/rbNO"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/no"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a"
-                                tools:ignore="DuplicateIds" />
-
-
-                        </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etTo"
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
+                            android:layout_marginTop="5dp"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:background="@drawable/edit_text_round_corner_bg"
+                            android:focusableInTouchMode="true"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/disabled_text"
+                            android:textColorHint="@color/disabled_text" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_regular"
                             android:gravity="center_horizontal"
-                            android:text="@string/upload_images"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:text="@string/for_the_best_viewing_please_upload"
+                            android:text="Helper text"
                             android:textColor="@color/grey"
                             android:textSize="12sp" />
-
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvImages"
-                            android:visibility="visible"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp" />
-
 
                     </LinearLayout>
                 </RelativeLayout>
 
-
-   <RelativeLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -626,64 +408,11 @@
                         <include
                             android:id="@+id/layout_location_info"
                             layout="@layout/layout_set_location_info" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/are_you_open_to_deliver"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <RadioButton
-                                android:id="@+id/rbYesDeliver"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/yes"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a" />
-
-                            <RadioButton
-                                android:id="@+id/rbNoDeliver"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:text="@string/no"
-                                android:textColor="@color/black"
-                                app:buttonTint="@color/red_a" />
-
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center_horizontal"
-                            android:text="@string/up_till_what_km"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/etKm"
-                            android:layout_width="match_parent"
-                            android:layout_height="39dp"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/edit_text_round_corner_bg"
-                            android:focusableInTouchMode="true"
-                            android:inputType="numberDecimal"
-                            android:textColor="@color/disabled_text"
-                            android:textColorHint="@color/disabled_text" />
 
                     </LinearLayout>
 
-   </RelativeLayout>
+                </RelativeLayout>
 
                 <include
                     layout="@layout/layout_set_user_info" />

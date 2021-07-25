@@ -11,11 +11,14 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.ui.LandingActivity
+import com.dartmic.yo2see.ui.addProduct.AddEventFragment
+import com.dartmic.yo2see.ui.addProduct.AddJobFragment
 import com.dartmic.yo2see.ui.addProduct.AddProductFragment
 import com.dartmic.yo2see.ui.buycategoriesList.CategoriesListFragment
 import com.dartmic.yo2see.ui.buycategoriesList.adapter.CategoriesExpandableListView
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeEvents
+import com.dartmic.yo2see.ui.product_list.JobListingFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
@@ -92,24 +95,66 @@ class SubCategoriesFragment : BaseFragment<CategoriesViewModel>(CategoriesViewMo
 
             subategoriesExpandableListView!!.setOnChildClickListener { parent, v, groupPosition, childPosition, id ->
                 if (type == Config.Constants.POST_AN_ADD) {
-                    mFragmentNavigation.pushFragment(
-                        AddProductFragment
-                            .getInstance(mInt + 1,categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
-                                childPosition
-                            ))
-                    )
-
-                } else {
-                    mFragmentNavigation.pushFragment(
-                        ProductListFragment
-                            .getInstance(
-                                mInt + 1,
-                                type,"","",
-                                categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
-                                    childPosition
+                    if (categoryListItemData?.categoryName.equals("Jobs", true)) {
+                        mFragmentNavigation.pushFragment(
+                            AddJobFragment
+                                .getInstance(
+                                    mInt + 1,
+                                    categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                        childPosition
+                                    )
                                 )
-                            )
-                    )
+                        )
+
+                    }
+                   else if (categoryListItemData?.categoryName.equals("Events", true)) {
+                        mFragmentNavigation.pushFragment(
+                            AddEventFragment
+                                .getInstance(
+                                    mInt + 1,
+                                    categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                        childPosition
+                                    )
+                                )
+                        )
+
+                    }else {
+                        mFragmentNavigation.pushFragment(
+                            AddProductFragment
+                                .getInstance(
+                                    mInt + 1,
+                                    categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                        childPosition
+                                    )
+                                )
+                        )
+                    }
+                } else {
+                    if (categoryListItemData?.categoryName.equals("Jobs", true)) {
+
+                        mFragmentNavigation.pushFragment(
+                            JobListingFragment
+                                .getInstance(
+                                    mInt + 1,
+                                    type, "", "",
+                                    categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                        childPosition
+                                    )
+                                )
+                        )
+                    } else {
+                        mFragmentNavigation.pushFragment(
+                            ProductListFragment
+                                .getInstance(
+                                    mInt + 1,
+                                    type, "", "",
+                                    categoryListItemData?.subCatList?.get(groupPosition)?.subToSubList?.get(
+                                        childPosition
+                                    )
+                                )
+                        )
+
+                    }
                 }
                 /* Toast.makeText(
                      it,

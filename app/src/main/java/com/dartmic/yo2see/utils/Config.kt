@@ -10,6 +10,7 @@ class Config {
         const val CLICK_VIEW_FAV = 101
         const val CLICK_ADD_IMAGE = 102
         const val CLICK_REMOVE_IMAGE = 103
+        const val CLICK_SHARE= 104
 
 
     }
@@ -58,6 +59,8 @@ class Config {
         const val FEATURE_API = BASE_PATH + "common/isfeaturelist"
         const val CATEGORIES_DATA_API = BASE_PATH + "common/alltypelist"
         const val PRODUCT_DATA_API = BASE_PATH + "product/listing"
+        const val PRODUCT_JOB_DATA_API = BASE_PATH + "event/listing"
+
         const val UPLOAD_IMAGE_API = BASE_PATH + "common/upload_image"
         const val PRODUCT_ADD_API = BASE_PATH + "product/add_product"
         const val PRODUCT_DETAILS_DATA_API = BASE_PATH + "common/listing_detail"
@@ -73,6 +76,9 @@ class Config {
         const val RESEND_EMAIL = BASE_PATH + "user/resend_email"
         const val FORGOT_PASSWORD = BASE_PATH + "user/forgetpwd"
         const val FEEDBACK = BASE_PATH + "user/user_rating"
+        const val GET_GEN_DATA_API = BASE_PATH + "common/generallist"
+        const val PRODUCT_ADD_JOB_API = BASE_PATH + "event/add_job"
+        const val PRODUCT_ADD_EVENT_API = BASE_PATH + "event/add_event"
 
 
     }

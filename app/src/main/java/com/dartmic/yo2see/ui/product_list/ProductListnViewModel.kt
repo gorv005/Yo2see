@@ -12,6 +12,8 @@ import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
+import com.dartmic.yo2see.model.product.job.JobListingResponsePayload
 import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.utils.Config
@@ -31,6 +33,8 @@ class ProductListnViewModel(
     val productDetailsViewModel = MutableLiveData<ProductDetailResponsePayload>()
     val userViewModel = MutableLiveData<LoginResponsePayload>()
     val favViewModel = MutableLiveData<LoginResponsePayload>()
+    val productJobListViewModel = MutableLiveData<JobListingResponsePayload>()
+    val productEventListViewModel = MutableLiveData<EventListingResponsePayload>()
 
     fun getUser(
         service: String,
@@ -195,6 +199,146 @@ class ProductListnViewModel(
     }
 
 
+    fun getJobProductList(
+        service: String,
+        userId: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        brand: String,
+        nType: String,
+        listing_type: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        search_key: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.getJobProduct(
+                service,
+                userId,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                brand,
+                nType,
+                listing_type,
+                listing_price,
+                country,
+                state,
+                city,
+                search_key
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    productJobListViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            productJobListViewModel.value =
+                                Gson().fromJson(error, JobListingResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun getEventProductList(
+        service: String,
+        userId: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        brand: String,
+        nType: String,
+        listing_type: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        search_key: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.getEventListing(
+                service,
+                userId,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                brand,
+                nType,
+                listing_type,
+                listing_price,
+                country,
+                state,
+                city,
+                search_key
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    productEventListViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            productEventListViewModel.value =
+                                Gson().fromJson(error, EventListingResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     fun addAndRemoveToFavorites(
         service: String,
         user_id: String,
@@ -304,6 +448,7 @@ class ProductListnViewModel(
     public fun getUserImage(): String? {
         return pre.getUserImage()
     }
+
     public fun getLoggedInUserName(): String? {
         return pre.getLoggedInUserName()
     }
@@ -311,6 +456,7 @@ class ProductListnViewModel(
     public fun getEmail(): String? {
         return pre.getLoggedInUserEmail()
     }
+
     public fun getUserPassword(): String? {
         return pre.getLoggedInUserPassword()
     }

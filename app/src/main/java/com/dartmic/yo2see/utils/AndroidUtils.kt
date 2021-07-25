@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.telephony.TelephonyManager
 import android.text.*
 import android.text.format.DateUtils
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
-import android.text.style.StyleSpan
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
@@ -23,6 +23,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseApplication
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
@@ -367,6 +368,7 @@ class AndroidUtils {
             }
             return 2
         }
+
         val onlyTime = SimpleDateFormat("h:mm a", Locale.US) // the format of your date
         val onlyDate = SimpleDateFormat("d MMM", Locale.US) // the format of your date
 
@@ -380,6 +382,7 @@ class AndroidUtils {
             }
 
         }
+
         fun isYesterday(d: Date): Boolean {
             return DateUtils.isToday(d.time + DateUtils.DAY_IN_MILLIS)
         }
@@ -391,7 +394,8 @@ class AndroidUtils {
 
         fun getFormattedTimeChatLog(timeInMilis: Long): String {
             val date = Date(timeInMilis * 1000L) // *1000 is to convert seconds to milliseconds
-            val fullFormattedTime = SimpleDateFormat("d MMM, h:mm a", Locale.US) // the format of your date
+            val fullFormattedTime =
+                SimpleDateFormat("d MMM, h:mm a", Locale.US) // the format of your date
             val onlyTime = SimpleDateFormat("h:mm a", Locale.US) // the format of your date
 
             return when {
@@ -400,6 +404,93 @@ class AndroidUtils {
             }
 
         }
+
+        fun getCountryCode(c: Context): String {
+            val tm = c.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            val countryCodeValue = tm.networkCountryIso
+            return countryCodeValue
+        }
+        /*fun getSymbol(): String? {
+            return getSymbol(Locale.getDefault())
+        }*/
+         fun getCurrencyCode(): String{
+            Log.e("DEBUG code",Currency.getInstance(Locale.getDefault()).currencyCode)
+            return Currency.getInstance(Locale.getDefault()).currencyCode
+        }
+        fun getCurrencySymbol(currencyCode: String?): String? {
+            return try {
+                val currency = Currency.getInstance(currencyCode)
+                Log.e("DEBUG symbol",currency.symbol)
+
+                currency.symbol
+            } catch (e: java.lang.Exception) {
+                currencyCode
+            }
+        }
+        /* fun getCurrencySymbol(countryCode: String?): String? {
+             return Currency.getInstance(Locale("", countryCode)).symbol
+         }*/
+        /*  fun getCurrencyLocaleMap(): Map<Currency?, Locale>? {
+              val currencyLocaleMap: MutableMap<Currency?, Locale> = HashMap()
+              for (locale in Locale.getAvailableLocales()) {
+                  try {
+                      val currency = Currency.getInstance(locale)
+                      currencyLocaleMap[currency] = locale
+                  } catch (e: java.lang.Exception) {
+                  }
+              }
+              return currencyLocaleMap
+          }
+          fun getCurrencySymbol(currencyCode: String?): String? {
+              var currencySymbol: String? = null
+              if (currencyCode == null || currencyCode.isEmpty()) {
+                  currencySymbol = currencyCode
+              } else {
+                  var currencyLocale: Locale? = null
+                  var currencyLocaleMap: Map<Currency?, Locale?>? = null
+                  var currency: Currency? = null
+                  try {
+                      currency = Currency.getInstance(currencyCode)
+                      currencyLocaleMap = getCurrencyLocaleMap()
+                      currencyLocale = currencyLocaleMap!![currency]
+                  } catch (e: java.lang.Exception) {
+                      println(
+                          "No symbol is there for currencyCode="
+                                  + currencyCode
+                      )
+                  }
+                  currencySymbol = if (currency != null && currencyLocale != null) {
+                      currency.getSymbol(
+                          currencyLocaleMap!!
+                              .get(currency)
+                      )
+                  } else {
+                      currencyCode
+                  }
+              }
+              return currencySymbol
+          }*/
+        fun convertStringIntoDateTime(time: String): Date {
+            val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
+            try {
+                val d: Date = sdf.parse(time)
+                return d
+            } catch (ex: ParseException) {
+            }
+            return sdf.calendar.time
+        }
+        fun checkStartEndDateTimeValid(calEdt:String,cal2Edt:String): CharSequence {
+            if (calEdt.isNotEmpty() && cal2Edt.isNotEmpty()) {
+                val startDateTime = convertStringIntoDateTime(calEdt)
+                val endDateTime = convertStringIntoDateTime(cal2Edt)
+                if (endDateTime.after(startDateTime) || endDateTime == startDateTime) {
+                    return AndroidUtils.getString(R.string.start_date_and_end_date_not_same)
+                }
+            }
+            return AndroidUtils.getString(R.string.error_field_cant_blank)
+
+        }
+
     }
 
 }

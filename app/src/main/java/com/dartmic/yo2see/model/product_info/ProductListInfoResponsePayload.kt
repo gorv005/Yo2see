@@ -101,6 +101,8 @@ data class ListingItem(@SerializedName("UserMobile")
                        val itemRating: String = "",
                        @SerializedName("UserUID")
                        val userUID: String = "",
+                       @SerializedName("AvgRatingUser")
+                       val AvgRatingUser: String = "",
                        @SerializedName("listing_publish_datetime")
                        val listingPublishDatetime: String = "",
                        @SerializedName("RentType")

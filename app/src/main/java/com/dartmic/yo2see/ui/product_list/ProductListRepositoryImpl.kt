@@ -7,6 +7,8 @@ import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
+import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
+import com.dartmic.yo2see.model.product.job.JobListingResponsePayload
 import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.network.AppRestApiFast
 
@@ -39,6 +41,70 @@ class ProductListRepositoryImpl(
             sub_cat_id,
             sub_to_sub_cat_id,
             brand,
+            listing_type,
+            listing_price,
+            country,
+            state,
+            city,
+            search_key
+        )
+    }
+
+    override fun getJobProduct(
+        service: String,
+        userId: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        brand: String,
+        nType:String,
+        listing_type: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        search_key: String
+    ): Single<JobListingResponsePayload> {
+        return restApi.getJobProductListing(
+            service,
+            userId,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            brand,
+            nType,
+            listing_type,
+            listing_price,
+            country,
+            state,
+            city,
+            search_key
+        )
+    }
+
+    override fun getEventListing(
+        service: String,
+        userId: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        brand: String,
+        nType: String,
+        listing_type: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        search_key: String
+    ): Single<EventListingResponsePayload> {
+        return restApi.getEventProductListing(
+            service,
+            userId,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            brand,
+            nType,
             listing_type,
             listing_price,
             country,

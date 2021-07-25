@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/back">
+
+    <LinearLayout
+        android:layout_marginTop="155dp"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rlFilter"
+            android:background="@color/red_a"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp">
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/poppins_regular"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:text="@string/filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <ImageView
+                    android:layout_marginStart="10dp"
+                    app:tint="@color/white"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_outline_filter_alt_24"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_yo2see_logo"
+            android:text="@string/mobile_and_accessories" />
+
+        <ImageView
+            app:tint="@color/red_a"
+            android:layout_width="@dimen/et_width_120"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:id="@+id/ivCurveProduct"
+            android:src="@drawable/ic_blue_top_background" />
+        <ImageView
+            android:id="@+id/ivBackProduct"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_left_arrow_white"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/lllocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp">
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/ic_location_pin"
+                    app:tint="@color/red_a" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_search_icon_black"
+                    app:tint="@color/red_a" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/tvSubTitleProductValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Mobiles/cell phones/Android"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:text="Found 1777 results"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvProductEventList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="65dp"
+                android:layout_marginEnd="10dp"
+                android:layoutAnimation="@anim/gridlayout_animation_from_bottom" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>
