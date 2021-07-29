@@ -1,5 +1,6 @@
 package com.dartmic.yo2see.ui
 
+import android.R.attr
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -25,11 +26,13 @@ import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.favorites.SortByBottomSheet
 import com.dartmic.yo2see.ui.home.HomeFragment
 import com.dartmic.yo2see.ui.home.products.ProductFragment
+import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.more.MoreFragment
 import com.dartmic.yo2see.ui.postAdd.PostAnAddFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.ui.product_list.adapter.SortByProductBottomSheet
+import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import com.ncapdevi.fragnav.FragNavController
@@ -37,6 +40,7 @@ import com.ncapdevi.fragnav.FragNavLogger
 import com.ncapdevi.fragnav.FragNavSwitchController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.ncapdevi.fragnav.tabhistory.UniqueTabHistoryStrategy
+import com.shivtechs.maplocationpicker.MapUtility
 import kotlinx.android.synthetic.main.activity_landing.*
 import kotlinx.android.synthetic.main.activity_landing.view.*
 
@@ -102,6 +106,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
 
     companion object {
         const val KEY_TAB = "KEY_TAB"
+        const val ADDRESS_PICKER_REQUEST = 1020
 
         fun getIntent(context: Context, f: Int): Intent? {
             val intent = Intent(context, LandingActivity::class.java)
@@ -111,10 +116,12 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_landing)
         //  bottomBar.inflateMenu(R.menu.bottom_nav_menu)
+        MapUtility.apiKey = getResources().getString(R.string.your_api_key);
         fragNavController.apply {
             transactionListener = this@LandingActivity
             rootFragmentListener = this@LandingActivity
@@ -242,6 +249,13 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             }
 
         }
+       /* let {
+            this?.let { UiUtils.hideSoftKeyboard(it) }
+
+            startActivityForResult(
+                MapsActivity.getIntent(it), 12
+            )
+        }*/
     }
 
    public fun checkUserLogin(): Boolean {
@@ -356,10 +370,60 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         try {
-            if(getVisibleFragment() is ProductFragment) {
+            if (requestCode === ADDRESS_PICKER_REQUEST) {
+                try {
+                    if (data != null && data.getStringExtra(MapUtility.ADDRESS) != null) {
+                        // String address = data.getStringExtra(MapUtility.ADDRESS);
+                        val currentLatitude: Double =
+                            data.getDoubleExtra(MapUtility.LATITUDE, 0.0)
+                        val currentLongitude: Double =
+                           data.getDoubleExtra(MapUtility.LONGITUDE, 0.0)
+                        val completeAddress: Bundle = data.getBundleExtra("fullAddress")!!
+                        /* data in completeAddress bundle
+                    "fulladdress"
+                    "city"
+                    "state"
+                    "postalcode"
+                    "country"
+                    "addressline1"
+                    "addressline2"
+
+                     */
+
+                        Log.e("DEBUG",""+StringBuilder().append("addressline2: ")
+                            .append(completeAddress.getString("addressline2"))
+                            .append("\ncity: ").append(completeAddress.getString("city"))
+                            .append("\npostalcode: ")
+                            .append(completeAddress.getString("postalcode")).append("\nstate: ")
+                            .append(completeAddress.getString("state")).toString())
+
+                        Log.e("DEBUG",  StringBuilder().append("Lat:").append(currentLatitude).append("  Long:")
+                            .append(currentLongitude).toString())
+                        /*txtAddress.setText(
+                            StringBuilder().append("addressline2: ")
+                                .append(completeAddress.getString("addressline2"))
+                                .append("\ncity: ").append(completeAddress.getString("city"))
+                                .append("\npostalcode: ")
+                                .append(completeAddress.getString("postalcode")).append("\nstate: ")
+                                .append(completeAddress.getString("state")).toString()
+                        )
+                        txtLatLong.setText(
+                            StringBuilder().append("Lat:").append(currentLatitude).append("  Long:")
+                                .append(currentLongitude).toString()
+                        )*/
+                    }
+                } catch (ex: java.lang.Exception) {
+                    ex.printStackTrace()
+                }
+            }
+          else  if(getVisibleFragment() is ProductFragment) {
                 var f = getVisibleFragment() as ProductFragment
                // (( Fragment)ProductFragment).onActivityResult(requestCode, resultCode, data)
-                (supportFragmentManager.findFragmentById(R.id.container) as AddProductFragment?)?.onActivityResult(requestCode, resultCode, data)
+                (supportFragmentManager.findFragmentById(R.id.container) as AddProductFragment?)?.onActivityResult(
+                    requestCode,
+                    resultCode,
+                    data
+                )
             }
         } catch (e: Exception) {
             e.printStackTrace()

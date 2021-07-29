@@ -1,6 +1,7 @@
 package com.dartmic.yo2see.ui.addProduct
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -27,6 +28,7 @@ import com.dartmic.yo2see.model.add_product.RentTypeResponse
 import com.dartmic.yo2see.model.list_dropdown.GeneralListItem
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.ui.addProduct.adapter.DigitalSpinnerAdapter
+import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
@@ -96,7 +98,15 @@ class AddJobFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::cl
 
         getJobType("Job Type")
         getJobLevel("Job Level")
-
+        tvSearchLocation.setOnClickListener {
+            activity!!.let {
+                UiUtils.hideSoftKeyboard(it)
+                // Call for Location
+                startActivityForResult(
+                    MapsActivity.getIntent(it), 23
+                )
+            }
+        }
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -142,6 +152,23 @@ class AddJobFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::cl
                 etState.setError(validateetState)
                 etCountry.setError(validateetCountry)
             }
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 23) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                etAddressOne.setText(data.getStringExtra(MapsActivity.KEY_ADDRESS1))
+                etPincode.setText(data.getStringExtra(MapsActivity.KEY_PINCODE))
+                etCountry.setText(data.getStringExtra(MapsActivity.KEY_COUNTRY))
+                etState.setText(data.getStringExtra(MapsActivity.KEY_STATE))
+                etCity.setText(data.getStringExtra(MapsActivity.KEY_CITY))
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LATITUDE, 0.0)
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LONGITUDE, 0.0)
+
+            }
+
+
         }
     }
 

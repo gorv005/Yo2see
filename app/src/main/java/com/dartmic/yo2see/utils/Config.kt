@@ -40,6 +40,9 @@ class Config {
         const val TYPE_RENT = "Rent"
         const val TYPE_POST = "Post"
         const val TYPE_BARTER = "Barter"
+        const val ADDRESS = "ADDRESS"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
 
     }
 
@@ -79,6 +82,13 @@ class Config {
         const val GET_GEN_DATA_API = BASE_PATH + "common/generallist"
         const val PRODUCT_ADD_JOB_API = BASE_PATH + "event/add_job"
         const val PRODUCT_ADD_EVENT_API = BASE_PATH + "event/add_event"
+        const val PRODUCT_ADD_BUSINESS = BASE_PATH + "event/add_business"
+        const val PRODUCT_ADD_BLOG = BASE_PATH + "event/add_blog"
+        const val PRODUCT_ADD_POEM = BASE_PATH + "event/add_poem"
+        const val PRODUCT_ADD_STORY = BASE_PATH + "event/add_story"
+        const val PRODUCT_ADD_FREELANCE = BASE_PATH + "event/add_freelancing"
+        const val PRODUCT_ADD_LOCAL_SERVICE = BASE_PATH + "event/add_local_service"
+        const val PRODUCT_DETAILS_EVENT_DATA_API = BASE_PATH + "event/listing_detail"
 
 
     }

@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/back">
 
 
@@ -12,349 +12,395 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/lllocation"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp">
+                android:orientation="vertical">
 
-                <ImageView
-                    app:tint="@color/red_a"
+                <RelativeLayout
+                    android:id="@+id/lllocation"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="30dp"
-                    android:layout_width="wrap_content"
-                    android:src="@drawable/ic_location_pin" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="70dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:lines="1"
+                        android:ellipsize="end"
+                        android:text="@string/yes"
+                        android:textColor="@color/red_a"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true">
+
+                        <ImageView
+                            android:id="@+id/ivLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="30dp"
+                            android:src="@drawable/ic_location_pin"
+                            app:tint="@color/red_a" />
+
+                        <ImageView
+                            android:id="@+id/ivSearch"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_search_icon_black"
+                            app:tint="@color/red_a" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvHomeWelecomeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/lllocation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_horizontal"
+                    android:text="@string/welcome_text"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+                <RelativeLayout
+                    android:id="@+id/rlCat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="4">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/rlbuy_SellView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/rlbuy_Sell"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/round_shadow_white_circle">
+
+                                    <ImageView
+                                        android:layout_width="24dp"
+                                        android:layout_height="30dp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_buysell_icon_small_blue" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/rlbuy_Sell"
+                                    android:layout_centerHorizontal="true"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="@string/buy_sell"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/rlRentView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/rlRent"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/round_shadow_white_circle">
+
+                                    <ImageView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_rent_icon_small_purple" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/rlRent"
+                                    android:layout_centerHorizontal="true"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="@string/rent"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/rlbarterView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/rlbarter"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/round_shadow_white_circle">
+
+                                    <ImageView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_barter_icon_small_purple" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/rlbarter"
+                                    android:layout_centerHorizontal="true"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="@string/barter"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <RelativeLayout
+                                android:id="@+id/rlTrendsView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:id="@+id/rlTrends"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/round_shadow_white_circle">
+
+                                    <ImageView
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:layout_centerInParent="true"
+                                        android:src="@drawable/ic_trends_icon_small_purple" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/rlTrends"
+                                    android:layout_centerHorizontal="true"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="@string/events"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/black"
+                                    android:textSize="13sp" />
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <ImageView
-                    android:id="@+id/ivSearch"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:tint="@color/red_a"
-                    android:src="@drawable/ic_search_icon_black" />
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_cloud_updated" />
+
+                <TextView
+                    android:id="@+id/tvBrows"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/lllocation"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center_horizontal"
+                    android:text="@string/brows_through_our_products"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/lllocation"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/ads"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:clipToPadding="false">
+
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:background="@drawable/gradient_bg"
+                        app:tabGravity="fill"
+                        app:tabIndicatorColor="@null"
+                        app:tabMode="fixed"
+                        app:tabRippleColor="@null"
+                        app:tabSelectedTextColor="#ffffff" />
+
+                    <View
+                        android:id="@+id/indicator"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ic_round_red_tab"
+                        android:elevation="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:elevation="2dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/tvProducts"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="@string/products"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="14sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/tvEvents"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:fontFamily="@font/poppins_medium"
+                                android:text="@string/events_"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:visibility="gone" />
+
+                        </RelativeLayout>
+                    </LinearLayout>
+                </FrameLayout>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHomeProducts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvHomeEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvHomeWelecomeText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/lllocation"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:textSize="14sp"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center_horizontal"
-                android:text="@string/welcome_text"
-                android:textColor="@color/black" />
-
-
-            <RelativeLayout
-                android:id="@+id/rlCat"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:weightSum="4"
-                    android:layout_height="match_parent">
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:id="@+id/rlbuy_SellView"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <RelativeLayout
-                                android:id="@+id/rlbuy_Sell"
-                                android:background="@drawable/round_shadow_white_circle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <ImageView
-                                    android:layout_width="24dp"
-                                    android:layout_height="30dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_buysell_icon_small_blue" />
-                            </RelativeLayout>
-                            <TextView
-                                android:layout_below="@id/rlbuy_Sell"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="@string/buy_sell"
-                                android:textAllCaps="true"
-                                android:textColor="@color/black"
-                                android:textSize="13sp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:id="@+id/rlRentView"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <RelativeLayout
-                                android:id="@+id/rlRent"
-                                android:background="@drawable/round_shadow_white_circle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_rent_icon_small_purple"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"/>
-                            </RelativeLayout>
-                            <TextView
-                                android:layout_below="@id/rlRent"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="@string/rent"
-                                android:textAllCaps="true"
-                                android:textColor="@color/black"
-                                android:textSize="13sp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:id="@+id/rlbarterView"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <RelativeLayout
-                                android:id="@+id/rlbarter"
-                                android:background="@drawable/round_shadow_white_circle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/ic_barter_icon_small_purple"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"/>
-                            </RelativeLayout>
-                            <TextView
-                                android:layout_below="@id/rlbarter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:fontFamily="@font/poppins_bold"
-                                android:text="@string/barter"
-                                android:textAllCaps="true"
-                                android:textColor="@color/black"
-                                android:textSize="13sp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <RelativeLayout
-                            android:id="@+id/rlTrendsView"
-                            android:layout_centerInParent="true"
-                            android:gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                        <RelativeLayout
-                            android:id="@+id/rlTrends"
-                            android:background="@drawable/round_shadow_white_circle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_centerInParent="true"
-                            android:src="@drawable/ic_trends_icon_small_purple"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"/>
-                        </RelativeLayout>
-                        <TextView
-                            android:layout_below="@id/rlTrends"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:fontFamily="@font/poppins_bold"
-                            android:text="@string/events"
-                            android:textAllCaps="true"
-                            android:textColor="@color/black"
-                            android:textSize="13sp" />
-                        </RelativeLayout>
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_cloud_updated" />
-
-            <TextView
-                android:id="@+id/tvBrows"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/lllocation"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="@string/brows_through_our_products"
-                android:textColor="@color/black"
-                android:textSize="14sp" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvEvents"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/lllocation"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/poppins_bold"
-                android:text="@string/ads"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvAds"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp" />
-            <FrameLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false">
-
-
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tab"
-                    android:layout_width="match_parent"
-                    android:layout_height="43dp"
-                    android:background="@drawable/gradient_bg"
-                    app:tabGravity="fill"
-                    app:tabMode="fixed"
-                    app:tabSelectedTextColor="#ffffff"
-                    app:tabIndicatorColor="@null"
-                    app:tabRippleColor="@null"/>
-
-                <View
-                    android:id="@+id/indicator"
-                    android:layout_width="0dp"
-                    android:elevation="2dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/ic_round_red_tab"/>
-
-                <LinearLayout
-                    android:weightSum="2"
-                    android:elevation="2dp"
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="43dp">
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:id="@+id/tvProducts"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="@string/products"
-                            android:layout_centerInParent="true"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <TextView
-                            android:visibility="gone"
-                            android:id="@+id/tvEvents"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_medium"
-                            android:text="@string/events_"
-                            android:layout_centerInParent="true"
-                            android:textAllCaps="true"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </FrameLayout>
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:visibility="visible"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvHomeProducts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-               />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvHomeEvents"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
-
-        </LinearLayout>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:scaleType="fitXY"
-                app:tint="@color/red_a"
-                android:src="@drawable/curve_buysell" />
+                android:src="@drawable/curve_buysell"
+                app:tint="@color/red_a" />
 
         </RelativeLayout>
 

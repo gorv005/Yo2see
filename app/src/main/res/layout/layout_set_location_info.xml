@@ -32,6 +32,19 @@
         android:background="@color/red_a" />
 
     <TextView
+        android:id="@+id/tvSearchLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/search_location"
+        android:textColor="@color/red_a"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:background="@color/red_a" />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -46,6 +59,8 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:focusable="false"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:lines="1"
@@ -67,6 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:focusable="false"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"
@@ -89,6 +106,8 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
+        android:clickable="false"
+        android:focusable="false"
         android:inputType="number"
         android:textColor="@color/disabled_text"
         android:textColorHint="@color/disabled_text" />
@@ -110,6 +129,8 @@
         android:layout_marginTop="5dp"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
+        android:clickable="false"
+        android:focusable="false"
         android:textColor="@color/disabled_text"
         android:textColorHint="@color/disabled_text" />
 
@@ -129,6 +150,8 @@
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:layout_marginTop="5dp"
+        android:clickable="false"
+        android:focusable="false"
         android:background="@drawable/edit_text_round_corner_bg"
         android:focusableInTouchMode="true"
         android:textColor="@color/disabled_text"

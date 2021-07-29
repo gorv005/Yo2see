@@ -85,6 +85,7 @@ class AddProductViewModel(
 
         }
     }
+
     fun getJobType(
         service: String,
         gen_type: String
@@ -181,7 +182,7 @@ class AddProductViewModel(
         type: RequestBody,
         images: MultipartBody.Part
     ) {
-     //   searchEvent.value = SearchEvent(isLoading = true)
+        //   searchEvent.value = SearchEvent(isLoading = true)
 
 
         launch {
@@ -191,8 +192,8 @@ class AddProductViewModel(
                 .subscribe({
                     Logger.Debug(msg = it.toString())
                     uploadImageModel.value = it
-               /*     searchEvent.value =
-                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)*/
+                    /*     searchEvent.value =
+                             SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)*/
 
                 }, {
                     try {
@@ -208,9 +209,9 @@ class AddProductViewModel(
 
                             uploadImageModel.value =
                                 Gson().fromJson(error, UploadImageResponse::class.java)
-                           /* searchEvent.value =
-                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
-*/
+                            /* searchEvent.value =
+                                 SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+ */
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -288,7 +289,15 @@ class AddProductViewModel(
                 user_id,
                 photos_array,
                 rent_type_array,
-                longitude, latitude, barter_text, barter_exchange_text, barter_product_title, barter_product_desc, barter_additional_text, rent_product_detail, rent_terms_and_condition
+                longitude,
+                latitude,
+                barter_text,
+                barter_exchange_text,
+                barter_product_title,
+                barter_product_desc,
+                barter_additional_text,
+                rent_product_detail,
+                rent_terms_and_condition
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -497,8 +506,495 @@ class AddProductViewModel(
         }
     }
 
-    public fun getUserID() :String?{
-       return pre.getLoggedInUserId()
+    fun addBusiness(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        image_type_array: JSONArray
+
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addBusiness(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                business_type,
+                image_type_array
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun addBlog(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        image_type_array: JSONArray
+
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addBlog(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                business_type,
+                image_type_array
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun addPoem(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addPoem(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                type
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun addStory(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addStory(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                type
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun addFreelance(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addFreelance(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                type
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+
+    fun addLocalService(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addLocalService(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                type
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    public fun getUserID(): String? {
+        return pre.getLoggedInUserId()
     }
 
 }

@@ -2,7 +2,7 @@ package com.dartmic.yo2see.ui.home
 
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
+import android.content.Intent
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.util.Log
@@ -13,8 +13,6 @@ import android.view.animation.AnimationUtils
 import android.view.animation.LayoutAnimationController
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -26,21 +24,28 @@ import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.callbacks.AdapterViewItemClickListener
 import com.dartmic.yo2see.model.AdsItems
-import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryDataResponsePayload
 import com.dartmic.yo2see.model.Category_sub_subTosub.CategoryListItemData
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.categories.CategoryListItem
-import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.addProduct.AddEventFragment
+import com.dartmic.yo2see.ui.addProduct.ads_for_business.AddAdsForBusinessFragment
+import com.dartmic.yo2see.ui.addProduct.blog.AddBlogFragment
+import com.dartmic.yo2see.ui.addProduct.freelance_news.AddFreelanceNewsFragment
+import com.dartmic.yo2see.ui.addProduct.local_service.AddLocalServiceFragment
+import com.dartmic.yo2see.ui.addProduct.poems.AddPoemsFragment
+import com.dartmic.yo2see.ui.addProduct.story.AddStoryFragment
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
 import com.dartmic.yo2see.ui.home.adapter.TabFragmentAdapter
 import com.dartmic.yo2see.ui.home.products.ProductFragment
+import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.product_list.EventListingFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.ui.product_list.business.BusinessAdsListingFragment
+import com.dartmic.yo2see.ui.product_list.poems.PoemsListingFragment
 import com.dartmic.yo2see.ui.search.SerachActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
@@ -48,6 +53,7 @@ import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.shivtechs.maplocationpicker.LocationPickerActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_product.*
 import kotlinx.android.synthetic.main.tree.*
@@ -88,6 +94,14 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             tvHomeWelecomeText.setText(AndroidUtils.getString(R.string.post_an_add))
             rlCat.visibility = View.GONE
             tvBrows.setText(AndroidUtils.getString(R.string.what_product_you_would))
+        }
+        ivLocation.setOnClickListener {
+            val intent = Intent(activity, MapsActivity::class.java)
+            startActivityForResult(intent, LandingActivity.ADDRESS_PICKER_REQUEST)
+        }
+        if(model?.getAddress().equals("")){
+            val intent = Intent(activity, MapsActivity::class.java)
+            startActivityForResult(intent, LandingActivity.ADDRESS_PICKER_REQUEST)
         }
         ivSearch.setOnClickListener {
             startActivity(SerachActivity.getIntent(activity!!))
@@ -220,6 +234,11 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                     rvHomeEvents.visibility = View.VISIBLE
 
                 }
+                var params = indicator?.getLayoutParams() as FrameLayout.LayoutParams
+
+                val translationOffset: Float = (0F + i) * indicatorWidth
+                params.leftMargin = translationOffset.toInt()
+                indicator?.setLayoutParams(params)
             }
 
             override fun onPageScrollStateChanged(i: Int) {}
@@ -648,6 +667,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                 1
             )
         }
+        tvLocation.text = model.getAddress()
     }
 
     override fun onClickAdapterView(
@@ -669,12 +689,107 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                         SubToSubListItem(
                                             "",
                                             "",
-                                            "0",
+                                            objectAtPosition?.categoryId,
                                             "0",
                                             objectAtPosition.categoryName,
                                             "0"
                                         )
                                     )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Ads for Business")) {
+                            mFragmentNavigation.pushFragment(
+                                AddAdsForBusinessFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Blog")) {
+                            mFragmentNavigation.pushFragment(
+                                AddBlogFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Local Services")) {
+                            mFragmentNavigation.pushFragment(
+                                AddLocalServiceFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Freelance")) {
+                            mFragmentNavigation.pushFragment(
+                                AddFreelanceNewsFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Poems")) {
+                            mFragmentNavigation.pushFragment(
+                                AddPoemsFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Short Stories")) {
+                            mFragmentNavigation.pushFragment(
+                                AddStoryFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else {
+                            mFragmentNavigation.pushFragment(
+                                SubCategoriesFragment
+                                    .getInstance(mInt + 1, type, objectAtPosition)
                             )
                         }
                     } else {
@@ -685,7 +800,41 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                     mInt + 1, type, "", "", SubToSubListItem(
                                         "",
                                         "",
+                                        objectAtPosition.categoryId,
                                         "0",
+                                        objectAtPosition.categoryName,
+                                        "0"
+                                    )
+                                )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Poems") || objectAtPosition.categoryName.contains(
+                                "Short Stories"
+                            )
+                            || objectAtPosition.categoryName.contains("Local Services") || objectAtPosition.categoryName.contains(
+                                "Freelance"
+                            )
+                        ) {
+                            mFragmentNavigation.pushFragment(
+                                PoemsListingFragment.getInstance(
+                                    mInt + 1, type, "", "", SubToSubListItem(
+                                        "",
+                                        "",
+                                        objectAtPosition.categoryId,
+                                        "0",
+                                        objectAtPosition.categoryName,
+                                        "0"
+                                    )
+                                )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Ads for Business") ||
+                            objectAtPosition.categoryName.contains("Blog")
+                        ) {
+                            mFragmentNavigation.pushFragment(
+                                BusinessAdsListingFragment.getInstance(
+                                    mInt + 1, type, "", "", SubToSubListItem(
+                                        "",
+                                        "",
+                                        objectAtPosition.categoryId,
                                         "0",
                                         objectAtPosition.categoryName,
                                         "0"

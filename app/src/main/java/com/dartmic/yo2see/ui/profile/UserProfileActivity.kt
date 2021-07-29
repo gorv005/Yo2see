@@ -1,4 +1,4 @@
-    package com.dartmic.yo2see.ui.profile
+package com.dartmic.yo2see.ui.profile
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseActivity
+import com.dartmic.yo2see.model.product.event.ListingItemEvent
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.signup.RegistrationViewModel
 import com.dartmic.yo2see.util.UiUtils
@@ -20,22 +21,42 @@ import kotlinx.android.synthetic.main.activity_user_profile.*
 class UserProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel::class),
     BaseRatingBar.OnRatingChangeListener {
     lateinit var listingItem: ListingItem
+    lateinit var listingItemEvent: ListingItemEvent
+ var userID="0"
     var rate: String = "1"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         intent.run {
-            listingItem = getParcelableExtra(DATA)!!
+            if(getBooleanExtra(ISPRODUCT,false)) {
+                listingItem = getParcelableExtra(DATA)!!
+                userID=listingItem?.userId
+                tvUserName.text = listingItem?.userName
+                tvEmail.text = listingItem?.userEmail
+                tvLink.text = listingItem?.userMobile
+                tvProfileName.text = listingItem?.userName + "'s" + " Profile"
+                tvRatingUser.text = "Rate " + listingItem?.userName
+                if (listingItem?.usersPhoto != null && !listingItem?.usersPhoto.equals("")) {
+                    Glide.with(this@UserProfileActivity).load("https://yo2see.com/app/admin/" + listingItem?.usersPhoto)
+                        .placeholder(R.drawable.no_image2).circleCrop()
+                        .into(ivProfileL)
+                }
+            }else{
+                listingItemEvent = getParcelableExtra(DATA)!!
+                userID=listingItemEvent?.userId!!
+
+                tvUserName.text = listingItemEvent?.userName
+                tvEmail.text = listingItemEvent?.userEmail
+                tvLink.text = listingItemEvent?.userMobile
+                tvProfileName.text = listingItemEvent?.userName + "'s" + " Profile"
+                tvRatingUser.text = "Rate " + listingItemEvent?.userName
+                if (listingItemEvent?.usersPhoto != null && !listingItemEvent?.usersPhoto.equals("")) {
+                    Glide.with(this@UserProfileActivity).load("https://yo2see.com/app/admin/" + listingItemEvent?.usersPhoto)
+                        .placeholder(R.drawable.no_image2).circleCrop()
+                        .into(ivProfileL)
+                }
+            }
         }
-        tvUserName.text = listingItem?.userName
-        tvEmail.text = listingItem?.userEmail
-        tvLink.text = listingItem?.userMobile
-        tvProfileName.text = listingItem?.userName + "'s" + " Profile"
-        tvRatingUser.text = "Rate " + listingItem?.userName
-        if (listingItem?.usersPhoto != null&& !listingItem?.usersPhoto.equals("")) {
-            Glide.with(this).load("https://yo2see.com/app/admin/"+listingItem?.usersPhoto)
-                .placeholder(R.drawable.no_image2).circleCrop()
-                .into(ivProfileL)
-        }
+
         ratingBar.setOnRatingChangeListener(this)
         btnSubmit.setOnClickListener {
             rateUser()
@@ -63,12 +84,13 @@ class UserProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationView
         this?.let { UiUtils.hideSoftKeyboard(it) }
 
         if (NetworkUtil.isInternetAvailable(this)) {
+
             model.sendFeedback(
                 "UserRating",
-                model?.getUserID()+"",
-               listingItem?.userId,
+                model?.getUserID() + "",
+                userID,
                 rate
-                )
+            )
         }
     }
 
@@ -111,11 +133,19 @@ class UserProfileActivity : BaseActivity<RegistrationViewModel>(RegistrationView
     companion object {
         const val KEY_TAB = "KEY_TAB"
         const val DATA = "data"
+        const val ISPRODUCT = "ISPRODUCT"
 
         fun getIntent(
-            context: Context, data: ListingItem,
+            context: Context, data: ListingItem,isProduct:Boolean
         ): Intent? {
-            val intent = Intent(context, UserProfileActivity::class.java).putExtra(DATA, data)
+            val intent = Intent(context, UserProfileActivity::class.java).putExtra(DATA, data).putExtra(ISPRODUCT, isProduct)
+            return intent
+        }
+
+        fun getIntent(
+            context: Context, data: ListingItemEvent,isProduct:Boolean
+        ): Intent? {
+            val intent = Intent(context, UserProfileActivity::class.java).putExtra(DATA, data).putExtra(ISPRODUCT, isProduct)
             return intent
         }
     }

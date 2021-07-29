@@ -281,4 +281,7 @@ class CategoriesViewModel(
     public fun getUserPassword(): String? {
         return pre.getLoggedInUserPassword()
     }
+    public fun getAddress(): String? {
+        return pre.getAddress()
+    }
 }

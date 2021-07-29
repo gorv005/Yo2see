@@ -84,7 +84,7 @@ class AdapterEventProductList(
             itemView.tvProductDescription?.text = allProducts?.eDescription
 
             itemView.tvAddress?.text = HtmlCompat.fromHtml(
-                "<u>" + allProducts?.ePublishDatetime + "</u>",
+                "<u>" + allProducts?.eCity + ", " + allProducts?.eCountry + "</u>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             itemView.tvDate?.text =
@@ -93,7 +93,7 @@ class AdapterEventProductList(
                             "<b>" + allProducts?.ePublishDatetime + "</b>" + " " + "To " + "<b>" + allProducts?.eExpiryDatetime + "</b>",
                     HtmlCompat.FROM_HTML_MODE_LEGACY
                 )
-           // "From " + allProducts?.ePublishDatetime + " " + "To " + allProducts?.eExpiryDatetime
+            // "From " + allProducts?.ePublishDatetime + " " + "To " + allProducts?.eExpiryDatetime
 
             /*  val v = SpannableString("View " + allProducts.userName + "'s listing")
               v.setSpan(UnderlineSpan(), 0, v.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

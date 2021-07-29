@@ -53,6 +53,7 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
     fun getLoggedInUserId() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_ID)
     fun getUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
 
+    fun getAddress() = getStringPreference(Config.Constants.ADDRESS)
 
     val sharedPreferences = context.getSharedPreferences(
         Config.SharedPreferences.PROPERTY_PREF,
@@ -77,7 +78,7 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
         commitChangesInEditor(editor)
     }
 
-    fun getStringPreference(prefName: String, defaultValue: String? = null): String? =
+    fun getStringPreference(prefName: String, defaultValue: String? = ""): String? =
         sharedPreferences.getString(prefName, defaultValue)
 
     fun getIntPreference(prefName: String, defaultValue: Int = 0) =

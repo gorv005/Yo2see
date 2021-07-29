@@ -133,6 +133,14 @@ class ProductListRepositoryImpl(
         return restApi.getProductDetails(service, user_id, id)
     }
 
+    override fun getEventProductDetails(
+        service: String,
+        user_id: String,
+        id: String
+    ): Single<ProductDetailResponsePayload> {
+        return restApi.getEventProductDetails(service, user_id, id)
+    }
+
     override fun alterFavorites(
         service: String,
         user_id: String,

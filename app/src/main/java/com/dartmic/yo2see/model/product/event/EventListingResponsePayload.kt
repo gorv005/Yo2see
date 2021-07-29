@@ -87,6 +87,8 @@ data class ListingItemEvent(@SerializedName("job_type")
                        val eAddress: String?,
                        @SerializedName("job_responsibility")
                        val jobResponsibility: String?,
+                            @SerializedName("listing_cover_image")
+                            val listingCoverImage: String?,
                        @SerializedName("e_price")
                        val ePrice: String?): Parcelable
 

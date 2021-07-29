@@ -441,6 +441,57 @@ class ProductListnViewModel(
         }
     }
 
+
+    fun getEventProductDetails(
+        service: String,
+        user_id: String,
+        id: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.getEventProductDetails(
+                service,
+                user_id,
+                id
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    productDetailsViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            productDetailsViewModel.value =
+                                Gson().fromJson(error, ProductDetailResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     public fun getUserID(): String? {
         return pre.getLoggedInUserId()
     }

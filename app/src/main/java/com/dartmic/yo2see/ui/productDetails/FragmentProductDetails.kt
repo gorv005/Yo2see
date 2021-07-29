@@ -200,7 +200,7 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
 
             tvViewProfile.setOnClickListener {
                 activity?.let {
-                    startActivity(UserProfileActivity?.getIntent(it, listingItem))
+                    startActivity(UserProfileActivity?.getIntent(it, listingItem,true))
                 }
             }
             tvProductAvailabilityDesc.setText(s)

@@ -36,6 +36,7 @@ import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.addProduct.adapter.AdapterImage
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
+import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.ui.profile.ProfileActivity
@@ -118,7 +119,9 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         subscribeLoading()
         subscribeUi()
         getUser()
-
+        ivBackDetails.setOnClickListener {
+            onBackPressed()
+        }
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -130,6 +133,15 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
         tvUseCurrentLocation.setOnClickListener {
             isLocationClicked = true
             getAddress()
+        }
+        tvSearchLocation.setOnClickListener {
+            activity!!.let {
+                UiUtils.hideSoftKeyboard(it)
+                // Call for Location
+                startActivityForResult(
+                    MapsActivity.getIntent(it), 23
+                )
+            }
         }
         saveProductBtn.setOnClickListener {
 
@@ -191,8 +203,16 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
             }
         }
 
-        tvSetPrice.setText(AndroidUtils.getString(R.string.set_a_price)+" ("+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+")")
-        tvSetAPriceLabel.setText(AndroidUtils.getString(R.string.set_a_rent_price)+" ("+AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+")")
+        tvSetPrice.setText(
+            AndroidUtils.getString(R.string.set_a_price) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
+        tvSetAPriceLabel.setText(
+            AndroidUtils.getString(R.string.set_a_rent_price) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
 
     }
 
@@ -463,6 +483,19 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
 
                 showImages()
             }
+
+        } else if (requestCode == 23) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                etAddressOne.setText(data.getStringExtra(MapsActivity.KEY_ADDRESS1))
+                etPincode.setText(data.getStringExtra(MapsActivity.KEY_PINCODE))
+                etCountry.setText(data.getStringExtra(MapsActivity.KEY_COUNTRY))
+                etState.setText(data.getStringExtra(MapsActivity.KEY_STATE))
+                etCity.setText(data.getStringExtra(MapsActivity.KEY_CITY))
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LATITUDE, 0.0)
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LONGITUDE, 0.0)
+
+            }
+
 
         } else {
             if (resultCode == Activity.RESULT_OK) {

@@ -278,6 +278,11 @@
     <string name="start_date_and_end_date_not_same">Please enter a valid date</string>
     <string name="event_time">Event Time</string>
     <string name="event_date">Event Date</string>
+    <string name="your_api_key">AIzaSyDBuOG9-Ty2hRprn6UUZc92WkqBCaRgvTE</string>
+    <string name="title_of_poems">Title for the poems</string>
+    <string name="type_your_poem_here">Type your poem here</string>
+    <string name="type_of_poem">Type of Poem</string>
+    <string name="type_your_story_here">Type your story here</string>
 
     <string-array name="text">
         <item>WHAT WE OFFER</item>
@@ -294,5 +299,23 @@
         <item>Brand</item>
         <item>Price</item>
     </string-array>
+    <string name="view_poem_listing"><u>View poem</u></string>
+    <string name="title_of_story">Title for the story</string>
+    <string name="type_of_story">Type of story</string>
+    <string name="title_of_local_service">Title of local services</string>
+    <string name="description_of_local_service">Description of local services</string>
+    <string name="type_of_local_service">Type of local services</string>
+    <string name="title_of_freelance">Title of freelancing news</string>
+    <string name="description_of_freelancing">Freelancing description</string>
+    <string name="type_of_freelancing">Type of freelancing</string>
+    <string name="title_of_blog">Title of the blog</string>
+    <string name="type_your_blog_here">Type your blog here</string>
+    <string name="category_of_blog">Category of blog</string>
+    <string name="name_of_business">Name of business</string>
+    <string name="description_of_business">Description of business</string>
+    <string name="type_of_business">Type of business</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="search_location">Search Location</string>
+    <string name="location">Location</string>
 
 </resources>

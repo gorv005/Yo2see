@@ -18,7 +18,10 @@ import okhttp3.RequestBody
 import org.json.JSONArray
 import java.util.ArrayList
 
-class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val pre: PreferenceManager) : AddProductRepository {
+class AddProdcutRepositoryImpl(
+    private val restApi: AppRestApiFast,
+    private val pre: PreferenceManager
+) : AddProductRepository {
 
 
     override fun uploadImages(
@@ -74,9 +77,42 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
         rent_product_detail: String,
         rent_terms_and_condition: String
     ): Single<AddProdcutResponse> {
-        return restApi.addProdcut(service, category_id, sub_cat_id, sub_to_sub_cat_id, brand, isRent,
+        return restApi.addProdcut(
+            service,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            brand,
+            isRent,
             isBarter,
-            isSell, listing_price, country, state, city, pincode, address, title, description, item_condition, negotiation_type, open_to_deliver, km_range, publish_datetime, expiry_datetime, user_id, photos_array, rent_type_array,longitude, latitude, barter_text, barter_exchange_text, barter_product_title, barter_product_desc, barter_additional_text, rent_product_detail, rent_terms_and_condition)
+            isSell,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            item_condition,
+            negotiation_type,
+            open_to_deliver,
+            km_range,
+            publish_datetime,
+            expiry_datetime,
+            user_id,
+            photos_array,
+            rent_type_array,
+            longitude,
+            latitude,
+            barter_text,
+            barter_exchange_text,
+            barter_product_title,
+            barter_product_desc,
+            barter_additional_text,
+            rent_product_detail,
+            rent_terms_and_condition
+        )
     }
 
     override fun addJob(
@@ -103,7 +139,8 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
         job_type: String,
         job_responsibility: String
     ): Single<AddProdcutResponse> {
-        return restApi.addJob(  service,
+        return restApi.addJob(
+            service,
             user_id,
             category_id,
             sub_cat_id,
@@ -124,7 +161,8 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
             job_skills,
             job_level,
             job_type,
-            job_responsibility)
+            job_responsibility
+        )
     }
 
     override fun addEvent(
@@ -147,7 +185,8 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
         latitude: String,
         event_type: String
     ): Single<AddProdcutResponse> {
-        return restApi.addEvent(   service,
+        return restApi.addEvent(
+            service,
             user_id,
             category_id,
             sub_cat_id,
@@ -164,7 +203,268 @@ class AddProdcutRepositoryImpl(private val restApi: AppRestApiFast, private val 
             event_to,
             longitude,
             latitude,
-            event_type)
+            event_type
+        )
+    }
+
+    override fun addBusiness(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        image_type_array: JSONArray
+    ): Single<AddProdcutResponse> {
+        return restApi.addBusiness(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            business_type,
+            image_type_array
+        )
+
+    }
+
+    override fun addBlog(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        image_type_array: JSONArray
+    ): Single<AddProdcutResponse> {
+        return restApi.addBlog(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            business_type,
+            image_type_array
+        )
+
+    }
+
+    override fun addPoem(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ): Single<AddProdcutResponse> {
+        return restApi.addPoem(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            type
+        )
+    }
+
+    override fun addStory(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ): Single<AddProdcutResponse> {
+        return restApi.addStory(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            type
+        )
+    }
+
+    override fun addFreelance(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ): Single<AddProdcutResponse> {
+        return restApi.addFreelance(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            type
+        )
+
+    }
+
+    override fun addLocalService(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ): Single<AddProdcutResponse> {
+        return restApi.addLocalService(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            type
+        )
+
     }
 
 }

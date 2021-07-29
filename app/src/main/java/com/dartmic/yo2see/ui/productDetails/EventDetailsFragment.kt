@@ -16,6 +16,7 @@ import com.dartmic.yo2see.model.product.job.ListingItemJob
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.chat_list.NewMessageChatActivity
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
+import com.dartmic.yo2see.ui.profile.UserProfileActivity
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
@@ -119,11 +120,11 @@ class EventDetailsFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                 fetchCurrentUser()
             }
 
-            /*  tvViewProfile.setOnClickListener {
+             tvViewProfile.setOnClickListener {
                   activity?.let {
-                      startActivity(UserProfileActivity?.getIntent(it, listingItem))
+                      startActivity(UserProfileActivity?.getIntent(it, listingItem,false))
                   }
-              }*/
+              }
             init()
             subscribeUi()
             subscribeLoading()
@@ -169,7 +170,7 @@ class EventDetailsFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
     fun init() {
         tvProductName.text = listingItem?.eTitle
         tvAddress.text = listingItem?.eCity
-        tvSalaryDetails.text = listingItem?.ePrice
+        tvSalaryDetails.text = AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+listingItem?.ePrice
         tvJoblevel.text = listingItem?.eventType
         tvDesc.text = listingItem?.eDescription
         tvEventDate.text = HtmlCompat.fromHtml(

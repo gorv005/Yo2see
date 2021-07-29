@@ -28,12 +28,7 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_event_listing.*
-import kotlinx.android.synthetic.main.fragment_job_listing.*
-import kotlinx.android.synthetic.main.fragment_job_listing.ivBackProduct
-import kotlinx.android.synthetic.main.fragment_job_listing.rlFilter
-import kotlinx.android.synthetic.main.fragment_job_listing.rvProductJobList
-import kotlinx.android.synthetic.main.fragment_job_listing.tvResult
-import kotlinx.android.synthetic.main.fragment_job_listing.tvSubTitleProductValue
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -311,7 +306,7 @@ class EventListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
     fun init() {
         if (query.equals("")) {
             tvSubTitleProductValue.text =
-                subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
+                subToSubListItem?.categoryName
         } else {
             tvSubTitleProductValue.text = ""
         }

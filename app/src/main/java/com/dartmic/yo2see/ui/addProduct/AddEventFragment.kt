@@ -1,6 +1,7 @@
 package com.dartmic.yo2see.ui.addProduct
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -11,8 +12,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -23,19 +26,19 @@ import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.list_dropdown.GeneralListItem
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.ui.addProduct.adapter.DigitalSpinnerAdapter
+import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
-import com.github.florent37.singledateandtimepicker.dialog.DoubleDateAndTimePickerDialog
 import com.gsa.ui.login.AddProductViewModel
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.fragment_add_event.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
@@ -50,7 +53,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class),
-    LocationListener, AdapterView.OnItemSelectedListener {
+    LocationListener, AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener,
+    DatePickerDialog.OnDateSetListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -63,6 +67,7 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
     private var eventTypeArray = ArrayList<GeneralListItem>()
     private lateinit var eventsTypeSpinner: DigitalSpinnerAdapter
     var eventType = ""
+    var isFrom = false
     private lateinit var locationManager: LocationManager
     private val locationPermissionCode = 2
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,16 +82,24 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
         super.onViewCreated(view, savedInstanceState)
         subToSubListItem = arguments?.getParcelable(ProductListFragment.DATA)!!
         tvProductPath.text =
-            subToSubListItem?.categoryName + "/" + subToSubListItem?.subCategoryName + "/" + subToSubListItem?.subSubcategoryName
+            subToSubListItem?.categoryName
         subscribeLoading()
         subscribeUi()
         getUser()
         eventTypeSpinner.onItemSelectedListener = this
 
         getEventType("Event Type")
-        etFrom.setText("20-07-2021 10:00")
-        etTo.setText("25-08-2021 10:00")
-
+      //  etFrom.setText("20-07-2021 10:00")
+       // etTo.setText("25-08-2021 10:00")
+        tvSearchLocation.setOnClickListener {
+            activity!!.let {
+                UiUtils.hideSoftKeyboard(it)
+                // Call for Location
+                startActivityForResult(
+                    MapsActivity.getIntent(it), 23
+                )
+            }
+        }
         locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -99,23 +112,25 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
             isLocationClicked = true
             getAddress()
         }
-       /* etFrom.setOnClickListener {
+        etFrom.setOnClickListener {
+            isFrom = true
             addEventDate()
         }
         etTo.setOnClickListener {
+            isFrom = false
             addEventDate()
-        }*/
+        }
         saveProductBtn.setOnClickListener {
             var validatetEventname = AndroidUtils.validateName(etEventname.text.toString())
             var validatetEventDiscription =
                 AndroidUtils.validateName(etEventDiscription.text.toString())
             var validateetCost =
                 AndroidUtils.validateName(etCost.text.toString())
-            var validateDate =null
-               /* AndroidUtils.checkStartEndDateTimeValid(
-                    etFrom.text.toString(),
-                    etTo.text.toString()
-                )*/
+            var validateDate = null
+            /* AndroidUtils.checkStartEndDateTimeValid(
+                 etFrom.text.toString(),
+                 etTo.text.toString()
+             )*/
             var validateAddress = AndroidUtils.validateName(etAddressOne.text.toString())
             var validateetCity = AndroidUtils.validateName(etCity.text.toString())
             var validateetPincode = AndroidUtils.validateName(etPincode.text.toString())
@@ -145,6 +160,23 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
                 etState.setError(validateetState)
                 etCountry.setError(validateetCountry)
             }
+        }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 23) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                etAddressOne.setText(data.getStringExtra(MapsActivity.KEY_ADDRESS1))
+                etPincode.setText(data.getStringExtra(MapsActivity.KEY_PINCODE))
+                etCountry.setText(data.getStringExtra(MapsActivity.KEY_COUNTRY))
+                etState.setText(data.getStringExtra(MapsActivity.KEY_STATE))
+                etCity.setText(data.getStringExtra(MapsActivity.KEY_CITY))
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LATITUDE, 0.0)
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LONGITUDE, 0.0)
+
+            }
+
+
         }
     }
 
@@ -400,31 +432,71 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
     }
 
     fun addEventDate() {
-        var simpleDateFormat = SimpleDateFormat("dd/mm/YYYY HH:mm", Locale.getDefault());
+        val now = Calendar.getInstance()
+        val dpd = DatePickerDialog.newInstance(
+            this,
+            now[Calendar.YEAR],  // Initial year selection
+            now[Calendar.MONTH],  // Initial month selection
+            now[Calendar.DAY_OF_MONTH] // Inital day selection
+        )
+// If you're calling this from a support Fragment
+// If you're calling this from a support Fragment
+        dpd.show(fragmentManager!!, "Datepickerdialog")
+        //    var simpleDateFormat = SimpleDateFormat("dd/mm/YYYY HH:mm", Locale.getDefault());
 
 
-        var calendarMin = Calendar.getInstance()
-        val now = Date()
-        calendarMin.setTime(now); // Set min now
-        var minDate = calendarMin.getTime()
+        /* var calendarMin = Calendar.getInstance()
+         val now = Date()
+         calendarMin.setTime(now); // Set min now
+         var minDate = calendarMin.getTime()
 
-     var d=   DoubleDateAndTimePickerDialog.Builder(activity)
+      var d=   DoubleDateAndTimePickerDialog.Builder(activity)
 
-         d.setTimeZone(TimeZone.getDefault())
-            d.minutesStep(15).mustBeOnFuture().secondDateAfterFirst(true).tab0Date(now)
-                .tab1Date( Date(now.getTime() + TimeUnit.HOURS.toMillis(1)))
+          d.setTimeZone(TimeZone.getDefault())
+             d.minutesStep(15).mustBeOnFuture().secondDateAfterFirst(true).tab0Date(now)
+                 .tab1Date(Date(now.getTime() + TimeUnit.HOURS.toMillis(1)))
 
-                //.bottomSheet()
-            //.curved()
-            //.stepSizeMinutes(15)
-            .title(AndroidUtils.getString(R.string.event_time)).minDateRange(minDate)
-            .tab0Text(AndroidUtils.getString(R.string.from))
-            .tab1Text(AndroidUtils.getString(R.string.to))
-            .listener {
-                etTo.setText(simpleDateFormat.format(it?.get(1)))
-                etFrom.setText(simpleDateFormat.format(it?.get(0)))
+                 //.bottomSheet()
+             //.curved()
+             //.stepSizeMinutes(15)
+             .title(AndroidUtils.getString(R.string.event_time)).minDateRange(minDate)
+             .tab0Text(AndroidUtils.getString(R.string.from))
+             .tab1Text(AndroidUtils.getString(R.string.to))
+             .listener {
+                 etTo.setText(simpleDateFormat.format(it?.get(1)))
+                 etFrom.setText(simpleDateFormat.format(it?.get(0)))
 
-            }.display()
+             }.display()*/
+
+    }
+
+    var fromTime = ""
+    var toTime = ""
+    override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
+        if (isFrom) {
+            fromTime = fromTime + " " + hourOfDay + ":" + minute
+            etFrom.setText(fromTime)
+        } else {
+            toTime = toTime + " " + hourOfDay + ":" + minute
+            etTo.setText(toTime)
+        }
+    }
+
+    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        if (isFrom) {
+            fromTime = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
+        } else {
+            toTime = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
+
+        }
+        val now = Calendar.getInstance()
+        var   tpd = TimePickerDialog.newInstance(
+            this,
+            now.get(Calendar.HOUR_OF_DAY),
+            now.get(Calendar.MINUTE),
+            true
+        )
+        tpd.show(fragmentManager!!, "Timepickerdialog");
 
     }
 }

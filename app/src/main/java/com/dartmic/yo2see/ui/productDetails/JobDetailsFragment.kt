@@ -130,7 +130,7 @@ class JobDetailsFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
 
             /*  tvViewProfile.setOnClickListener {
                   activity?.let {
-                      startActivity(UserProfileActivity?.getIntent(it, listingItem))
+                      startActivity(UserProfileActivity?.getIntent(it, listingItem,false))
                   }
               }*/
             init()
@@ -179,7 +179,7 @@ class JobDetailsFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
     fun init() {
         tvProductName.text = listingItem?.subCategoryName
         tvAddress.text = listingItem?.eCity
-        tvSalaryDetails.text = listingItem?.ePrice
+        tvSalaryDetails.text = AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode())+listingItem?.ePrice
         tvJoblevel.text = listingItem?.jobLevel+ " ("+listingItem.jobType+")"
         tvDesc.text = listingItem?.eDescription
         tvJobResponsibilities.text = listingItem?.jobResponsibility

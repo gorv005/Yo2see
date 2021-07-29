@@ -75,6 +75,12 @@ interface ProductListRepository {
         id: String
     ): Single<ProductDetailResponsePayload>
 
+    fun getEventProductDetails(
+        service: String,
+        user_id: String,
+        id: String
+    ): Single<ProductDetailResponsePayload>
+
     fun alterFavorites(
         service: String,
         user_id: String,
