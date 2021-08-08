@@ -1,0 +1,366 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="135dp"
+                android:orientation="vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp">
+
+
+                <TextView
+                    android:id="@+id/tvProductPath"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center_horizontal"
+                    android:text="Samsung galaxy s8"
+                    android:layout_marginLeft="20dp"
+
+                    android:textColor="@color/red_a"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/shadow_back">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/et_height_20">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:gravity="center_horizontal"
+                                android:text="@string/name_title"
+                                android:textColor="@color/red_a"
+                                android:textSize="20sp" />
+
+                            <ImageView
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_list" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/red_a" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_horizontal"
+                            android:text="@string/name_for_uncategorized"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="0.001dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Helper text"
+                            android:textColor="@color/grey1"
+                            android:textSize="12sp" />
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etTitleForUncategorized"
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
+                            android:layout_marginTop="5dp"
+                            android:lines="1"
+                            android:background="@drawable/edit_text_round_corner_bg"
+                            android:focusableInTouchMode="true"
+                            android:textColor="@color/disabled_text"
+                            android:textColorHint="@color/disabled_text" />
+
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_horizontal"
+                            android:text="@string/description_of_uncategorized"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="0.001dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Helper text"
+                            android:textColor="@color/grey1"
+                            android:textSize="12sp" />
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etDescriptionOfUncategorized"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="5dp"
+                            android:lines="1"
+                            android:background="@drawable/edit_text_round_corner_bg"
+                            android:focusableInTouchMode="true"
+                            android:textColor="@color/disabled_text"
+                            android:textColorHint="@color/disabled_text" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_horizontal"
+                            android:text="@string/type_of_uncategorized"
+                            android:textColor="@color/black"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="0.001dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:text="Helper text"
+                            android:textColor="@color/grey1"
+                            android:textSize="12sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
+
+                            android:background="@drawable/spinner_drawable"
+
+                            android:orientation="vertical">
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/uncategorizedSpinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:dropDownWidth="match_parent"
+                                android:paddingEnd="@dimen/spinner_padding"
+                                style="@style/SpinnerTheme"
+                                android:dropDownSelector="@drawable/custom_edit_text_drawable"
+                                android:popupBackground="@drawable/spinner_drawable"
+                                android:spinnerMode="dropdown"
+                                tools:listitem="@layout/item_custom_spinner"
+                                tools:ignore="RtlSymmetry" />
+
+
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/shadow_back"
+                    app:elevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/et_height_20">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:gravity="center_horizontal"
+                                android:text="@string/cost_if_applicable"
+                                android:textAllCaps="true"
+                                android:textColor="@color/red_a"
+                                android:textSize="20sp" />
+
+                            <ImageView
+                                android:layout_centerVertical="true"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/ic_credit_card" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/red_a" />
+
+                        <TextView
+                            android:id="@+id/tvSetPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center_horizontal"
+                            android:text="@string/cost"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/etPay"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="39dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@drawable/edit_text_round_corner_bg"
+                            android:focusableInTouchMode="true"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/disabled_text"
+                            android:textColorHint="@color/disabled_text" />
+
+                        <TextView
+                            android:id="@+id/tvSetPriceHelperText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:gravity="center_horizontal"
+                            android:text="Helper text"
+                            android:textColor="@color/grey"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:background="@drawable/shadow_back"
+                    app:elevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/et_height_20">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:gravity="center_horizontal"
+                                android:text="@string/address_"
+                                android:textAllCaps="true"
+                                android:textColor="@color/red_a"
+                                android:textSize="20sp" />
+
+                            <ImageView
+                                android:layout_centerVertical="true"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:src="@drawable/ic_home_loction" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/red_a" />
+                        <include
+                            android:id="@+id/layout_location_info"
+                            layout="@layout/layout_set_location_info" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <include
+                    layout="@layout/layout_set_user_info" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/saveProductBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="39dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/btn_app_selected"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/add_listing"
+                    android:textColor="@color/white" />
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_yo2see_logo"
+                android:text="@string/mobile_and_accessories" />
+
+            <ImageView
+                android:id="@+id/ivCurveAddProduct"
+                android:layout_width="@dimen/et_width_120"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_blue_top_background"
+                app:tint="@color/red_a" />
+
+            <ImageView
+                android:id="@+id/ivBackDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:src="@drawable/ic_left_arrow_white" />
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

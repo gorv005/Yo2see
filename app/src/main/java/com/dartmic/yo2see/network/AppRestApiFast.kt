@@ -528,5 +528,79 @@ interface AppRestApiFast {
         @Field("from_user_id") from_user_id: String, @Field("rating") rating: String
 
     ): Single<UserInforesponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_ADD_BUSINESS_FOR_SALE)
+    fun addBusinessForSale(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("pincode") pincode: String,
+        @Field("address") address: String,
+        @Field("title") title: String,
+        @Field("description") description: String,
+        @Field("publish_datetime") publish_datetime: String,
+        @Field("expiry_datetime") expiry_datetime: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("business_type") business_type: String,
+        @Field("photos_array") photos_array: JSONArray
+
+    ): Single<AddProdcutResponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_ADD_UNCATEGORIZED)
+    fun addUncategorized(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("pincode") pincode: String,
+        @Field("address") address: String,
+        @Field("title") title: String,
+        @Field("description") description: String,
+        @Field("publish_datetime") publish_datetime: String,
+        @Field("expiry_datetime") expiry_datetime: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("freelance_type") poem_type: String
+    ): Single<AddProdcutResponse>
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_ADD_VOLUNTERRING)
+    fun addVolunteering(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("pincode") pincode: String,
+        @Field("address") address: String,
+        @Field("title") title: String,
+        @Field("description") description: String,
+        @Field("publish_datetime") publish_datetime: String,
+        @Field("expiry_datetime") expiry_datetime: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("freelance_type") poem_type: String
+    ): Single<AddProdcutResponse>
+
 }
 

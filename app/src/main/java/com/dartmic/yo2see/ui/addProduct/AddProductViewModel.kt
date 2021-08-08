@@ -993,6 +993,248 @@ class AddProductViewModel(
         }
     }
 
+    fun addBusinessForSale(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        image_type_array: JSONArray
+
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addBusinessForSale(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                business_type,
+                image_type_array
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+    fun addUncategorized(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addUncategorized(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                type
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+    fun addVolunteering(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            addProductRepository.addVolunteering(
+                service,
+                user_id,
+                category_id,
+                sub_cat_id,
+                sub_to_sub_cat_id,
+                listing_price,
+                country,
+                state,
+                city,
+                pincode,
+                address,
+                title,
+                description,
+                publish_datetime,
+                expiry_datetime,
+                longitude,
+                latitude,
+                type
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addJobProductModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addJobProductModel.value =
+                                Gson().fromJson(error, AddProdcutResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     public fun getUserID(): String? {
         return pre.getLoggedInUserId()
     }

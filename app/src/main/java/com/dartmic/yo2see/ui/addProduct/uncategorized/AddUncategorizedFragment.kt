@@ -1,4 +1,4 @@
-package com.dartmic.yo2see.ui.addProduct
+package com.dartmic.yo2see.ui.addProduct.uncategorized
 
 import android.Manifest
 import android.app.Activity
@@ -12,20 +12,20 @@ import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
 import android.text.TextUtils
-import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.list_dropdown.GeneralListItem
 import com.dartmic.yo2see.model.login.UserList
 import com.dartmic.yo2see.ui.addProduct.adapter.DigitalSpinnerAdapter
+import com.dartmic.yo2see.ui.addProduct.freelance_news.AddFreelanceNewsFragment
 import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.util.UiUtils
@@ -33,14 +33,10 @@ import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.AddProductViewModel
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import kotlinx.android.synthetic.main.fragment_add_event.*
+import kotlinx.android.synthetic.main.fragment_add_uncategorized.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
 import java.util.*
-import kotlin.collections.ArrayList
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,12 +45,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [AddEventFragment.newInstance] factory method to
+ * Use the [AddUncategorizedFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class),
-    LocationListener, AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener,
-    DatePickerDialog.OnDateSetListener {
+class AddUncategorizedFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::class),
+    LocationListener, AdapterView.OnItemSelectedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -64,10 +59,9 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
     var mprovider: String? = null
     var isLocationClicked: Boolean = false
     lateinit var userList: UserList
-    private var eventTypeArray = ArrayList<GeneralListItem>()
-    private lateinit var eventsTypeSpinner: DigitalSpinnerAdapter
-    var eventType = ""
-    var isFrom = false
+    private var jobTypeArray = ArrayList<GeneralListItem>()
+    private lateinit var jobTypeSpinner: DigitalSpinnerAdapter
+    var jobType = ""
     private lateinit var locationManager: LocationManager
     private val locationPermissionCode = 2
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,11 +80,13 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
         subscribeLoading()
         subscribeUi()
         getUser()
-        eventTypeSpinner.onItemSelectedListener = this
+        uncategorizedSpinner.onItemSelectedListener = this
 
-        getEventType("Event Type")
-        //  etFrom.setText("20-07-2021 10:00")
-        // etTo.setText("25-08-2021 10:00")
+        getJobType("Uncategorized Type")
+
+        ivBackDetails.setOnClickListener {
+            onBackPressed()
+        }
         tvSearchLocation.setOnClickListener {
             activity!!.let {
                 UiUtils.hideSoftKeyboard(it)
@@ -112,34 +108,21 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
             isLocationClicked = true
             getAddress()
         }
-        etFrom.setOnClickListener {
-            isFrom = true
-            addEventDate()
-        }
-        etTo.setOnClickListener {
-            isFrom = false
-            addEventDate()
-        }
         saveProductBtn.setOnClickListener {
-            var validatetEventname = AndroidUtils.validateName(etEventname.text.toString())
-            var validatetEventDiscription =
-                AndroidUtils.validateName(etEventDiscription.text.toString())
-            var validateetCost =
-                AndroidUtils.validateName(etCost.text.toString())
-            var validateDate = null
-            AndroidUtils.checkStartEndDateTimeValid(
-                etFrom.text.toString(),
-                etTo.text.toString()
-            )
+            var validatetTitleOFPoem =
+                AndroidUtils.validateName(etTitleForUncategorized.text.toString())
+            var validatetTyPeYourPoem =
+                AndroidUtils.validateName(etDescriptionOfUncategorized.text.toString())
+            var validateetPay =
+                AndroidUtils.validateName(etPay.text.toString())
             var validateAddress = AndroidUtils.validateName(etAddressOne.text.toString())
             var validateetCity = AndroidUtils.validateName(etCity.text.toString())
             var validateetPincode = AndroidUtils.validateName(etPincode.text.toString())
             var validateetState = AndroidUtils.validateName(etState.text.toString())
             var validateetCountry = AndroidUtils.validateName(etCountry.text.toString())
-            if (TextUtils.isEmpty(validatetEventname) &&
-                TextUtils.isEmpty(validatetEventDiscription) &&
-                TextUtils.isEmpty(validateetCost) &&
-                TextUtils.isEmpty(validateDate) &&
+            if (TextUtils.isEmpty(validatetTitleOFPoem) &&
+                TextUtils.isEmpty(validateetPay) &&
+                TextUtils.isEmpty(validatetTyPeYourPoem) &&
                 TextUtils.isEmpty(validateAddress) &&
                 TextUtils.isEmpty(validateetCity) &&
                 TextUtils.isEmpty(validateetPincode) &&
@@ -148,36 +131,15 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
             ) {
                 addProduct()
             } else {
-                etEventname.setError(validatetEventname)
-                etEventDiscription.setError(validatetEventDiscription)
-                etCost.setError(validateetCost)
-                etFrom.setError(validateDate)
-                etTo.setError(validateDate)
-
+                etTitleForUncategorized.setError(validatetTitleOFPoem)
+                etDescriptionOfUncategorized.setError(validatetTyPeYourPoem)
+                etPay.setError(validateetPay)
                 etAddressOne.setError(validateAddress)
                 etCity.setError(validateetCity)
                 etPincode.setError(validateetPincode)
                 etState.setError(validateetState)
                 etCountry.setError(validateetCountry)
             }
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 23) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                etAddressOne.setText(data.getStringExtra(MapsActivity.KEY_ADDRESS1))
-                etPincode.setText(data.getStringExtra(MapsActivity.KEY_PINCODE))
-                etCountry.setText(data.getStringExtra(MapsActivity.KEY_COUNTRY))
-                etState.setText(data.getStringExtra(MapsActivity.KEY_STATE))
-                etCity.setText(data.getStringExtra(MapsActivity.KEY_CITY))
-                latitude = data.getDoubleExtra(MapsActivity.KEY_LATITUDE, 0.0)
-                latitude = data.getDoubleExtra(MapsActivity.KEY_LONGITUDE, 0.0)
-
-            }
-
-
         }
     }
 
@@ -191,7 +153,7 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
         }
     }
 
-    fun getEventType(type: String) {
+    fun getJobType(type: String) {
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
 
@@ -201,27 +163,37 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
         }
     }
 
+    fun getJobLevel(type: String) {
+        if (NetworkUtil.isInternetAvailable(activity)) {
+            //  listingType = "Rent"
+
+            model.getJobLevel(
+                "General Value", type
+            )
+        }
+    }
+
 
     fun addProduct() {
-        model.addEvent(
-            "AddEvent",
+        model.addUncategorized(
+            "AddUncategorized",
             model.getUserID()!!,
             subToSubListItem.categoryId,
             subToSubListItem.subCategoryId,
             subToSubListItem.id,
-            etCost.text.toString(),
+            etPay.text.toString(),
             etCountry.text.toString(),
             etState.text.toString(),
             etCity.text.toString(),
             etPincode.text.toString(),
             etAddressOne.text.toString(),
-            etEventname.text.toString(),
-            etEventDiscription.text.toString(),
-            etFrom.text.toString(),
-            etTo.text.toString(),
+            etTitleForUncategorized.text.toString(),
+            etDescriptionOfUncategorized.text.toString(),
+            "",
+            "",
             "" + longitude,
             "" + latitude,
-            eventType
+            jobType
 
         )
 
@@ -229,7 +201,7 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
 
     private fun subscribeLoading() {
 
-        model.searchEvent.observe(this, Observer {
+        model.searchEvent.observe(this, androidx.lifecycle.Observer {
             if (it.isLoading) {
                 showProgressDialog()
             } else {
@@ -242,7 +214,7 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
     }
 
     private fun subscribeUi() {
-        model.userViewModel.observe(this, Observer {
+        model.userViewModel.observe(this, androidx.lifecycle.Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
                 userList = it?.userList!!
@@ -251,25 +223,25 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
                 showSnackbar(it.message, false)
             }
         })
-        model.listOFJobType.observe(this, Observer {
+        model.listOFJobType.observe(this, androidx.lifecycle.Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
-                eventTypeArray = it?.generalList!!
+                jobTypeArray = it?.generalList!!
 
                 var listC1: ArrayList<Boolean> = ArrayList()
-                for (item in eventTypeArray) {
+                for (item in jobTypeArray) {
                     listC1.add(true)
                 }
 
 
-                eventsTypeSpinner = DigitalSpinnerAdapter(activity!!, eventTypeArray, listC1)
-                eventTypeSpinner.adapter = eventsTypeSpinner
+                jobTypeSpinner = DigitalSpinnerAdapter(activity!!, jobTypeArray, listC1)
+                uncategorizedSpinner.adapter = jobTypeSpinner
             } else {
                 showSnackbar(it.message, false)
             }
         })
 
-        model.addJobProductModel.observe(this, Observer {
+        model.addJobProductModel.observe(this, androidx.lifecycle.Observer {
             Logger.Debug("DEBUG", it.toString())
             if (it.status) {
                 hideProgressDialog()
@@ -292,13 +264,31 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
         @JvmStatic
         fun getInstance(
             instance: Int, categoryListItemData: SubToSubListItem?
-        ): AddEventFragment {
+        ): AddUncategorizedFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             bundle.putParcelable(ProductListFragment.DATA, categoryListItemData)
-            val fragment = AddEventFragment()
+            val fragment = AddUncategorizedFragment()
             fragment.arguments = bundle
             return fragment
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 23) {
+            if (resultCode == Activity.RESULT_OK && data != null) {
+                etAddressOne.setText(data.getStringExtra(MapsActivity.KEY_ADDRESS1))
+                etPincode.setText(data.getStringExtra(MapsActivity.KEY_PINCODE))
+                etCountry.setText(data.getStringExtra(MapsActivity.KEY_COUNTRY))
+                etState.setText(data.getStringExtra(MapsActivity.KEY_STATE))
+                etCity.setText(data.getStringExtra(MapsActivity.KEY_CITY))
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LATITUDE, 0.0)
+                latitude = data.getDoubleExtra(MapsActivity.KEY_LONGITUDE, 0.0)
+
+            }
+
+
         }
     }
 
@@ -348,7 +338,7 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
         }
     }
 
-    override fun getLayoutId() = R.layout.fragment_add_event
+    override fun getLayoutId() = R.layout.fragment_add_uncategorized
     private fun OnGPS() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
         builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("Yes",
@@ -421,8 +411,8 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent?.id) {
-            R.id.eventTypeSpinner -> {
-                eventType = eventTypeArray.get(position).genValue
+            R.id.uncategorizedSpinner -> {
+                jobType = jobTypeArray.get(position).genValue
             }
 
 
@@ -430,74 +420,5 @@ class AddEventFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-    }
-
-    fun addEventDate() {
-        val now = Calendar.getInstance()
-        val dpd = DatePickerDialog.newInstance(
-            this,
-            now[Calendar.YEAR],  // Initial year selection
-            now[Calendar.MONTH],  // Initial month selection
-            now[Calendar.DAY_OF_MONTH] // Inital day selection
-        )
-// If you're calling this from a support Fragment
-// If you're calling this from a support Fragment
-        dpd.show(fragmentManager!!, "Datepickerdialog")
-        //    var simpleDateFormat = SimpleDateFormat("dd/mm/YYYY HH:mm", Locale.getDefault());
-
-
-        /* var calendarMin = Calendar.getInstance()
-         val now = Date()
-         calendarMin.setTime(now); // Set min now
-         var minDate = calendarMin.getTime()
-
-      var d=   DoubleDateAndTimePickerDialog.Builder(activity)
-
-          d.setTimeZone(TimeZone.getDefault())
-             d.minutesStep(15).mustBeOnFuture().secondDateAfterFirst(true).tab0Date(now)
-                 .tab1Date(Date(now.getTime() + TimeUnit.HOURS.toMillis(1)))
-
-                 //.bottomSheet()
-             //.curved()
-             //.stepSizeMinutes(15)
-             .title(AndroidUtils.getString(R.string.event_time)).minDateRange(minDate)
-             .tab0Text(AndroidUtils.getString(R.string.from))
-             .tab1Text(AndroidUtils.getString(R.string.to))
-             .listener {
-                 etTo.setText(simpleDateFormat.format(it?.get(1)))
-                 etFrom.setText(simpleDateFormat.format(it?.get(0)))
-
-             }.display()*/
-
-    }
-
-    var fromTime = ""
-    var toTime = ""
-    override fun onTimeSet(view: TimePickerDialog?, hourOfDay: Int, minute: Int, second: Int) {
-        if (isFrom) {
-            fromTime = fromTime + " " + hourOfDay + ":" + minute
-            etFrom.setText(fromTime)
-        } else {
-            toTime = toTime + " " + hourOfDay + ":" + minute
-            etTo.setText(toTime)
-        }
-    }
-
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        if (isFrom) {
-            fromTime = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
-        } else {
-            toTime = "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year
-
-        }
-        val now = Calendar.getInstance()
-        var tpd = TimePickerDialog.newInstance(
-            this,
-            now.get(Calendar.HOUR_OF_DAY),
-            now.get(Calendar.MINUTE),
-            true
-        )
-        tpd.show(fragmentManager!!, "Timepickerdialog");
-
     }
 }

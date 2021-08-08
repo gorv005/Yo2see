@@ -166,7 +166,43 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         ""
                     )
 
-                } else {
+                }
+                else if (subToSubListItem?.categoryName.contains("Volunteering")) {
+                    model.getEventProductList(
+                        "List",
+                        model?.getUserID()!!,
+                        subToSubListItem.categoryId,
+                        subToSubListItem.subCategoryId,
+                        subToSubListItem.id,
+                        "",
+                        "Valunteering",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
+
+                }
+                else if (subToSubListItem?.categoryName.contains("Uncategorized")) {
+                    model.getEventProductList(
+                        "List",
+                        model?.getUserID()!!,
+                        subToSubListItem.categoryId,
+                        subToSubListItem.subCategoryId,
+                        subToSubListItem.id,
+                        "",
+                        "Uncategorized",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
+
+                }else {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,

@@ -466,5 +466,133 @@ class AddProdcutRepositoryImpl(
         )
 
     }
+    override fun addBusinessForSale(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        image_type_array: JSONArray
+    ): Single<AddProdcutResponse> {
+        return restApi.addBusinessForSale(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            business_type,
+            image_type_array
+        )
+
+    }
+    override fun addUncategorized(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ): Single<AddProdcutResponse> {
+        return restApi.addUncategorized(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            type
+        )
+
+    }
+    override fun addVolunteering(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        type: String
+    ): Single<AddProdcutResponse> {
+        return restApi.addVolunteering(
+            service,
+            user_id,
+            category_id,
+            sub_cat_id,
+            sub_to_sub_cat_id,
+            listing_price,
+            country,
+            state,
+            city,
+            pincode,
+            address,
+            title,
+            description,
+            publish_datetime,
+            expiry_datetime,
+            longitude,
+            latitude,
+            type
+        )
+
+    }
 
 }

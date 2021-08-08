@@ -131,7 +131,25 @@ class BusinessAdsListingFragment :
                         ""
                     )
 
-                } else if (subToSubListItem?.categoryName.contains("Blog")) {
+                }
+               else if (subToSubListItem?.categoryName.contains("Business for Sale")) {
+                    model.getEventProductList(
+                        "List",
+                        model?.getUserID()!!,
+                        subToSubListItem.categoryId,
+                        subToSubListItem.subCategoryId,
+                        subToSubListItem.id,
+                        "",
+                        "Business for sale",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                    )
+
+                }else if (subToSubListItem?.categoryName.contains("Blog")) {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,

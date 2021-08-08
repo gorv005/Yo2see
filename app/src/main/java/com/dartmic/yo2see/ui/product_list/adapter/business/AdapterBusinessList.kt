@@ -94,7 +94,7 @@ class AdapterBusinessList(
             itemView.tvProductDescription?.text = allProducts?.eDescription
 
             itemView.tvAddress?.text = HtmlCompat.fromHtml(
-                "<u>" + allProducts?.eCity + ", " + allProducts?.eCity + "</u>",
+                "<u>" + allProducts?.eCity + ", " + allProducts?.eState + "</u>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
             itemView.tvPrice?.text =

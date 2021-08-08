@@ -30,12 +30,15 @@ import com.dartmic.yo2see.model.categories.CategoryListItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.addProduct.AddEventFragment
+import com.dartmic.yo2see.ui.addProduct.add_valunteering.AddVolunteeringFragment
 import com.dartmic.yo2see.ui.addProduct.ads_for_business.AddAdsForBusinessFragment
 import com.dartmic.yo2see.ui.addProduct.blog.AddBlogFragment
+import com.dartmic.yo2see.ui.addProduct.business_on_sale.AddBusinessOnSaleFragment
 import com.dartmic.yo2see.ui.addProduct.freelance_news.AddFreelanceNewsFragment
 import com.dartmic.yo2see.ui.addProduct.local_service.AddLocalServiceFragment
 import com.dartmic.yo2see.ui.addProduct.poems.AddPoemsFragment
 import com.dartmic.yo2see.ui.addProduct.story.AddStoryFragment
+import com.dartmic.yo2see.ui.addProduct.uncategorized.AddUncategorizedFragment
 import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.home.adapter.AdapterHomeData
@@ -99,7 +102,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             val intent = Intent(activity, MapsActivity::class.java)
             startActivityForResult(intent, LandingActivity.ADDRESS_PICKER_REQUEST)
         }
-        if(model?.getAddress().equals("")){
+        if (model?.getAddress().equals("")) {
             val intent = Intent(activity, MapsActivity::class.java)
             startActivityForResult(intent, LandingActivity.ADDRESS_PICKER_REQUEST)
         }
@@ -786,7 +789,52 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                         )
                                     )
                             )
-                        } else {
+                        } else if (objectAtPosition.categoryName.contains("Business for Sale")) {
+                            mFragmentNavigation.pushFragment(
+                                AddBusinessOnSaleFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        } else if (objectAtPosition.categoryName.contains("Volunteering")) {
+                            mFragmentNavigation.pushFragment(
+                                AddVolunteeringFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        }  else if (objectAtPosition.categoryName.contains("Uncategorized")) {
+                            mFragmentNavigation.pushFragment(
+                                AddUncategorizedFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
+                        }  else {
                             mFragmentNavigation.pushFragment(
                                 SubCategoriesFragment
                                     .getInstance(mInt + 1, type, objectAtPosition)
@@ -812,6 +860,10 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                             )
                             || objectAtPosition.categoryName.contains("Local Services") || objectAtPosition.categoryName.contains(
                                 "Freelance"
+                            ) ||objectAtPosition.categoryName.contains(
+                                    "Volunteering"
+                                    )||objectAtPosition.categoryName.contains(
+                                "Uncategorized"
                             )
                         ) {
                             mFragmentNavigation.pushFragment(
@@ -827,7 +879,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                 )
                             )
                         } else if (objectAtPosition.categoryName.contains("Ads for Business") ||
-                            objectAtPosition.categoryName.contains("Blog")
+                            objectAtPosition.categoryName.contains("Blog")||objectAtPosition.categoryName.contains("Business for Sale")
                         ) {
                             mFragmentNavigation.pushFragment(
                                 BusinessAdsListingFragment.getInstance(

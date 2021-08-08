@@ -89,6 +89,9 @@ class Config {
         const val PRODUCT_ADD_FREELANCE = BASE_PATH + "event/add_freelancing"
         const val PRODUCT_ADD_LOCAL_SERVICE = BASE_PATH + "event/add_local_service"
         const val PRODUCT_DETAILS_EVENT_DATA_API = BASE_PATH + "event/listing_detail"
+        const val PRODUCT_ADD_BUSINESS_FOR_SALE = BASE_PATH + "event/add_business_for_sale"
+        const val PRODUCT_ADD_UNCATEGORIZED = BASE_PATH + "event/add_uncategorized"
+        const val PRODUCT_ADD_VOLUNTERRING= BASE_PATH + "event/add_valunteering"
 
 
     }
