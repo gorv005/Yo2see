@@ -57,9 +57,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var state = ""
     var country = ""
     var zipCode = ""
+    var type1 = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+        intent?.run {
+            type1 = getIntExtra(KEY_TYPE, 0)!!
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
@@ -259,9 +263,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         const val KEY_PINCODE = "KEY_PINCODE"
         const val KEY_CITY = "KEY_CITY"
         const val KEY_ADDRESS1 = "KEY_ADDRESS1"
+        const val KEY_TYPE = "KEY_TYPE"
 
-        fun getIntent(context: Context): Intent? {
-            val intent = Intent(context, MapsActivity::class.java)
+        fun getIntent(context: Context, type: Int): Intent? {
+            val intent = Intent(context, MapsActivity::class.java).putExtra(KEY_TYPE, type)
             return intent
         }
     }
@@ -275,13 +280,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         parseAddress(address)
         runOnUiThread {
 
-
-            preferenceManager.savePreference(Config.Constants.ADDRESS, placeDes)
-            preferenceManager.savePreference(Config.Constants.LATITUDE, placeDetails.lat.toString())
-            preferenceManager.savePreference(
-                Config.Constants.LONGITUDE,
-                placeDetails.lng.toString()
-            )
+            if (type1 == 0) {
+                preferenceManager.savePreference(Config.Constants.ADDRESS, placeDes)
+                preferenceManager.savePreference(
+                    Config.Constants.LATITUDE,
+                    placeDetails.lat.toString()
+                )
+                preferenceManager.savePreference(
+                    Config.Constants.LONGITUDE,
+                    placeDetails.lng.toString()
+                )
+            }
 
             /* streetTextView.text = street
              cityTextView.text = city
@@ -319,7 +328,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         (0 until address.size).forEach { i ->
             when {
                 address[i].type.contains("sublocality_level_2") -> street += address[i].longName + ", "
-                address[i].type.contains("route") -> street += address[i].longName+ ", "
+                address[i].type.contains("route") -> street += address[i].longName + ", "
                 address[i].type.contains("sublocality_level_1") -> street += address[i].longName
                 address[i].type.contains("locality") -> city += address[i].longName
                 address[i].type.contains("administrative_area_level_1") -> state += address[i].longName

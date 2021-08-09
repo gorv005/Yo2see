@@ -13,6 +13,7 @@ import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 import com.dartmic.yo2see.network.AppRestApiFast
 
 import io.reactivex.Single
+import org.json.JSONArray
 
 class ProductListRepositoryImpl(
     private val restApi: AppRestApiFast,
@@ -32,7 +33,11 @@ class ProductListRepositoryImpl(
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String, sort_type:String
+
     ): Single<ProductListInfoResponsePayload> {
         return restApi.getProductListing(
             service,
@@ -46,7 +51,11 @@ class ProductListRepositoryImpl(
             country,
             state,
             city,
-            search_key
+            search_key,
+            event_type,
+            min_price,
+            max_price,
+            sort_type
         )
     }
 
@@ -63,7 +72,10 @@ class ProductListRepositoryImpl(
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String, sort_type:String
     ): Single<JobListingResponsePayload> {
         return restApi.getJobProductListing(
             service,
@@ -78,7 +90,11 @@ class ProductListRepositoryImpl(
             country,
             state,
             city,
-            search_key
+            search_key,
+            event_type,
+            min_price,
+            max_price,
+            sort_type
         )
     }
 
@@ -95,7 +111,10 @@ class ProductListRepositoryImpl(
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String, sort_type:String
     ): Single<EventListingResponsePayload> {
         return restApi.getEventProductListing(
             service,
@@ -110,7 +129,11 @@ class ProductListRepositoryImpl(
             country,
             state,
             city,
-            search_key
+            search_key,
+            event_type,
+            min_price,
+            max_price,
+            sort_type
         )
     }
 

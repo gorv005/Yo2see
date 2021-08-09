@@ -121,7 +121,7 @@ class AddBusinessOnSaleFragment : BaseFragment<AddProductViewModel>(AddProductVi
                 UiUtils.hideSoftKeyboard(it)
                 // Call for Location
                 startActivityForResult(
-                    MapsActivity.getIntent(it), 23
+                    MapsActivity.getIntent(it,2), 23
                 )
             }
         }

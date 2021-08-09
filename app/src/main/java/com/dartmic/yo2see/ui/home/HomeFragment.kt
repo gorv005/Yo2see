@@ -99,12 +99,18 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             tvBrows.setText(AndroidUtils.getString(R.string.what_product_you_would))
         }
         ivLocation.setOnClickListener {
-            val intent = Intent(activity, MapsActivity::class.java)
-            startActivityForResult(intent, LandingActivity.ADDRESS_PICKER_REQUEST)
+
+            startActivityForResult(
+                MapsActivity.getIntent(activity!!, 0),
+                LandingActivity.ADDRESS_PICKER_REQUEST
+            )
         }
         if (model?.getAddress().equals("")) {
-            val intent = Intent(activity, MapsActivity::class.java)
-            startActivityForResult(intent, LandingActivity.ADDRESS_PICKER_REQUEST)
+            startActivityForResult(
+                MapsActivity.getIntent(activity!!, 0),
+                LandingActivity.ADDRESS_PICKER_REQUEST
+            )
+
         }
         ivSearch.setOnClickListener {
             startActivity(SerachActivity.getIntent(activity!!))
@@ -819,7 +825,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                         )
                                     )
                             )
-                        }  else if (objectAtPosition.categoryName.contains("Uncategorized")) {
+                        } else if (objectAtPosition.categoryName.contains("Uncategorized")) {
                             mFragmentNavigation.pushFragment(
                                 AddUncategorizedFragment
                                     .getInstance(
@@ -834,7 +840,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                         )
                                     )
                             )
-                        }  else {
+                        } else {
                             mFragmentNavigation.pushFragment(
                                 SubCategoriesFragment
                                     .getInstance(mInt + 1, type, objectAtPosition)
@@ -845,7 +851,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                             mFragmentNavigation.pushFragment(
 
                                 EventListingFragment.getInstance(
-                                    mInt + 1, type, "", "", SubToSubListItem(
+                                    mInt + 1, type, "", "", "", SubToSubListItem(
                                         "",
                                         "",
                                         objectAtPosition.categoryId,
@@ -860,15 +866,15 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                             )
                             || objectAtPosition.categoryName.contains("Local Services") || objectAtPosition.categoryName.contains(
                                 "Freelance"
-                            ) ||objectAtPosition.categoryName.contains(
-                                    "Volunteering"
-                                    )||objectAtPosition.categoryName.contains(
+                            ) || objectAtPosition.categoryName.contains(
+                                "Volunteering"
+                            ) || objectAtPosition.categoryName.contains(
                                 "Uncategorized"
                             )
                         ) {
                             mFragmentNavigation.pushFragment(
                                 PoemsListingFragment.getInstance(
-                                    mInt + 1, type, "", "", SubToSubListItem(
+                                    mInt + 1, type, "", "", "", SubToSubListItem(
                                         "",
                                         "",
                                         objectAtPosition.categoryId,
@@ -879,11 +885,13 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                 )
                             )
                         } else if (objectAtPosition.categoryName.contains("Ads for Business") ||
-                            objectAtPosition.categoryName.contains("Blog")||objectAtPosition.categoryName.contains("Business for Sale")
+                            objectAtPosition.categoryName.contains("Blog") || objectAtPosition.categoryName.contains(
+                                "Business for Sale"
+                            )
                         ) {
                             mFragmentNavigation.pushFragment(
                                 BusinessAdsListingFragment.getInstance(
-                                    mInt + 1, type, "", "", SubToSubListItem(
+                                    mInt + 1, type, "", "", "", SubToSubListItem(
                                         "",
                                         "",
                                         objectAtPosition.categoryId,

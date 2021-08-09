@@ -19,6 +19,7 @@ import com.dartmic.yo2see.model.profile.UserInforesponse
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.google.gson.Gson
+import org.json.JSONArray
 
 import retrofit2.HttpException
 
@@ -142,7 +143,11 @@ class ProductListnViewModel(
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String,
+        sort_type:String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -160,7 +165,11 @@ class ProductListnViewModel(
                 country,
                 state,
                 city,
-                search_key
+                search_key,
+                event_type,
+                min_price,
+                max_price,
+                sort_type
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -212,7 +221,11 @@ class ProductListnViewModel(
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String,
+        sort_type:String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -231,7 +244,11 @@ class ProductListnViewModel(
                 country,
                 state,
                 city,
-                search_key
+                search_key,
+                event_type,
+                min_price,
+                max_price,
+                sort_type
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -282,7 +299,12 @@ class ProductListnViewModel(
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String,
+        sort_type:String
+
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -301,7 +323,11 @@ class ProductListnViewModel(
                 country,
                 state,
                 city,
-                search_key
+                search_key,
+                event_type,
+                min_price,
+                max_price,
+                sort_type
             )
                 .subscribeOn(scheduler.io())
                 .observeOn(scheduler.ui())
@@ -510,5 +536,12 @@ class ProductListnViewModel(
 
     public fun getUserPassword(): String? {
         return pre.getLoggedInUserPassword()
+    }
+
+    public fun getLatitude(): String? {
+        return pre.getLatitude()
+    }
+    public fun getLongitude(): String? {
+        return pre.getLongitude()
     }
 }

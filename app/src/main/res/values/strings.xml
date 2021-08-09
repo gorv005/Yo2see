@@ -296,7 +296,7 @@
 
     <string-array name="filter_type">
 
-        <item>Brand</item>
+        <item>Type</item>
         <item>Price</item>
     </string-array>
     <string name="view_poem_listing"><u>View poem</u></string>
@@ -327,5 +327,8 @@
     <string name="title_of_volunteering">Title of Volunteering</string>
     <string name="description_of_volunteering">Volunteering Description</string>
     <string name="type_of_volunteering">Type of Volunteering</string>
+    <string name="select_type_of_search">Type of category</string>
+    <string name="select_category">Select product category</string>
+    <string name="select_event_category">Select Event category</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.dartmic.yo2see.ui.product_list.business
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
+import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product.event.ListingItemEvent
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
@@ -28,6 +30,7 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_business_ads_listing.*
+import org.json.JSONArray
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -54,7 +57,16 @@ class BusinessAdsListingFragment :
     lateinit var listingItem: ListingItemEvent
     private var listingItemList = ArrayList<ListingItemEvent>()
     var pos: Int = -1
+    val REQUEST_CODE = 11
+    internal var isFilter: Boolean = false
+    internal var minPrice: String? = "0"
+    internal var maxPrice: String? = "100000000"
+    private var brandMultipleListModels = java.util.ArrayList<FilterDefaultMultipleListModel>()
 
+    private var brandSelected= java.util.ArrayList<String>()
+    internal var sort_by: String = ""
+    var latitude = ""
+    var longitude = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -83,8 +95,12 @@ class BusinessAdsListingFragment :
         type = arguments?.getInt(TYPE)
         subToSubListItem = arguments?.getParcelable(DATA)!!
         query = arguments?.getString(QUERY)
-        location = arguments?.getString(LOCATION)
-
+        latitude = arguments?.getString(LATITUDE)!!
+        longitude = arguments?.getString(LONGITUDE)!!
+        if(latitude.equals("")){
+            latitude=model?.getLatitude()!!
+            longitude=model?.getLongitude()!!
+        }
         init()
         rvProductBusinessList.layoutManager = manager
         activity?.let {
@@ -94,7 +110,18 @@ class BusinessAdsListingFragment :
         }
         rlFilter.setOnClickListener {
             activity?.let {
-                startActivity(FilterActivity.getIntent(it))
+                if (subToSubListItem?.categoryName.contains("Ads for Business")) {
+                    startActivityForResult(FilterActivity.getIntent(it,"Business Type", brandMultipleListModels,minPrice!!, maxPrice!!),REQUEST_CODE)
+
+                }
+                else if (subToSubListItem?.categoryName.contains("Blog")) {
+                    startActivityForResult(FilterActivity.getIntent(it,"Blog Category",brandMultipleListModels,minPrice!!, maxPrice!!),REQUEST_CODE)
+
+                }
+                else if (subToSubListItem?.categoryName.contains("Business for Sale")) {
+                    startActivityForResult(FilterActivity.getIntent(it,"BusinessForSale Type",brandMultipleListModels,minPrice!!, maxPrice!!),REQUEST_CODE)
+
+                }
             }
         }
         rvProductBusinessList.adapter = adapterEventProductList
@@ -112,8 +139,9 @@ class BusinessAdsListingFragment :
     fun getProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
+            val brands = JSONArray(brandSelected)
 
-            if (query.equals("")) {
+
                 if (subToSubListItem?.categoryName.contains("Ads for Business")) {
                     model.getEventProductList(
                         "List",
@@ -126,9 +154,13 @@ class BusinessAdsListingFragment :
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
                 }
@@ -144,9 +176,14 @@ class BusinessAdsListingFragment :
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
+
                     )
 
                 }else if (subToSubListItem?.categoryName.contains("Blog")) {
@@ -161,18 +198,15 @@ class BusinessAdsListingFragment :
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
-                }
-            } else {
-                model.getProductList(
-                    "List", model?.getUserID()!!, "", "",
-                    "", "", listingType!!, "",
-                    "", "", location!!, query!!
-                )
 
             }
         }
@@ -247,18 +281,21 @@ class BusinessAdsListingFragment :
         const val DATA = "data"
         const val LOCATION = "location"
         const val QUERY = "query"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
 
         @JvmStatic
         fun getInstance(
             instance: Int,
-            type: Int?, location: String, query: String,
+            type: Int?, latitude: String, longitude: String, query: String,
             categoryListItemData: SubToSubListItem?
         ): BusinessAdsListingFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = BusinessAdsListingFragment()
             bundle.putInt(TYPE, type!!)
-            bundle.putString(LOCATION, location)
+            bundle.putString(LATITUDE, latitude)
+            bundle.putString(LONGITUDE, longitude)
             bundle.putString(QUERY, query)
 
             bundle.putParcelable(DATA, categoryListItemData)
@@ -350,4 +387,24 @@ class BusinessAdsListingFragment :
         }
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE ->
+                if (resultCode == Activity.RESULT_OK) {
+
+
+                    brandSelected = data!!.getStringArrayListExtra("brandSelected")!!
+                    minPrice = data!!.getStringExtra("minPrice")
+                    maxPrice = data!!.getStringExtra("maxPrice")
+                    brandMultipleListModels =
+                        data!!.getParcelableArrayListExtra<FilterDefaultMultipleListModel>("brandModel")!!
+                    isFilter = true
+                    getProductData()
+                }
+
+        }
+    }
+
 }

@@ -54,6 +54,8 @@ class PreferenceManager(context: Context) /*: BasePrefManager(context)*/ {
     fun getUserImage() = getStringPreference(Config.SharedPreferences.PROPERTY_USER_IMAGE)
 
     fun getAddress() = getStringPreference(Config.Constants.ADDRESS)
+    fun getLatitude() = getStringPreference(Config.Constants.LATITUDE)
+    fun getLongitude() = getStringPreference(Config.Constants.LONGITUDE)
 
     val sharedPreferences = context.getSharedPreferences(
         Config.SharedPreferences.PROPERTY_PREF,

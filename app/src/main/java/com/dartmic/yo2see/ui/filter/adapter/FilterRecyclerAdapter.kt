@@ -36,9 +36,9 @@ class FilterRecyclerAdapter(
             if (filterModels[i].title == "Category") {
                    filterViewHolder.filterName.setTextColor(Color.parseColor("#EF0618"))
                 filterViewHolder.filterName.text = "Category"
-            } else if (filterModels[i].title == "Brand") {
+            } else if (filterModels[i].title == "Type") {
                 filterViewHolder.filterName.setTextColor(Color.parseColor("#EF0618"))
-                filterViewHolder.filterName.text = "Brand"
+                filterViewHolder.filterName.text = "Type"
             } else if (filterModels[i].title == "Price") {
                 filterViewHolder.filterName.setTextColor(Color.parseColor("#EF0618"))
                 filterViewHolder.filterName.text = "Price"
@@ -47,9 +47,9 @@ class FilterRecyclerAdapter(
             if (filterModels[i].title == "Category") {
                     filterViewHolder.filterName.setTextColor(Color.parseColor("#000000"))
                 filterViewHolder.filterName.text = "Category"
-            } else if (filterModels[i].title == "Brand") {
+            } else if (filterModels[i].title == "Type") {
                       filterViewHolder.filterName.setTextColor(Color.parseColor("#000000"))
-                filterViewHolder.filterName.text = "Brand"
+                filterViewHolder.filterName.text = "Type"
             } else if (filterModels[i].title == "Price") {
                       filterViewHolder.filterName.setTextColor(Color.parseColor("#000000"))
                 filterViewHolder.filterName.text = "Price"

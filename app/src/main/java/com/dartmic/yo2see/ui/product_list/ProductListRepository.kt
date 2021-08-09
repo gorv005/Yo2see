@@ -12,6 +12,7 @@ import com.dartmic.yo2see.model.product_info.ProductListInfoResponsePayload
 
 import io.reactivex.Single
 import kotlinx.coroutines.Job
+import org.json.JSONArray
 
 interface ProductListRepository {
     fun getUser( service: String,
@@ -30,7 +31,11 @@ interface ProductListRepository {
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String,
+        sort_type:String
     ): Single<ProductListInfoResponsePayload>
     fun getJobProduct(
         service: String,
@@ -45,7 +50,11 @@ interface ProductListRepository {
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String,
+        sort_type:String
     ): Single<JobListingResponsePayload>
 
     fun getEventListing(
@@ -61,7 +70,11 @@ interface ProductListRepository {
         country: String,
         state: String,
         city: String,
-        search_key: String
+        search_key: String,
+        event_type: JSONArray,
+        min_price:String,
+        max_price:String,
+        sort_type:String
     ): Single<EventListingResponsePayload>
 
     fun getFavList(

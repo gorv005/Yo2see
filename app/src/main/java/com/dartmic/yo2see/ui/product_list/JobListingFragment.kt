@@ -1,5 +1,6 @@
 package com.dartmic.yo2see.ui.product_list
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
+import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product.job.ListingItemJob
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
@@ -35,6 +37,7 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_job_listing.*
+import org.json.JSONArray
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,6 +63,15 @@ class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
     lateinit var listingItem: ListingItemJob
     private var listingItemList = ArrayList<ListingItemJob>()
     var pos: Int = -1
+    val REQUEST_CODE = 11
+    internal var isFilter: Boolean = false
+    internal var minPrice: String? = "0"
+    internal var maxPrice: String? = "100000000"
+    private var brandMultipleListModels = java.util.ArrayList<FilterDefaultMultipleListModel>()
+    var latitude = ""
+    var longitude = ""
+    private var brandSelected = java.util.ArrayList<String>()
+    internal var sort_by: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +102,12 @@ class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
         subToSubListItem = arguments?.getParcelable(DATA)!!
         query = arguments?.getString(QUERY)
         location = arguments?.getString(LOCATION)
-
+        latitude = arguments?.getString(LATITUDE)!!
+        longitude = arguments?.getString(LONGITUDE)!!
+        if(latitude.equals("")){
+            latitude=model?.getLatitude()!!
+            longitude=model?.getLongitude()!!
+        }
         init()
         rvProductJobList.layoutManager = manager
         activity?.let {
@@ -100,7 +117,15 @@ class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
         }
         rlFilter.setOnClickListener {
             activity?.let {
-                startActivity(FilterActivity.getIntent(it))
+                startActivityForResult(
+                    FilterActivity.getIntent(
+                        it,
+                        "Job Type",
+                        brandMultipleListModels,
+                        minPrice!!,
+                        maxPrice!!
+                    ), REQUEST_CODE
+                )
             }
         }
         rvProductJobList.adapter = adapterProductList
@@ -118,31 +143,27 @@ class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
     fun getProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
+            val brands = JSONArray(brandSelected)
 
-            if (query.equals("")) {
-                model.getJobProductList(
-                    "List",
-                    model?.getUserID()!!,
-                    subToSubListItem.categoryId,
-                    subToSubListItem.subCategoryId,
-                    subToSubListItem.id,
-                    "",
-                    "Job",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            } else {
-                model.getProductList(
-                    "List", model?.getUserID()!!, "", "",
-                    "", "", listingType!!, "",
-                    "", "", location!!, query!!
-                )
-
-            }
+            model.getJobProductList(
+                "List",
+                model?.getUserID()!!,
+                subToSubListItem.categoryId,
+                subToSubListItem.subCategoryId,
+                subToSubListItem.id,
+                "",
+                "Job",
+                "",
+                "",
+                "",
+                latitude,
+                longitude,
+                query!!,
+                brands,
+                minPrice!!,
+                maxPrice!!,
+                sort_by
+            )
         }
     }
 
@@ -215,18 +236,22 @@ class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
         const val DATA = "data"
         const val LOCATION = "location"
         const val QUERY = "query"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
 
         @JvmStatic
         fun getInstance(
             instance: Int,
-            type: Int?, location: String, query: String,
+            type: Int?, latitude: String, longitude: String, query: String,
+
             categoryListItemData: SubToSubListItem?
         ): JobListingFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = JobListingFragment()
             bundle.putInt(TYPE, type!!)
-            bundle.putString(LOCATION, location)
+            bundle.putString(LATITUDE, latitude)
+            bundle.putString(LONGITUDE, longitude)
             bundle.putString(QUERY, query)
 
             bundle.putParcelable(DATA, categoryListItemData)
@@ -318,5 +343,25 @@ class JobListingFragment : BaseFragment<ProductListnViewModel>(ProductListnViewM
         }
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE ->
+                if (resultCode == Activity.RESULT_OK) {
+
+
+                    brandSelected = data!!.getStringArrayListExtra("brandSelected")!!
+                    minPrice = data!!.getStringExtra("minPrice")
+                    maxPrice = data!!.getStringExtra("maxPrice")
+                    brandMultipleListModels =
+                        data!!.getParcelableArrayListExtra<FilterDefaultMultipleListModel>("brandModel")!!
+                    isFilter = true
+                    getProductData()
+                }
+
+        }
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.dartmic.yo2see.ui.product_list
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,11 +18,13 @@ import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
+import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
+import com.dartmic.yo2see.ui.product_list.business.BusinessAdsListingFragment
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
@@ -32,6 +35,7 @@ import kotlinx.android.synthetic.main.fragment_categories_list.*
 import kotlinx.android.synthetic.main.fragment_product_details.*
 import kotlinx.android.synthetic.main.fragment_product_list.*
 import kotlinx.android.synthetic.main.fragment_sub_categories.*
+import org.json.JSONArray
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,7 +63,16 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     private var listingItemList = ArrayList<ListingItem>()
     var pos: Int = -1
     internal var sort_selected: String = ""
+    internal var sort_by: String = ""
+    var latitude = ""
+    var longitude = ""
+    val REQUEST_CODE = 11
+    internal var isFilter: Boolean = false
+    internal var minPrice: String? = "0"
+    internal var maxPrice: String? = "100000000"
+    private var brandMultipleListModels = java.util.ArrayList<FilterDefaultMultipleListModel>()
 
+    private var brandSelected = java.util.ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -85,8 +98,12 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         type = arguments?.getInt(TYPE)
         subToSubListItem = arguments?.getParcelable(DATA)!!
         query = arguments?.getString(QUERY)
-        location = arguments?.getString(LOCATION)
-
+        latitude = arguments?.getString(LATITUDE)!!
+        longitude = arguments?.getString(LONGITUDE)!!
+        if (latitude.equals("")) {
+            latitude = model?.getLatitude()!!
+            longitude = model?.getLongitude()!!
+        }
         init()
         rvProductList.layoutManager = manager
         activity?.let {
@@ -98,7 +115,15 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         }
         rlFilter.setOnClickListener {
             activity?.let {
-                startActivity(FilterActivity.getIntent(it))
+                startActivityForResult(
+                    FilterActivity.getIntent(
+                        it,
+                        "Local Service",
+                        brandMultipleListModels,
+                        minPrice!!,
+                        maxPrice!!
+                    ), REQUEST_CODE
+                )
             }
         }
         rvProductList.adapter = adapterProductList
@@ -116,33 +141,32 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
     fun getProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
+            val brands = JSONArray(brandSelected)
 
-            if (query.equals("")) {
-                model.getProductList(
-                    "List",
-                    model?.getUserID()!!,
-                    subToSubListItem.categoryId,
-                    subToSubListItem.subCategoryId,
-                    subToSubListItem.id,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    ""
-                )
-            } else {
-                model.getProductList(
-                    "List", model?.getUserID()!!, "", "",
-                    "", "", listingType!!, "",
-                    "", "", location!!, query!!
-                )
 
-            }
+            model.getProductList(
+                "List",
+                model?.getUserID()!!,
+                subToSubListItem.categoryId,
+                subToSubListItem.subCategoryId,
+                subToSubListItem.id,
+                "",
+                "",
+                "",
+                "",
+                latitude,
+                longitude,
+                query!!,
+                brands,
+                minPrice!!,
+                maxPrice!!,
+                sort_by
+            )
+
         }
     }
 
+/*
     fun getProductDataFromSearch() {
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
@@ -163,6 +187,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             )
         }
     }
+*/
 
     private fun subscribeLoading() {
 
@@ -257,18 +282,21 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         const val DATA = "data"
         const val LOCATION = "location"
         const val QUERY = "query"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
 
         @JvmStatic
         fun getInstance(
             instance: Int,
-            type: Int?, location: String, query: String,
+            type: Int?, latitude: String, longitude: String, query: String,
             categoryListItemData: SubToSubListItem?
         ): ProductListFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = ProductListFragment()
             bundle.putInt(TYPE, type!!)
-            bundle.putString(LOCATION, location)
+            bundle.putString(LATITUDE, latitude)
+            bundle.putString(LONGITUDE, longitude)
             bundle.putString(QUERY, query)
 
             bundle.putParcelable(DATA, categoryListItemData)
@@ -285,7 +313,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         when (viewType) {
             Config.AdapterClickViewTypes.CLICK_SHARE -> {
                 this?.let {
-                  share()
+                    share()
                 }
             }
 
@@ -330,7 +358,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         }
     }
 
-    fun share(){
+    fun share() {
         var shareMessage = "\nLet me recommend you this application\n\n"
         shareMessage =
             """
@@ -346,6 +374,7 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         val shareIntent = Intent.createChooser(sendIntent, "Choose one")
         startActivity(shareIntent)
     }
+
     fun init() {
         if (query.equals("")) {
             tvSubTitleProductValue.text =
@@ -428,22 +457,44 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
         when (sort) {
             AndroidUtils.getString(R.string.popularity) -> {
                 sort_selected = AndroidUtils.getString(R.string.popularity)
+                sort_by = "popularity"
 
             }
             AndroidUtils.getString(R.string.price_high_to_low) -> {
                 sort_selected = AndroidUtils.getString(R.string.price_high_to_low)
-
+                sort_by = "popularity"
             }
             AndroidUtils.getString(R.string.price_low_high) -> {
                 sort_selected = AndroidUtils.getString(R.string.price_low_high)
-
+                sort_by = "low"
             }
             AndroidUtils.getString(R.string.open_to_nagotiation_) -> {
                 sort_selected = AndroidUtils.getString(R.string.open_to_nagotiation_)
-
+                sort_by = "negotiation"
             }
-        }
 
+        }
+        getProductData()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE ->
+                if (resultCode == Activity.RESULT_OK) {
+
+
+                    brandSelected = data!!.getStringArrayListExtra("brandSelected")!!
+                    minPrice = data!!.getStringExtra("minPrice")
+                    maxPrice = data!!.getStringExtra("maxPrice")
+                    brandMultipleListModels =
+                        data!!.getParcelableArrayListExtra<FilterDefaultMultipleListModel>("brandModel")!!
+                    isFilter = true
+                    getProductData()
+                }
+
+        }
     }
 
 }

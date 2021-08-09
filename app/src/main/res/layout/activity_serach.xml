@@ -1,14 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:background="@color/white"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -28,7 +29,7 @@
                     android:paddingEnd="10dp"
                     android:text="@string/search_mobile"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/etSearchQuery"
@@ -46,6 +47,7 @@
                     android:singleLine="@bool/show"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -55,7 +57,8 @@
                     android:paddingEnd="10dp"
                     android:text="@string/search_for_mobiles"
                     android:textColor="@color/grey"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,19 +68,12 @@
                     android:paddingEnd="10dp"
                     android:text="@string/add_location"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:lineSpacingExtra="0.5dp"
-                    android:paddingLeft="12dp"
-                    android:paddingEnd="10dp"
-                    android:text="@string/user_my_current_location"
-                    android:textColor="@color/grey"
                     android:textSize="14sp" />
 
+
                 <EditText
+                    android:focusable="false"
+                    android:clickable="true"
                     android:id="@+id/locationSearch"
                     android:layout_width="match_parent"
                     android:layout_height="43dp"
@@ -93,6 +89,8 @@
                     android:singleLine="@bool/show"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,62 +98,141 @@
                     android:fontFamily="@font/poppins_semibold"
                     android:paddingLeft="12dp"
                     android:paddingEnd="10dp"
-                    android:text="@string/category_type"
+                    android:text="@string/select_type_of_search"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
                 <LinearLayout
-                    android:id="@+id/layoutChannel1"
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:layout_marginRight="@dimen/dimen_10"
-                    android:background="@drawable/edit_text_corner_red_bg"
-
-                    android:layout_height="43dp">
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:id="@+id/categoryType"
-                        tools:listitem="@layout/item_custom_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:spinnerMode="dropdown"
-                        />
-                </LinearLayout>
-                <RelativeLayout
-                    android:layout_marginTop="@dimen/et_height_30"
-                    android:orientation="horizontal"
+                    android:layout_marginStart="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:buttonTint="@color/red_a"
+                        android:id="@+id/rbProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Product" />
+
+                    <RadioButton
+                        android:buttonTint="@color/red_a"
+
+                        android:id="@+id/rbEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Event" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/llCategoryProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/select_category"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutChannel1"
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:background="@drawable/edit_text_corner_red_bg"
+
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/categoryType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:spinnerMode="dropdown"
+                            tools:listitem="@layout/item_custom_spinner" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/llCategoryEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="10dp"
+                        android:text="@string/select_event_category"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="43dp"
+                        android:layout_marginLeft="@dimen/dimen_10"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="@dimen/dimen_10"
+                        android:background="@drawable/edit_text_corner_red_bg"
+
+                        android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/EventType"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:spinnerMode="dropdown"
+                            tools:listitem="@layout/item_custom_spinner" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/et_height_30"
+                    android:orientation="horizontal">
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnCancel"
-                        android:layout_marginStart="10dp"
                         android:layout_width="160dp"
                         android:layout_height="45dp"
+                        android:layout_marginStart="10dp"
                         android:background="@drawable/rounded_corners_app_red_back"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/action_cancel"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="19sp"
-                        />
+                        android:textSize="19sp" />
+
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnApply"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginStart="10dp"
                         android:layout_width="160dp"
-                        android:layout_alignParentRight="true"
                         android:layout_height="45dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="20dp"
                         android:background="@drawable/rounded_corners_app_red_back"
                         android:fontFamily="@font/poppins_semibold"
                         android:text="@string/apply"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="19sp"
-                        />
+                        android:textSize="19sp" />
 
                 </RelativeLayout>
 
@@ -163,11 +240,11 @@
 
             <ImageView
                 android:id="@+id/ivBackSearch"
-                android:padding="20dp"
-                app:tint="@color/red_a"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
                 android:src="@drawable/ic_left_arrow_white"
-                android:layout_height="wrap_content"/>
+                app:tint="@color/red_a" />
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

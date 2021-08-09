@@ -21,6 +21,7 @@ import com.dartmic.yo2see.interfaces.SortImpl
 import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.ui.AdsItems.sheet.SimpleAdsBottomSheet
+import com.dartmic.yo2see.ui.SubCategoriesList.SubCategoriesFragment
 import com.dartmic.yo2see.ui.addProduct.AddProductFragment
 import com.dartmic.yo2see.ui.chat_list.ChatListFragment
 import com.dartmic.yo2see.ui.favorites.SortByBottomSheet
@@ -30,8 +31,12 @@ import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.more.MoreFragment
 import com.dartmic.yo2see.ui.postAdd.PostAnAddFragment
+import com.dartmic.yo2see.ui.product_list.EventListingFragment
+import com.dartmic.yo2see.ui.product_list.JobListingFragment
 import com.dartmic.yo2see.ui.product_list.ProductListFragment
 import com.dartmic.yo2see.ui.product_list.adapter.SortByProductBottomSheet
+import com.dartmic.yo2see.ui.product_list.business.BusinessAdsListingFragment
+import com.dartmic.yo2see.ui.product_list.poems.PoemsListingFragment
 import com.dartmic.yo2see.util.UiUtils
 import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
@@ -249,16 +254,16 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             }
 
         }
-       /* let {
-            this?.let { UiUtils.hideSoftKeyboard(it) }
+        /* let {
+             this?.let { UiUtils.hideSoftKeyboard(it) }
 
-            startActivityForResult(
-                MapsActivity.getIntent(it), 12
-            )
-        }*/
+             startActivityForResult(
+                 MapsActivity.getIntent(it), 12
+             )
+         }*/
     }
 
-   public fun checkUserLogin(): Boolean {
+    public fun checkUserLogin(): Boolean {
         var preferenceManager = PreferenceManager(this)
 
         return preferenceManager.isUserLoggedIn()
@@ -277,17 +282,95 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
             var location = getStringExtra("location")
             var type = getStringExtra("type")
             var from = getStringExtra("from")
+            var categoryName = getStringExtra("categoryName")!!
+            var latitude = getStringExtra("latitude")!!
+            var longitude = getStringExtra("longitude")!!
+            var categoryId = getStringExtra("categoryId")!!
+
             if (from.equals("search")) {
-                pushFragment(
-                    ProductListFragment
-                        .getInstance(
-                            1,
-                            AndroidUtils.getType(type!!),
-                            location!!,
-                            query!!,
-                            SubToSubListItem()
+
+                if (categoryName.equals("Events")) {
+                    pushFragment(
+
+                        EventListingFragment.getInstance(
+                            1, 0, latitude, longitude, query!!, SubToSubListItem(
+                                "",
+                                "",
+                                categoryId,
+                                "0",
+                                categoryName,
+                                "0"
+                            )
                         )
-                )
+                    )
+                } else if (categoryName.contains("Poems") || categoryName.contains(
+                        "Short Stories"
+                    )
+                    || categoryName.contains("Local Services") || categoryName.contains(
+                        "Freelance"
+                    ) || categoryName.contains(
+                        "Volunteering"
+                    ) || categoryName.contains(
+                        "Uncategorized"
+                    )
+                ) {
+                    pushFragment(
+                        PoemsListingFragment.getInstance(
+                            1, 0, latitude, longitude, query!!, SubToSubListItem(
+                                "",
+                                "",
+                                categoryId,
+                                "0",
+                                categoryName,
+                                "0"
+                            )
+                        )
+
+                    )
+                } else if (categoryName.contains("Ads for Business") ||
+                    categoryName.contains("Blog") || categoryName.contains("Business for Sale")
+                ) {
+                    pushFragment(
+                        BusinessAdsListingFragment.getInstance(
+                            1, 0, latitude, longitude, query!!, SubToSubListItem(
+                                "",
+                                "",
+                                categoryId,
+                                "0",
+                                categoryName,
+                                "0"
+                            )
+                        )
+                    )
+                } else if (categoryName.contains("Job", true)
+                ) {
+                    pushFragment(
+                        JobListingFragment.getInstance(
+                            1, 0, latitude, longitude, query!!, SubToSubListItem(
+                                "",
+                                "",
+                                categoryId,
+                                "0",
+                                categoryName,
+                                "0"
+                            )
+                        )
+                    )
+                } else {
+                    pushFragment(
+                        ProductListFragment
+                            .getInstance(
+                                1, 0, latitude, longitude, query!!, SubToSubListItem(
+                                    "",
+                                    "",
+                                    categoryId,
+                                    "0",
+                                    categoryName,
+                                    "0"
+                                )
+                            )
+                    )
+                }
             }
         }
 
@@ -377,7 +460,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                         val currentLatitude: Double =
                             data.getDoubleExtra(MapUtility.LATITUDE, 0.0)
                         val currentLongitude: Double =
-                           data.getDoubleExtra(MapUtility.LONGITUDE, 0.0)
+                            data.getDoubleExtra(MapUtility.LONGITUDE, 0.0)
                         val completeAddress: Bundle = data.getBundleExtra("fullAddress")!!
                         /* data in completeAddress bundle
                     "fulladdress"
@@ -390,15 +473,20 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
 
                      */
 
-                        Log.e("DEBUG",""+StringBuilder().append("addressline2: ")
-                            .append(completeAddress.getString("addressline2"))
-                            .append("\ncity: ").append(completeAddress.getString("city"))
-                            .append("\npostalcode: ")
-                            .append(completeAddress.getString("postalcode")).append("\nstate: ")
-                            .append(completeAddress.getString("state")).toString())
+                        Log.e(
+                            "DEBUG", "" + StringBuilder().append("addressline2: ")
+                                .append(completeAddress.getString("addressline2"))
+                                .append("\ncity: ").append(completeAddress.getString("city"))
+                                .append("\npostalcode: ")
+                                .append(completeAddress.getString("postalcode")).append("\nstate: ")
+                                .append(completeAddress.getString("state")).toString()
+                        )
 
-                        Log.e("DEBUG",  StringBuilder().append("Lat:").append(currentLatitude).append("  Long:")
-                            .append(currentLongitude).toString())
+                        Log.e(
+                            "DEBUG",
+                            StringBuilder().append("Lat:").append(currentLatitude).append("  Long:")
+                                .append(currentLongitude).toString()
+                        )
                         /*txtAddress.setText(
                             StringBuilder().append("addressline2: ")
                                 .append(completeAddress.getString("addressline2"))
@@ -415,10 +503,9 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                 } catch (ex: java.lang.Exception) {
                     ex.printStackTrace()
                 }
-            }
-          else  if(getVisibleFragment() is ProductFragment) {
+            } else if (getVisibleFragment() is ProductFragment) {
                 var f = getVisibleFragment() as ProductFragment
-               // (( Fragment)ProductFragment).onActivityResult(requestCode, resultCode, data)
+                // (( Fragment)ProductFragment).onActivityResult(requestCode, resultCode, data)
                 (supportFragmentManager.findFragmentById(R.id.container) as AddProductFragment?)?.onActivityResult(
                     requestCode,
                     resultCode,

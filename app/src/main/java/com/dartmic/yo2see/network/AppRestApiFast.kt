@@ -111,9 +111,14 @@ interface AppRestApiFast {
         @Field("listing_type") listing_type: String,
         @Field("listing_price") listing_price: String,
         @Field("country") country: String,
-        @Field("state") state: String,
-        @Field("city") city: String,
-        @Field("search_key") search_key: String
+        @Field("latitude") state: String,
+        @Field("longitude") city: String,
+        @Field("search_key") search_key: String,
+        @Field("event_type") event_type: JSONArray,
+        @Field("min_price") min_price: String,
+        @Field("max_price") max_price: String,
+        @Field("sort_type") sort_type: String
+
     ): Single<ProductListInfoResponsePayload>
 
     @FormUrlEncoded
@@ -129,9 +134,14 @@ interface AppRestApiFast {
         @Field("listing_type") listing_type: String,
         @Field("listing_price") listing_price: String,
         @Field("country") country: String,
-        @Field("state") state: String,
-        @Field("city") city: String,
-        @Field("search_key") search_key: String
+        @Field("latitude") state: String,
+        @Field("longitude") city: String,
+        @Field("search_key") search_key: String,
+        @Field("event_type") event_type: JSONArray,
+        @Field("min_price") min_price: String,
+        @Field("max_price") max_price: String,
+        @Field("sort_type") sort_type: String
+
     ): Single<JobListingResponsePayload>
 
     @FormUrlEncoded
@@ -147,9 +157,14 @@ interface AppRestApiFast {
         @Field("listing_type") listing_type: String,
         @Field("listing_price") listing_price: String,
         @Field("country") country: String,
-        @Field("state") state: String,
-        @Field("city") city: String,
-        @Field("search_key") search_key: String
+        @Field("latitude") state: String,
+        @Field("longitude") city: String,
+        @Field("search_key") search_key: String,
+        @Field("event_type") event_type: JSONArray,
+        @Field("min_price") min_price: String,
+        @Field("max_price") max_price: String,
+        @Field("sort_type") sort_type: String
+
     ): Single<EventListingResponsePayload>
 
     @Multipart
@@ -550,7 +565,7 @@ interface AppRestApiFast {
         @Field("expiry_datetime") expiry_datetime: String,
         @Field("longitude") longitude: String,
         @Field("latitude") latitude: String,
-        @Field("business_type") business_type: String,
+        @Field("business_for_sale_type") business_type: String,
         @Field("photos_array") photos_array: JSONArray
 
     ): Single<AddProdcutResponse>
@@ -576,7 +591,7 @@ interface AppRestApiFast {
         @Field("expiry_datetime") expiry_datetime: String,
         @Field("longitude") longitude: String,
         @Field("latitude") latitude: String,
-        @Field("freelance_type") poem_type: String
+        @Field("uncategorized_type") poem_type: String
     ): Single<AddProdcutResponse>
 
     @FormUrlEncoded
@@ -599,7 +614,7 @@ interface AppRestApiFast {
         @Field("expiry_datetime") expiry_datetime: String,
         @Field("longitude") longitude: String,
         @Field("latitude") latitude: String,
-        @Field("freelance_type") poem_type: String
+        @Field("valunteering_type") poem_type: String
     ): Single<AddProdcutResponse>
 
 }

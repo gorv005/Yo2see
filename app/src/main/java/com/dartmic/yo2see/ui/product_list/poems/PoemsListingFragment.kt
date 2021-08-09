@@ -1,5 +1,6 @@
 package com.dartmic.yo2see.ui.product_list.poems
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
+import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product.event.ListingItemEvent
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
@@ -28,6 +30,7 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.ProductListnViewModel
 import kotlinx.android.synthetic.main.fragment_poems_listing.*
+import org.json.JSONArray
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,6 +56,15 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
     lateinit var listingItem: ListingItemEvent
     private var listingItemList = ArrayList<ListingItemEvent>()
     var pos: Int = -1
+    val REQUEST_CODE = 11
+    internal var isFilter: Boolean = false
+    internal var minPrice: String? = "0"
+    internal var maxPrice: String? = "100000000"
+    private var brandMultipleListModels = java.util.ArrayList<FilterDefaultMultipleListModel>()
+    var latitude = ""
+    var longitude = ""
+    private var brandSelected = java.util.ArrayList<String>()
+    internal var sort_by: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,8 +94,12 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
         type = arguments?.getInt(TYPE)
         subToSubListItem = arguments?.getParcelable(DATA)!!
         query = arguments?.getString(QUERY)
-        location = arguments?.getString(LOCATION)
-
+        latitude = arguments?.getString(LATITUDE)!!
+        longitude = arguments?.getString(LONGITUDE)!!
+        if(latitude.equals("")){
+            latitude=model?.getLatitude()!!
+            longitude=model?.getLongitude()!!
+        }
         init()
         rvProductPoemList.layoutManager = manager
         activity?.let {
@@ -93,7 +109,67 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
         }
         rlFilter.setOnClickListener {
             activity?.let {
-                startActivity(FilterActivity.getIntent(it))
+                if (subToSubListItem?.categoryName.contains("Short Stories")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Story Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
+                } else if (subToSubListItem?.categoryName.contains("Freelance")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Freelancing Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
+                } else if (subToSubListItem?.categoryName.contains("Local Services")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Service Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
+                } else if (subToSubListItem?.categoryName.contains("Volunteering")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Valunteering Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
+                } else if (subToSubListItem?.categoryName.contains("Uncategorized")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Uncategorized Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
+                } else {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Poem Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
+                }
             }
         }
         rvProductPoemList.adapter = adapterEventProductList
@@ -111,8 +187,9 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
     fun getProductData() {
         if (NetworkUtil.isInternetAvailable(activity)) {
             //  listingType = "Rent"
+            val brands = JSONArray(brandSelected)
 
-            if (query.equals("")) {
+
                 if (subToSubListItem?.categoryName.contains("Short Stories")) {
                     model.getEventProductList(
                         "List",
@@ -125,13 +202,15 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        "" + latitude, "" + longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
-                }
-                else if (subToSubListItem?.categoryName.contains("Freelance")) {
+                } else if (subToSubListItem?.categoryName.contains("Freelance")) {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,
@@ -143,13 +222,15 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        "" + latitude, "" + longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
-                }
-               else if (subToSubListItem?.categoryName.contains("Local Services")) {
+                } else if (subToSubListItem?.categoryName.contains("Local Services")) {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,
@@ -161,13 +242,16 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
-                }
-                else if (subToSubListItem?.categoryName.contains("Volunteering")) {
+                } else if (subToSubListItem?.categoryName.contains("Volunteering")) {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,
@@ -179,13 +263,16 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
-                }
-                else if (subToSubListItem?.categoryName.contains("Uncategorized")) {
+                } else if (subToSubListItem?.categoryName.contains("Uncategorized")) {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,
@@ -197,12 +284,16 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
 
-                }else {
+                } else {
                     model.getEventProductList(
                         "List",
                         model?.getUserID()!!,
@@ -214,20 +305,16 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
                         "",
                         "",
                         "",
-                        "",
-                        "",
-                        ""
+                        latitude,
+                        longitude,
+                        query!!,
+                        brands,
+                        minPrice!!,
+                        maxPrice!!,
+                        sort_by
                     )
                 }
-            } else {
-                model.getProductList(
-                    "List", model?.getUserID()!!, "", "",
-                    "", "", listingType!!, "",
-                    "", "", location!!, query!!
-                )
-
             }
-        }
     }
 
 
@@ -299,18 +386,21 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
         const val DATA = "data"
         const val LOCATION = "location"
         const val QUERY = "query"
+        const val LATITUDE = "LATITUDE"
+        const val LONGITUDE = "LONGITUDE"
 
         @JvmStatic
         fun getInstance(
             instance: Int,
-            type: Int?, location: String, query: String,
+            type: Int?, latitude: String, longitude: String, query: String,
             categoryListItemData: SubToSubListItem?
         ): PoemsListingFragment {
             val bundle = Bundle()
             bundle.putInt(BaseFragment.ARGS_INSTANCE, instance)
             val fragment = PoemsListingFragment()
             bundle.putInt(TYPE, type!!)
-            bundle.putString(LOCATION, location)
+            bundle.putString(LATITUDE, latitude)
+            bundle.putString(LONGITUDE, longitude)
             bundle.putString(QUERY, query)
 
             bundle.putParcelable(DATA, categoryListItemData)
@@ -402,4 +492,24 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
         }
 
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            REQUEST_CODE ->
+                if (resultCode == Activity.RESULT_OK) {
+
+
+                    brandSelected = data!!.getStringArrayListExtra("brandSelected")!!
+                    minPrice = data!!.getStringExtra("minPrice")
+                    maxPrice = data!!.getStringExtra("maxPrice")
+                    brandMultipleListModels =
+                        data!!.getParcelableArrayListExtra<FilterDefaultMultipleListModel>("brandModel")!!
+                    isFilter = true
+                    getProductData()
+                }
+
+        }
+    }
+
 }
