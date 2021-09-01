@@ -11,6 +11,7 @@ import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
@@ -175,6 +176,11 @@ class AddAdsForBusinessFragment : BaseFragment<AddProductViewModel>(AddProductVi
                 etCountry.setError(validateetCountry)
             }
         }
+        tvSetPrice.setText(
+            AndroidUtils.getString(R.string.cost) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
     }
 
     fun init() {
@@ -344,9 +350,9 @@ class AddAdsForBusinessFragment : BaseFragment<AddProductViewModel>(AddProductVi
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-                val handler = Handler()
-                handler.postDelayed({
-                    onBackPressed()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    activity?.onBackPressed()
+
                 }, 1000)
             } else {
                 showSnackbar(it.message, false)
@@ -416,6 +422,8 @@ class AddAdsForBusinessFragment : BaseFragment<AddProductViewModel>(AddProductVi
                 Toast.makeText(activity, "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
+
+
     }
 
     fun showImages() {

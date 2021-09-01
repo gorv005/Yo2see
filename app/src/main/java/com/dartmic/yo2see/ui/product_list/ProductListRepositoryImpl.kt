@@ -2,9 +2,11 @@ package com.gsa.ui.login
 
 
 import com.dartmic.yo2see.managers.PreferenceManager
+import com.dartmic.yo2see.model.comment.CommentListResponse
 import com.dartmic.yo2see.model.login.LoginRequest
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
+import com.dartmic.yo2see.model.my_history.PostHistoryResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
@@ -35,8 +37,8 @@ class ProductListRepositoryImpl(
         city: String,
         search_key: String,
         event_type: JSONArray,
-        min_price:String,
-        max_price:String, sort_type:String
+        min_price: String,
+        max_price: String, sort_type: String
 
     ): Single<ProductListInfoResponsePayload> {
         return restApi.getProductListing(
@@ -66,7 +68,7 @@ class ProductListRepositoryImpl(
         sub_cat_id: String,
         sub_to_sub_cat_id: String,
         brand: String,
-        nType:String,
+        nType: String,
         listing_type: String,
         listing_price: String,
         country: String,
@@ -74,8 +76,8 @@ class ProductListRepositoryImpl(
         city: String,
         search_key: String,
         event_type: JSONArray,
-        min_price:String,
-        max_price:String, sort_type:String
+        min_price: String,
+        max_price: String, sort_type: String
     ): Single<JobListingResponsePayload> {
         return restApi.getJobProductListing(
             service,
@@ -113,8 +115,8 @@ class ProductListRepositoryImpl(
         city: String,
         search_key: String,
         event_type: JSONArray,
-        min_price:String,
-        max_price:String, sort_type:String
+        min_price: String,
+        max_price: String, sort_type: String
     ): Single<EventListingResponsePayload> {
         return restApi.getEventProductListing(
             service,
@@ -137,7 +139,10 @@ class ProductListRepositoryImpl(
         )
     }
 
-    override fun getFavList(service: String, userId: String): Single<ProductListInfoResponsePayload> {
+    override fun getFavList(
+        service: String,
+        userId: String
+    ): Single<ProductListInfoResponsePayload> {
         return restApi.getFavProductListing(
             service,
             userId
@@ -171,6 +176,40 @@ class ProductListRepositoryImpl(
         fav_flag: Int
     ): Single<LoginResponsePayload> {
         return restApi.addToFavorites(service, user_id, list_id, fav_flag)
+    }
+
+    override fun postHistory(service: String, user_id: String): Single<PostHistoryResponsePayload> {
+        return restApi.postHistory(service, user_id)
+    }
+
+    override fun deleteHistory(
+        service: String,
+        user_id: String,
+        table_id: String,
+        table_name: String
+    ): Single<PostHistoryResponsePayload> {
+        return restApi.deleteHistory(service, user_id, table_id, table_name)
+
+    }
+
+    override fun getComments(
+        service: String,
+        nType: String,
+        user_id: String,
+        event_id: String
+    ): Single<CommentListResponse> {
+        return restApi.getComments(service, nType, user_id, event_id)
+    }
+
+    override fun addComment(
+        service: String,
+        nType: String,
+        user_id: String,
+        event_id: String,
+        parent_id: String,
+        comment: String
+    ): Single<CommentListResponse> {
+        return restApi.addComment(service, nType, user_id, event_id,parent_id,comment)
     }
 
 

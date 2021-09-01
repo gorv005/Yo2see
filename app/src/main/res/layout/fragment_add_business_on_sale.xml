@@ -130,7 +130,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_marginTop="5dp"
-                            android:lines="1"
                             android:background="@drawable/edit_text_round_corner_bg"
                             android:focusableInTouchMode="true"
                             android:textColor="@color/disabled_text"

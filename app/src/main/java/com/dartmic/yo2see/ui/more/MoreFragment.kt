@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.managers.PreferenceManager
@@ -16,11 +17,16 @@ import com.dartmic.yo2see.ui.categories.CategoriesViewModel
 import com.dartmic.yo2see.ui.change_password.ChangePasswordActivity
 import com.dartmic.yo2see.ui.favorites.FragmentFavorites
 import com.dartmic.yo2see.ui.home.HomeFragment
+import com.dartmic.yo2see.ui.login.LoginActivity
+import com.dartmic.yo2see.ui.post_history.PostHistoryFragment
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.profile.ProfileActivity
 import com.dartmic.yo2see.utils.Config
+import kotlinx.android.synthetic.main.activity_profile.*
 
 import kotlinx.android.synthetic.main.fragment_more.*
+import kotlinx.android.synthetic.main.fragment_more.ivProfileL
+import kotlinx.android.synthetic.main.fragment_more.tvUserName
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,39 +62,68 @@ class MoreFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var preferenceManager = PreferenceManager(activity!!)
 
-        val username = SpannableString(preferenceManager?.getLoggedInUserName())
-        username.setSpan(UnderlineSpan(), 0, username.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tvUserName.text = username.toString()
         ivClose.setOnClickListener {
             activity?.onBackPressed()
         }
         tvMyAccount.setOnClickListener {
-            startActivity(ProfileActivity.getIntent(activity!!))
+            if (checkUserLogin()) {
+                startActivity(ProfileActivity.getIntent(activity!!))
+            } else {
+                startActivity(LoginActivity.getIntent(activity!!))
+            }
         }
         tvUserName.setOnClickListener {
-            startActivity(ProfileActivity.getIntent(activity!!))
+            if (checkUserLogin()) {
+                startActivity(ProfileActivity.getIntent(activity!!))
+            } else {
+                startActivity(LoginActivity.getIntent(activity!!))
+            }
         }
         tvChangePassword.setOnClickListener {
-            startActivity(ChangePasswordActivity.getIntent(activity!!))
+            if (checkUserLogin()) {
+                startActivity(ChangePasswordActivity.getIntent(activity!!))
+            } else {
+                startActivity(LoginActivity.getIntent(activity!!))
+            }
 
         }
+        tvPostHistory.setOnClickListener {
+            if (checkUserLogin()) {
+                mFragmentNavigation.pushFragment(
+                    PostHistoryFragment
+                        .getInstance(mInt + 1)
+                )
+            } else {
+                startActivity(LoginActivity.getIntent(activity!!))
+
+            }
+        }
         tvFavorites.setOnClickListener {
-            mFragmentNavigation.pushFragment(
-                FragmentFavorites
-                    .getInstance(mInt + 1)
-            )
+            if (checkUserLogin()) {
+                mFragmentNavigation.pushFragment(
+                    FragmentFavorites
+                        .getInstance(mInt + 1)
+                )
+            } else {
+                startActivity(LoginActivity.getIntent(activity!!))
+
+            }
         }
         tvLogout.setOnClickListener {
-            var preferenceManager = PreferenceManager(activity!!)
-            preferenceManager.savePreference(
-                Config.SharedPreferences.PROPERTY_LOGIN_PREF,
-                false
-            )
-            startActivity(
-                LandingActivity.getIntent(activity!!, 1)
-            )
+            if (checkUserLogin()) {
+                var preferenceManager = PreferenceManager(activity!!)
+                preferenceManager.savePreference(
+                    Config.SharedPreferences.PROPERTY_LOGIN_PREF,
+                    false
+                )
+                startActivity(
+                    LandingActivity.getIntent(activity!!, 1)
+                )
+            } else {
+                startActivity(LoginActivity.getIntent(activity!!))
+
+            }
         }
     }
 
@@ -103,6 +138,24 @@ class MoreFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        var preferenceManager = PreferenceManager(activity!!)
+
+        val username = SpannableString(preferenceManager?.getLoggedInUserName())
+        username.setSpan(UnderlineSpan(), 0, username.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tvUserName.text = username.toString()
+        Glide.with(this).load("https://yo2see.com/app/admin/" + preferenceManager?.getUserImage())
+            .placeholder(R.drawable.no_image2).circleCrop()
+            .into(ivProfileL)
+    }
+
     override fun getLayoutId() = R.layout.fragment_more
+
+    public fun checkUserLogin(): Boolean {
+        var preferenceManager = PreferenceManager(activity!!)
+
+        return preferenceManager.isUserLoggedIn()
+    }
 
 }

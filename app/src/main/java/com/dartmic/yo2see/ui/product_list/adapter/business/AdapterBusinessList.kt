@@ -97,8 +97,12 @@ class AdapterBusinessList(
                 "<u>" + allProducts?.eCity + ", " + allProducts?.eState + "</u>",
                 HtmlCompat.FROM_HTML_MODE_LEGACY
             )
-            itemView.tvPrice?.text =
-                AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + allProducts?.ePrice
+            if(allProducts?.ePrice==null || allProducts?.ePrice.equals("")){
+                itemView.tvPrice?.text =allProducts?.eventType
+            }else {
+                itemView.tvPrice?.text =
+                    AndroidUtils.getCurrencySymbol(AndroidUtils.getCurrencyCode()) + allProducts?.ePrice
+            }
             // "From " + allProducts?.ePublishDatetime + " " + "To " + allProducts?.eExpiryDatetime
 
             /*  val v = SpannableString("View " + allProducts.userName + "'s listing")

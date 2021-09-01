@@ -11,7 +11,8 @@ class Config {
         const val CLICK_ADD_IMAGE = 102
         const val CLICK_REMOVE_IMAGE = 103
         const val CLICK_SHARE= 104
-
+        const val CLICK_VIEW_DELETE = 108
+        const val CLICK_COMMENT= 109
 
     }
 
@@ -92,6 +93,11 @@ class Config {
         const val PRODUCT_ADD_BUSINESS_FOR_SALE = BASE_PATH + "event/add_business_for_sale"
         const val PRODUCT_ADD_UNCATEGORIZED = BASE_PATH + "event/add_uncategorized"
         const val PRODUCT_ADD_VOLUNTERRING= BASE_PATH + "event/add_valunteering"
+        const val PRODUCT_ADD_FORUM = BASE_PATH + "event/add_forum"
+        const val POST_HISTORY = BASE_PATH + "common/mylist"
+        const val DELETE_HISTORY = BASE_PATH + "common/deletelist"
+        const val COMMENT_LIST = BASE_PATH + "event/commentlist"
+        const val ADD_COMMENT = BASE_PATH + "event/add_comment"
 
 
     }

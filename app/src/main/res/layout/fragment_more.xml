@@ -38,10 +38,25 @@
                     android:layout_marginTop="40dp">
 
                     <RelativeLayout
-
+                        android:layout_gravity="center_horizontal"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:background="@drawable/round_bg" />
+                        android:background="@drawable/round_bg" >
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/ivProfileL"
+                            android:src="@drawable/no_image2"
+                            android:scaleType="centerCrop"
+                            app:riv_corner_radius="30dip"
+                            app:riv_border_width="2dip"
+                            android:padding="5dp"
+                            android:layout_centerInParent="true"
+                            android:layout_width="108dp"
+                            android:layout_height="108dp"
+                            app:riv_border_color="#ffffff"
+                            app:riv_oval="true" />
+
+                    </RelativeLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -193,20 +208,12 @@
                     android:textSize="14sp"
                     />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvPostHistory"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/current_post"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/previous_posts"
+                    android:text="@string/post_history"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     />

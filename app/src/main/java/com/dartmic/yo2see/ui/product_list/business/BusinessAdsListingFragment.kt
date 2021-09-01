@@ -13,11 +13,14 @@ import com.dartmic.yo2see.BuildConfig
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product.event.ListingItemEvent
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
+import com.dartmic.yo2see.ui.login.LoginActivity
+import com.dartmic.yo2see.ui.productDetails.ForumDetailFragment
 import com.dartmic.yo2see.ui.productDetails.business.BusinessDetailFragment
 import com.dartmic.yo2see.ui.productDetails.poem.PoemDetailFragment
 import com.dartmic.yo2see.ui.product_list.adapter.business.AdapterBusinessList
@@ -63,7 +66,7 @@ class BusinessAdsListingFragment :
     internal var maxPrice: String? = "100000000"
     private var brandMultipleListModels = java.util.ArrayList<FilterDefaultMultipleListModel>()
 
-    private var brandSelected= java.util.ArrayList<String>()
+    private var brandSelected = java.util.ArrayList<String>()
     internal var sort_by: String = ""
     var latitude = ""
     var longitude = ""
@@ -97,9 +100,9 @@ class BusinessAdsListingFragment :
         query = arguments?.getString(QUERY)
         latitude = arguments?.getString(LATITUDE)!!
         longitude = arguments?.getString(LONGITUDE)!!
-        if(latitude.equals("")){
-            latitude=model?.getLatitude()!!
-            longitude=model?.getLongitude()!!
+        if (latitude.equals("")) {
+            latitude = model?.getLatitude()!!
+            longitude = model?.getLongitude()!!
         }
         init()
         rvProductBusinessList.layoutManager = manager
@@ -111,16 +114,51 @@ class BusinessAdsListingFragment :
         rlFilter.setOnClickListener {
             activity?.let {
                 if (subToSubListItem?.categoryName.contains("Ads for Business")) {
-                    startActivityForResult(FilterActivity.getIntent(it,"Business Type", brandMultipleListModels,minPrice!!, maxPrice!!),REQUEST_CODE)
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Business Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
 
-                }
-                else if (subToSubListItem?.categoryName.contains("Blog")) {
-                    startActivityForResult(FilterActivity.getIntent(it,"Blog Category",brandMultipleListModels,minPrice!!, maxPrice!!),REQUEST_CODE)
+                } else if (subToSubListItem?.categoryName.contains("Blog")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Blog Category",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
 
-                }
-                else if (subToSubListItem?.categoryName.contains("Business for Sale")) {
-                    startActivityForResult(FilterActivity.getIntent(it,"BusinessForSale Type",brandMultipleListModels,minPrice!!, maxPrice!!),REQUEST_CODE)
+                } else if (subToSubListItem?.categoryName.contains("Business for Sale")) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "BusinessForSale Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
 
+                } else if (subToSubListItem?.categoryName.contains("Forum") || subToSubListItem?.categoryName.contains(
+                        "Fourms"
+                    )
+                ) {
+                    startActivityForResult(
+                        FilterActivity.getIntent(
+                            it,
+                            "Forum Type",
+                            brandMultipleListModels,
+                            minPrice!!,
+                            maxPrice!!
+                        ), REQUEST_CODE
+                    )
                 }
             }
         }
@@ -142,70 +180,94 @@ class BusinessAdsListingFragment :
             val brands = JSONArray(brandSelected)
 
 
-                if (subToSubListItem?.categoryName.contains("Ads for Business")) {
-                    model.getEventProductList(
-                        "List",
-                        model?.getUserID()!!,
-                        subToSubListItem.categoryId,
-                        subToSubListItem.subCategoryId,
-                        subToSubListItem.id,
-                        "",
-                        "Business",
-                        "",
-                        "",
-                        "",
-                        latitude,
-                        longitude,
-                        query!!,
-                        brands,
-                        minPrice!!,
-                        maxPrice!!,
-                        sort_by
-                    )
+            if (subToSubListItem?.categoryName.contains("Ads for Business")) {
+                model.getEventProductList(
+                    "List",
+                    model?.getUserID()!!,
+                    subToSubListItem.categoryId,
+                    subToSubListItem.subCategoryId,
+                    subToSubListItem.id,
+                    "",
+                    "Business",
+                    "",
+                    "",
+                    "",
+                    latitude,
+                    longitude,
+                    query!!,
+                    brands,
+                    minPrice!!,
+                    maxPrice!!,
+                    sort_by
+                )
 
-                }
-               else if (subToSubListItem?.categoryName.contains("Business for Sale")) {
-                    model.getEventProductList(
-                        "List",
-                        model?.getUserID()!!,
-                        subToSubListItem.categoryId,
-                        subToSubListItem.subCategoryId,
-                        subToSubListItem.id,
-                        "",
-                        "Business for sale",
-                        "",
-                        "",
-                        "",
-                        latitude,
-                        longitude,
-                        query!!,
-                        brands,
-                        minPrice!!,
-                        maxPrice!!,
-                        sort_by
+            } else if (subToSubListItem?.categoryName.contains("Business for Sale")) {
+                model.getEventProductList(
+                    "List",
+                    model?.getUserID()!!,
+                    subToSubListItem.categoryId,
+                    subToSubListItem.subCategoryId,
+                    subToSubListItem.id,
+                    "",
+                    "Business for sale",
+                    "",
+                    "",
+                    "",
+                    latitude,
+                    longitude,
+                    query!!,
+                    brands,
+                    minPrice!!,
+                    maxPrice!!,
+                    sort_by
 
-                    )
+                )
 
-                }else if (subToSubListItem?.categoryName.contains("Blog")) {
-                    model.getEventProductList(
-                        "List",
-                        model?.getUserID()!!,
-                        subToSubListItem.categoryId,
-                        subToSubListItem.subCategoryId,
-                        subToSubListItem.id,
-                        "",
-                        "Blog",
-                        "",
-                        "",
-                        "",
-                        latitude,
-                        longitude,
-                        query!!,
-                        brands,
-                        minPrice!!,
-                        maxPrice!!,
-                        sort_by
-                    )
+            } else if (subToSubListItem?.categoryName.contains("Blog")) {
+                model.getEventProductList(
+                    "List",
+                    model?.getUserID()!!,
+                    subToSubListItem.categoryId,
+                    subToSubListItem.subCategoryId,
+                    subToSubListItem.id,
+                    "",
+                    "Blog",
+                    "",
+                    "",
+                    "",
+                    latitude,
+                    longitude,
+                    query!!,
+                    brands,
+                    minPrice!!,
+                    maxPrice!!,
+                    sort_by
+                )
+
+
+            } else if (subToSubListItem?.categoryName.contains("Forum") || subToSubListItem?.categoryName.contains(
+                    "Fourms"
+                )
+            ) {
+                model.getEventProductList(
+                    "List",
+                    model?.getUserID()!!,
+                    subToSubListItem.categoryId,
+                    subToSubListItem.subCategoryId,
+                    subToSubListItem.id,
+                    "",
+                    "Forum",
+                    "",
+                    "",
+                    "",
+                    latitude,
+                    longitude,
+                    query!!,
+                    brands,
+                    minPrice!!,
+                    maxPrice!!,
+                    sort_by
+                )
 
 
             }
@@ -323,10 +385,25 @@ class BusinessAdsListingFragment :
             Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT -> {
 
                 this?.let {
-                    mFragmentNavigation.pushFragment(
-                        BusinessDetailFragment
-                            .getInstance(mInt + 1, type, objectAtPosition, position)
-                    )
+                    if (checkUserLogin()) {
+                        if (subToSubListItem?.categoryName.contains("Forum") || subToSubListItem?.categoryName.contains(
+                                "Fourms"
+                            )
+                        ) {
+                            mFragmentNavigation.pushFragment(
+                                ForumDetailFragment
+                                    .getInstance(mInt + 1, type, objectAtPosition, position)
+                            )
+                        } else {
+                            mFragmentNavigation.pushFragment(
+                                BusinessDetailFragment
+                                    .getInstance(mInt + 1, type, objectAtPosition, position)
+                            )
+                        }
+                    } else {
+                        startActivity(LoginActivity.getIntent(activity!!))
+
+                    }
 
                 }
 
@@ -359,6 +436,12 @@ class BusinessAdsListingFragment :
             }
 
         }
+    }
+
+    public fun checkUserLogin(): Boolean {
+        var preferenceManager = PreferenceManager(activity!!)
+
+        return preferenceManager.isUserLoggedIn()
     }
 
     fun share() {

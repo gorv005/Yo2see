@@ -38,10 +38,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+      <!--  <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDBuOG9-Ty2hRprn6UUZc92WkqBCaRgvTE" />-->
         <activity
             android:name=".ui.location.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".ui.addProduct.poems.AddPoemsActivity" />
         <activity android:name=".ui.profile.UserProfileActivity" />
         <activity android:name=".ui.chat_list.NewMessageChatActivity" />
         <activity

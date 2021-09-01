@@ -27,6 +27,12 @@ import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Config
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -52,7 +58,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [FragmentProductDetails.newInstance] factory method to
  * create an instance of this fragment.
  */
-class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class) {
+class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnViewModel::class),
+    OnMapReadyCallback {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -60,6 +67,8 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
     lateinit var listingItem: ListingItem
     var clickPos: Int? = 0
 
+    var mGoogleMap: GoogleMap? = null
+    var mapFrag: MapView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -183,6 +192,10 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             clickPos = arguments?.getInt(CLICKPOSITION)
 
             listingItem = arguments?.getParcelable(DATA)!!
+            mapFrag = view.findViewById(R.id.map) as MapView
+            mapFrag?.onCreate(savedInstanceState)
+            //   mapFrag?.getMap
+            mapFrag?.getMapAsync(this)
             var s = "This product is available for "
 
             if (listingItem?.isSell != null && listingItem?.isSell?.equals("yes")) {
@@ -602,6 +615,19 @@ class FragmentProductDetails : BaseFragment<ProductListnViewModel>(ProductListnV
             }
 
         })
+    }
+    override fun onMapReady(googleMap: GoogleMap) {
+        try {
+            mGoogleMap = googleMap
+            //  val cameraUpdate = CameraUpdateFactory.newLatLngZoom(LatLng(listingItem?.latitude?.toDouble()!!, listingItem?.longitude?.toDouble()!!), 10f)
+            //    mGoogleMap!!.animateCamera(cameraUpdate)
+            val sydney =
+                LatLng(listingItem?.latitude?.toDouble()!!, listingItem?.longitude?.toDouble()!!)
+            mGoogleMap?.addMarker(MarkerOptions().position(sydney))
+            mGoogleMap?.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 2f))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

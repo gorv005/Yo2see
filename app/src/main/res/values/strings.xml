@@ -330,5 +330,21 @@
     <string name="select_type_of_search">Type of category</string>
     <string name="select_category">Select product category</string>
     <string name="select_event_category">Select Event category</string>
+    <string name="need_multiple_permission">Need Multiple Permissions</string>
+    <string name="this_app_need_permission">This app needs permissions.</string>
+    <string name="grant">Grant</string>
+    <string name="go_to_setting">Go to Permissions to Grant</string>
+    <string name="cancel">Cancel</string>
+    <string name="unable_to_get_all_permission">Unable to get Permission</string>
+    <string name="name_of_the_forum">Title of the forum</string>
+    <string name="description_of_forum">Decription of forum</string>
+    <string name="type_of_forum">Type of forum</string>
+    <string name="date_of_posted_forum">Date of posted forum</string>
+    <string name="post_history">Post History</string>
+    <string name="reply_to_this_post">Reply to this post</string>
+    <string name="read_replies"><u>Read replies with this thread</u></string>
+    <string name="add_comment">Add Comment</string>
+    <string name="add_reply">Add Reply</string>
+    <string name="there_is_no_notification">There is no notification for you.</string>
 
 </resources>

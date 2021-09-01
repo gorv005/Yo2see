@@ -13,11 +13,13 @@ import com.dartmic.yo2see.BuildConfig
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product.event.ListingItemEvent
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
+import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.productDetails.EventDetailsFragment
 import com.dartmic.yo2see.ui.productDetails.poem.PoemDetailFragment
 import com.dartmic.yo2see.ui.product_list.EventListingFragment
@@ -412,6 +414,11 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
 
     override fun getLayoutId() = R.layout.fragment_poems_listing
 
+    public fun checkUserLogin(): Boolean {
+        var preferenceManager = PreferenceManager(activity!!)
+
+        return preferenceManager.isUserLoggedIn()
+    }
 
     override fun onClickAdapterView(
         objectAtPosition: ListingItemEvent,
@@ -428,10 +435,15 @@ class PoemsListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
             Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT -> {
 
                 this?.let {
-                    mFragmentNavigation.pushFragment(
-                        PoemDetailFragment
-                            .getInstance(mInt + 1, type, objectAtPosition, position)
-                    )
+                    if(checkUserLogin()) {
+                        mFragmentNavigation.pushFragment(
+                            PoemDetailFragment
+                                .getInstance(mInt + 1, type, objectAtPosition, position)
+                        )
+                    }else{
+                        startActivity(LoginActivity.getIntent(activity!!))
+
+                    }
 
                 }
 

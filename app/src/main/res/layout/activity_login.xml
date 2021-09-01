@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:scrollbars="none"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/login_page_background"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:scrollbars="none">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,13 +22,13 @@
             android:text="@string/mobile_and_accessories" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLoginCart"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:adjustViewBounds="true"
 
             android:layout_alignParentStart="true"
             android:layout_marginTop="50dp"
-            android:id="@+id/ivLoginCart"
+            android:adjustViewBounds="true"
             app:srcCompat="@drawable/moving_cart_withoutbg" />
 
         <LinearLayout
@@ -41,33 +41,34 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_padding">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:paddingLeft="40dp"
-            android:paddingEnd="10dp"
-            android:text="@string/username"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:paddingLeft="40dp"
+                android:paddingEnd="10dp"
+                android:text="@string/email_id"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/etUserName"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_marginStart="@dimen/padding3x4"
-            android:layout_marginEnd="@dimen/padding3x4"
-            android:layout_gravity="center"
-            android:layout_marginTop="5dp"
-            android:paddingStart="20dp"
-            android:fontFamily="@font/poppins_regular"
-            android:animateLayoutChanges="@bool/show"
-            android:drawablePadding="@dimen/margin5x2"
-            android:background="@drawable/rounded_corners_app_edittext_bg"
-            android:singleLine="@bool/show"
-            android:textColor="@color/black"
-            android:textSize="16sp" tools:ignore="UnusedAttribute"/>
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding3x4"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="@dimen/padding3x4"
+                android:animateLayoutChanges="@bool/show"
+                android:background="@drawable/rounded_corners_app_edittext_bg"
+                android:drawablePadding="@dimen/margin5x2"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingStart="20dp"
+                android:singleLine="@bool/show"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="UnusedAttribute" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,53 +81,56 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-        <EditText
-            android:id="@+id/etPasswordLogin"
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:layout_marginStart="@dimen/padding3x4"
-            android:layout_marginEnd="@dimen/padding3x4"
-            android:layout_gravity="center"
-            android:inputType="textPassword"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/poppins_regular"
-            android:animateLayoutChanges="@bool/show"
-            android:drawablePadding="@dimen/margin5x2"
-            android:background="@drawable/rounded_corners_app_edittext_bg"
-            android:paddingStart="20dp"
-            android:singleLine="@bool/show"
-            android:textColor="@color/black"
-            android:textSize="16sp" tools:ignore="UnusedAttribute"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/tvSignUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/poppins_semibold"
-            android:paddingLeft="20dp"
-            android:paddingEnd="10dp"
-            android:text="@string/sign_up"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-            <TextView
-                android:id="@+id/tvForgotpassword"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:paddingLeft="20dp"
-                android:paddingEnd="10dp"
-                android:layout_alignParentRight="true"
-                android:text="@string/forgot_password"
+            <EditText
+                android:id="@+id/etPasswordLogin"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/padding3x4"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="@dimen/padding3x4"
+                android:animateLayoutChanges="@bool/show"
+                android:background="@drawable/rounded_corners_app_edittext_bg"
+                android:drawablePadding="@dimen/margin5x2"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textPassword"
+                android:paddingStart="20dp"
+                android:singleLine="@bool/show"
                 android:textColor="@color/black"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                tools:ignore="UnusedAttribute" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvSignUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingLeft="20dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/sign_up"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvForgotpassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingLeft="20dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
 
-
-        </RelativeLayout>
+            </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnLogin"
@@ -144,22 +148,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
 
             <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:id="@+id/btnSignInFacebook"
+                android:id="@+id/btnSignInFacebook"
+                android:layout_width="match_parent"
 
-            android:layout_height="45dp"
-            android:layout_marginTop="70dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textAllCaps="false"
-            android:text="@string/sign_in_facebook"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rememberCheck"
-            android:textColor="@color/white"
-            android:textSize="16sp"
+                android:layout_height="45dp"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/rounded_corners_app_button_facebook_bg"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/sign_in_facebook"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
 
-            android:fontFamily="@font/poppins_regular"
-            android:background="@drawable/rounded_corners_app_button_facebook_bg"
-            />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSignInTwitter"
@@ -172,26 +175,26 @@
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
 
             <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="match_parent"
-            android:id="@+id/btnSignInGoogle"
-            android:layout_height="45dp"
-            android:layout_marginTop="@dimen/margin5x3"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textAllCaps="false"
-            android:text="@string/sign_in_gmail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rememberCheck"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:fontFamily="@font/poppins_regular"
-            android:background="@drawable/rounded_corners_app_button_google_bg"
-            />
+                android:id="@+id/btnSignInGoogle"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="@dimen/margin5x3"
+                android:background="@drawable/rounded_corners_app_button_google_bg"
+                android:fontFamily="@font/poppins_regular"
+                android:text="@string/sign_in_gmail"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rememberCheck" />
 
-    </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>

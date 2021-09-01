@@ -331,5 +331,28 @@ interface AddProductRepository {
         type: String
 
     ): Single<AddProdcutResponse>
+    fun addForum(
+        service: String,
+        user_id: String,
+        category_id: String,
+        sub_cat_id: String,
+        sub_to_sub_cat_id: String,
+        listing_price: String,
+        country: String,
+        state: String,
+        city: String,
+        pincode: String,
+        address: String,
+        title: String,
+        description: String,
+        publish_datetime: String,
+        expiry_datetime: String,
+        longitude: String,
+        latitude: String,
+        business_type: String,
+        rent_type_array: JSONArray
+
+
+    ): Single<AddProdcutResponse>
 
 }

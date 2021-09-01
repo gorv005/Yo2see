@@ -74,9 +74,9 @@ class ChatListFragment : BaseFragment<ProductListnViewModel>(ProductListnViewMod
         // rvChat.adapter = ada++pterChat
         //   adapterChat.submitList(getEvents())
         tvUserName.setText(model?.getLoggedInUserName())
-      /*  Glide.with(this).load("https://yo2see.com/app/admin/" + model?.getUserImage())
+        Glide.with(this).load("https://yo2see.com/app/admin/" + model?.getUserImage())
             .placeholder(R.drawable.ic_clothing_white).circleCrop()
-            .into(ivProfileChat)*/
+            .into(ivProfileChat)
         verifyUserIsLoggedIn()
         rvChat.adapter = adapter
 

@@ -7,9 +7,11 @@ import com.dartmic.yo2see.common.CommonBoolean
 import com.dartmic.yo2see.interfaces.SchedulerProvider
 import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.SearchEvent
+import com.dartmic.yo2see.model.comment.CommentListResponse
 import com.dartmic.yo2see.model.login.LoginRequest
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
+import com.dartmic.yo2see.model.my_history.PostHistoryResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
@@ -36,6 +38,10 @@ class ProductListnViewModel(
     val favViewModel = MutableLiveData<LoginResponsePayload>()
     val productJobListViewModel = MutableLiveData<JobListingResponsePayload>()
     val productEventListViewModel = MutableLiveData<EventListingResponsePayload>()
+    val productHistory1 = MutableLiveData<PostHistoryResponsePayload>()
+    val deleteHistory = MutableLiveData<PostHistoryResponsePayload>()
+    val commentListViewModel = MutableLiveData<CommentListResponse>()
+    val addCommentListViewModel = MutableLiveData<CommentListResponse>()
 
     fun getUser(
         service: String,
@@ -145,9 +151,9 @@ class ProductListnViewModel(
         city: String,
         search_key: String,
         event_type: JSONArray,
-        min_price:String,
-        max_price:String,
-        sort_type:String
+        min_price: String,
+        max_price: String,
+        sort_type: String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -223,9 +229,9 @@ class ProductListnViewModel(
         city: String,
         search_key: String,
         event_type: JSONArray,
-        min_price:String,
-        max_price:String,
-        sort_type:String
+        min_price: String,
+        max_price: String,
+        sort_type: String
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
 
@@ -301,9 +307,9 @@ class ProductListnViewModel(
         city: String,
         search_key: String,
         event_type: JSONArray,
-        min_price:String,
-        max_price:String,
-        sort_type:String
+        min_price: String,
+        max_price: String,
+        sort_type: String
 
     ) {
         searchEvent.value = SearchEvent(isLoading = true)
@@ -518,6 +524,217 @@ class ProductListnViewModel(
         }
     }
 
+    fun getPostHistory(
+        service: String,
+        user_id: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.postHistory(
+                service,
+                user_id
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    productHistory1.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            productHistory1.value =
+                                Gson().fromJson(error, PostHistoryResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+
+    fun deleteHistory(
+        service: String,
+        user_id: String,
+        table_id: String,
+        table_name: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.deleteHistory(
+                service,
+                user_id,
+                table_id,
+                table_name
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    deleteHistory.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            deleteHistory.value =
+                                Gson().fromJson(error, PostHistoryResponsePayload::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+
+    fun getComments(
+        service: String,
+        nType: String,
+        user_id: String,
+        event_id: String
+    ) {
+        // searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.getComments(
+                service,
+                nType,
+                user_id,
+                event_id
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    commentListViewModel.value = it
+                    /*    searchEvent.value =
+                            SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)*/
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            commentListViewModel.value =
+                                Gson().fromJson(error, CommentListResponse::class.java)
+                            /*   searchEvent.value =
+                                   SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+   */
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
+
+    fun addComments(
+        service: String,
+        nType: String,
+        user_id: String,
+        event_id: String,
+        parent_id: String,
+        comment: String
+    ) {
+        searchEvent.value = SearchEvent(isLoading = true)
+
+
+        launch {
+            productListRepository.addComment(
+                service,
+                nType,
+                user_id,
+                event_id,
+                parent_id,
+                comment
+            )
+                .subscribeOn(scheduler.io())
+                .observeOn(scheduler.ui())
+                .subscribe({
+                    Logger.Debug(msg = it.toString())
+                    addCommentListViewModel.value = it
+                    searchEvent.value =
+                        SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = true)
+
+                }, {
+                    try {
+                        Logger.Debug(msg = it.toString())
+                        val error = it as HttpException
+                        val errorBody = error?.response()?.errorBody()?.run {
+
+                            val r = string()
+                            Logger.Debug(msg = r)
+                            val error = r.replaceRange(0, 0, "")
+                                .replaceRange(r.length, r.length, "")
+                            //  val json = Gson().toJson(error)
+
+                            addCommentListViewModel.value =
+                                Gson().fromJson(error, CommentListResponse::class.java)
+                            searchEvent.value =
+                                SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    // searchEvent.value = SearchEvent(isLoading = CommonBoolean.FALSE, isSuccess = false)
+                })
+
+
+        }
+    }
+
     public fun getUserID(): String? {
         return pre.getLoggedInUserId()
     }
@@ -541,6 +758,7 @@ class ProductListnViewModel(
     public fun getLatitude(): String? {
         return pre.getLatitude()
     }
+
     public fun getLongitude(): String? {
         return pre.getLongitude()
     }

@@ -1,9 +1,11 @@
 package com.gsa.ui.login
 
 
+import com.dartmic.yo2see.model.comment.CommentListResponse
 import com.dartmic.yo2see.model.login.LoginRequest
 import com.dartmic.yo2see.model.login.LoginResponsePayload
 import com.dartmic.yo2see.model.login.UserList
+import com.dartmic.yo2see.model.my_history.PostHistoryResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
@@ -100,5 +102,35 @@ interface ProductListRepository {
         id: String,
         fav_flag:Int
     ): Single<LoginResponsePayload>
+
+    fun postHistory(
+        service: String,
+        user_id: String
+    ): Single<PostHistoryResponsePayload>
+
+    fun deleteHistory(
+        service: String,
+        user_id: String,
+        table_id: String,
+        table_name: String
+    ): Single<PostHistoryResponsePayload>
+
+
+    fun getComments(
+        service: String,
+        nType: String,
+        user_id: String,
+        event_id: String
+    ): Single<CommentListResponse>
+
+
+    fun addComment(
+        service: String,
+        nType: String,
+        user_id: String,
+        event_id: String,
+        parent_id: String,
+        comment: String
+    ): Single<CommentListResponse>
 
 }

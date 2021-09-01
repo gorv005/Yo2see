@@ -13,12 +13,14 @@ import com.dartmic.yo2see.BuildConfig
 import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
+import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product.event.ListingItemEvent
 import com.dartmic.yo2see.model.product.job.ListingItemJob
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
+import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.productDetails.EventDetailsFragment
 import com.dartmic.yo2see.ui.productDetails.JobDetailsFragment
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterEventProductList
@@ -272,10 +274,15 @@ class EventListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
             Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT -> {
 
                 this?.let {
-                    mFragmentNavigation.pushFragment(
-                        EventDetailsFragment
-                            .getInstance(mInt + 1, type, objectAtPosition, position)
-                    )
+                    if(checkUserLogin()) {
+                        mFragmentNavigation.pushFragment(
+                            EventDetailsFragment
+                                .getInstance(mInt + 1, type, objectAtPosition, position)
+                        )
+                    }else{
+                        startActivity(LoginActivity.getIntent(activity!!))
+
+                    }
 
                 }
 
@@ -308,6 +315,11 @@ class EventListingFragment : BaseFragment<ProductListnViewModel>(ProductListnVie
             }
 
         }
+    }
+    public fun checkUserLogin(): Boolean {
+        var preferenceManager = PreferenceManager(activity!!)
+
+        return preferenceManager.isUserLoggedIn()
     }
 
     fun share() {

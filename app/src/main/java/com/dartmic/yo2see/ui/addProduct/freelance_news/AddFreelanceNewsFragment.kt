@@ -11,6 +11,7 @@ import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
@@ -38,12 +39,7 @@ import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.gsa.ui.login.AddProductViewModel
-import kotlinx.android.synthetic.main.fragment_add_ads_for_business.*
 import kotlinx.android.synthetic.main.fragment_add_freelance_news.*
-import kotlinx.android.synthetic.main.fragment_add_freelance_news.etPay
-import kotlinx.android.synthetic.main.fragment_add_freelance_news.ivBackDetails
-import kotlinx.android.synthetic.main.fragment_add_freelance_news.saveProductBtn
-import kotlinx.android.synthetic.main.fragment_add_freelance_news.tvProductPath
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
 import java.io.File
@@ -153,6 +149,11 @@ class AddFreelanceNewsFragment : BaseFragment<AddProductViewModel>(AddProductVie
                 etCountry.setError(validateetCountry)
             }
         }
+        tvSetPrice.setText(
+            AndroidUtils.getString(R.string.cost) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
     }
 
     fun getUser() {
@@ -258,9 +259,9 @@ class AddFreelanceNewsFragment : BaseFragment<AddProductViewModel>(AddProductVie
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-                val handler = Handler()
-                handler.postDelayed({
-                    onBackPressed()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    activity?.onBackPressed()
+
                 }, 1000)
             } else {
                 showSnackbar(it.message, false)

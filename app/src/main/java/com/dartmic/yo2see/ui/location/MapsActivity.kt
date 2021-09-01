@@ -49,7 +49,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     var mFusedLocationClient: FusedLocationProviderClient? = null
 
     val placesApi = PlaceAPI.Builder()
-        .apiKey(AndroidUtils.getString(R.string.google_maps_key))
+        .apiKey("AIzaSyBpgoQ8ZJr10HsoLzU_E6pVbPHUQFC9SHc")
         .build(this@MapsActivity)
 
     var street = ""

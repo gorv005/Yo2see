@@ -16,12 +16,14 @@ import com.dartmic.yo2see.R
 import com.dartmic.yo2see.base.BaseFragment
 import com.dartmic.yo2see.callbacks.AdapterViewClickListener
 import com.dartmic.yo2see.interfaces.SortImpl
+import com.dartmic.yo2see.managers.PreferenceManager
 import com.dartmic.yo2see.model.Category_sub_subTosub.SubToSubListItem
 import com.dartmic.yo2see.model.ProductItems
 import com.dartmic.yo2see.model.filter.FilterDefaultMultipleListModel
 import com.dartmic.yo2see.model.product_info.ListingItem
 import com.dartmic.yo2see.ui.LandingActivity
 import com.dartmic.yo2see.ui.filter.FilterActivity
+import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.productDetails.FragmentProductDetails
 import com.dartmic.yo2see.ui.product_list.adapter.AdapterProductList
 import com.dartmic.yo2see.ui.product_list.business.BusinessAdsListingFragment
@@ -136,6 +138,11 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             activity?.onBackPressed()
         }
 
+    }
+    public fun checkUserLogin(): Boolean {
+        var preferenceManager = PreferenceManager(activity!!)
+
+        return preferenceManager.isUserLoggedIn()
     }
 
     fun getProductData() {
@@ -320,10 +327,16 @@ class ProductListFragment : BaseFragment<ProductListnViewModel>(ProductListnView
             Config.AdapterClickViewTypes.CLICK_VIEW_PRODUCT -> {
 
                 this?.let {
-                    mFragmentNavigation.pushFragment(
-                        FragmentProductDetails
-                            .getInstance(mInt + 1, type, objectAtPosition, position)
-                    )
+                    if(checkUserLogin()) {
+
+                        mFragmentNavigation.pushFragment(
+                            FragmentProductDetails
+                                .getInstance(mInt + 1, type, objectAtPosition, position)
+                        )
+                    }else{
+                        startActivity(LoginActivity.getIntent(activity!!))
+
+                    }
 
                 }
 

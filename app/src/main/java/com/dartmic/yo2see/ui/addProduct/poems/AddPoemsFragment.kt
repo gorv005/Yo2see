@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -33,13 +34,7 @@ import com.dartmic.yo2see.utils.AndroidUtils
 import com.dartmic.yo2see.utils.Logger
 import com.dartmic.yo2see.utils.NetworkUtil
 import com.gsa.ui.login.AddProductViewModel
-import kotlinx.android.synthetic.main.fragment_add_ads_for_business.*
 import kotlinx.android.synthetic.main.fragment_add_poems.*
-import kotlinx.android.synthetic.main.fragment_add_poems.etPay
-import kotlinx.android.synthetic.main.fragment_add_poems.ivBackDetails
-import kotlinx.android.synthetic.main.fragment_add_poems.saveProductBtn
-import kotlinx.android.synthetic.main.fragment_add_poems.tvProductPath
-import kotlinx.android.synthetic.main.fragment_local_service.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
 import java.util.*
@@ -147,6 +142,11 @@ class AddPoemsFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
                 etCountry.setError(validateetCountry)
             }
         }
+        tvSetPrice.setText(
+            AndroidUtils.getString(R.string.cost) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -269,9 +269,9 @@ class AddPoemsFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-                val handler = Handler()
-                handler.postDelayed({
-                    onBackPressed()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    activity?.onBackPressed()
+
                 }, 1000)
             } else {
                 showSnackbar(it.message, false)

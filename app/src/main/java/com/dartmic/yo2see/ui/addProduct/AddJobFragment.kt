@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
@@ -40,7 +41,6 @@ import com.gsa.ui.login.AddProductViewModel
 import kotlinx.android.synthetic.main.fragment_add_job.*
 import kotlinx.android.synthetic.main.fragment_add_job.saveProductBtn
 import kotlinx.android.synthetic.main.fragment_add_job.tvProductPath
-import kotlinx.android.synthetic.main.fragment_add_product.*
 import kotlinx.android.synthetic.main.layout_set_location_info.*
 import kotlinx.android.synthetic.main.layout_set_payment.*
 import kotlinx.android.synthetic.main.layout_set_user_info.*
@@ -153,6 +153,11 @@ class AddJobFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::cl
                 etCountry.setError(validateetCountry)
             }
         }
+        tvSetPrice.setText(
+            AndroidUtils.getString(R.string.set_a_price) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -294,9 +299,9 @@ class AddJobFragment : BaseFragment<AddProductViewModel>(AddProductViewModel::cl
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-                val handler = Handler()
-                handler.postDelayed({
-                    onBackPressed()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    activity?.onBackPressed()
+
                 }, 1000)
             } else {
                 showSnackbar(it.message, false)

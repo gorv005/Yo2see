@@ -1,0 +1,247 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/back">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="none"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:visibility="invisible"
+
+                    android:id="@+id/lllocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp">
+
+                    <ImageView
+                        app:tint="@color/red_a"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="30dp"
+                        android:src="@drawable/ic_location_pin" />
+
+                    <ImageView
+                        app:tint="@color/red_a"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_search_icon_black" />
+
+                </LinearLayout>
+
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvProductName"
+                        android:paddingStart="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="Samsung galaxy s8"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="50dp"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:paddingEnd="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="@string/address"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="30dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp">
+                    <pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        />
+                    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+                        android:id="@+id/worm_dots_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/view_pager"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:dotsStrokeColor="@color/white1"
+                        app:dotsStrokeWidth="8dp"
+                        app:dotsColor="@color/blue1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:selectedDotColor="@color/blue1" />
+                </LinearLayout>
+
+
+
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/red_a"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"/>
+
+                <TextView
+                    android:id="@+id/tvSalaryDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text="dmd"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginStart="20dp"
+
+                    android:fontFamily="@font/poppins_light" />
+
+                <TextView
+                    android:id="@+id/tvPoemlevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text="Samsung galaxy s8"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginStart="20dp"
+
+                    android:fontFamily="@font/poppins_medium" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text="@string/description"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginStart="20dp"
+
+                    android:fontFamily="@font/poppins_medium" />
+
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text="Lorem Ipsum is simply dummym"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginStart="20dp"
+
+                    android:fontFamily="@font/poppins_light" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/grid_image"
+                    android:text="@string/reply_to_this_post"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/poppins_medium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="0.001dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Helper text"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/grey1"
+                    android:textSize="12sp" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etForumReply"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/edit_text_round_corner_bg"
+                    android:focusableInTouchMode="true"
+                    android:textColor="@color/disabled_text"
+                    android:textColorHint="@color/disabled_text" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/addCommentBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="39dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_app_selected"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/add_comment"
+                    android:textColor="@color/white" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvProductForumCommentList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
+                     />
+
+
+                <include  layout="@layout/layout_set_user_info_product_detail"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_yo2see_logo"
+                android:text="@string/mobile_and_accessories" />
+
+            <ImageView
+                android:id="@+id/ivCurveProductDetails"
+                android:layout_width="@dimen/et_width_120"
+                android:layout_height="100dp"
+                android:scaleType="fitXY"
+                app:tint="@color/red_a"
+                android:src="@drawable/ic_blue_top_background" />
+            <ImageView
+                android:id="@+id/ivBackDetails"
+                android:padding="20dp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_left_arrow_white"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

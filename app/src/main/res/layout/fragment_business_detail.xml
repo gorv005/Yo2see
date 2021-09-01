@@ -163,6 +163,7 @@
 
 
                 <include  layout="@layout/layout_set_user_info_product_detail"/>
+
             </LinearLayout>
 
             <ImageView

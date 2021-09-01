@@ -7,8 +7,10 @@ import com.dartmic.yo2see.model.add_product.ImagePathResponse
 import com.dartmic.yo2see.model.add_product.RentTypeResponse
 import com.dartmic.yo2see.model.categories.CategoriesResponse
 import com.dartmic.yo2see.model.categories.FeatureListResponse
+import com.dartmic.yo2see.model.comment.CommentListResponse
 import com.dartmic.yo2see.model.list_dropdown.ListOfDropDownResponse
 import com.dartmic.yo2see.model.login.LoginResponsePayload
+import com.dartmic.yo2see.model.my_history.PostHistoryResponsePayload
 import com.dartmic.yo2see.model.product.ProductDetailResponsePayload
 import com.dartmic.yo2see.model.product.ProductListResponsePayload
 import com.dartmic.yo2see.model.product.event.EventListingResponsePayload
@@ -432,7 +434,6 @@ interface AppRestApiFast {
     ): Single<AddProdcutResponse>
 
 
-
     @FormUrlEncoded
     @POST(Config.Endpoints.PRODUCT_DETAILS_DATA_API)
     fun getProductDetails(
@@ -617,5 +618,76 @@ interface AppRestApiFast {
         @Field("valunteering_type") poem_type: String
     ): Single<AddProdcutResponse>
 
+    @FormUrlEncoded
+    @POST(Config.Endpoints.PRODUCT_ADD_FORUM)
+    fun addForum(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("category_id") category_id: String,
+        @Field("sub_cat_id") sub_cat_id: String,
+        @Field("sub_to_sub_cat_id") sub_to_sub_cat_id: String,
+        @Field("listing_price") listing_price: String,
+        @Field("country") country: String,
+        @Field("state") state: String,
+        @Field("city") city: String,
+        @Field("pincode") pincode: String,
+        @Field("address") address: String,
+        @Field("title") title: String,
+        @Field("description") description: String,
+        @Field("publish_datetime") publish_datetime: String,
+        @Field("expiry_datetime") expiry_datetime: String,
+        @Field("longitude") longitude: String,
+        @Field("latitude") latitude: String,
+        @Field("forum_type") business_type: String,
+        @Field("photos_array") photos_array: JSONArray
+
+    ): Single<AddProdcutResponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.POST_HISTORY)
+    fun postHistory(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String
+
+
+    ): Single<PostHistoryResponsePayload>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.DELETE_HISTORY)
+    fun deleteHistory(
+        @Field("service") service: String,
+        @Field("user_id") user_id: String,
+        @Field("Table_Id") Table_Id: String,
+        @Field("TableName") TableName: String
+
+
+    ): Single<PostHistoryResponsePayload>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.COMMENT_LIST)
+    fun getComments(
+        @Field("service") service: String,
+        @Field("nType") nType: String,
+        @Field("user_id") user_id: String,
+        @Field("event_id") event_id: String
+
+
+    ): Single<CommentListResponse>
+
+
+    @FormUrlEncoded
+    @POST(Config.Endpoints.ADD_COMMENT)
+    fun addComment(
+        @Field("service") service: String,
+        @Field("nType") nType: String,
+        @Field("user_id") user_id: String,
+        @Field("event_id") event_id: String,
+        @Field("parent_id") parent_id: String,
+        @Field("comment") comment: String
+
+    ): Single<CommentListResponse>
 }
 

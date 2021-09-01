@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
@@ -141,6 +142,11 @@ class AddUncategorizedFragment : BaseFragment<AddProductViewModel>(AddProductVie
                 etCountry.setError(validateetCountry)
             }
         }
+        tvSetPrice.setText(
+            AndroidUtils.getString(R.string.set_a_price) + " (" + AndroidUtils.getCurrencySymbol(
+                AndroidUtils.getCurrencyCode()
+            ) + ")"
+        )
     }
 
     fun getUser() {
@@ -246,9 +252,9 @@ class AddUncategorizedFragment : BaseFragment<AddProductViewModel>(AddProductVie
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-                val handler = Handler()
-                handler.postDelayed({
-                    onBackPressed()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    activity?.onBackPressed()
+
                 }, 1000)
             } else {
                 showSnackbar(it.message, false)

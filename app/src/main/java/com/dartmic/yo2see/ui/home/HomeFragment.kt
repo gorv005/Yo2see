@@ -1,8 +1,10 @@
 package com.dartmic.yo2see.ui.home
 
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.util.Log
@@ -34,6 +36,7 @@ import com.dartmic.yo2see.ui.addProduct.add_valunteering.AddVolunteeringFragment
 import com.dartmic.yo2see.ui.addProduct.ads_for_business.AddAdsForBusinessFragment
 import com.dartmic.yo2see.ui.addProduct.blog.AddBlogFragment
 import com.dartmic.yo2see.ui.addProduct.business_on_sale.AddBusinessOnSaleFragment
+import com.dartmic.yo2see.ui.addProduct.forum.AddForumFragment
 import com.dartmic.yo2see.ui.addProduct.freelance_news.AddFreelanceNewsFragment
 import com.dartmic.yo2see.ui.addProduct.local_service.AddLocalServiceFragment
 import com.dartmic.yo2see.ui.addProduct.poems.AddPoemsFragment
@@ -78,6 +81,18 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
     var type: Int? = 0
     private var eventDataResponseList = ArrayList<CategoryListItemData>()
 
+    // PERMISSIONS
+    private var permissionsRequired = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.READ_PHONE_STATE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    private val PERMISSION_CALLBACK_CONSTANT = 100
+    private val REQUEST_PERMISSION_SETTING = 101
+    private var permissionStatus: SharedPreferences? = null
+    private var sentToSettings = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -98,6 +113,8 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
             rlCat.visibility = View.GONE
             tvBrows.setText(AndroidUtils.getString(R.string.what_product_you_would))
         }
+        // PERMISSION STATUS OBJECT
+        permissionStatus = activity?.getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
         ivLocation.setOnClickListener {
 
             startActivityForResult(
@@ -105,13 +122,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                 LandingActivity.ADDRESS_PICKER_REQUEST
             )
         }
-        if (model?.getAddress().equals("")) {
-            startActivityForResult(
-                MapsActivity.getIntent(activity!!, 0),
-                LandingActivity.ADDRESS_PICKER_REQUEST
-            )
 
-        }
         ivSearch.setOnClickListener {
             startActivity(SerachActivity.getIntent(activity!!))
         }
@@ -256,6 +267,7 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
         subscribeLoading()
         subscribeUi()
         getCategories()
+
         // getEventsData()
     }
 
@@ -676,7 +688,15 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                 1
             )
         }
-        tvLocation.text = model.getAddress()
+        if (model?.getAddress().equals("")) {
+            startActivityForResult(
+                MapsActivity.getIntent(activity!!, 0),
+                LandingActivity.ADDRESS_PICKER_REQUEST
+            )
+
+        }else {
+            tvLocation.text = model.getAddress()
+        }
     }
 
     override fun onClickAdapterView(
@@ -840,6 +860,23 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                                         )
                                     )
                             )
+                        } else if (objectAtPosition.categoryName.contains("Forum") || objectAtPosition.categoryName.contains(
+                                "Fourms"
+                            )) {
+                            mFragmentNavigation.pushFragment(
+                                AddForumFragment
+                                    .getInstance(
+                                        mInt + 1,
+                                        SubToSubListItem(
+                                            "",
+                                            "",
+                                            objectAtPosition?.categoryId,
+                                            "0",
+                                            objectAtPosition.categoryName,
+                                            "0"
+                                        )
+                                    )
+                            )
                         } else {
                             mFragmentNavigation.pushFragment(
                                 SubCategoriesFragment
@@ -887,6 +924,10 @@ class HomeFragment : BaseFragment<CategoriesViewModel>(CategoriesViewModel::clas
                         } else if (objectAtPosition.categoryName.contains("Ads for Business") ||
                             objectAtPosition.categoryName.contains("Blog") || objectAtPosition.categoryName.contains(
                                 "Business for Sale"
+                            ) || objectAtPosition.categoryName.contains(
+                                "Forum"
+                            ) || objectAtPosition.categoryName.contains(
+                                "Fourms"
                             )
                         ) {
                             mFragmentNavigation.pushFragment(

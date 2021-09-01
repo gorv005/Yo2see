@@ -27,7 +27,7 @@ class SignUpActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel
 
         }
         rlPrivate.setOnClickListener {
-            userType="Private"
+            userType = "Private"
             rlPrivate.setBackgroundColor(ContextCompat.getColor(this, R.color.red_a))
             rlBusiness.setBackgroundColor(ContextCompat.getColor(this, R.color.light_red))
             tvPrivate.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -35,7 +35,7 @@ class SignUpActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel
 
         }
         rlBusiness.setOnClickListener {
-            userType="Business"
+            userType = "Business"
             rlBusiness.setBackgroundColor(ContextCompat.getColor(this, R.color.red_a))
             rlPrivate.setBackgroundColor(ContextCompat.getColor(this, R.color.light_red))
             tvBusiness.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -87,7 +87,7 @@ class SignUpActivity : BaseActivity<RegistrationViewModel>(RegistrationViewModel
                     OtpVerifyActivity.getIntent(
                         it,
                         "User Signup",
-                        etPhonenumber.text.toString(),
+                        ccp.selectedCountryCodeWithPlus + "" + etPhonenumber.text.toString(),
                         etFirstName.text.toString(),
                         etEmail.text.toString(),
                         etPassword.text.toString(),

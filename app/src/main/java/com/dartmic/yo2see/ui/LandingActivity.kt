@@ -1,17 +1,25 @@
 package com.dartmic.yo2see.ui
 
+import android.Manifest
 import android.R.attr
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.arthurivanets.bottomsheets.BottomSheet
@@ -30,6 +38,7 @@ import com.dartmic.yo2see.ui.home.products.ProductFragment
 import com.dartmic.yo2see.ui.location.MapsActivity
 import com.dartmic.yo2see.ui.login.LoginActivity
 import com.dartmic.yo2see.ui.more.MoreFragment
+import com.dartmic.yo2see.ui.notification.NotificationFragment
 import com.dartmic.yo2see.ui.postAdd.PostAnAddFragment
 import com.dartmic.yo2see.ui.product_list.EventListingFragment
 import com.dartmic.yo2see.ui.product_list.JobListingFragment
@@ -63,6 +72,20 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     private val fragNavController: FragNavController =
         FragNavController(supportFragmentManager, R.id.container)
 
+    // PERMISSIONS
+    private var permissionsRequired = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.READ_PHONE_STATE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+
+    private val PERMISSION_CALLBACK_CONSTANT = 100
+    private val REQUEST_PERMISSION_SETTING = 101
+    private var permissionStatus: SharedPreferences? = null
+    private var sentToSettings = false
+
     override fun pushFragment(fragment: Fragment, sharedElementList: List<Pair<View, String>>?) {
         val options = FragNavTransactionOptions.newBuilder()
         options.reordering = true
@@ -93,7 +116,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
     override fun getRootFragment(index: Int): Fragment {
         when (index) {
             INDEX_HOME -> return HomeFragment.getInstance(0, Config.Constants.PRODUCT)
-            INDEX_NOTIFICATION -> return ChatListFragment.getInstance(0)
+            INDEX_NOTIFICATION -> return NotificationFragment.getInstance(0)
             INDEX_ADD_POST -> return PostAnAddFragment.getInstance(0)
             //   INDEX_RENT_BUY_SELL -> return HomeFragment.getInstance(0)
             INDEX_MORE -> return MoreFragment.getInstance(0)
@@ -136,6 +159,8 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                     Log.e("DEBUG", message, throwable)
                 }
             }
+// PERMISSION STATUS OBJECT
+            permissionStatus = getSharedPreferences("permissionStatus", Context.MODE_PRIVATE)
 
 
             defaultTransactionOptions = FragNavTransactionOptions.newBuilder().customAnimations(
@@ -261,6 +286,7 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
                  MapsActivity.getIntent(it), 12
              )
          }*/
+        requestPermission()
     }
 
     public fun checkUserLogin(): Boolean {
@@ -537,4 +563,162 @@ class LandingActivity : AppCompatActivity(), BaseFragment.FragmentNavigation,
         sortByBottomSheet.show(supportFragmentManager, SortByProductBottomSheet.TAG)
     }
 
+
+    // check permissions granted
+    private fun isPermissionGranted(): Boolean {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[0]
+            ) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[1]
+            ) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[2]
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return false
+
+        } else {
+            return true
+
+        }
+    }
+
+    // request for permission
+    private fun requestPermission() {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[0]
+            ) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[1]
+            ) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(
+                this,
+                permissionsRequired[2]
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[2])
+            ) {
+                //Show Information about why you need the permission
+                getAlertDialog()
+            } else if (permissionStatus!!.getBoolean(permissionsRequired[0], false)) {
+                //Previously Permission Request was cancelled with 'Dont Ask Again',
+                // Redirect to Settings after showing Information about why you need the permission
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle(AndroidUtils.getString(R.string.need_multiple_permission))
+                builder.setMessage(AndroidUtils.getString(R.string.this_app_need_permission))
+                builder.setPositiveButton(AndroidUtils.getString(R.string.grant)) { dialog, which ->
+                    dialog.cancel()
+                    sentToSettings = true
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivityForResult(intent, REQUEST_PERMISSION_SETTING)
+                    Toast.makeText(
+                        applicationContext,
+                        AndroidUtils.getString(R.string.go_to_setting),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                builder.setNegativeButton(AndroidUtils.getString(R.string.cancel)) { dialog, which -> dialog.cancel() }
+                builder.show()
+            } else {
+                //just request the permission
+                ActivityCompat.requestPermissions(
+                    this,
+                    permissionsRequired,
+                    PERMISSION_CALLBACK_CONSTANT
+                )
+            }
+
+            //   txtPermissions.setText("Permissions Required")
+
+            val editor = permissionStatus!!.edit()
+            editor.putBoolean(permissionsRequired[0], true)
+            editor.commit()
+        } else {
+            //You already have the permission, just go ahead.
+            //    Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+    // check if permission allowed
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
+            //check if all permissions are granted
+            var allgranted = false
+            for (i in grantResults.indices) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allgranted = true
+                } else {
+                    allgranted = false
+                    break
+                }
+            }
+
+            if (allgranted) {
+                // Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    permissionsRequired[0]
+                )
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[1])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, permissionsRequired[2])
+            ) {
+
+                getAlertDialog()
+            } else {
+                Toast.makeText(
+                    applicationContext,
+                    AndroidUtils.getString(R.string.unable_to_get_all_permission),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    // permission request dialog
+    private fun getAlertDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(AndroidUtils.getString(R.string.need_multiple_permission))
+        builder.setMessage(AndroidUtils.getString(R.string.this_app_need_permission))
+        builder.setPositiveButton(AndroidUtils.getString(R.string.grant)) { dialog, which ->
+            dialog.cancel()
+            ActivityCompat.requestPermissions(
+                this,
+                permissionsRequired,
+                PERMISSION_CALLBACK_CONSTANT
+            )
+        }
+        builder.setNegativeButton(AndroidUtils.getString(R.string.cancel)) { dialog, which -> dialog.cancel() }
+        builder.show()
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        if (sentToSettings) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    permissionsRequired[0]
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                //Got Permission
+                //   Toast.makeText(applicationContext, "Allowed All Permissions", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 }

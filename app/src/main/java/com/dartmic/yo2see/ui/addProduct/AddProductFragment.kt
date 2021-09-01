@@ -11,6 +11,7 @@ import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
@@ -139,7 +140,7 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
                 UiUtils.hideSoftKeyboard(it)
                 // Call for Location
                 startActivityForResult(
-                    MapsActivity.getIntent(it,2), 23
+                    MapsActivity.getIntent(it, 2), 23
                 )
             }
         }
@@ -441,9 +442,9 @@ class AddProductFragment : BaseFragment<AddProductViewModel>(AddProductViewModel
             if (it.status) {
                 hideProgressDialog()
                 showSnackbar(it.message, true)
-                val handler = Handler()
-                handler.postDelayed({
-                    onBackPressed()
+                Handler(Looper.getMainLooper()).postDelayed({
+                    activity?.onBackPressed()
+
                 }, 1000)
             } else {
                 showSnackbar(it.message, false)
